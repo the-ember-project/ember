@@ -19,6 +19,8 @@ jobs:
   review:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      PYTHONUNBUFFERED: "1"  # show output live in the log
     steps:
       - uses: actions/checkout@v4
         with:

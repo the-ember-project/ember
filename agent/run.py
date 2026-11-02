@@ -18,6 +18,7 @@ import os
 import posixpath
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.request
 from pathlib import Path
@@ -262,12 +263,18 @@ def tool_run_command(command: str, timeout_seconds: int = 300) -> str:
         home = f"/home/{RUN_AS}"
         env.update(HOME=home, PATH=f"{home}/.local/bin:{env.get('PATH', '')}")
         argv = ["sudo", "-n", "-u", RUN_AS, "env", "-i", *(f"{k}={v}" for k, v in env.items()), *argv]
-    try:
-        r = subprocess.run(argv, cwd=ROOT, env=env, capture_output=True,
-                           text=True, timeout=timeout_seconds)
-        return clip(f"exit code {r.returncode}\n--- stdout ---\n{r.stdout}\n--- stderr ---\n{r.stderr}")
-    except subprocess.TimeoutExpired as e:
-        return clip(f"Timed out after {timeout_seconds}s\n{e.stdout or ''}\n{e.stderr or ''}")
+    # Output goes to temporary files, not pipes: a job the agent starts in the background
+    # keeps a pipe open, which would make this wait until the timeout.
+    with tempfile.TemporaryFile("w+") as out, tempfile.TemporaryFile("w+") as err:
+        try:
+            r = subprocess.run(argv, cwd=ROOT, env=env, stdout=out, stderr=err, text=True,
+                               timeout=timeout_seconds)
+            status = f"exit code {r.returncode}"
+        except subprocess.TimeoutExpired:
+            status = f"Timed out after {timeout_seconds}s"
+        out.seek(0)
+        err.seek(0)
+        return clip(f"{status}\n--- stdout ---\n{out.read()}\n--- stderr ---\n{err.read()}")
 
 
 def tool_request_human_help(title: str, body: str) -> str:

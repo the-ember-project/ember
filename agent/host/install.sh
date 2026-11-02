@@ -21,8 +21,13 @@ fi
 
 # A separate user for the agent's commands, which you may run commands as without a password.
 id researcher >/dev/null 2>&1 || sudo useradd -m researcher
-echo "$USER ALL=(researcher) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/agiexp >/dev/null
+printf '%s\n' "$USER ALL=(researcher) NOPASSWD: ALL" "Defaults:$USER !use_pty" | sudo tee /etc/sudoers.d/agiexp >/dev/null
 sudo chmod 440 /etc/sudoers.d/agiexp
+
+# Let the researcher user pass through (not list) the folders above the repository, so it can
+# run the agent's scripts by path.
+d="$REPO_DIR"
+while [ "$d" != / ]; do sudo chmod o+x "$d"; d=$(dirname "$d"); done
 
 # Shared cache for downloaded models and packages.
 sudo mkdir -p "$CACHE_DIR"

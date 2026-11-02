@@ -19,6 +19,8 @@ jobs:
   lab:
     runs-on: ubuntu-latest
     timeout-minutes: 340
+    env:
+      PYTHONUNBUFFERED: "1"  # show output live in the log
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,6 +49,13 @@ jobs:
           sudo useradd -m researcher
           mkdir -p "$RUNNER_TEMP/agent-cache" self knowledge research experiments
           chmod -R a+rwX "$RUNNER_TEMP/agent-cache" self knowledge research experiments
+          # Let it pass through (not list) the folders above the repo and the cache, so it can
+          # run scripts by path and use the cache. It still can't read anything else there.
+          for d in "$GITHUB_WORKSPACE" "$RUNNER_TEMP"; do
+            while [ "$d" != / ]; do sudo chmod o+x "$d"; d=$(dirname "$d"); done
+          done
+          # Without a pseudo-terminal, a background command doesn't hold the agent's command open.
+          echo 'Defaults !use_pty' | sudo tee /etc/sudoers.d/agent-no-pty > /dev/null
 
       - name: Run queued experiments
         if: steps.queue.outputs.jobs == 'yes'
