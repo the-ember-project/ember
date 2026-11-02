@@ -45,6 +45,11 @@ What has been decided for the AGI research agent, and what is still to do.
 - Ember keeps `research/roadmap.md` itself: its vision of real progress toward AGI for small models, 3–5 milestones with how each is measured, where it stands, and a `Last checked:` date. It's shown at the start of every session.
 - Once a month it checks honestly whether its recent work served the milestones, and adjusts. Sessions remind it when the roadmap is missing or a check is due.
 
+**Guarding against memory rot** (built 2026-11-03)
+- Everything loaded at the start of a session is capped: playbook 10,000 characters, roadmap 4,000, agenda 8,000, each journal entry 4,000, startup files 40,000. Ember is warned at 80% of a limit and told to condense once it's over.
+- Ember fixes wrong notes in the session it finds them, and tidies its memory monthly (prune, merge, correct, mark superseded results), tracked by `Last tidied:` in `self/memory_log.md`, with a reminder when due.
+- Not built: clearing old tool output within a session (a Claude API feature). Left for Ember to discover and propose through its memory research, or for us to add later.
+
 **Weekly independent review** (built)
 - Sundays at 04:00 UTC, one fresh Claude call with no tools and no stake in the work reviews the past week's journal, lab runs and changed experiments, including their commit history, so it can see whether predictions came before results.
 - It sorts findings into "could change a result" and "minor", and gives each claim a verdict: supported, overstated, unsupported or can't tell.

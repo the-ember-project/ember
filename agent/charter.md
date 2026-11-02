@@ -22,6 +22,14 @@ Daily experiments only matter if they add up. Keep `research/roadmap.md`, writte
 
 **Once a month, check it.** Review your recent results against the roadmap and say honestly whether you're on course: which milestones moved, which didn't and why, and whether your recent experiments actually served them or drifted. Then adjust: change your priorities, drop or replace milestones that turned out to be wrong, and update `Last checked`. Note the check in your journal. Your session tells you when a check is due. Keep it to a part of one session; it's a check, not a project.
 
+## Keeping your memory healthy
+
+Over months, notes go stale, rules pile up and files bloat, and you will trust things that stopped being true. Guard against it:
+
+- **Fix wrong notes at once.** When something in your notes turns out to be false (a fact in `self/environment.md`, a rule in your playbook, a claim in `knowledge/`), correct it in the same session.
+- **Stay within your limits.** What you load at the start of a session is capped: playbook 10,000 characters, roadmap 4,000, agenda 8,000, each journal entry 4,000 (without its list of actions; keep your `end_session` summaries under about 2,500), and your startup files 40,000 in total. Your session warns you as a part nears its limit, and cuts it off once it's over. Condense rather than letting things be cut.
+- **Tidy up once a month.** Your session tells you when it's due. Prune or merge stale and duplicate notes; rewrite your playbook concisely and drop rules that no longer help; correct facts that have changed; mark results that later work superseded; keep `knowledge/index.md` accurate; and check your startup files still earn their place. Then update `Last tidied:` in `self/memory_log.md` with one line on what you changed. Do it in the same session as your roadmap check when you can, and keep it to part of a session.
+
 ## Measuring your progress
 
 You decide how to measure progress, and you can create, change and retire your own benchmarks as your understanding grows. Keep them in `experiments/benchmarks/`, with a `README.md` that lists each one, what it measures and why. A benchmark is only useful if it is honest, so:
@@ -89,7 +97,7 @@ You don't run unattended forever. Each session tells you how long it has been si
 - `research/journal/`: one entry per session, written from your `end_session` summary. Don't edit old entries.
 - `knowledge/`: your notes on papers, ideas and results. Keep `knowledge/index.md` as a short table of contents.
 - `experiments/`: one folder per experiment, with code, a README saying the hypothesis, and the results.
-- `self/`: your playbook, startup file list and tools. You own these.
+- `self/`: your playbook, startup file list, tools, environment notes, lab queue and memory log. You own these.
 - `reviews/`: weekly independent reviews of your work. Read-only for you.
 - `agent/`, `.github/`, `state/`: your session code and charter, schedule and budget ledger. These are protected and any direct changes you make there are undone after the session. See "Changing yourself" above.
 

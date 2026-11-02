@@ -33,8 +33,19 @@ JOURNAL_DIR = ROOT / "research" / "journal"
 
 # The agent's own folder: changes here take effect next session without approval.
 SELF_DIR = ROOT / "self"
+
+# Everything a session loads at its start is capped, so memory can't bloat unnoticed: the
+# agent is warned as a part nears its cap, and must condense it once it's over.
 PLAYBOOK_LIMIT = 10_000
 STARTUP_LIMIT = 40_000
+ROADMAP_LIMIT = 4_000
+AGENDA_LIMIT = 8_000
+JOURNAL_ENTRY_LIMIT = 4_000
+size_notes: list[str] = []
+
+# The monthly memory tidy-up; its date is kept in this file by the agent.
+MEMORY_LOG = SELF_DIR / "memory_log.md"
+TIDY_DAYS = 30
 
 # Changes here need a pull request the human approves.
 PROPOSABLE = ("agent/", "requirements.txt")
@@ -386,7 +397,8 @@ TOOLS = [
                                            "recorded in files.",
      "input_schema": schema({
          "summary": {"type": "string", "description": "What you did, what you found, and what the next session "
-                                                      "should do. Saved as this session's journal entry."},
+                                                      "should do. Saved as this session's journal entry. Keep it "
+                                                      "under about 2,500 characters."},
          "new_result": {"type": "string", "description": "The new result this session produced, in one sentence "
                                                          "(a finished experiment, a measured comparison, or a "
                                                          "conclusion backed by evidence). Empty if none."},
@@ -403,12 +415,32 @@ def run_tool(name: str, args: dict) -> tuple[str, bool]:
 
 # ---------------------------------------------------------------- session
 
+def capped(label: str, text: str, limit: int) -> str:
+    """Cut text to its limit, and note for the agent when it's over or close to it."""
+    if len(text) > limit:
+        size_notes.append(f"- **{label} is {len(text):,} characters, over its {limit:,} limit**, so only the "
+                          f"first {limit:,} were loaded. Condense it this session.")
+        return text[:limit] + f"\n\n[... cut at the {limit:,}-character limit ...]"
+    if len(text) > 0.8 * limit:
+        size_notes.append(f"- {label} is {len(text):,} of its {limit:,} characters. Condense it soon.")
+    return text
+
+
+def days_since_date(text: str, label: str, now: dt.datetime) -> int | None:
+    """Days since a 'Label: YYYY-MM-DD' line in text, or None if there's no valid one."""
+    found = re.search(rf"{label}:\**\s*(\d{{4}}-\d{{2}}-\d{{2}})", text)
+    try:
+        return (now.date() - dt.date.fromisoformat(found.group(1))).days if found else None
+    except ValueError:
+        return None
+
+
 def system_prompt() -> str:
     charter = (ROOT / "agent" / "charter.md").read_text()
     playbook = SELF_DIR / "playbook.md"
     if not playbook.exists():
         return charter
-    text = playbook.read_text(errors="replace")[:PLAYBOOK_LIMIT]
+    text = capped("self/playbook.md", playbook.read_text(errors="replace"), PLAYBOOK_LIMIT)
     return (f"{charter}\n\n---\n\n# Your playbook (self/playbook.md)\n\n"
             "You wrote this yourself in earlier sessions. Where it conflicts with the charter above, "
             f"the charter wins.\n\n{text}")
@@ -431,9 +463,13 @@ def startup_files() -> str:
             continue
         if total + len(text) > STARTUP_LIMIT:
             parts.append(f"### {path}\n(Skipped: the {STARTUP_LIMIT}-character limit for startup files is reached.)")
+            size_notes.append(f"- **Startup files are over their {STARTUP_LIMIT:,}-character limit**, so {path} "
+                              "was skipped. Condense them or list fewer.")
             continue
         total += len(text)
         parts.append(f"### {path}\n{text}")
+    if STARTUP_LIMIT * 0.8 < total <= STARTUP_LIMIT:
+        size_notes.append(f"- Startup files are {total:,} of their {STARTUP_LIMIT:,} characters. Condense them soon.")
     return "\n\n".join(parts) or "(self/startup.txt lists no files.)"
 
 
@@ -464,17 +500,43 @@ def roadmap_section(now: dt.datetime) -> str:
                 "session, briefly: your vision, 3–5 milestones with how each is measured, where you stand, "
                 "and `Last checked:` with today's date. See \"Your long-term roadmap\" in your charter.\n")
     text = roadmap.read_text(errors="replace")
-    checked = re.search(r"Last checked:\**\s*(\d{4}-\d{2}-\d{2})", text)
+    days = days_since_date(text, "Last checked", now)
     due = ""
-    try:
-        days = (now.date() - dt.date.fromisoformat(checked.group(1))).days if checked else None
-    except ValueError:
-        days = None
     if days is None:
         due = "\n\n**Monthly check due:** the roadmap has no valid `Last checked: YYYY-MM-DD` date."
     elif days >= 30:
         due = f"\n\n**Monthly check due:** last checked {days} days ago. Do it this session."
-    return f"## Your long-term roadmap (research/roadmap.md)\n\n{text[:4000]}{due}\n"
+    return (f"## Your long-term roadmap (research/roadmap.md)\n\n"
+            f"{capped('research/roadmap.md', text, ROADMAP_LIMIT)}{due}\n")
+
+
+def journal_entry(path: Path) -> str:
+    """A past journal entry without its list of actions, cut to its limit. Entries are never
+    edited afterwards, so a long one means the agent should write shorter summaries."""
+    text = re.sub(r"<details>.*?</details>", "", path.read_text(errors="replace"), flags=re.S).strip()
+    if len(text) > JOURNAL_ENTRY_LIMIT:
+        size_notes.append(f"- Journal entry {path.name} is {len(text):,} characters, over its "
+                          f"{JOURNAL_ENTRY_LIMIT:,} limit, so it was cut. Keep your end_session summaries shorter.")
+        text = text[:JOURNAL_ENTRY_LIMIT] + "\n\n[... cut ...]"
+    return text
+
+
+def memory_tidy_section(now: dt.datetime) -> str:
+    """A reminder when the monthly memory tidy-up is due; nothing otherwise."""
+    text = MEMORY_LOG.read_text(errors="replace") if MEMORY_LOG.exists() else ""
+    days = days_since_date(text, "Last tidied", now)
+    if days is not None and days < TIDY_DAYS:
+        return ""
+    when = f"last done {days} days ago" if days is not None else "no valid `Last tidied:` date found"
+    return (f"## Memory tidy-up due ({when})\n\nThis session, tidy your memory as described in your charter "
+            f"(\"Keeping your memory healthy\"), then update `Last tidied:` in `self/memory_log.md`.\n")
+
+
+def memory_size_section() -> str:
+    """Warnings collected while loading this session's memory; nothing if all is within limits."""
+    if not size_notes:
+        return ""
+    return "## Memory size\n\n" + "\n".join(size_notes) + "\n"
 
 
 def latest_review(now: dt.datetime) -> str:
@@ -517,7 +579,9 @@ After this session you will pause. You'll start again on your own as soon as the
 def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = "") -> str:
     agenda = ROOT / "research" / "agenda.md"
     journals = sorted(JOURNAL_DIR.glob("*.md"))
-    recent = "\n\n---\n\n".join(j.read_text() for j in journals[-3:]) or "(No earlier sessions.)"
+    recent = "\n\n---\n\n".join(journal_entry(j) for j in journals[-3:]) or "(No earlier sessions.)"
+    agenda_text = (capped("research/agenda.md", agenda.read_text(errors="replace"), AGENDA_LIMIT)
+                   if agenda.exists() else "(missing - create it)")
     contact = ledger.get("last_human_contact")
     contact_line = (f"Last contact from the human: {(now - dt.datetime.fromisoformat(contact)).days} days ago. "
                     f"After {WIND_DOWN_DAYS} days without contact you write a final report and pause."
@@ -533,7 +597,7 @@ Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent
 
 {roadmap_section(now)}
 ## Your research agenda (research/agenda.md)
-{agenda.read_text() if agenda.exists() else '(missing - create it)'}
+{agenda_text}
 
 ## Your last journal entries
 {recent}
@@ -548,6 +612,8 @@ Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent
 ## Open GitHub issues and pull requests (labelled 'agent')
 {human_messages()}
 
+{memory_tidy_section(now)}
+{memory_size_section()}
 Begin."""
 
 
@@ -701,6 +767,7 @@ def main() -> int:
     if TOTAL_FUNDS:
         budget = min(budget, TOTAL_FUNDS - ledger["lifetime_spent_usd"])
 
+    size_notes.clear()
     charter = system_prompt()
     messages = [{"role": "user", "content": first_message(budget, ledger, now, note)}]
     s = {"spent": 0.0, "turns": 0, "log": [], "new_result": ""}
