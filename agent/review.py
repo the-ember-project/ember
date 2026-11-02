@@ -119,6 +119,9 @@ def main() -> int:
     if run.MONTHLY_BUDGET - ledger["spent_usd"] < MIN_BUDGET:
         print("Not enough of this month's budget left for a review.")
         return 0
+    if run.TOTAL_FUNDS and run.TOTAL_FUNDS - ledger["lifetime_spent_usd"] < MIN_BUDGET:
+        print("Not enough of the lifetime fund left for a review.")
+        return 0
 
     material = clip(f"# Journal entries from the last {DAYS} days\n\n" + "\n\n".join(journals)
                     + f"\n\n# Lab runs from the last {DAYS} days\n\n{recent_lab_runs(now)}"

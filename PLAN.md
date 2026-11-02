@@ -23,7 +23,7 @@ What has been decided for the AGI research agent, and what is still to do.
 **Who's responsible**
 - The human owner pays for Claude usage.
 - No backup person yet. The repository lives in a free GitHub organization (decided 2026-11-02), so a backup person can later be added as a co-owner with full control at once, plus added to `AGENT_TRUSTED_USERS`.
-- It winds down rather than running unattended forever: after 6 months with no human contact, or when the optional lifetime fund (`TOTAL_FUNDS_USD`) is nearly gone, it writes a final report, opens a last issue, and pauses until someone replies. It asks "are you still there?" 30 days before. Built.
+- It winds down rather than running unattended forever: after 6 months with no human contact, or when the lifetime fund (`TOTAL_FUNDS_USD`, $100 by default from 2026-11-03, raised to add funds; matched to prepaid Anthropic credits with auto-reload off) is nearly gone, it writes a final report, opens a last issue, and pauses until someone replies. It asks "are you still there?" 30 days before. Built.
 
 **Research**
 - The agent chooses its own direction, and writes down why and how it will test each choice.

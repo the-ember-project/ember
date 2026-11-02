@@ -80,7 +80,7 @@ The agent doesn't run unattended forever:
 - **Contact:** it counts as contact when you push a commit, merge a pull request, or open or comment on an issue or pull request. The agent's own posts don't count.
 - **After 150 days without contact:** it opens an issue asking if you're still there. Any reply keeps it going.
 - **After 180 days:** it spends one last session writing `research/FINAL_REPORT.md`, a complete account of its work, then opens an issue saying it has paused and stops. The lab stops too.
-- **Optional lifetime fund:** add a repository variable `TOTAL_FUNDS_USD` (for example `500`). When that total is almost spent, it writes its final report and pauses the same way.
+- **Lifetime fund:** $100 by default, the total set aside for Ember. When it's almost spent, Ember writes its final report and pauses the same way. To add funds, add or raise a repository variable `TOTAL_FUNDS_USD` to the new total (for example `150` adds $50 to the default), and top up your Anthropic credits by the same amount. Ember's ledger in `state/budget.json` shows its lifetime spending.
 - **Waking it up:** comment on any issue (or raise `TOTAL_FUNDS_USD` if the fund ran out), and it resumes at its next scheduled time. GitHub disables scheduled workflows in repositories with no activity for 60 days, so after a long pause you may also need to re-enable the workflows in the Actions tab.
 
 To change the 180 days, add a repository variable `WIND_DOWN_DAYS`.

@@ -43,8 +43,8 @@ GITHUB_REPOSITORY=
 AGENT_TRUSTED_USERS=
 MONTHLY_BUDGET_USD=40
 # AGENT_MODEL=claude-opus-5-5
-# Optional: a total amount set aside for the agent; it writes a final report and pauses near the end.
-# TOTAL_FUNDS_USD=500
+# The total set aside for the agent (raise it to add funds); it writes a final report and pauses near the end.
+TOTAL_FUNDS_USD=100
 # Days without contact from you before it writes a final report and pauses (default 180).
 # WIND_DOWN_DAYS=180
 EOF

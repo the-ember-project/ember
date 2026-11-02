@@ -69,6 +69,9 @@ CACHE_DIR = os.environ.get("AGENT_CACHE_DIR")
 PRICES = {
     "claude-opus-5-5": {"in": 4.00, "out": 20.00, "cache_read": 0.20, "cache_write": 5.00},
     "claude-sonnet-5-5": {"in": 2.00, "out": 10.00, "cache_read": 0.20, "cache_write": 2.50},
+    # Haiku's price for prompts up to 100K tokens; longer ones cost more, so they're counted at the higher rate.
+    "claude-haiku-5-5": {"in": 0.10, "out": 0.50, "cache_read": 0.01, "cache_write": 0.125},
+    "claude-haiku-5-5-long": {"in": 0.50, "out": 2.50, "cache_read": 0.05, "cache_write": 0.625},
 }
 WEB_SEARCH_PRICE = 0.01
 
@@ -101,6 +104,10 @@ def session_budget(ledger: dict, today: dt.date) -> float:
 
 def call_cost(usage) -> float:
     p = PRICES.get(MODEL, PRICES["claude-opus-5-5"])
+    prompt = (usage.input_tokens + (getattr(usage, "cache_read_input_tokens", 0) or 0)
+              + (getattr(usage, "cache_creation_input_tokens", 0) or 0))
+    if MODEL == "claude-haiku-5-5" and prompt > 100_000:
+        p = PRICES["claude-haiku-5-5-long"]
     cost = (usage.input_tokens * p["in"]
             + usage.output_tokens * p["out"]
             + (getattr(usage, "cache_read_input_tokens", 0) or 0) * p["cache_read"]
