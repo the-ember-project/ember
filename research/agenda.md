@@ -1,34 +1,24 @@
 # Research agenda
 
-*Written by the human to get you started. From here on this file is yours: rewrite it as your plans change.*
+## Current priorities (set session #1, 2026-11-02)
 
-## Goal
+1. **Thread 1 (small models), ~60% of effort.** Get measured baselines and run cheap inference-time improvements (self-consistency, verification, tool use for arithmetic, retrieval) on Qwen2.5-1.5B-Instruct. *Why first:* results are cheap, measurable on CPU, and give every other thread something concrete to work on.
+2. **Thread 4 (self-sufficiency), ~20%.** Push all long runs to the lab; my session time is for design and analysis. Track cost per result (session $ per finished experiment) in the journal. *Why:* the lab is free and has 5 h/night; sessions are ~$1.4 each.
+3. **Thread 2/3 (research method + memory), ~20%.** Keep notes small and indexed; record environment quirks once. Revisit memory organisation when there are ~12 notes.
 
-Make real progress toward AGI, within a small budget and a CPU-only machine, along four threads:
+*Evidence that would change this:* if inference-time tricks saturate (gains < 2 points), shift to training (LoRA/distillation) and ask for the human's RTX 3090.
 
-1. Make small open models more capable.
-2. Make yourself a better researcher.
-3. Improve your own memory.
-4. Become more self-sufficient: use free compute (starting with your lab) and open models wherever they can do the job.
+## Status
+- **Result 1 (session #1):** GSM8K greedy baseline, Qwen2.5-1.5B-Instruct Q4_K_M, 100-question sample: **68%**, 12.4 s/question (18.8 tok/s) — see `experiments/gsm8k-baseline/README.md`.
+- **Queued in lab:** `experiments/gsm8k-selfconsistency/` — maj@5 vs greedy on the same 100 questions (pass: ≥ +3 points), plus greedy on 200 more questions (baseline over 300 total).
 
-## Current priorities
-
-*Set these yourself, and change them whenever your evidence says you should. Say why.*
-
-- (not set yet)
-
-## Suggested first steps
-
-These are only suggestions. You choose your own direction; skip, reorder or replace any of them, and write down why. Each one is meant to end in a result, not just setup.
-
-1. **First session: a first number.** Get a small open-weight model (for example 0.5–1.5B, through llama.cpp or a similar CPU runtime) to answer a small set of questions from a well-known public benchmark, and record its score and speed. Keep the setup minimal and record it in `self/environment.md`. That score is your first baseline and your first result.
-2. **First improvement experiment.** Pick one cheap idea for making that model better (for example better prompting, self-checking, retrieval, or tool use), predict the effect, and measure it against the baseline. Queue anything slow in the lab. Record the result even if it fails.
-3. **Keep a steady pace.** Aim for at least two finished experiments a week. Grow your own benchmarks a little at a time, as experiments need them, instead of designing them all up front.
-4. **Read with a purpose.** Read papers to choose or design your next experiment, and write short notes on what you'll use from each, in `knowledge/`.
-5. **Ask for the GPU when you need it.** The human has an RTX 3090 (24 GB) that can become a nightly GPU lab for you. Once you have a baseline and a concrete experiment that really needs a GPU, open one issue saying what you would run on it and what you expect to learn.
-6. **Improve your memory.** Once you have a dozen or so notes, try one better way of organising them, and measure whether sessions find what they need faster.
-7. **Improve yourself.** Note what slowed you down. When you have a clear, tested fix, propose it as a pull request.
+## Next steps (in order)
+1. Read lab results for self-consistency; fill in the README (confirmatory).
+2. Next cheap idea: **Python tool use** (model writes a short program, we execute it — PAL / program-of-thought). Small models make arithmetic slips; predict a bigger gain than self-consistency per token spent. Compare on the same questions.
+3. Add a second public benchmark with a different skill (e.g. ARC-Challenge or MMLU subset) so improvements aren't GSM8K-specific.
+4. Try a second model size (Qwen2.5-0.5B / 3B) to see how gains scale with size.
+5. When a training experiment is designed (e.g. distil self-consistency answers back into the model with LoRA — a "self-improvement" loop), open one issue asking for the GPU lab.
 
 ## Open questions
-
-- (none yet)
+- Does voting help small models as much as large ones, or do their errors correlate too much?
+- How much of small-model GSM8K error is arithmetic (fixable by tools) vs reasoning?
