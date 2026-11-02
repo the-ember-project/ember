@@ -14,6 +14,7 @@ import datetime as dt
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -27,6 +28,8 @@ LOG = ROOT / "self" / "lab_log.md"
 TOTAL_MINUTES = int(os.environ.get("LAB_TOTAL_MINUTES") or 300)
 DEFAULT_JOB_MINUTES = 60
 MAX_OUTPUT = 1_000_000
+# A "## Prediction" heading or a "Prediction:" line, in any case.
+PREDICTION = re.compile(r"^\s*(#+\s*predictions?\b|\**predictions?\**\s*:)", re.IGNORECASE | re.MULTILINE)
 RUN_AS = os.environ.get("AGENT_RUN_AS")
 CACHE_DIR = os.environ.get("AGENT_CACHE_DIR")
 
@@ -41,9 +44,9 @@ def parse(line: str) -> tuple[Path, int]:
     if script.suffix not in (".sh", ".py"):
         raise ValueError("the script must be a .sh or .py file")
     readme = script.parent / "README.md"
-    if not readme.is_file() or "prediction:" not in readme.read_text(errors="replace").lower():
-        raise ValueError("its folder needs a README.md with a 'Prediction:' (metric, pass criterion and "
-                         "predicted result) written before the run")
+    if not readme.is_file() or not PREDICTION.search(readme.read_text(errors="replace")):
+        raise ValueError("its folder needs a README.md with a Prediction section or line (metric, pass "
+                         "criterion and predicted result) written before the run")
     minutes = int(parts[1]) if len(parts) > 1 else DEFAULT_JOB_MINUTES
     return script, max(1, minutes)
 
