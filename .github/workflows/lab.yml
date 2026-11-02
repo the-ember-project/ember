@@ -1,0 +1,75 @@
+name: Lab
+
+# Runs the long experiments the agent queued in self/lab_queue.txt. Free on public
+# repositories, makes no Claude calls, and the experiments never see any secrets.
+
+on:
+  schedule:
+    - cron: "0 8 * * *"  # two hours after the daily research session
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Check the queue
+        id: queue
+        run: |
+          if grep -qvE '^\s*(#|$)' self/lab_queue.txt 2>/dev/null; then echo "jobs=yes" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-python@v5
+        if: steps.queue.outputs.jobs == 'yes'
+        with:
+          python-version: "3.12"
+
+      - uses: actions/cache@v4
+        if: steps.queue.outputs.jobs == 'yes'
+        with:
+          path: ${{ runner.temp }}/agent-cache
+          key: agent-cache-${{ github.run_id }}
+          restore-keys: agent-cache-
+
+      - name: Create a separate user for the experiments
+        if: steps.queue.outputs.jobs == 'yes'
+        run: |
+          sudo useradd -m researcher
+          mkdir -p "$RUNNER_TEMP/agent-cache" self knowledge research experiments
+          chmod -R a+rwX "$RUNNER_TEMP/agent-cache" self knowledge research experiments
+
+      - name: Run queued experiments
+        if: steps.queue.outputs.jobs == 'yes'
+        env:
+          AGENT_RUN_AS: researcher
+          AGENT_CACHE_DIR: ${{ runner.temp }}/agent-cache
+          LAB_TOTAL_MINUTES: "300"
+        run: python agent/lab.py
+
+      - name: Save the results
+        if: always() && steps.queue.outputs.jobs == 'yes'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo pkill -KILL -u researcher || true
+          # The lab only saves experiment results and its own queue and log.
+          git checkout HEAD -- agent .github requirements.txt state research knowledge reviews
+          git clean -fdq -- agent .github state research knowledge reviews
+          find . -path ./.git -prune -o -type f -size +5M -print -delete
+          git config user.name "agi-research-agent"
+          git config user.email "agi-research-agent@users.noreply.github.com"
+          git add -A
+          git -c core.hooksPath=/dev/null commit -qm "Lab run $(date -u +'%Y-%m-%d %H:%M')" || exit 0
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
+          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"

@@ -1,0 +1,3 @@
+# Files to load at the start of every session, one path per line (40,000 characters in total at most).
+knowledge/index.md
+self/environment.md

@@ -1,0 +1,77 @@
+name: Research session
+
+on:
+  schedule:
+    - cron: "0 6 * * *"  # once a day at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: research
+  cancel-in-progress: false
+
+jobs:
+  session:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      # Models and packages the agent downloads, kept between sessions (GitHub keeps up to 10 GB).
+      - uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/agent-cache
+          key: agent-cache-${{ github.run_id }}
+          restore-keys: agent-cache-
+
+      - name: Create a separate user for the agent's commands
+        run: |
+          sudo useradd -m researcher
+          mkdir -p "$RUNNER_TEMP/agent-cache" self knowledge research experiments
+          # The agent's commands may write its own folders and the cache, but not its code,
+          # schedule, budget ledger or the git internals.
+          chmod -R a+rwX "$RUNNER_TEMP/agent-cache" self knowledge research experiments
+
+      - name: Run the agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MONTHLY_BUDGET_USD: ${{ vars.MONTHLY_BUDGET_USD }}
+          AGENT_MODEL: ${{ vars.AGENT_MODEL }}
+          TOTAL_FUNDS_USD: ${{ vars.TOTAL_FUNDS_USD }}
+          WIND_DOWN_DAYS: ${{ vars.WIND_DOWN_DAYS }}
+          AGENT_TRUSTED_USERS: ${{ vars.AGENT_TRUSTED_USERS }}
+          AGENT_RUN_AS: researcher
+          AGENT_CACHE_DIR: ${{ runner.temp }}/agent-cache
+        run: python agent/run.py
+
+      - name: Undo changes to protected files and save the session
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Stop anything the agent left running in the background.
+          sudo pkill -KILL -u researcher || true
+          git checkout HEAD -- agent .github requirements.txt reviews
+          git clean -fdq -- agent .github reviews
+          # Drop anything too big for the repo.
+          find . -path ./.git -prune -o -type f -size +5M -print -delete
+          git config user.name "agi-research-agent"
+          git config user.email "agi-research-agent@users.noreply.github.com"
+          git add -A
+          git -c core.hooksPath=/dev/null commit -qm "Research session $(date -u +'%Y-%m-%d %H:%M')" || exit 0
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
+          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"
