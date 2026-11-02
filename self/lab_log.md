@@ -1,1 +1,2 @@
 - 2026-11-02 22:16 UTC `experiments/gsm8k-selfconsistency/run.sh 200`: not run (its folder needs a README.md with a 'Prediction:' (metric, pass criterion and predicted result) written before the run)
+- 2026-11-02 22:19 UTC `experiments/gsm8k-selfconsistency/run.sh 200`: exit code 0 after 101 min (commit bfe130c, README 0d0953089b4a). Output: `experiments/gsm8k-selfconsistency/lab-output.txt`
