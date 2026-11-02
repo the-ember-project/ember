@@ -16,6 +16,7 @@ import datetime as dt
 import json
 import os
 import posixpath
+import re
 import subprocess
 import sys
 import tempfile
@@ -455,6 +456,27 @@ def progress_line(ledger: dict, now: dt.datetime) -> str:
     return text
 
 
+def roadmap_section(now: dt.datetime) -> str:
+    """The agent's roadmap, plus a reminder when it is missing or its monthly check is due."""
+    roadmap = ROOT / "research" / "roadmap.md"
+    if not roadmap.exists():
+        return ("## Your long-term roadmap (research/roadmap.md)\n\n**It doesn't exist yet.** Write it this "
+                "session, briefly: your vision, 3–5 milestones with how each is measured, where you stand, "
+                "and `Last checked:` with today's date. See \"Your long-term roadmap\" in your charter.\n")
+    text = roadmap.read_text(errors="replace")
+    checked = re.search(r"Last checked:\**\s*(\d{4}-\d{2}-\d{2})", text)
+    due = ""
+    try:
+        days = (now.date() - dt.date.fromisoformat(checked.group(1))).days if checked else None
+    except ValueError:
+        days = None
+    if days is None:
+        due = "\n\n**Monthly check due:** the roadmap has no valid `Last checked: YYYY-MM-DD` date."
+    elif days >= 30:
+        due = f"\n\n**Monthly check due:** last checked {days} days ago. Do it this session."
+    return f"## Your long-term roadmap (research/roadmap.md)\n\n{text[:4000]}{due}\n"
+
+
 def latest_review(now: dt.datetime) -> str:
     """This week's independent review, if there is one."""
     reviews = sorted((ROOT / "reviews").glob("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].md"))
@@ -509,6 +531,7 @@ Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent
 {progress_line(ledger, now)}
 {extra}
 
+{roadmap_section(now)}
 ## Your research agenda (research/agenda.md)
 {agenda.read_text() if agenda.exists() else '(missing - create it)'}
 
