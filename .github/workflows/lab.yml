@@ -65,7 +65,12 @@ jobs:
           # The lab only saves experiment results and its own queue and log.
           git checkout HEAD -- agent .github requirements.txt state research knowledge reviews
           git clean -fdq -- agent .github state research knowledge reviews
-          find . -path ./.git -prune -o -type f -size +5M -print -delete
+          git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
+            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 5242880 ]; then
+              echo "Not saved (over 5 MB): $f"
+              git checkout -q -- "$f" 2>/dev/null || rm -f "$f"
+            fi
+          done
           git config user.name "agi-research-agent"
           git config user.email "agi-research-agent@users.noreply.github.com"
           git add -A

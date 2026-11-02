@@ -38,8 +38,9 @@ STARTUP_LIMIT = 40_000
 PROPOSABLE = ("agent/", "requirements.txt")
 MAX_OPEN_PRS = 3
 
-MODEL = os.environ.get("AGENT_MODEL", "claude-opus-5-5")
-EFFORT = os.environ.get("AGENT_EFFORT", "high")
+# "or" rather than a default: GitHub passes unset repository variables as empty strings.
+MODEL = os.environ.get("AGENT_MODEL") or "claude-opus-5-5"
+EFFORT = os.environ.get("AGENT_EFFORT") or "high"
 MONTHLY_BUDGET = float(os.environ.get("MONTHLY_BUDGET_USD") or 40)
 RUNS_PER_DAY = int(os.environ.get("RUNS_PER_DAY") or 1)
 MIN_SESSION_BUDGET = 0.30
@@ -124,7 +125,7 @@ def github(method: str, path: str, body: dict | None = None):
     token, repo = os.environ.get("GITHUB_TOKEN"), os.environ.get("GITHUB_REPOSITORY")
     if not token or not repo:
         raise RuntimeError("GitHub is not available (not running in GitHub Actions)")
-    api = os.environ.get("GITHUB_API_URL", "https://api.github.com")
+    api = os.environ.get("GITHUB_API_URL") or "https://api.github.com"
     req = urllib.request.Request(
         f"{api}/repos/{repo}{path}",
         method=method,
