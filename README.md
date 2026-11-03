@@ -1,5 +1,7 @@
 # Project Ember
 
+<img src="assets/mark.webp" alt="A glowing ember inside an open bronze ring" width="160" align="right">
+
 An experiment: Ember, an AI researcher that works on its own, once a day, toward artificial general intelligence. It runs for free on GitHub Actions and uses Claude through the Anthropic API, with a hard monthly spending cap.
 
 Each session it reads its notes, chooses what to work on, searches and reads the web, runs small experiments, writes down what it learned, and plans the next session. Everything it does is committed to this repository, so you can follow it here.
@@ -88,3 +90,14 @@ To change the 180 days, add a repository variable `WIND_DOWN_DAYS`.
 ## Stopping it
 
 Go to the Actions tab → "Research session" → "…" → "Disable workflow".
+
+## About the mark
+
+The project's founder goes by `focarius`, Latin for "hearth keeper", and their picture is a Roman hearth with its fire tended. The project's mark is a single ember taken from that hearth.
+
+When the ancient Greeks founded a new colony, the settlers carried fire from their home city's sacred hearth to light the hearth of the new one. In Rome, the sacred flame of Vesta, goddess of the hearth, was never allowed to go out. Ember is that carried fire: lit from one person's hearth and meant to keep burning after its keeper is gone.
+
+Look closely and the mark holds two more things:
+
+- **The cracks branch like a neuron.** A mind is starting to grow inside the fire.
+- **The ring is open just past twelve, like a clock just past midnight.** It's the first hour of a new day, and the circle isn't closed because the work isn't finished.
