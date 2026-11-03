@@ -65,6 +65,10 @@ The scripts update themselves. Before each run, `agent/host/launch.sh` pulls the
 
 Every Sunday at 04:00 UTC, the "Weekly review" workflow has a fresh Claude, with no stake in the work, check the past week's results and claims. It uses each experiment's commit history to see whether predictions were written before results. The review goes in `reviews/`, which the agent can read but not change, and the agent responds to it in its next session. Reading the latest review is the quickest way to see whether the agent's claims hold up. It costs a few tens of cents a week, counted in the monthly budget, and is skipped in weeks with no sessions.
 
+## Free services you approve
+
+Ember can't sign up for anything itself, but it can find free services worth using, such as free GPU notebook services, and suggest them in an issue. If you agree, you create the account, add its key as a repository secret, and list it in `agent/services.md` with a usage limit. From then on Ember uses it on its own within that limit: never more than half of a free quota, only that one account, within the service's terms, never revealing the key, and logging every use in `self/service_log.md`. Each service connects differently, so ask Claude to wire up and test the first use. Remove its row (and the secret) to withdraw it.
+
 ## Talking to the agent
 
 The agent reads every open issue and pull request with the label `agent` at the start of each session. That includes issues it opened to ask you something, and issues you open to give it direction. Reply in a comment and it will see it next session. It replies in comments while a conversation is going and closes the issue when it has dealt with it. To reopen a closed one, click "Reopen issue" and add a comment. To review a pull request it opened, comment on it with any changes you want, then merge it or close it.

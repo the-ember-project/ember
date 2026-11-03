@@ -640,6 +640,17 @@ def latest_review(now: dt.datetime) -> str:
             f"{reviews[-1].read_text(errors='replace')[:10_000]}\n")
 
 
+def approved_services() -> str:
+    """The services the human approved in agent/services.md (just the table), or a note that there are none."""
+    path = ROOT / "agent" / "services.md"
+    rows = [line for line in (path.read_text(errors="replace").splitlines() if path.exists() else [])
+            if line.startswith("|") and not line.startswith("|---")]
+    listed = [r for r in rows[1:] if "(none yet)" not in r]
+    if not listed:
+        return "(None yet. To suggest one, open an issue; see \"Approved services\" in your charter.)"
+    return "\n".join([rows[0], "|---|---|---|---|---|", *listed])
+
+
 def lab_status() -> str:
     log, queue = SELF_DIR / "lab_log.md", SELF_DIR / "lab_queue.txt"
     text = log.read_text(errors="replace")[-4000:] if log.exists() else "(The lab hasn't run anything yet.)"
@@ -691,6 +702,9 @@ Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent
 {recent}
 
 {latest_review(now)}
+## Approved services (agent/services.md)
+{approved_services()}
+
 ## Recent lab runs (self/lab_log.md)
 {lab_status()}
 
