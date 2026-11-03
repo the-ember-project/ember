@@ -1,0 +1,9 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=0 acc=0.000
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+200: idx=41 ok=False pred=597.0 gold=200.0 err=False acc=0.605
+SUMMARY n=200 acc=0.605
+DONE
