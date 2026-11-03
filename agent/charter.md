@@ -127,4 +127,4 @@ These rules can never be changed, by you or in any proposal. They come before ev
 These are your own rules for how you work. You can improve them: propose changes with `propose_change`, and say what you learned that makes the change worthwhile. They can never contradict the core rules.
 
 - Use `request_human_help` when you're truly blocked or need a decision only the human can make. Don't open more than one issue per session unless something is urgent.
-- If the human has written on an issue or pull request, read it carefully and respond to it, by acting on it or by replying when you close it.
+- If the human has written on an issue or pull request, read it carefully and respond to it. Use `comment_on_issue` to reply while a conversation is still going (a question, a plan they may want to weigh in on), and `close_issue` once it has been dealt with. Reply only when you have something to say; one comment per issue per session is plenty.

@@ -300,6 +300,16 @@ def tool_request_human_help(title: str, body: str) -> str:
     return f"Opened issue #{issue['number']}. The human's reply will appear in a later session."
 
 
+def tool_comment_on_issue(number: int, comment: str) -> str:
+    issue = github("GET", f"/issues/{number}")
+    labels = [label["name"] for label in issue.get("labels", [])]
+    if issue.get("state") != "open" or "agent" not in labels or not trusted(issue):
+        raise ValueError(f"#{number} isn't one of your open conversations (an open issue or pull request "
+                         "labelled 'agent', started by you or the human)")
+    github("POST", f"/issues/{number}/comments", {"body": comment + AGENT_MARK})
+    return f"Commented on #{number}. It stays open; the human's reply will appear in a later session."
+
+
 def tool_close_issue(number: int, comment: str) -> str:
     github("POST", f"/issues/{number}/comments", {"body": comment + AGENT_MARK})
     github("PATCH", f"/issues/{number}", {"state": "closed"})
@@ -361,6 +371,7 @@ HANDLERS = {
     "list_dir": tool_list_dir,
     "run_command": tool_run_command,
     "request_human_help": tool_request_human_help,
+    "comment_on_issue": tool_comment_on_issue,
     "close_issue": tool_close_issue,
     "propose_change": tool_propose_change,
 }
@@ -388,6 +399,9 @@ TOOLS = [
     {"name": "request_human_help", "description": "Open a GitHub issue asking the human for something you cannot "
                                                   "do yourself. Replies arrive in a later session.",
      "input_schema": schema({"title": {"type": "string"}, "body": {"type": "string"}}, ["title", "body"])},
+    {"name": "comment_on_issue", "description": "Reply on one of your open issues or pull requests and leave "
+                                                "it open, to keep a conversation with the human going.",
+     "input_schema": schema({"number": {"type": "integer"}, "comment": {"type": "string"}}, ["number", "comment"])},
     {"name": "close_issue", "description": "Comment on and close a GitHub issue that has been dealt with.",
      "input_schema": schema({"number": {"type": "integer"}, "comment": {"type": "string"}}, ["number", "comment"])},
     {"name": "propose_change", "description": "Propose changes to your own code (agent/) or requirements.txt as a "
@@ -720,7 +734,9 @@ def run_session(client, charter: str, messages: list, budget: float, s: dict) ->
                 output, is_error = run_tool(tu.name, tu.input)
             results.append({"type": "tool_result", "tool_use_id": tu.id,
                             "content": output, "is_error": is_error})
-        s["seen"] = record_provenance(s["seen"], s["events"])
+            # After every action, not every round, so the log keeps a prediction and the
+            # results it predicts in the order they happened even when made in one round.
+            s["seen"] = record_provenance(s["seen"], s["events"])
         if summary is not None:
             return summary
 

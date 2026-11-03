@@ -67,7 +67,7 @@ Every Sunday at 04:00 UTC, the "Weekly review" workflow has a fresh Claude, with
 
 ## Talking to the agent
 
-The agent reads every open issue and pull request with the label `agent` at the start of each session. That includes issues it opened to ask you something, and issues you open to give it direction. Reply in a comment and it will see it next session. It closes issues when it has dealt with them. To review a pull request it opened, comment on it with any changes you want, then merge it or close it.
+The agent reads every open issue and pull request with the label `agent` at the start of each session. That includes issues it opened to ask you something, and issues you open to give it direction. Reply in a comment and it will see it next session. It replies in comments while a conversation is going and closes the issue when it has dealt with it. To reopen a closed one, click "Reopen issue" and add a comment. To review a pull request it opened, comment on it with any changes you want, then merge it or close it.
 
 ## Budget
 
