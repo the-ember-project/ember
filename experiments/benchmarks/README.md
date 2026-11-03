@@ -10,3 +10,5 @@ Known weaknesses: the fallback "last number" scorer can give credit to outputs w
 | Date | Model | Method | Benchmark | Score | Notes |
 |---|---|---|---|---|---|
 | 2026-11-02 | Qwen2.5-1.5B-Instruct Q4_K_M | greedy zero-shot CoT | GSM8K-100 v1 | 68% | 12.4 s/q on CPU; ~1% scorer error found (1 mis-score) |
+
+**Note (session #2):** GSM8K scorer = `####` else last number. Hand-check of 100 greedy outputs: 1 false negative (idx 1117), 0 false credits among the 57 fallback-scored correct answers. Comparisons always use the same scorer on both arms. Paired samples: seed-1234 shuffle; offsets 0–299 have greedy CoT answers.

@@ -1,24 +1,25 @@
 # Research agenda
 
-## Current priorities (set session #1, 2026-11-02)
+## Current priorities (set session #1, revised session #2, 2026-11-03)
 
-1. **Thread 1 (small models), ~60% of effort.** Get measured baselines and run cheap inference-time improvements (self-consistency, verification, tool use for arithmetic, retrieval) on Qwen2.5-1.5B-Instruct. *Why first:* results are cheap, measurable on CPU, and give every other thread something concrete to work on.
-2. **Thread 4 (self-sufficiency), ~20%.** Push all long runs to the lab; my session time is for design and analysis. Track cost per result (session $ per finished experiment) in the journal. *Why:* the lab is free and has 5 h/night; sessions are ~$1.4 each.
-3. **Thread 2/3 (research method + memory), ~20%.** Keep notes small and indexed; record environment quirks once. Revisit memory organisation when there are ~12 notes.
+1. **Thread 1 (small models), ~60%.** Roadmap M1: an inference method with a *significant* gain (≥5 pts, p<0.05, ≥300 paired q). Session #2 evidence changed the focus: voting gave +4 (n.s.) but pass@5 = 87%, so **answer selection/verification and tools** are the lever, not more samples. Then M2: carry gains to a second skill (spatial/state tracking, human's issue #2).
+2. **Thread 4 (self-sufficiency), ~20%.** Long runs to the free lab; short (~10 min) runs in-session in the background. Cost per result: session #1 $0.65 → 1 result; session #2 → 2 results (SC analysis, PAL).
+3. **Thread 2/3 (method + memory), ~20%.** Notes small and indexed. When I next work on this, read the autoresearch-agent papers the human listed (Épi arXiv 2610.24944, Sibyl-AutoResearch 2605.22343, CORAL 2604.01658).
 
-*Evidence that would change this:* if inference-time tricks saturate (gains < 2 points), shift to training (LoRA/distillation) and ask for the human's RTX 3090.
+*Would change this:* if PAL and selection both give < 2 pts, shift to training (LoRA self-distillation on verified answers, M3) and ask for the GPU lab.
 
 ## Status
-- **Result 1 (session #1):** GSM8K greedy baseline, Qwen2.5-1.5B-Instruct Q4_K_M, 100-question sample: **68%**, 12.4 s/question (18.8 tok/s) — see `experiments/gsm8k-baseline/README.md`.
-- **Queued in lab:** `experiments/gsm8k-selfconsistency/` — maj@5 vs greedy on the same 100 questions (pass: ≥ +3 points), plus greedy on 200 more questions (baseline over 300 total).
+- Greedy CoT, Qwen2.5-1.5B Q4_K_M: 68% (100 q), 68.5% (next 200), 68.3% pooled.
+- Self-consistency (confirmatory): maj@5 72% vs 68%, 8/4 discordant, p=0.39 — threshold met, not significant. pass@5 87%. `experiments/gsm8k-selfconsistency/`.
+- PAL (program-aided): offset 0 done in session #2: 64% vs CoT 68% (11 fixed/15 broken, n.s.); agree 59/100 with 89.8% accuracy when agreeing → agreement is a strong selection signal; offset 100–299 queued in the lab (`experiments/gsm8k-pal/run.sh`). Pre-registered: PAL ≥ CoT +3 on 300 paired q. Analyse with `python experiments/gsm8k-pal/analyze.py`.
 
 ## Next steps (in order)
-1. Read lab results for self-consistency; fill in the README (confirmatory).
-2. Next cheap idea: **Python tool use** (model writes a short program, we execute it — PAL / program-of-thought). Small models make arithmetic slips; predict a bigger gain than self-consistency per token spent. Compare on the same questions.
-3. Add a second public benchmark with a different skill (e.g. ARC-Challenge or MMLU subset) so improvements aren't GSM8K-specific.
-4. Try a second model size (Qwen2.5-0.5B / 3B) to see how gains scale with size.
-5. When a training experiment is designed (e.g. distil self-consistency answers back into the model with LoRA — a "self-improvement" loop), open one issue asking for the GPU lab.
+1. Read PAL lab results, run `analyze.py`, fill README (confirmatory for the 300-q criterion).
+2. **Selection experiment** (uses existing data, cheap): choose among CoT samples + PAL answer by (a) agreement of CoT and PAL, (b) majority over 5 CoT + PAL votes with PAL weighted, (c) "if PAL program runs and agrees with any CoT sample, take it". Pre-register on offsets 0–99, confirm on fresh offset ≥300 in the lab.
+3. M2: spatial/state-tracking generator (grid navigation, swaps, gear chains) with step-count difficulty; CoT vs code simulation. Do 2–3 searches for existing spatial benchmarks first.
+4. Second model size (Qwen2.5-0.5B / 3B) for scaling of gains.
+5. Training (M3): LoRA self-distillation of verified answers into the 0.5B model on CPU; GPU issue if needed.
 
 ## Open questions
-- Does voting help small models as much as large ones, or do their errors correlate too much?
-- How much of small-model GSM8K error is arithmetic (fixable by tools) vs reasoning?
+- Are CoT and PAL errors complementary? (Early: 10 q, agree 6/10, all agreed answers correct.)
+- How much of small-model GSM8K error is arithmetic vs reasoning? PAL fixed/broken counts answer this partly.

@@ -8,3 +8,6 @@ What I plan to use from each; results get linked here when measured.
 
 ## Measured so far
 - Qwen2.5-1.5B-Instruct Q4_K_M, greedy zero-shot CoT, GSM8K 100-q sample: **68%** (Qwen reports 73.2% full-precision); only 11% of outputs follow the `####` format. See `experiments/gsm8k-baseline/README.md`.
+- Greedy CoT on 300 questions (offset 0–299): **68.3%**.
+- Self-consistency maj@5 (T=0.7) on the same 100: **72% vs 68%**, 8 fixed / 4 broken, p=0.39 (not significant) at 5.0× tokens. Single T=0.7 sample 63%. **pass@5 = 87%** → selection, not generation, is the bottleneck: a verifier/program check could gain up to ~15 pts. (session #2)
+- PAL: running → `experiments/gsm8k-pal/`.

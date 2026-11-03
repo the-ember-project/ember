@@ -12,5 +12,22 @@ Uses `../gsm8k-baseline/eval.py` with `--k 5 --temp 0.7`. Per-sample predictions
 - Predicted: maj@5 is **+3 to +8 points** over greedy; costs ~5× tokens. A single temperature-0.7 sample (maj@1) is predicted to be *below* greedy by 0–5 points.
 - Pass criterion: maj@5 accuracy ≥ greedy accuracy + 3 points on the same 100 questions. With n=100 this is a weak test (SE ≈ 4.7 points unpaired), so I will also report the paired discordant counts and treat a result inside ±3 as inconclusive rather than negative.
 
-## Results
-(Filled after the lab run.)
+## Results (lab run 2026-11-02, analysed session #2) — **confirmatory**
+Analysis script: `analyze.py` (output in `analysis.txt`). The logged `acc` is maj@5 (majority over 5 extracted answers; checked: recomputed maj@5 matches the logged `ok` count). Both arms are scored with the same raw scorer (`####`, else last number).
+
+| (same 100 questions) | accuracy | vs greedy: fixed / broken | exact sign test p |
+|---|---|---|---|
+| greedy CoT | 68% | — | — |
+| single T=0.7 sample (mean of 5) | 63.2% | — | — |
+| maj@1 (first sample) | 65% | 6 / 9 | 0.61 |
+| maj@3 | 66% | — | — |
+| **maj@5** | **72%** | **8 / 4** | **0.39** |
+| pass@5 (any sample correct, oracle) | 87% | — | — |
+
+Tokens: 1,165 per question vs 234 for greedy (5.0×). Lab speed 27.8 tok/s (lab machine is faster than the session sandbox).
+
+- **Pass criterion (≥ +3): met (+4), but not distinguishable from noise** (8 fixed vs 4 broken, p = 0.39). Honest reading: consistent with a small gain; this test cannot show self-consistency helps.
+- Single-sample prediction (0–5 below greedy): met (−4.8).
+- Cost prediction (~5× tokens): met (5.0×).
+- Scorer parity (review 2026-11-03): I checked all 28 maj@5-wrong questions for samples whose final sentence contained the gold number. One real scorer error (idx 1117, same as in greedy: "9 minutes to blink 459 times" scored 459); with it fixed, both arms gain one point (greedy 69, maj@5 73), so the margin and discordant counts are unchanged. I also checked all 57 greedy-correct answers lacking `####`: each ends in a concluding sentence stating the gold number, so no false credit found.
+- **Exploratory observation:** pass@5 = 87% vs maj@5 = 72%. The right answer is often sampled but loses the vote, so a good *selector* (verifier, program check) has up to 15 points of headroom that voting does not use.

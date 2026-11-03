@@ -1,0 +1,8 @@
+# Session 2
+2026-11-03 13:54:37 file created: experiments/gsm8k-selfconsistency/analyze.py
+2026-11-03 13:54:41 file created: experiments/gsm8k-selfconsistency/analysis.txt
+2026-11-03 13:56:02 file created: experiments/gsm8k-pal/pal.py
+2026-11-03 13:56:23 file created: experiments/gsm8k-pal/results_pal_n100.jsonl
+2026-11-03 13:56:23 prediction written: experiments/gsm8k-pal/README.md (80a94ba32781)
+2026-11-03 13:56:23 file created: experiments/gsm8k-pal/run.sh
+2026-11-03 13:57:28 file created: experiments/gsm8k-pal/analyze.py

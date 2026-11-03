@@ -1,0 +1,11 @@
+[raw scorer] greedy=68 maj@1=65 maj@3=66 maj@5=72 pass@5=87
+   maj@1 vs greedy: fixed=6 broken=9 exact sign-test p=0.607
+   maj@5 vs greedy: fixed=8 broken=4 exact sign-test p=0.388
+   mean single T=0.7 sample acc=63.2
+   check: maj@5 raw matches logged ok: True
+[strict scorer] greedy=68 maj@1=65 maj@3=66 maj@5=72 pass@5=87
+   maj@1 vs greedy: fixed=6 broken=9 exact sign-test p=0.607
+   maj@5 vs greedy: fixed=8 broken=4 exact sign-test p=0.388
+   mean single T=0.7 sample acc=63.2
+greedy outputs where scorers disagree: 0
+tokens/q greedy=234 sc=1165
