@@ -382,7 +382,7 @@ TOOLS = [
      "input_schema": schema({"path": {"type": "string", "description": "Defaults to the repository root."}}, [])},
     {"name": "run_command", "description": "Run a shell command (bash) from the repository root on the "
                                            "Linux machine running this session: run experiments, pip install packages, "
-                                           "inspect output. 2 CPU cores, ~7 GB RAM, no GPU. Max 900 s per command.",
+                                           "inspect output. 4 CPU cores, ~16 GB RAM, no GPU. Max 900 s per command.",
      "input_schema": schema({"command": {"type": "string"},
                              "timeout_seconds": {"type": "integer", "description": "Default 300, max 900."}}, ["command"])},
     {"name": "request_human_help", "description": "Open a GitHub issue asking the human for something you cannot "
