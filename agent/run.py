@@ -13,6 +13,7 @@ ledger) are restored by the workflow after every session.
 
 import calendar
 import datetime as dt
+import hashlib
 import json
 import os
 import posixpath
@@ -26,9 +27,14 @@ from pathlib import Path
 
 import anthropic
 
+from lab import PREDICTION  # one definition of what counts as a written prediction
+
 ROOT = Path(__file__).resolve().parent.parent
 PROTECTED = ("agent", ".github", "state", ".git", "requirements.txt", "reviews")
 STATE_FILE = ROOT / "state" / "budget.json"
+# When each prediction was written and each experiment file appeared, recorded by this code
+# (the agent can't edit state/), so a reviewer can check predictions came before results.
+PROVENANCE_LOG = ROOT / "state" / "provenance.log"
 JOURNAL_DIR = ROOT / "research" / "journal"
 
 # The agent's own folder: changes here take effect next session without approval.
@@ -415,6 +421,49 @@ def run_tool(name: str, args: dict) -> tuple[str, bool]:
 
 # ---------------------------------------------------------------- session
 
+def prediction_fingerprint(text: str) -> str | None:
+    """A short hash of a README's Prediction section, or None if it has none."""
+    found = PREDICTION.search(text)
+    if not found:
+        return None
+    rest = text[found.start():]
+    next_heading = re.search(r"\n\s*#+\s", rest[1:])
+    section = rest[:next_heading.start() + 1] if next_heading else rest
+    return hashlib.sha256(section.strip().encode()).hexdigest()[:12]
+
+
+def scan_experiments() -> dict[str, str]:
+    """Every file under experiments/: READMEs by their prediction's fingerprint, others as 'file'."""
+    found = {}
+    for p in (ROOT / "experiments").rglob("*"):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(ROOT).as_posix()
+        if p.name == "README.md":
+            try:
+                fp = prediction_fingerprint(p.read_text(errors="replace"))
+            except OSError:
+                fp = None
+            found[rel] = f"prediction {fp}" if fp else "readme"
+        else:
+            found[rel] = "file"
+    return found
+
+
+def record_provenance(seen: dict[str, str], events: list[str]) -> dict[str, str]:
+    """Log predictions written or changed, and experiment files created, since the last scan."""
+    now = scan_experiments()
+    stamp = f"{dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%M:%S}"
+    for path, kind in now.items():
+        before = seen.get(path)
+        if kind.startswith("prediction") and before != kind:
+            what = "prediction changed" if before and before.startswith("prediction") else "prediction written"
+            events.append(f"{stamp} {what}: {path} ({kind.split()[1]})")
+        elif kind == "file" and before is None:
+            events.append(f"{stamp} file created: {path}")
+    return now
+
+
 def capped(label: str, text: str, limit: int) -> str:
     """Cut text to its limit, and note for the agent when it's over or close to it."""
     if len(text) > limit:
@@ -671,6 +720,7 @@ def run_session(client, charter: str, messages: list, budget: float, s: dict) ->
                 output, is_error = run_tool(tu.name, tu.input)
             results.append({"type": "tool_result", "tool_use_id": tu.id,
                             "content": output, "is_error": is_error})
+        s["seen"] = record_provenance(s["seen"], s["events"])
         if summary is not None:
             return summary
 
@@ -770,7 +820,7 @@ def main() -> int:
     size_notes.clear()
     charter = system_prompt()
     messages = [{"role": "user", "content": first_message(budget, ledger, now, note)}]
-    s = {"spent": 0.0, "turns": 0, "log": [], "new_result": ""}
+    s = {"spent": 0.0, "turns": 0, "log": [], "new_result": "", "seen": scan_experiments(), "events": []}
     summary = "(The session crashed; see the GitHub Actions log.)"
     try:
         summary = run_session(anthropic.Anthropic(), charter, messages, budget, s)
@@ -780,6 +830,10 @@ def main() -> int:
         ledger["lifetime_spent_usd"] = round(ledger["lifetime_spent_usd"] + s["spent"], 4)
         ledger["sessions"] += 1
         ledger["lifetime_sessions"] += 1
+        if s["events"]:
+            PROVENANCE_LOG.parent.mkdir(exist_ok=True)
+            with open(PROVENANCE_LOG, "a") as log:
+                log.write(f"# Session {ledger['lifetime_sessions']}\n" + "\n".join(s["events"]) + "\n")
         if s["new_result"]:
             ledger["sessions_since_result"] = 0
             ledger["lifetime_results"] = ledger.get("lifetime_results", 0) + 1

@@ -53,6 +53,7 @@ What has been decided for the AGI research agent, and what is still to do.
 **Weekly independent review** (built)
 - Sundays at 04:00 UTC, one fresh Claude call with no tools and no stake in the work reviews the past week's journal, lab runs and changed experiments, including their commit history, so it can see whether predictions came before results.
 - It sorts findings into "could change a result" and "minor", and gives each claim a verdict: supported, overstated, unsupported or can't tell.
+- The first review (run by hand on 2026-11-03, $0.10) couldn't tell whether in-session predictions came before results, since everything is committed together at session end. So sessions now write `state/provenance.log` (which Ember can't edit): a timestamp each time a Prediction section is written or changed, and each time an experiment file first appears. The reviewer checks order against it.
 - Saved in `reviews/`, which the agent can't change; the next session sees it and responds. A few tens of cents a week, skipped in weeks with no sessions or when the month's budget is nearly spent. Lab v3.1 found this kind of review was the one that caught real mistakes.
 
 **Measuring progress**

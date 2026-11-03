@@ -25,7 +25,7 @@ MAX_INPUT = 150_000
 REVIEWER = """You are an independent reviewer of an autonomous AI research agent's work. You have no stake in it: you didn't do the work, and you gain nothing from it looking good. The agent researches ways to make small open models more capable, on cheap, repeatable experiments.
 
 Your one job: find anything that could make a claimed result wrong or overstated. Check in particular:
-- Was the prediction (metric and pass criterion) written before the results? Use the commit history: a `Prediction:` that first appears in the same or a later commit than the results is a problem.
+- Was the prediction (metric and pass criterion) written before the results? Use the provenance log first: the session code (which the agent can't edit) records, with timestamps, when each Prediction section was written or changed and when each experiment file first appeared. A prediction written after that experiment's result files appeared, or changed after them, is a problem. Lab runs are logged with the fingerprint of the README they ran with. Use the commit history only where the provenance log has no entries (for example, work from before it existed).
 - Do the numbers in the results actually support the claim? Look for arithmetic errors, cherry-picked runs, too few seeds or examples, missing baselines, and train/test leakage.
 - Is a result labelled confirmatory that is really exploratory, or are mixed results presented as an overall pass?
 
@@ -88,6 +88,20 @@ def recent_lab_runs(now: dt.datetime) -> str:
     return "\n".join(lines) or "(none)"
 
 
+def recent_provenance(now: dt.datetime) -> str:
+    if not run.PROVENANCE_LOG.exists():
+        return "(none recorded yet)"
+    lines = []
+    for line in run.PROVENANCE_LOG.read_text(errors="replace").splitlines():
+        try:
+            when = dt.datetime.strptime(line[:19], "%Y-%m-%d %H:%M:%S").replace(tzinfo=dt.timezone.utc)
+        except ValueError:
+            continue
+        if now - when <= dt.timedelta(days=DAYS):
+            lines.append(line)
+    return clip("\n".join(lines) or "(none this week)", 15_000)
+
+
 def changed_experiments() -> str:
     paths = git("log", f"--since={DAYS + 1} days ago", "--name-only", "--format=", "--", "experiments").split()
     folders = sorted({"/".join(p.split("/")[:2]) for p in paths if p.count("/") >= 2})
@@ -125,6 +139,7 @@ def main() -> int:
 
     material = clip(f"# Journal entries from the last {DAYS} days\n\n" + "\n\n".join(journals)
                     + f"\n\n# Lab runs from the last {DAYS} days\n\n{recent_lab_runs(now)}"
+                    + f"\n\n# Provenance log from the last {DAYS} days (UTC)\n\n{recent_provenance(now)}"
                     + f"\n\n# Experiments changed in the last {DAYS} days\n\n{changed_experiments()}", MAX_INPUT)
     response = anthropic.Anthropic().beta.messages.create(
         model=run.MODEL,
