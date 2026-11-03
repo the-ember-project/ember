@@ -61,6 +61,9 @@ MAX_OPEN_PRS = 3
 MODEL = os.environ.get("AGENT_MODEL") or "claude-opus-5-5"
 EFFORT = os.environ.get("AGENT_EFFORT") or "high"
 MONTHLY_BUDGET = float(os.environ.get("MONTHLY_BUDGET_USD") or 40)
+# A small monthly reserve on top of the budget, which the agent spends at its own discretion
+# to stretch a session that needs more than its share. It resets each month and isn't carried over.
+RESERVE = float(os.environ.get("DISCRETIONARY_USD") or 5)
 RUNS_PER_DAY = int(os.environ.get("RUNS_PER_DAY") or 1)
 MIN_SESSION_BUDGET = 0.30
 MAX_TURNS = 80
@@ -104,8 +107,18 @@ def load_ledger(today: dt.date) -> dict:
     ledger.setdefault("lifetime_spent_usd", 0.0)
     ledger.setdefault("lifetime_sessions", 0)
     if ledger.get("month") != month:
-        ledger.update(month=month, spent_usd=0.0, sessions=0)
+        ledger.update(month=month, spent_usd=0.0, sessions=0, reserve_spent_usd=0.0)
+    ledger.setdefault("reserve_spent_usd", 0.0)
     return ledger
+
+
+def reserve_left(ledger: dict) -> float:
+    """What's left of this month's reserve, never more than the lifetime fund can spare."""
+    left = RESERVE - ledger["reserve_spent_usd"]
+    if TOTAL_FUNDS:
+        # Keep enough of the fund for a final report.
+        left = min(left, TOTAL_FUNDS - ledger["lifetime_spent_usd"] - 3.0)
+    return max(0.0, round(left, 2))
 
 
 def save_ledger(ledger: dict) -> None:
@@ -413,6 +426,13 @@ TOOLS = [
          "files": {"type": "array", "items": schema({"path": {"type": "string"}, "content": {"type": "string"}},
                                                     ["path", "content"])},
      }, ["title", "description", "files"])},
+    {"name": "use_reserve", "description": "Add money from this month's discretionary reserve to this "
+                                           "session's budget, when the work in hand is worth more than the "
+                                           "session's share. The reason is recorded in your journal.",
+     "input_schema": schema({
+         "amount_usd": {"type": "number", "description": "How much to add, in US dollars."},
+         "reason": {"type": "string", "description": "What the extra money is for, in one sentence."},
+     }, ["amount_usd", "reason"])},
     {"name": "end_session", "description": "End this session. Call it once your work for the session is "
                                            "recorded in files.",
      "input_schema": schema({
@@ -651,9 +671,14 @@ def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = ""
                     if contact else "Last contact from the human: unknown.")
     funds_line = (f" Lifetime fund: ${ledger['lifetime_spent_usd']:.2f} of ${TOTAL_FUNDS:.2f} spent."
                   if TOTAL_FUNDS else "")
+    reserve = reserve_left(ledger)
+    reserve_line = (f"Discretionary reserve left this month: ${reserve:.2f} of ${RESERVE:.2f} "
+                    "(add it to this session with use_reserve if the work is worth it)."
+                    if RESERVE else "")
     return f"""Session started {now:%Y-%m-%d %H:%M} UTC. This is session #{ledger['lifetime_sessions'] + 1}.
 
 Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent_usd']:.2f} of ${MONTHLY_BUDGET:.2f}.{funds_line}
+{reserve_line}
 {contact_line}
 {progress_line(ledger, now)}
 {extra}
@@ -680,9 +705,27 @@ Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent
 Begin."""
 
 
+def use_reserve(s: dict, amount, reason: str) -> tuple[str, bool]:
+    """Move money from the month's discretionary reserve into this session's budget."""
+    try:
+        amount = round(float(amount), 2)
+    except (TypeError, ValueError):
+        return "Error: amount_usd must be a number.", True
+    available = round(s["reserve_left"] - s["reserve_used"], 2)
+    if amount <= 0 or not reason.strip():
+        return "Error: give a positive amount_usd and a reason.", True
+    if available <= 0:
+        return "Error: this month's discretionary reserve is used up.", True
+    amount = min(amount, available)
+    s["reserve_used"] = round(s["reserve_used"] + amount, 2)
+    s["budget"] = round(s["budget"] + amount, 2)
+    s["reserve_reasons"].append(f"${amount:.2f}: {reason.strip()}")
+    return (f"Added ${amount:.2f} from the reserve. This session's budget is now ${s['budget']:.2f}; "
+            f"${available - amount:.2f} of the reserve is left this month. The time limit still applies."), False
 
-def run_session(client, charter: str, messages: list, budget: float, s: dict) -> str:
-    """The agent loop. Updates s["spent"], s["turns"] and s["log"] as it goes; returns the summary."""
+
+def run_session(client, charter: str, messages: list, s: dict) -> str:
+    """The agent loop. Updates s["spent"], s["budget"], s["turns"] and s["log"] as it goes; returns the summary."""
     started = time.monotonic()
     warned = False
     for s["turns"] in range(1, MAX_TURNS + 1):
@@ -709,7 +752,7 @@ def run_session(client, charter: str, messages: list, budget: float, s: dict) ->
 
         if response.stop_reason == "refusal":
             return f"Session stopped: the model declined to continue ({response.stop_details})."
-        if s["spent"] >= budget:
+        if s["spent"] >= s["budget"]:
             return "(Budget ran out before the agent wrote a summary.)"
         if time.monotonic() - started > MAX_SECONDS:
             return "(Time limit reached before the agent wrote a summary.)"
@@ -730,6 +773,10 @@ def run_session(client, charter: str, messages: list, budget: float, s: dict) ->
                 summary = tu.input.get("summary", "")
                 s["new_result"] = tu.input.get("new_result", "").strip()
                 output, is_error = "Session ended.", False
+            elif tu.name == "use_reserve":
+                output, is_error = use_reserve(s, tu.input.get("amount_usd", 0), tu.input.get("reason", ""))
+                if not is_error:
+                    warned = False
             else:
                 output, is_error = run_tool(tu.name, tu.input)
             results.append({"type": "tool_result", "tool_use_id": tu.id,
@@ -740,12 +787,12 @@ def run_session(client, charter: str, messages: list, budget: float, s: dict) ->
         if summary is not None:
             return summary
 
-        near_budget = s["spent"] >= 0.8 * budget
+        near_budget = s["spent"] >= 0.8 * s["budget"]
         near_time = time.monotonic() - started > 0.8 * MAX_SECONDS
         if (near_budget or near_time) and not warned:
             warned = True
             results.append({"type": "text", "text":
-                            f"Notice: ${s['spent']:.2f} of ${budget:.2f} spent, "
+                            f"Notice: ${s['spent']:.2f} of ${s['budget']:.2f} spent, "
                             f"{(time.monotonic() - started) / 60:.0f} of {MAX_SECONDS // 60} minutes used. "
                             "Save your work to files, update research/agenda.md, and call end_session now."})
         messages.append({"role": "user", "content": results})
@@ -836,13 +883,17 @@ def main() -> int:
     size_notes.clear()
     charter = system_prompt()
     messages = [{"role": "user", "content": first_message(budget, ledger, now, note)}]
-    s = {"spent": 0.0, "turns": 0, "log": [], "new_result": "", "seen": scan_experiments(), "events": []}
+    s = {"spent": 0.0, "budget": budget, "turns": 0, "log": [], "new_result": "", "seen": scan_experiments(),
+         "events": [], "reserve_left": reserve_left(ledger), "reserve_used": 0.0, "reserve_reasons": []}
     summary = "(The session crashed; see the GitHub Actions log.)"
     try:
-        summary = run_session(anthropic.Anthropic(), charter, messages, budget, s)
+        summary = run_session(anthropic.Anthropic(), charter, messages, s)
     finally:
         # Always record the spend, even after a crash, and overwrite any change the agent made to the ledger.
-        ledger["spent_usd"] = round(ledger["spent_usd"] + s["spent"], 4)
+        # Spending beyond the session's own share comes out of the reserve, not the monthly budget.
+        from_reserve = min(max(0.0, s["spent"] - budget), s["reserve_used"])
+        ledger["spent_usd"] = round(ledger["spent_usd"] + s["spent"] - from_reserve, 4)
+        ledger["reserve_spent_usd"] = round(ledger["reserve_spent_usd"] + from_reserve, 4)
         ledger["lifetime_spent_usd"] = round(ledger["lifetime_spent_usd"] + s["spent"], 4)
         ledger["sessions"] += 1
         ledger["lifetime_sessions"] += 1
@@ -874,6 +925,8 @@ def main() -> int:
         actions = "\n".join(f"- `{a}`" for a in s["log"]) or "- (none)"
         entry.write_text(f"# Session {ledger['lifetime_sessions']} — {now:%Y-%m-%d %H:%M} UTC\n\n"
                          f"Cost: ${s['spent']:.2f} (budget ${budget:.2f}), turns: {s['turns']}\n\n"
+                         + (f"Reserve used: ${from_reserve:.2f} ({'; '.join(s['reserve_reasons'])})\n\n"
+                            if s["reserve_reasons"] else "") +
                          f"**New result:** {s['new_result'] or '(none)'}\n\n"
                          f"## Summary\n\n{summary}\n\n"
                          f"<details><summary>Actions</summary>\n\n{actions}\n\n</details>\n")

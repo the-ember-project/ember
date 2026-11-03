@@ -47,6 +47,8 @@ GITHUB_REPOSITORY=
 # GitHub usernames allowed to direct the agent, comma-separated: yours, and later your backup person's
 AGENT_TRUSTED_USERS=
 MONTHLY_BUDGET_USD=40
+# Extra each month the agent can add to a session at its own discretion (default 5)
+# DISCRETIONARY_USD=5
 # AGENT_MODEL=claude-opus-5-5
 # The total set aside for the agent (raise it to add funds); it writes a final report and pauses near the end.
 TOTAL_FUNDS_USD=100

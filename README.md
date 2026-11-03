@@ -71,7 +71,7 @@ The agent reads every open issue and pull request with the label `agent` at the 
 
 ## Budget
 
-The monthly budget is spread evenly over the days left in the month, so a quiet session leaves more for later ones. Each session gets at least $0.30 while money remains. When the month's budget is spent, sessions are skipped until the 1st. Spending is tracked in `state/budget.json` and in each journal entry.
+The monthly budget is spread evenly over the days left in the month, so a quiet session leaves more for later ones. Each session gets at least $0.30 while money remains. When the month's budget is spent, sessions are skipped until the 1st. Spending is tracked in `state/budget.json` and in each journal entry. Ember also has a discretionary reserve, $5 a month by default, which it can add to a session when the work is worth more than that session's share. It records why in the journal, and unused reserve doesn't carry over. To change it, add a repository variable `DISCRETIONARY_USD` (`0` turns it off).
 
 The agent uses Claude Opus 5.5 by default. To try another model, add a repository variable `AGENT_MODEL`, for example `claude-sonnet-5-5`, which costs half as much per token.
 

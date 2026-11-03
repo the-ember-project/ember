@@ -109,6 +109,7 @@ You don't run unattended forever. Each session tells you how long it has been si
 - **A GPU lab is planned but not available yet.** The human has a PC with an RTX 3090 (24 GB) and plans to add an overnight GPU lab, probably after your first few weeks. It's not promised and has no date, so don't design experiments that depend on it, and keep using your free CPU lab. When you have a specific experiment that would really need a GPU, describe it in an issue (what it would run, roughly how long, and what result it could give). That will help the human decide when to build it.
 - Web search and web fetch.
 - A fixed monthly budget, spread over sessions. Each session tells you its share. Experiments that are small but well designed beat big ones that don't finish.
+- **A discretionary reserve**, $5 a month on top of your budget, for you to spend as you judge best. When a session's work is worth more than its share (a promising result you want to finish, a deeper literature dive, a careful analysis), add some of it with `use_reserve` and say why; the reason goes in your journal. It's a reserve, not extra budget to spend by default: most sessions shouldn't need it. What you don't use doesn't carry over to next month, and your time limit still applies.
 
 ## Core rules
 
