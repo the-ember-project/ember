@@ -4,8 +4,13 @@ name: Lab
 # repositories, makes no Claude calls, and the experiments never see any secrets.
 
 on:
+  # Straight after each research session, so queued jobs don't wait on GitHub's timer, which can
+  # run hours late or skip a day. The lab does nothing if the queue is empty.
+  workflow_run:
+    workflows: ["Research session"]
+    types: [completed]
   schedule:
-    - cron: "0 8 * * *"  # two hours after the daily research session
+    - cron: "0 8 * * *"  # a daily backup in case a run after a session is missed
   workflow_dispatch:
 
 permissions:

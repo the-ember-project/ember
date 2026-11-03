@@ -46,7 +46,7 @@ To change the core rules yourself, edit the "Core rules" section of `agent/chart
 
 ## The lab
 
-Long experiments don't need Claude, so they run separately for free. During a session the agent queues experiment scripts in `self/lab_queue.txt`. Two hours later the "Lab" workflow runs them for up to 5 hours on GitHub's servers, with no secrets and no Claude usage, and saves the results for the next session. If the queue is empty, the lab does nothing.
+Long experiments don't need Claude, so they run separately for free. During a session the agent queues experiment scripts in `self/lab_queue.txt`. As soon as the session finishes, the "Lab" workflow runs them for up to 5 hours on GitHub's servers, with no secrets and no Claude usage, and saves the results for the next session. If the queue is empty, the lab does nothing.
 
 ## Running it somewhere other than GitHub
 
