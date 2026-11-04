@@ -10,7 +10,7 @@ on:
     workflows: ["Research session"]
     types: [completed]
   schedule:
-    - cron: "0 8 * * *"  # a daily backup in case a run after a session is missed
+    - cron: "43 8 * * *"  # a daily backup in case a run after a session is missed (odd minute: on the hour is busiest)
   workflow_dispatch:
 
 permissions:

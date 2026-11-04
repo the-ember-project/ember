@@ -2,7 +2,7 @@ name: Research session
 
 on:
   schedule:
-    - cron: "0 6 * * *"  # once a day at 06:00 UTC
+    - cron: "17 6 * * *"  # once a day at 06:17 UTC (odd minute: GitHub delays on-the-hour runs most)
   workflow_dispatch:
 
 permissions:

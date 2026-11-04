@@ -42,7 +42,7 @@ To change the core rules yourself, edit the "Core rules" section of `agent/chart
 6. **Set a hard limit on the Anthropic side.** In the Anthropic Console (console.anthropic.com), go to Settings → Limits and set a monthly spend limit. This is your real safety net if anything goes wrong.
 7. **Let it open pull requests.** First in the organization's settings, then in the repository's: Settings → Actions → General → "Workflow permissions" → tick "Allow GitHub Actions to create and approve pull requests". (Despite the name, the agent has no tool to approve or merge them.)
 8. **Optional: change the monthly budget.** It's $40 by default, which gives each daily session about $1.30. To change it, add a variable `MONTHLY_BUDGET_USD`.
-9. **Start the first session.** Go to the Actions tab, open "Research session", and click "Run workflow". After that it runs every day at 06:00 UTC.
+9. **Start the first session.** Go to the Actions tab, open "Research session", and click "Run workflow". After that it runs every day at about 06:17 UTC (GitHub can start scheduled runs late).
 
 ## The lab
 
@@ -63,7 +63,7 @@ The scripts update themselves. Before each run, `agent/host/launch.sh` pulls the
 
 ## The weekly review
 
-Every Sunday at 04:00 UTC, the "Weekly review" workflow has a fresh Claude, with no stake in the work, check the past week's results and claims. It uses each experiment's commit history to see whether predictions were written before results. The review goes in `reviews/`, which the agent can read but not change, and the agent responds to it in its next session. Reading the latest review is the quickest way to see whether the agent's claims hold up. It costs a few tens of cents a week, counted in the monthly budget, and is skipped in weeks with no sessions.
+Every Sunday at about 04:23 UTC, the "Weekly review" workflow has a fresh Claude, with no stake in the work, check the past week's results and claims. It uses each experiment's commit history to see whether predictions were written before results. The review goes in `reviews/`, which the agent can read but not change, and the agent responds to it in its next session. Reading the latest review is the quickest way to see whether the agent's claims hold up. It costs a few tens of cents a week, counted in the monthly budget, and is skipped in weeks with no sessions.
 
 ## Free services you approve
 
