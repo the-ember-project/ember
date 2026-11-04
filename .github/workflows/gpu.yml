@@ -45,7 +45,8 @@ jobs:
 
       - name: Install the Kaggle client
         if: steps.work.outputs.jobs == 'yes'
-        run: pip install -q --upgrade kaggle && pip show kaggle | head -2  # the kaggle command itself needs the key
+        # six: some kaggle releases need it but don't install it. The kaggle command itself needs the key.
+        run: pip install -q --upgrade kaggle six && pip show kaggle | head -2
 
       - name: Run queued jobs on Kaggle
         if: steps.work.outputs.jobs == 'yes'
