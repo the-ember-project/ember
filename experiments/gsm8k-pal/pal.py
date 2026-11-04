@@ -36,7 +36,10 @@ def main():
     ap.add_argument("--n", type=int, default=100); ap.add_argument("--offset", type=int, default=0)
     ap.add_argument("--seed", type=int, default=1234); ap.add_argument("--max_tokens", type=int, default=400)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--k", type=int, default=1); ap.add_argument("--temp", type=float, default=0.0)
+    ap.add_argument("--sample_seed", type=int, default=None, help="per-sample seeds = sample_seed*1000+j")
     a = ap.parse_args()
+    from collections import Counter
     mp = hf_hub_download(a.repo, a.file)
     df = pd.read_parquet(hf_hub_download("openai/gsm8k", "main/test-00000-of-00001.parquet", repo_type="dataset"))
     idx = list(range(len(df))); random.Random(a.seed).shuffle(idx); idx = idx[a.offset:a.offset + a.n]
@@ -47,17 +50,29 @@ def main():
         for i in idx:
             if i in done: continue
             gold = float(df.answer[i].split("####")[-1].strip().replace(",", ""))
-            t = time.time()
-            r = llm.create_chat_completion(messages=[{"role": "system", "content": SYSTEM},
-                                                     {"role": "user", "content": df.question[i]}],
-                                           temperature=0.0, max_tokens=a.max_tokens)
-            text = r["choices"][0]["message"]["content"]
-            code, out, err, pred = run_code(text)
+            t = time.time(); recs = []
+            for j in range(a.k):
+                kw = {} if a.sample_seed is None else {"seed": a.sample_seed * 1000 + j}
+                r = llm.create_chat_completion(messages=[{"role": "system", "content": SYSTEM},
+                                                         {"role": "user", "content": df.question[i]}],
+                                               temperature=a.temp, max_tokens=a.max_tokens, **kw)
+                text = r["choices"][0]["message"]["content"]
+                code, out, err, p_ = run_code(text)
+                recs.append((text, out, err, p_, r["usage"]["completion_tokens"]))
+            if a.k == 1:
+                text, out, err, pred, ntok = recs[0]
+            else:
+                votes = Counter(round(x[3], 4) for x in recs if x[3] is not None)
+                pred = votes.most_common(1)[0][0] if votes else None
+                text = [x[0] for x in recs]; out = [x[1] for x in recs]; err = [x[2] for x in recs]
+                ntok = sum(x[4] for x in recs)
             ok = pred is not None and abs(pred - gold) < 1e-4
             c += ok; t_ += 1
-            f.write(json.dumps({"idx": i, "gold": gold, "pred": pred, "ok": ok, "secs": round(time.time() - t, 2),
-                                "tokens": r["usage"]["completion_tokens"], "exec_ok": not err, "err": err,
-                                "stdout": out, "output": text}) + "\n"); f.flush()
+            rec = {"idx": i, "gold": gold, "pred": pred, "ok": ok, "secs": round(time.time() - t, 2),
+                   "tokens": ntok, "exec_ok": (not err) if a.k == 1 else [not e for e in err], "err": err,
+                   "stdout": out, "output": text}
+            if a.k > 1: rec["preds"] = [x[3] for x in recs]
+            f.write(json.dumps(rec) + "\n"); f.flush()
             print(f"{t_}: idx={i} ok={ok} pred={pred} gold={gold} err={bool(err)} acc={c/t_:.3f}", flush=True)
     print(f"SUMMARY n={t_} acc={c/max(t_,1):.3f}")
 

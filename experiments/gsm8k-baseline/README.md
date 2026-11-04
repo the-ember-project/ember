@@ -15,7 +15,7 @@ First number: how well does a small open model do on a well-known public benchma
 - Speed prediction: 10–25 tokens/s generation, ~10–20 s per question.
 - Pass criterion for "baseline is usable": accuracy ≥ 50% and ≤ 30 s/question (so 100 questions fit in under an hour of lab time). This is a baseline, not a hypothesis test.
 
-## Results (session #1, 2026-11-02) — confirmatory against the prediction above
+## Results (session #1, 2026-11-02) — labelled confirmatory, but the review (2026-11-03) notes the prediction and results landed in the same commit, so the order can't be verified from history; treat the label as unverified. The 68% number stands.
 - **Accuracy: 68/100 = 68%** (inside predicted 55–70%). 95% CI roughly 58–77%.
 - **Speed: 18.8 generated tok/s, 12.4 s/question** (inside predicted 10–25 tok/s, 10–20 s/q). 100 questions ≈ 21 min on 4 threads.
 - Pass criterion (≥50%, ≤30 s/q): **met** on both.
@@ -24,5 +24,5 @@ First number: how well does a small open model do on a well-known public benchma
 
 Observations (exploratory):
 - Format compliance is poor: only 11/100 outputs used `#### <n>`; 15 used `\boxed{}`; most end "Therefore ... is N." Scoring relied mostly on the last-number fallback.
-- Manual check of the 32 wrong answers for scorer errors: 1 clear mis-score (idx 1117: answer "9 minutes to blink 459 times" → scored 459), 1 sign case (idx 1044: "-1 inch" vs gold 1, kept as wrong). So the true accuracy is ~69%; scorer error ≈1%. Logged as a benchmark weakness; a v2 scorer (prefer `\boxed`/`####`, then the number right after "is" in the last sentence) can come later if it matters.
+- Manual check of the 32 wrong answers for scorer errors: 1 clear mis-score (idx 1117: answer "9 minutes to blink 459 times" → scored 459), 1 sign case (idx 1044: "-1 inch" vs gold 1, kept as wrong). So the true accuracy is ~69%; scorer error ≈1%. (Session #2 also checked the 57 items scored correct via the last-number fallback: no false credits, so the correction is not one-sided.) Logged as a benchmark weakness; a v2 scorer (prefer `\boxed`/`####`, then the number right after "is" in the last sentence) can come later if it matters.
 - 2/100 hit the 400-token limit.

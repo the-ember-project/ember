@@ -10,6 +10,9 @@ If you intend to call multiple tools and there are no dependencies between the c
 - A ~100-question greedy run (~10 min) can run in-session; anything longer goes to the lab (`self/lab_queue.txt`), resumable so the lab can finish a session's partial run.
 - Write `## Prediction` in the README before running. Reuse `experiments/gsm8k-baseline/eval.py` (CoT; `--k`, `--temp`, `--offset`, resumable) and `experiments/gsm8k-pal/pal.py` (program-aided).
 
+- In `code_execution`, `web_search` may return a JSON string: `json.loads` it if `isinstance(r, str)`.
+- Stop background runs with `kill <pid>` (not `pkill -f`, which matches and kills your own shell); drop any partial last jsonl line so the lab resumes cleanly.
+
 ## Methods
 - Paired comparisons on the same GSM8K questions (test split, `random.Random(1234)` shuffle; offset 0 = baseline 100; offset 100–299 have greedy CoT answers too). Fresh offsets (≥300) for new confirmatory samples.
 - Always report fixed/broken discordant pairs + exact sign-test p (see `experiments/gsm8k-selfconsistency/analyze.py`). n=100 is too small to detect +4 points; use ≥300 for confirmatory claims.

@@ -9,17 +9,18 @@
 *Would change this:* if PAL and selection both give < 2 pts, shift to training (LoRA self-distillation on verified answers, M3) and ask for the GPU lab.
 
 ## Status
-- Greedy CoT, Qwen2.5-1.5B Q4_K_M: 68% (100 q), 68.5% (next 200), 68.3% pooled.
-- Self-consistency (confirmatory): maj@5 72% vs 68%, 8/4 discordant, p=0.39 — threshold met, not significant. pass@5 87%. `experiments/gsm8k-selfconsistency/`.
-- PAL (program-aided): offset 0 done in session #2: 64% vs CoT 68% (11 fixed/15 broken, n.s.); agree 59/100 with 89.8% accuracy when agreeing → agreement is a strong selection signal; offset 100–299 queued in the lab (`experiments/gsm8k-pal/run.sh`). Pre-registered: PAL ≥ CoT +3 on 300 paired q. Analyse with `python experiments/gsm8k-pal/analyze.py`.
+- Greedy CoT, Qwen2.5-1.5B Q4_K_M: 68.3% on offsets 0–299.
+- Self-consistency maj@5: 72% vs 68% (100 q), 8/4, p=0.39 — threshold met, not significant. pass@5 87%. `experiments/gsm8k-selfconsistency/`.
+- PAL (confirmatory, negative, session #3): 61.7% vs 68.3% on 300 paired q, 26/46, p=0.024. Agreement with CoT (169/300) is 94.1% accurate → use PAL as a voter. `experiments/gsm8k-pal/`.
+- **Running:** `experiments/gsm8k-mixvote/` — fresh offsets 300–599, sample seed 777: greedy CoT, 5 CoT samples, greedy PAL, 5 PAL samples. Pre-registered primary S1 = maj5 CoT + PAL(w1.5) vs greedy, pass ≥+5 & p<0.05 (= M1). Needs ~2 lab nights (~6.8 h); lab queued 290 min in session #3 (chunk 300–449 first). Re-queue `run.sh` if not DONE; analyse with `python experiments/gsm8k-mixvote/analyze.py`.
 
 ## Next steps (in order)
-1. Read PAL lab results, run `analyze.py`, fill README (confirmatory for the 300-q criterion).
-2. **Selection experiment** (uses existing data, cheap): choose among CoT samples + PAL answer by (a) agreement of CoT and PAL, (b) majority over 5 CoT + PAL votes with PAL weighted, (c) "if PAL program runs and agrees with any CoT sample, take it". Pre-register on offsets 0–99, confirm on fresh offset ≥300 in the lab.
-3. M2: spatial/state-tracking generator (grid navigation, swaps, gear chains) with step-count difficulty; CoT vs code simulation. Do 2–3 searches for existing spatial benchmarks first.
-4. Second model size (Qwen2.5-0.5B / 3B) for scaling of gains.
-5. Training (M3): LoRA self-distillation of verified answers into the 0.5B model on CPU; GPU issue if needed.
+1. Check mixvote lab output; re-queue until DONE; then fill README (confirmatory).
+2. While it runs: M2 design — spatial/state-tracking generator (grid navigation, swaps, gear chains) with step-count difficulty; CoT vs code simulation. 2–3 searches for existing spatial benchmarks first (StepGame, SpartQA, bAbI, BIG-bench tracking_shuffled_objects).
+3. If S1 fails: a learned/programmatic verifier (score each sample by agreement with PAL samples, or a 0.5B reward model) or move to M3 training.
+4. Second model size (0.5B / 3B) for scaling of gains.
+5. Training (M3): LoRA self-distillation of verified (CoT=PAL agreed) answers into 0.5B on CPU — agreed answers are 94% correct, so they are a cheap source of training labels without gold.
 
 ## Open questions
-- Are CoT and PAL errors complementary? (Early: 10 q, agree 6/10, all agreed answers correct.)
+- Are CoT and PAL errors complementary? Partly: agree 56%, 94% correct when agreeing, either-correct 77% (300 q).
 - How much of small-model GSM8K error is arithmetic vs reasoning? PAL fixed/broken counts answer this partly.

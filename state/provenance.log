@@ -6,3 +6,9 @@
 2026-11-03 13:56:23 prediction written: experiments/gsm8k-pal/README.md (80a94ba32781)
 2026-11-03 13:56:23 file created: experiments/gsm8k-pal/run.sh
 2026-11-03 13:57:28 file created: experiments/gsm8k-pal/analyze.py
+# Session 3
+2026-11-04 06:41:36 prediction written: experiments/gsm8k-mixvote/README.md (fda6b71a852b)
+2026-11-04 06:42:55 file created: experiments/gsm8k-mixvote/pal_greedy_off300_n300.jsonl
+2026-11-04 06:42:55 file created: experiments/gsm8k-mixvote/run.sh
+2026-11-04 06:43:12 file created: experiments/gsm8k-mixvote/analyze.py
+2026-11-04 06:44:38 prediction changed: experiments/gsm8k-mixvote/README.md (74135e4879bd)

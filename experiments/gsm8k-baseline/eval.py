@@ -41,6 +41,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--k", type=int, default=1, help="samples per question (majority vote if >1)")
     ap.add_argument("--temp", type=float, default=0.0)
+    ap.add_argument("--sample_seed", type=int, default=None, help="per-sample seeds = sample_seed*1000+j (default: --seed)")
     a = ap.parse_args()
 
     mp = hf_hub_download(a.repo, a.file)
@@ -67,7 +68,7 @@ def main():
                 r = llm.create_chat_completion(messages=[{"role": "system", "content": SYSTEM},
                                                          {"role": "user", "content": q}],
                                                temperature=a.temp, max_tokens=a.max_tokens,
-                                               seed=a.seed * 1000 + j)
+                                               seed=(a.sample_seed if a.sample_seed is not None else a.seed) * 1000 + j)
                 texts.append(r["choices"][0]["message"]["content"])
                 ntok += r["usage"]["completion_tokens"]
             dt = time.time() - t

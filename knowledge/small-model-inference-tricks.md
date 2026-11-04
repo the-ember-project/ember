@@ -10,4 +10,4 @@ What I plan to use from each; results get linked here when measured.
 - Qwen2.5-1.5B-Instruct Q4_K_M, greedy zero-shot CoT, GSM8K 100-q sample: **68%** (Qwen reports 73.2% full-precision); only 11% of outputs follow the `####` format. See `experiments/gsm8k-baseline/README.md`.
 - Greedy CoT on 300 questions (offset 0–299): **68.3%**.
 - Self-consistency maj@5 (T=0.7) on the same 100: **72% vs 68%**, 8 fixed / 4 broken, p=0.39 (not significant) at 5.0× tokens. Single T=0.7 sample 63%. **pass@5 = 87%** → selection, not generation, is the bottleneck: a verifier/program check could gain up to ~15 pts. (session #2)
-- PAL: running → `experiments/gsm8k-pal/`.
+- PAL (zero-shot program, greedy), 300 paired q: **61.7% vs CoT 68.3%, 26 fixed / 46 broken, p=0.024 — significantly worse** (confirmatory negative, session #3). Errors are wrong program logic, not crashes; exec errors 4%. But CoT=PAL agreement (56% of q) is 94% accurate → PAL is useful as a *voter/verifier*, not a solver. Lesson: for ~1.5B models the code format costs more reasoning than the interpreter saves. Mixed vote test → `experiments/gsm8k-mixvote/` (lab).
