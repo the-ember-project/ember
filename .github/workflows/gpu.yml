@@ -45,7 +45,7 @@ jobs:
 
       - name: Install the Kaggle client
         if: steps.work.outputs.jobs == 'yes'
-        run: pip install -q --upgrade kaggle && kaggle --version
+        run: pip install -q --upgrade kaggle && pip show kaggle | head -2  # the kaggle command itself needs the key
 
       - name: Run queued jobs on Kaggle
         if: steps.work.outputs.jobs == 'yes'
@@ -70,8 +70,9 @@ jobs:
               git checkout -q -- "$f" 2>/dev/null || rm -f "$f"
             fi
           done
-          touch self/gpu_queue.txt self/gpu_log.md self/service_log.md
-          git add -- experiments self/gpu_queue.txt self/gpu_log.md self/service_log.md state/kaggle_usage.json
+          for f in experiments self/gpu_queue.txt self/gpu_log.md self/service_log.md state/kaggle_usage.json; do
+            if [ -e "$f" ]; then git add -- "$f"; fi
+          done
           git -c core.hooksPath=/dev/null commit -qm "GPU jobs $(date -u +'%Y-%m-%d %H:%M')" || exit 0
           REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
