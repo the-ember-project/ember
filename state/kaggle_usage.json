@@ -1,3 +1,16 @@
 {
-  "jobs": []
+  "jobs": [
+    {
+      "line": "experiments/kaggle-gpu-check/check.py 10",
+      "folder": "experiments/kaggle-gpu-check",
+      "kernel": "focarius/ember-kaggle-gpu-check",
+      "limit": 10,
+      "charged": 2,
+      "source": "commit fb7a461, README 544ed667cdf9",
+      "submitted": "2026-11-04T23:07:59+00:00",
+      "pending": false,
+      "status": "complete",
+      "finished": "2026-11-04T23:09:00+00:00"
+    }
+  ]
 }

@@ -1,0 +1,12 @@
+Tesla T4, 15360 MiB
+Tesla T4, 15360 MiB
+cuda available: True
+{
+  "cuda": true,
+  "torch": "2.11.0+cu130",
+  "gpu": "Tesla T4",
+  "memory_gb": 15.6,
+  "matmul_4096_seconds": 0.0474
+}
+
+[exit code 0 after 0 min]
