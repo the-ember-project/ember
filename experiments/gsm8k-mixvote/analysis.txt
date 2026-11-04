@@ -1,0 +1,12 @@
+paired questions with all 4 arms: n=300 (greedy CoT 300, CoT k5 300, PAL greedy 300, PAL k5 300)
+greedy                               acc=0.653 diff=+0.0 fixed=0 broken=0 p=1.000 tokens/q=230 (1.0x)
+S1 maj5CoT+PAL(w1.5)                 acc=0.740 diff=+8.7 fixed=43 broken=17 p=0.001 tokens/q=1260 (5.5x)
+S2 maj(5CoT+5PAL)                    acc=0.790 diff=+13.7 fixed=54 broken=13 p=0.000 tokens/q=1777 (7.7x)
+S3 maj5CoT                           acc=0.710 diff=+5.7 fixed=34 broken=17 p=0.024 tokens/q=1131 (4.9x)
+[expl] PAL greedy                    acc=0.630 diff=-2.3 fixed=39 broken=46 p=0.515
+[expl] maj5PAL                       acc=0.687 diff=+3.3 fixed=46 broken=36 p=0.320
+[expl] maj5CoT+PAL(w1)               acc=0.733 diff=+8.0 fixed=40 broken=16 p=0.002
+[expl] maj4CoT+PAL(w1.5) (~4.5x)     acc=0.713 diff=+6.0 fixed=39 broken=21 p=0.027
+[expl] greedyCoT+PALgreedy+maj5CoT   acc=0.720 diff=+6.7 fixed=28 broken=8 p=0.001
+S1 vs S3: diff=+3.0 fixed=17 broken=8 p=0.108
+[expl] pass@5 CoT=0.843; pass@(5CoT+5PAL)=0.907
