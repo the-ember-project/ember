@@ -1,3 +1,4 @@
 - 2026-11-02 22:16 UTC `experiments/gsm8k-selfconsistency/run.sh 200`: not run (its folder needs a README.md with a 'Prediction:' (metric, pass criterion and predicted result) written before the run)
 - 2026-11-02 22:19 UTC `experiments/gsm8k-selfconsistency/run.sh 200`: exit code 0 after 101 min (commit bfe130c, README 0d0953089b4a). Output: `experiments/gsm8k-selfconsistency/lab-output.txt`
 - 2026-11-03 15:59 UTC `experiments/gsm8k-pal/run.sh 90`: exit code 0 after 18 min (commit c176294, README 976bf3f2492f). Output: `experiments/gsm8k-pal/lab-output.txt`
+- 2026-11-04 06:46 UTC `experiments/gsm8k-mixvote/run.sh 290`: stopped at its 290-minute limit after 290 min (commit cb00f25, README 6e2f59fd896b). Output: `experiments/gsm8k-mixvote/lab-output.txt`
