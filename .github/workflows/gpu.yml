@@ -1,0 +1,78 @@
+name: GPU jobs
+
+# Sends the GPU experiments the agent queued in self/gpu_queue.txt to Kaggle (an approved
+# service, see agent/services.md) and saves what they return. Makes no Claude calls. The Kaggle
+# key is used only here; the agent's code runs on Kaggle, never on this machine.
+
+on:
+  # Straight after each research session, like the lab.
+  workflow_run:
+    workflows: ["Research session"]
+    types: [completed]
+  schedule:
+    - cron: "37 14 * * *"  # a daily backup, which also collects jobs that ran past an earlier run
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gpu
+  cancel-in-progress: false
+
+jobs:
+  gpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    env:
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Check for work
+        id: work
+        run: |
+          if grep -qvE '^\s*(#|$)' self/gpu_queue.txt 2>/dev/null || grep -q '"pending": true' state/kaggle_usage.json 2>/dev/null; then
+            echo "jobs=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.work.outputs.jobs == 'yes'
+        with:
+          python-version: "3.12"
+
+      - name: Install the Kaggle client
+        if: steps.work.outputs.jobs == 'yes'
+        run: pip install -q --upgrade kaggle && kaggle --version
+
+      - name: Run queued jobs on Kaggle
+        if: steps.work.outputs.jobs == 'yes'
+        env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          KAGGLE_USERNAME: ${{ vars.KAGGLE_USERNAME || 'focarius' }}
+          GPU_WEEKLY_MINUTES: ${{ vars.GPU_WEEKLY_MINUTES || '900' }}
+          GPU_POLL_MINUTES: "320"
+        run: python agent/kaggle_jobs.py
+
+      - name: Save the results
+        if: always() && steps.work.outputs.jobs == 'yes'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Only experiment outputs, the GPU queue and logs, and the usage record are saved.
+          git config user.name "agi-research-agent"
+          git config user.email "agi-research-agent@users.noreply.github.com"
+          git ls-files -z -m -o --exclude-standard -- experiments | while IFS= read -r -d '' f; do
+            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 5242880 ]; then
+              echo "Not saved (over 5 MB): $f"
+              git checkout -q -- "$f" 2>/dev/null || rm -f "$f"
+            fi
+          done
+          touch self/gpu_queue.txt self/gpu_log.md self/service_log.md
+          git add -- experiments self/gpu_queue.txt self/gpu_log.md self/service_log.md state/kaggle_usage.json
+          git -c core.hooksPath=/dev/null commit -qm "GPU jobs $(date -u +'%Y-%m-%d %H:%M')" || exit 0
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
+          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"

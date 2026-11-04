@@ -59,6 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MONTHLY_BUDGET_USD: ${{ vars.MONTHLY_BUDGET_USD }}
           DISCRETIONARY_USD: ${{ vars.DISCRETIONARY_USD }}
+          GPU_WEEKLY_MINUTES: ${{ vars.GPU_WEEKLY_MINUTES }}
           AGENT_MODEL: ${{ vars.AGENT_MODEL }}
           TOTAL_FUNDS_USD: ${{ vars.TOTAL_FUNDS_USD || '100' }}
           WIND_DOWN_DAYS: ${{ vars.WIND_DOWN_DAYS }}

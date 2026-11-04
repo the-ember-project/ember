@@ -87,7 +87,15 @@ What has been decided for the AGI research agent, and what is still to do.
 - It only takes instructions from the GitHub users listed in the `AGENT_TRUSTED_USERS` setting. Comments from anyone else on its public repository are left out of what it reads.
 - Next: a free webpage on GitHub Pages that it updates each session (see below).
 
-## GPU lab (planned, not built)
+## Kaggle GPU (built 2026-11-04)
+
+The first approved service. The human made the Kaggle account (`focarius`, phone verified) and added `KAGGLE_API_TOKEN` as a repository secret. `agent/kaggle_jobs.py`, run by `.github/workflows/gpu.yml` after each session, sends jobs from `self/gpu_queue.txt` to Kaggle as private script notebooks with a GPU and internet. Design choices:
+- The key stays in that workflow, which never runs the agent's code; the agent's code runs only on Kaggle. Only the experiment folder's own small files are sent (no symlinks, nothing outside it).
+- One job at a time; a wrapper on Kaggle enforces the job's time limit and returns only files the job wrote or changed.
+- 15 GPU hours per rolling 7 days (half of Kaggle's ~30), charged at submission and settled when the job ends, kept in `state/kaggle_usage.json`. Jobs over the limit wait in the queue.
+- Same queue rules as the CPU lab (README prediction first, provenance logged). Uses are logged automatically in `self/service_log.md`.
+
+## GPU lab on this PC (planned, not built)
 
 A second lab on this PC (deskhop) for experiments that need a GPU. GitHub stays the agent's home and runs its thinking sessions; this PC only runs queued GPU experiments overnight.
 

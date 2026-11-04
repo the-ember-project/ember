@@ -658,6 +658,24 @@ def lab_status() -> str:
     return f"{text}\n\nStill queued: {len(waiting)} job(s)."
 
 
+def gpu_status() -> str:
+    """Recent Kaggle GPU jobs, what's queued, and the GPU minutes used in the last 7 days."""
+    log, queue, usage = SELF_DIR / "gpu_log.md", SELF_DIR / "gpu_queue.txt", ROOT / "state" / "kaggle_usage.json"
+    text = log.read_text(errors="replace")[-3000:].strip() if log.exists() else ""
+    waiting = [l for l in queue.read_text().splitlines() if l.strip() and not l.startswith("#")] if queue.exists() else []
+    try:
+        jobs = json.loads(usage.read_text())["jobs"]
+    except Exception:
+        jobs = []
+    since = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=7)
+    used = sum(j["charged"] for j in jobs if dt.datetime.fromisoformat(j["submitted"]) > since)
+    running = [j["line"] for j in jobs if j.get("pending")]
+    weekly = int(os.environ.get("GPU_WEEKLY_MINUTES") or 900)
+    return (f"{text or '(No GPU jobs yet.)'}\n\nStill queued: {len(waiting)} job(s). "
+            f"Running on Kaggle: {', '.join(running) or 'none'}. "
+            f"GPU minutes used in the last 7 days: {used} of {weekly}.")
+
+
 FINAL_SESSION_NOTE = f"""## This is your final session before pausing
 
 {{reason}} Use this session to wind down well:
@@ -707,6 +725,9 @@ Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent
 
 ## Recent lab runs (self/lab_log.md)
 {lab_status()}
+
+## GPU jobs on Kaggle (self/gpu_log.md)
+{gpu_status()}
 
 ## Files you chose to load at startup (self/startup.txt)
 {startup_files()}
