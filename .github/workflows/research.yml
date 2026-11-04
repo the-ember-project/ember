@@ -61,6 +61,7 @@ jobs:
           DISCRETIONARY_USD: ${{ vars.DISCRETIONARY_USD }}
           GPU_WEEKLY_MINUTES: ${{ vars.GPU_WEEKLY_MINUTES }}
           AGENT_MODEL: ${{ vars.AGENT_MODEL }}
+          HELPER_MODEL: ${{ vars.HELPER_MODEL }}
           TOTAL_FUNDS_USD: ${{ vars.TOTAL_FUNDS_USD || '100' }}
           WIND_DOWN_DAYS: ${{ vars.WIND_DOWN_DAYS }}
           AGENT_TRUSTED_USERS: ${{ vars.AGENT_TRUSTED_USERS }}
