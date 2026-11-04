@@ -53,7 +53,7 @@ WORK = "/kaggle/working"
 data = base64.b64decode(BUNDLE)
 with tarfile.open(fileobj=io.BytesIO(data)) as t:
     names = [m.name for m in t.getmembers() if m.isfile()]
-    t.extractall(WORK)
+    t.extractall(WORK, filter="data")
 def digest(p):
     with open(p, "rb") as f: return hashlib.sha256(f.read()).hexdigest()
 original = {{n: digest(os.path.join(WORK, n)) for n in names}}
