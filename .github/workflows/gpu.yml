@@ -27,7 +27,7 @@ jobs:
     env:
       PYTHONUNBUFFERED: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -38,7 +38,7 @@ jobs:
             echo "jobs=yes" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: steps.work.outputs.jobs == 'yes'
         with:
           python-version: "3.12"

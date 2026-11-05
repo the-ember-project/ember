@@ -23,18 +23,18 @@ jobs:
     env:
       PYTHONUNBUFFERED: "1"  # show output live in the log
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
       - run: pip install -r requirements.txt
 
       # Models and packages the agent downloads, kept between sessions (GitHub keeps up to 10 GB).
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ${{ runner.temp }}/agent-cache
           key: agent-cache-${{ github.run_id }}

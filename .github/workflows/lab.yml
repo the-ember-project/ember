@@ -27,7 +27,7 @@ jobs:
     env:
       PYTHONUNBUFFERED: "1"  # show output live in the log
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -36,12 +36,12 @@ jobs:
         run: |
           if grep -qvE '^\s*(#|$)' self/lab_queue.txt 2>/dev/null; then echo "jobs=yes" >> "$GITHUB_OUTPUT"; fi
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: steps.queue.outputs.jobs == 'yes'
         with:
           python-version: "3.12"
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         if: steps.queue.outputs.jobs == 'yes'
         with:
           path: ${{ runner.temp }}/agent-cache
