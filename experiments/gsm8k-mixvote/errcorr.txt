@@ -1,0 +1,4 @@
+sample error rate: CoT 0.381, PAL 0.405 (independence would give both-wrong CoT-CoT 0.145, PAL-PAL 0.164, CoT-PAL 0.155)
+CoT-CoT: pairs=3000 P(both wrong)=0.262 P(same wrong answer)=0.083 P(same | both wrong)=0.318
+PAL-PAL: pairs=3000 P(both wrong)=0.291 P(same wrong answer)=0.065 P(same | both wrong)=0.223
+CoT-PAL: pairs=7500 P(both wrong)=0.248 P(same wrong answer)=0.040 P(same | both wrong)=0.160

@@ -1,2 +1,3 @@
 # GPU experiments to send to Kaggle after the session, one per line:
 # path/to/script.py-or-.sh  time-limit-in-minutes
+experiments/bbh-mixvote/run.py 150

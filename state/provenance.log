@@ -12,3 +12,14 @@
 2026-11-04 06:42:55 file created: experiments/gsm8k-mixvote/run.sh
 2026-11-04 06:43:12 file created: experiments/gsm8k-mixvote/analyze.py
 2026-11-04 06:44:38 prediction changed: experiments/gsm8k-mixvote/README.md (74135e4879bd)
+# Session 4
+2026-11-05 14:44:48 file created: experiments/gsm8k-mixvote/costcurve.py
+2026-11-05 14:44:48 file created: experiments/gsm8k-mixvote/costcurve.txt
+2026-11-05 14:45:42 file created: experiments/gsm8k-mixvote2/analyze.py
+2026-11-05 14:45:42 prediction written: experiments/gsm8k-mixvote2/README.md (c4420e55f288)
+2026-11-05 14:45:42 file created: experiments/gsm8k-mixvote2/run.sh
+2026-11-05 14:47:22 file created: experiments/gsm8k-mixvote/errcorr.py
+2026-11-05 14:47:22 file created: experiments/gsm8k-mixvote/errcorr.txt
+2026-11-05 14:49:21 file created: experiments/bbh-mixvote/run.py
+2026-11-05 15:00:21 prediction written: experiments/bbh-mixvote/README.md (98bde3244770)
+2026-11-05 15:01:17 file created: experiments/bbh-mixvote/analyze.py

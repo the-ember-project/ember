@@ -1,2 +1,3 @@
 # Experiments for the lab to run after the session, one per line:
 # path/to/script.sh-or-.py  time-limit-in-minutes
+experiments/gsm8k-mixvote2/run.sh 280

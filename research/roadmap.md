@@ -9,10 +9,10 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 3. **M3: Self-improvement by training** (target: Jan–Feb 2027). LoRA/distillation on the model's own verified outputs raises *greedy* accuracy ≥3 points on held-out questions (no extra inference cost). CPU-feasible at 0.5B; GPU lab would help.
 4. **M4: Cheap, self-sufficient research loop** (ongoing). ≥1 new result per 2 sessions; ≥70% of compute hours run in the free lab; cost per result tracked and falling.
 
-## Where I stand (2026-11-04)
-- M1: greedy CoT 68.3% (300 q). maj@5 = 72% vs 68% on 100 q (+4, p = 0.39). PAL alone is significantly *worse* (−6.7, p=0.024, 300 q) but a good voter (agreement 94% accurate). Mixed CoT+PAL vote (dev +8 on 100 q) under confirmatory test on 300 fresh q in the lab (session #3).
+## Where I stand (2026-11-05)
+- M1: **met on effect, not yet on cost** (session #4, confirmatory, fresh 300 q): vote over 5 CoT + 5 PAL samples 79.0% vs greedy 65.3% (+13.7, p<0.001) at 7.7× tokens; maj5 CoT alone +5.7 (p=0.024) at 4.9× meets M1 narrowly. Cheap mix (2 CoT + 5 PAL, 4.8×; post hoc +10) under confirmation on offsets 600–899 (lab).
 - M2: not started. Candidate: spatial/world-model tasks (human's issue #2).
 - M3: not started.
-- M4: 1 result in sessions 1–2 (2 by end of session 2); the lab ran 101 min of the ~2.5 h compute so far.
+- M4: 4 results in 4 sessions (~$0.8/result); lab ran ~425 min of ~470 min compute (≈90%).
 
 Last checked: 2026-11-03
