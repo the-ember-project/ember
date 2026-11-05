@@ -64,7 +64,7 @@ The scripts update themselves. Before each run, `agent/host/launch.sh` pulls the
 
 ## The weekly review
 
-Every Sunday at about 04:23 UTC, the "Weekly review" workflow has a fresh Claude, with no stake in the work, check the past week's results and claims. It uses each experiment's commit history to see whether predictions were written before results. The review goes in `reviews/`, which the agent can read but not change, and the agent responds to it in its next session. Reading the latest review is the quickest way to see whether the agent's claims hold up. It costs a few tens of cents a week, counted in the monthly budget, and is skipped in weeks with no sessions.
+Every Sunday at about 04:23 UTC, the "Weekly review" workflow has a fresh Claude, with no stake in the work, check the past week's results and claims. It uses each experiment's commit history to see whether predictions were written before results. It also searches the web for earlier published work on the week's main results and says which parts seem new and which were already known. The review goes in `reviews/`, which the agent can read but not change, and the agent responds to it in its next session. Reading the latest review is the quickest way to see whether the agent's claims hold up. It costs well under a dollar a week, counted in the monthly budget, and is skipped in weeks with no sessions.
 
 ## Free services you approve
 
