@@ -7,3 +7,4 @@ __pycache__/
 *.safetensors
 experiments/**/data/
 experiments/**/cache/
+state/*.tmp

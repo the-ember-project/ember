@@ -27,7 +27,7 @@ from pathlib import Path
 
 import anthropic
 
-from lab import PREDICTION, prediction_fingerprint  # one definition of a prediction and its fingerprint
+from lab import PREDICTION, gpu_job_id, prediction_fingerprint  # shared with the lab and GPU workflows
 import safefs  # symlink-safe reads and writes of the agent's files
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -154,9 +154,20 @@ def reserve_left(ledger: dict) -> float:
     return max(0.0, round(left, 2))
 
 
+def write_atomic(path: Path, text: str) -> None:
+    """Write a file so it's always either the old version or the new one, never half-written,
+    even if the job is stopped mid-write: write a temporary file, then rename it into place."""
+    path.parent.mkdir(exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    with open(tmp, "w") as f:
+        f.write(text)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+
 def save_ledger(ledger: dict) -> None:
-    STATE_FILE.parent.mkdir(exist_ok=True)
-    STATE_FILE.write_text(json.dumps(ledger, indent=2) + "\n")
+    write_atomic(STATE_FILE, json.dumps(ledger, indent=2) + "\n")
 
 
 def session_budget(ledger: dict, today: dt.date) -> float:
@@ -258,8 +269,16 @@ def human_messages() -> str:
     for issue in issues:
         kind = "Pull request" if "pull_request" in issue else "Issue"
         text = f"### {kind} #{issue['number']}: {issue['title']}\n{issue.get('body') or ''}\n"
-        # Comments come oldest first; keep the latest 40, so the newest replies are never cut off.
-        comments = (github("GET", f"/issues/{issue['number']}/comments?per_page=100") or [])[-40:]
+        # Comments come oldest first, 100 to a page; read every page and keep the latest 40, so
+        # the newest replies are never cut off however long the conversation gets.
+        comments, page = [], 1
+        while page <= 20:
+            batch = github("GET", f"/issues/{issue['number']}/comments?per_page=100&page={page}") or []
+            comments += batch
+            if len(batch) < 100:
+                break
+            page += 1
+        comments = comments[-40:]
         for c in comments:
             if trusted(c):
                 who = "you (the agent)" if by_agent(c) else c["user"]["login"]
@@ -331,7 +350,10 @@ def tool_run_command(command: str, timeout_seconds: int = 300) -> str:
     if CACHE_DIR:
         # Downloaded models and packages persist between sessions here.
         env.update(XDG_CACHE_HOME=CACHE_DIR, HF_HOME=f"{CACHE_DIR}/huggingface", PIP_CACHE_DIR=f"{CACHE_DIR}/pip")
-    argv = ["bash", "-c", f"umask 000; {command}"]
+    # `timeout` stops the command and everything it started in the foreground when time is up.
+    # Stopping only sudo (Python's own timeout below) would leave the command running. Jobs the
+    # agent deliberately starts in the background with setsid keep running, as intended.
+    argv = ["timeout", "-s", "KILL", str(timeout_seconds), "bash", "-c", f"umask 000; {command}"]
     if RUN_AS:
         home = f"/home/{RUN_AS}"
         env.update(HOME=home, PATH=f"{home}/.local/bin:{env.get('PATH', '')}")
@@ -339,10 +361,14 @@ def tool_run_command(command: str, timeout_seconds: int = 300) -> str:
     # Output goes to temporary files, not pipes: a job the agent starts in the background
     # keeps a pipe open, which would make this wait until the timeout.
     with tempfile.TemporaryFile("w+") as out, tempfile.TemporaryFile("w+") as err:
+        started = time.monotonic()
         try:
             r = subprocess.run(argv, cwd=ROOT, env=env, stdout=out, stderr=err, text=True,
-                               timeout=timeout_seconds)
-            status = f"exit code {r.returncode}"
+                               timeout=timeout_seconds + 30)  # a backstop; `timeout` acts first
+            # `timeout` kills its whole process group, itself included, so the code depends on
+            # what sits between: 124 or 137 from a shell, -9 when the kill reaches us directly.
+            timed_out = r.returncode in (124, 137, -9) and time.monotonic() - started >= timeout_seconds - 1
+            status = f"Timed out after {timeout_seconds}s (stopped)" if timed_out else f"exit code {r.returncode}"
         except subprocess.TimeoutExpired:
             status = f"Timed out after {timeout_seconds}s"
         out.seek(0)
@@ -730,6 +756,37 @@ def lab_status() -> str:
     text = read(SELF_DIR / "lab_log.md")[-4000:] or "(The lab hasn't run anything yet.)"
     waiting = [l for l in read(SELF_DIR / "lab_queue.txt").splitlines() if l.strip() and not l.startswith("#")]
     return f"{text}\n\nStill queued: {len(waiting)} job(s)."
+
+
+def tidy_gpu_queue() -> None:
+    """Remove from self/gpu_queue.txt the lines the GPU workflow has taken since last time.
+    Only sessions write the queue: the GPU workflow can run at the same time as a session, and
+    if both saved the file their changes would collide. It records what it took instead."""
+    usage, done_path = ROOT / "state" / "kaggle_usage.json", ROOT / "state" / "gpu_queue_done.json"
+    try:
+        jobs = json.loads(usage.read_text())["jobs"]
+    except Exception:
+        return
+    try:
+        done = set(json.loads(done_path.read_text())["cleared"])
+    except Exception:
+        done = set()
+    todo = [j for j in jobs if j.get("from_queue") and gpu_job_id(j) not in done]
+    if not todo:
+        return
+    queue = SELF_DIR / "gpu_queue.txt"
+    text = safefs.read_text(queue)
+    lines = text.splitlines() if text is not None else []
+    for j in todo:
+        for i, line in enumerate(lines):
+            if line.strip() == j["line"]:
+                del lines[i]
+                break
+        done.add(gpu_job_id(j))
+    if text is not None:
+        safefs.write_text(queue, "".join(f"{line}\n" for line in lines), mode=0o666)
+    ids = {gpu_job_id(j) for j in jobs if j.get("from_queue")}
+    write_atomic(done_path, json.dumps({"cleared": sorted(done & ids)}, indent=2) + "\n")
 
 
 def gpu_status() -> str:
@@ -1222,6 +1279,10 @@ def main() -> int:
         budget = min(budget, TOTAL_FUNDS - ledger["lifetime_spent_usd"])
 
     size_notes.clear()
+    try:
+        tidy_gpu_queue()
+    except Exception as e:  # never let queue tidying stop a session
+        print(f"Could not tidy the GPU queue: {type(e).__name__}: {e}")
     charter = system_prompt()
     messages = [{"role": "user", "content": first_message(budget, ledger, now, note)}]
     s = {"spent": 0.0, "budget": budget, "turns": 0, "log": [], "new_result": "", "seen": scan_experiments(),

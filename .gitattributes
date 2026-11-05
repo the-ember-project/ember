@@ -1,3 +1,7 @@
 *.sh text eol=lf
 *.py text eol=lf
 *.yml text eol=lf
+# Append-only logs that the GPU workflow and a session may both add to at the same time:
+# keep both sides' lines instead of stopping the save with a conflict.
+self/gpu_log.md merge=union
+self/service_log.md merge=union

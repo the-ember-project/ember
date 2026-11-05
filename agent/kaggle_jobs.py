@@ -7,7 +7,8 @@ The agent adds lines to self/gpu_queue.txt during a session:
 (a .py or .sh script under experiments/, then an optional time limit in minutes). After the
 session, the "GPU jobs" workflow sends each one to Kaggle as a private script with a GPU, one at
 a time, waits for it, and downloads what it wrote into gpu-output/ next to the script. Results
-are logged in self/gpu_log.md and self/service_log.md, which the next session reads.
+are logged in self/gpu_log.md and self/service_log.md, which the next session reads. This
+workflow never edits the queue itself; it records the lines it took, and the session removes them.
 
 The Kaggle key stays in this workflow. The agent's code runs only on Kaggle, never here, and
 only the files of its own experiment folder are sent there (no links, nothing from outside it).
@@ -15,6 +16,7 @@ Usage is kept in state/kaggle_usage.json and capped per rolling 7 days (GPU_WEEK
 """
 
 import base64
+from collections import Counter
 import datetime as dt
 import io
 import json
@@ -26,16 +28,22 @@ import sys
 import tarfile
 import tempfile
 import time
+import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lab import EXPERIMENTS, ROOT, parse, provenance  # noqa: E402  (same queue rules as the lab)
+from lab import EXPERIMENTS, ROOT, gpu_job_id, parse, provenance  # noqa: E402  (same queue rules as the lab)
 import safefs  # noqa: E402  (symlink-safe reads and writes of the agent's files)
 
 QUEUE = ROOT / "self" / "gpu_queue.txt"
 LOG = ROOT / "self" / "gpu_log.md"
 SERVICE_LOG = ROOT / "self" / "service_log.md"
 USAGE = ROOT / "state" / "kaggle_usage.json"
+# Queue lines this workflow took that the session has since removed from the queue. This
+# workflow never edits self/gpu_queue.txt itself: it can run at the same time as a session in
+# which the agent edits the queue, and both saving the file would collide. So it records each
+# line it takes in USAGE, skips lines still waiting to be removed, and the session removes them.
+QUEUE_DONE = ROOT / "state" / "gpu_queue_done.json"
 
 USER = os.environ.get("KAGGLE_USERNAME") or "focarius"
 WEEKLY_MINUTES = int(os.environ.get("GPU_WEEKLY_MINUTES") or 900)    # half of Kaggle's ~30 h a week
@@ -95,8 +103,11 @@ def load_usage() -> dict:
 
 
 def save_usage(u: dict) -> None:
+    # Written to a temporary file and renamed, so a stopped job never leaves it half-written.
     USAGE.parent.mkdir(exist_ok=True)
-    USAGE.write_text(json.dumps(u, indent=2) + "\n")
+    tmp = USAGE.with_name(USAGE.name + ".tmp")
+    tmp.write_text(json.dumps(u, indent=2) + "\n")
+    os.replace(tmp, USAGE)
 
 
 def used_this_week(u: dict) -> int:
@@ -229,9 +240,23 @@ def main() -> int:
     # would otherwise put the Kaggle key into the log as an unreadable job line.
     queue = safefs.read_text(QUEUE)
     lines = [l.strip() for l in queue.splitlines()] if queue is not None else []
-    jobs = [l for l in lines if l and not l.startswith("#")]
-    entries, remaining = [], []
-    for i, line in enumerate(jobs):
+    # Skip lines already taken that the session hasn't removed from the queue yet.
+    try:
+        done = set(json.loads(QUEUE_DONE.read_text())["cleared"])
+    except Exception:
+        done = set()
+    taken = Counter(j["line"] for j in u["jobs"] if j.get("from_queue") and gpu_job_id(j) not in done)
+    jobs = []
+    for line in lines:
+        if not line or line.startswith("#"):
+            continue
+        if taken[line] > 0:
+            taken[line] -= 1
+        else:
+            jobs.append(line)
+
+    entries = []
+    for line in jobs:
         try:
             script, minutes = parse(line)
             minutes = min(minutes, MAX_JOB_MINUTES)
@@ -239,30 +264,29 @@ def main() -> int:
             if minutes + OVERHEAD > left:
                 entries.append(f"- {stamp()} `{line}`: waiting, it needs {minutes + OVERHEAD} GPU minutes "
                                f"and {max(0, left)} of the {WEEKLY_MINUTES} for the last 7 days are left")
-                remaining = jobs[i:]
                 break
             source = provenance(script)
             kernel = submit(script, minutes)
         except Exception as e:
             entries.append(f"- {stamp()} `{line}`: not run ({e})")
+            # Recorded as taken, so the session removes it from the queue.
+            u["jobs"].append({"line": line, "submitted": now().isoformat(timespec="seconds"), "charged": 0,
+                              "pending": False, "status": "not run", "from_queue": True, "id": uuid.uuid4().hex})
             continue
         job = {"line": line, "folder": str(script.parent.relative_to(ROOT)).replace("\\", "/"),
                "kernel": kernel, "limit": minutes, "charged": minutes + OVERHEAD, "source": source,
-               "submitted": now().isoformat(timespec="seconds"), "pending": True, "status": "running"}
+               "submitted": now().isoformat(timespec="seconds"), "pending": True, "status": "running",
+               "from_queue": True, "id": uuid.uuid4().hex}
         u["jobs"].append(job)
         save_usage(u)
         print(f"Sent {line} to Kaggle as {kernel} (limit {minutes} min)")
         if not wait(job, u, deadline):
             entries.append(f"- {stamp()} `{line}`: still running on Kaggle ({kernel}); "
                            "the next GPU run will collect it")
-            remaining = jobs[i + 1:]
             break
 
     if entries:
         safefs.append_text(LOG, "\n".join(entries) + "\n")
-    comments = [l for l in lines if l.startswith("#")]
-    if queue is not None:
-        safefs.write_text(QUEUE, "".join(f"{l}\n" for l in comments + remaining))
     u["jobs"] = u["jobs"][-200:]
     save_usage(u)
     return 0

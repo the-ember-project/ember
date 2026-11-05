@@ -69,6 +69,12 @@ def prediction_fingerprint(text: str) -> str | None:
     return hashlib.sha256(section.strip().encode()).hexdigest()[:12]
 
 
+def gpu_job_id(job: dict) -> str:
+    """How the GPU workflow and the session refer to one line the GPU workflow took from
+    self/gpu_queue.txt (see agent/kaggle_jobs.py and tidy_gpu_queue in agent/run.py)."""
+    return job.get("id") or f"{job['submitted']} {job['line']}"
+
+
 def provenance(script: Path) -> str:
     """The code version and the prediction (by its fingerprint) a run used."""
     fp = prediction_fingerprint(safefs.read_text(script.parent / "README.md") or "")

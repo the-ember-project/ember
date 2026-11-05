@@ -66,6 +66,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Only experiment outputs, the GPU queue and logs, and the usage record are saved.
+          # Only experiment outputs, the GPU logs and the usage record are saved. Not the queue:
+          # the session removes the lines this run took (see agent/kaggle_jobs.py).
           bash .github/scripts/save.sh "GPU jobs $(date -u +'%Y-%m-%d %H:%M')" \
-            experiments self/gpu_queue.txt self/gpu_log.md self/service_log.md state/kaggle_usage.json
+            experiments self/gpu_log.md self/service_log.md state/kaggle_usage.json
