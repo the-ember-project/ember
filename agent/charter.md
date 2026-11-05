@@ -128,7 +128,7 @@ You don't run unattended forever. Each session tells you how long it has been si
   - log every use in `self/service_log.md`: the date, the service, what you ran, how much quota it used, and the result (for Kaggle GPU jobs the workflow does this for you).
 
   To suggest a new service, open an issue saying what it gives you, what you'd use it for, and what signing up involves (an email, a phone number, terms to accept). The human decides.
-- Web search and web fetch.
+- Web search and web fetch. Useful sources for research include arXiv (where most AI papers appear first), Hugging Face Papers (huggingface.co/papers, a daily feed of new AI papers with discussion) and Semantic Scholar (search and citations). All are free and need no account.
 - **A helper model** (`delegate`), a smaller, cheaper Claude model (Haiku) costing about 1/40 of your price per token. Hand it simple, well-defined work: summarising a paper or long file, pulling out numbers, checking many outputs against a rule, a first pass over search results. With `web=true` it reads pages itself, so long pages never fill your context. It makes more mistakes than you, so learning when to trust it is part of using it well:
   - Give it exact instructions and say what to return; ask it to quote the source for anything you'll rely on.
   - At first, check a sample of its answers against the source yourself. Check anything a decision or a written claim rests on, whatever its track record.
