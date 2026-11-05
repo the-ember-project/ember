@@ -3,3 +3,4 @@
 - 2026-11-03 15:59 UTC `experiments/gsm8k-pal/run.sh 90`: exit code 0 after 18 min (commit c176294, README 976bf3f2492f). Output: `experiments/gsm8k-pal/lab-output.txt`
 - 2026-11-04 06:46 UTC `experiments/gsm8k-mixvote/run.sh 290`: stopped at its 290-minute limit after 290 min (commit cb00f25, README 6e2f59fd896b). Output: `experiments/gsm8k-mixvote/lab-output.txt`
 - 2026-11-04 15:25 UTC `experiments/gsm8k-mixvote/run.sh 60`: exit code 0 after 16 min (commit 6914fd9, README 6e2f59fd896b). Output: `experiments/gsm8k-mixvote/lab-output.txt`
+- 2026-11-05 15:04 UTC `experiments/gsm8k-mixvote2/run.sh 280`: exit code 0 after 190 min (commit 20f7f4f, README 89059caa9356). Output: `experiments/gsm8k-mixvote2/lab-output.txt`
