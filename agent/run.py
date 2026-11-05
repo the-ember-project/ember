@@ -30,7 +30,10 @@ import anthropic
 from lab import PREDICTION  # one definition of what counts as a written prediction
 
 ROOT = Path(__file__).resolve().parent.parent
-PROTECTED = ("agent", ".github", "state", ".git", "requirements.txt", "reviews")
+PROTECTED = ("agent", ".github", "state", ".git", "requirements.txt", "reviews", "transcripts")
+# A full record of each session (gzipped Markdown) and a short plain index of it, written by
+# this code after the session. The agent can read and search them but not change them.
+TRANSCRIPTS_DIR = ROOT / "transcripts"
 STATE_FILE = ROOT / "state" / "budget.json"
 # When each prediction was written and each experiment file appeared, recorded by this code
 # (the agent can't edit state/), so a reviewer can check predictions came before results.
@@ -854,6 +857,145 @@ def delegate(client, s: dict, task: str, files=None, web: bool = False) -> tuple
             f"{clip(answer)}"), False
 
 
+TRANSCRIPT_CAPS = {"input": 4000, "result": 6000, "text": 20000}
+
+
+def as_dict(block) -> dict:
+    """A content block as a plain dict, whether it's an SDK object or already a dict."""
+    if isinstance(block, dict):
+        return block
+    if hasattr(block, "model_dump"):
+        try:
+            return block.model_dump(mode="json", exclude_none=True)
+        except Exception:
+            pass
+    return {k: v for k, v in vars(block).items() if not k.startswith("_")}
+
+
+def cap(text: str, limit: int) -> str:
+    return text if len(text) <= limit else f"{text[:limit]}\n[... {len(text) - limit:,} more characters not kept ...]"
+
+
+def result_text(content) -> str:
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "\n".join(result_text(c.get("text", c) if isinstance(c, dict) else c) for c in content)
+    if isinstance(content, dict):
+        if "url" in content or "title" in content:
+            return f"{content.get('title', '')} {content.get('url', '')}".strip()
+        if "error_code" in content:
+            return f"error: {content['error_code']}"
+        return json.dumps(content)[:2000]
+    return str(content)
+
+
+def one_line(text: str, limit: int = 110) -> str:
+    text = " ".join(str(text).split())
+    return text if len(text) <= limit else text[:limit - 1] + "…"
+
+
+def tool_summary(name: str, args: dict) -> str:
+    """What a tool call did, in a few words, for the index."""
+    if name == "run_command":
+        return one_line(args.get("command", ""), 90)
+    if name in ("read_file", "write_file", "list_dir"):
+        return args.get("path", ".")
+    if name == "delegate":
+        files = args.get("files") or []
+        return one_line(args.get("task", ""), 70) + (f" [{len(files)} file(s)]" if files else "") + \
+            (" [web]" if args.get("web") else "")
+    if name in ("web_search", "web_fetch"):
+        return one_line(args.get("query") or args.get("url") or "", 90)
+    for key in ("title", "number", "amount_usd"):
+        if key in args:
+            return one_line(str(args[key]), 90)
+    return ""
+
+
+def looks_failed(text: str, is_error: bool) -> bool:
+    first = text.lstrip()[:40]
+    return is_error or (first.startswith("exit code") and not first.startswith("exit code 0")) \
+        or first.startswith("Timed out") or "Traceback (most recent call last)" in text[-4000:]
+
+
+def save_transcript(messages: list, s: dict, stamp: str, number: int, summary: str) -> str:
+    """Write transcripts/<stamp>.md.gz (the whole session) and transcripts/<stamp>-index.md.
+
+    The transcript is Markdown with a "### Step N" heading for every action, so a step found
+    in the index can be pulled out with zcat and grep without reading the rest."""
+    import gzip
+    TRANSCRIPTS_DIR.mkdir(exist_ok=True)
+    full, index, pending = [], [], {}
+    step, files_written, failures = 0, set(), 0
+    turn_costs = s.get("turn_costs", [])
+    full.append(f"# Session {number} transcript ({stamp} UTC)\n")
+    turn = 0
+    for m in messages:
+        content = m["content"]
+        if m["role"] == "user":
+            if isinstance(content, str):
+                label = "Startup message" if not full[1:] else "Message to the agent"
+                full.append(f"## {label}\n\n{cap(content, 60000 if label == 'Startup message' else 4000)}\n")
+                continue
+            for b in map(as_dict, content):
+                if b.get("type") == "tool_result":
+                    text = result_text(b.get("content", ""))
+                    name, n, pos = pending.pop(b.get("tool_use_id"), ("?", "?", None))
+                    failed = looks_failed(text, bool(b.get("is_error")))
+                    failures += failed
+                    section = (f"#### Result of step {n}{' (FAILED)' if failed else ''}\n\n```\n"
+                               f"{cap(text, TRANSCRIPT_CAPS['result'])}\n```\n")
+                    # Under its own step, so pulling out "Step N" gets the call and its result together.
+                    if pos is None:
+                        full.append(section)
+                    else:
+                        full[pos] += "\n" + section
+                    for i, line in enumerate(index):
+                        if line.startswith(f"- Step {n} "):
+                            index[i] = line + (f" → **FAILED**: {one_line(text, 80)}" if failed else "")
+                elif b.get("type") == "text":
+                    full.append(f"#### Notice\n\n{cap(b.get('text', ''), 2000)}\n")
+            continue
+        turn += 1
+        cost = f" (${turn_costs[turn - 1]:.3f})" if turn - 1 < len(turn_costs) else ""
+        full.append(f"## Turn {turn}{cost}\n")
+        index.append(f"\n**Turn {turn}**{cost}")
+        for b in map(as_dict, content):
+            kind = b.get("type")
+            if kind == "text" and b.get("text", "").strip():
+                full.append(f"{cap(b['text'].strip(), TRANSCRIPT_CAPS['text'])}\n")
+                index.append(f"- says: {one_line(b['text'], 100)}")
+            elif kind in ("tool_use", "server_tool_use"):
+                step += 1
+                name, args = b.get("name", "?"), b.get("input") or {}
+                if name == "write_file" and args.get("path"):
+                    files_written.add(args["path"])
+                pending[b.get("id")] = (name, step, len(full))
+                full.append(f"### Step {step}: {name}\n\n```json\n"
+                            f"{cap(json.dumps(args, indent=1, ensure_ascii=False), TRANSCRIPT_CAPS['input'])}\n```\n")
+                index.append(f"- Step {step} `{name}` {tool_summary(name, args)}")
+            elif kind and kind.endswith("_tool_result"):
+                name, n, pos = pending.pop(b.get("tool_use_id"), ("?", "?", None))
+                section = f"#### Result of step {n}\n\n```\n{cap(result_text(b.get('content', '')), 3000)}\n```\n"
+                if pos is None:
+                    full.append(section)
+                else:
+                    full[pos] += "\n" + section
+    full.append(f"## End of session\n\n{summary}\n")
+    name = f"{stamp}.md.gz"
+    with gzip.open(TRANSCRIPTS_DIR / name, "wt", encoding="utf-8") as f:
+        f.write("\n".join(full))
+    header = (f"# Session {number} index ({stamp} UTC)\n\n"
+              f"Full transcript: `transcripts/{name}` (gzipped Markdown). Read one step with, for example:\n"
+              f"`zcat transcripts/{name} | sed -n '/^### Step 12:/,/^### Step 13:/p'`\n"
+              f"Search all sessions: `zgrep -n 'pattern' transcripts/*.md.gz`\n\n"
+              f"Cost ${s.get('spent', 0):.2f}, {turn} turns, {step} steps, {failures} failed. "
+              f"Files written: {', '.join(sorted(files_written)) or 'none'}.\n")
+    (TRANSCRIPTS_DIR / f"{stamp}-index.md").write_text(header + "\n".join(index) + "\n")
+    return f"transcripts/{stamp}-index.md"
+
+
 def run_session(client, charter: str, messages: list, s: dict) -> str:
     """The agent loop. Updates s["spent"], s["budget"], s["turns"] and s["log"] as it goes; returns the summary."""
     started = time.monotonic()
@@ -870,7 +1012,9 @@ def run_session(client, charter: str, messages: list, s: dict) -> str:
             betas=["server-side-fallback-2026-07-01"],
             extra_body={"fallbacks": "default", "cache_control": {"type": "ephemeral"}},
         )
-        s["spent"] += call_cost(response.usage)
+        turn_cost = call_cost(response.usage)
+        s["spent"] += turn_cost
+        s.setdefault("turn_costs", []).append(turn_cost)
         messages.append({"role": "assistant", "content": response.content})
 
         for block in response.content:
@@ -1053,6 +1197,12 @@ def main() -> int:
                        "after a long quiet period, re-enable them in the Actions tab.")
         save_ledger(ledger)
 
+        try:
+            index_path = save_transcript(messages, s, f"{now:%Y-%m-%d-%H%M}", ledger["lifetime_sessions"], summary)
+        except Exception as e:  # a transcript problem must never lose the journal or the ledger
+            print(f"Could not save the transcript: {type(e).__name__}: {e}")
+            index_path = ""
+
         JOURNAL_DIR.mkdir(parents=True, exist_ok=True)
         entry = JOURNAL_DIR / f"{now:%Y-%m-%d-%H%M}.md"
         actions = "\n".join(f"- `{a}`" for a in s["log"]) or "- (none)"
@@ -1062,6 +1212,7 @@ def main() -> int:
                             if s["reserve_reasons"] else "") +
                          (f"Helper model: {s['helper_calls']} task(s), ${s.get('helper_spent', 0):.2f} "
                           "(included in the cost above)\n\n" if s.get("helper_calls") else "") +
+                         (f"Transcript index: `{index_path}`\n\n" if index_path else "") +
                          f"**New result:** {s['new_result'] or '(none)'}\n\n"
                          f"## Summary\n\n{summary}\n\n"
                          f"<details><summary>Actions</summary>\n\n{actions}\n\n</details>\n")

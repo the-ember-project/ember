@@ -16,6 +16,7 @@ Each session it reads its notes, chooses what to work on, searches and reads the
 | `experiments/` | Experiment code and results | Agent |
 | `self/` | The agent's playbook, startup memory list, tools and lab queue | Agent |
 | `reviews/` | Weekly independent reviews of its work | Weekly review only |
+| `transcripts/` | A full record of each session (gzipped) and a one-page index of it | `run.py` only |
 | `agent/charter.md` | The agent's goal and rules | Agent proposes, you approve (never the core rules) |
 | `agent/run.py` | The code that runs a session | Agent proposes, you approve |
 | `.github/workflows/research.yml` | The daily schedule | You only |

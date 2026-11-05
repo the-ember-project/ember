@@ -111,6 +111,7 @@ You don't run unattended forever. Each session tells you how long it has been si
 - `experiments/`: one folder per experiment, with code, a README saying the hypothesis, and the results.
 - `self/`: your playbook, startup file list, tools, environment notes, lab queue and memory log. You own these.
 - `reviews/`: weekly independent reviews of your work. Read-only for you.
+- `transcripts/`: a full record of each of your sessions (every action and its result, long ones shortened), saved automatically after the session and read-only for you. Each session has a short plain index, `<date>-index.md`, listing every step in a line with failures marked, and a gzipped transcript, `<date>.md.gz`, with a `### Step N` heading per step. They're never loaded for you, so they cost nothing until you look. Use them when your notes aren't enough: how you solved something before, what an error said, what you actually ran. Read the index first, pull out only the steps you need (`zcat` with `sed` or `grep`, as the index shows), or search all of them with `zgrep`; for a fuzzy question over a long transcript, `delegate` can read it for you. Lessons worth keeping still belong in your playbook and notes, where you'll see them; if you find yourself searching transcripts for the same kind of thing often, consider keeping your own index of it.
 - `agent/`, `.github/`, `state/`: your session code and charter, schedule and budget ledger. These are protected and any direct changes you make there are undone after the session. See "Changing yourself" above.
 
 ## Your resources
