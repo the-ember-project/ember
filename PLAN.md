@@ -48,6 +48,7 @@ What has been decided for the AGI research agent, and what is still to do.
 **Guarding against memory rot** (built 2026-11-03)
 - Everything loaded at the start of a session is capped: playbook 10,000 characters, roadmap 4,000, agenda 8,000, each journal entry 4,000, startup files 40,000. Ember is warned at 80% of a limit and told to condense once it's over.
 - Ember fixes wrong notes in the session it finds them, and tidies its memory monthly (prune, merge, correct, mark superseded results), tracked by `Last tidied:` in `self/memory_log.md`, with a reminder when due.
+- Added 2026-11-05 (founder: "I just don't want too many guardrails that could limit its freedom"): a charter bullet inviting Ember to take a bigger swing now and then (a multi-session idea that could fail, declared in the agenda with a checkpoint), and the no-result nudge after 3 sessions now says a declared bigger swing is fine. The result-every-session pressure, from the earlier lab's lesson, was pushing toward small, safe steps.
 - Not built: clearing old tool output within a session (a Claude API feature). Left for Ember to discover and propose through its memory research, or for us to add later.
 
 **Weekly independent review** (built)

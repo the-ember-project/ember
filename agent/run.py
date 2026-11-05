@@ -614,8 +614,10 @@ def progress_line(ledger: dict, now: dt.datetime) -> str:
     text = (f"Progress: {since} session(s) since your last new result; {ledger.get('lifetime_results', 0)} "
             f"new results in total; {finished} lab job(s) finished successfully in the last 30 days.")
     if since >= 3:
-        text += (f"\n\n**Your last {since} sessions produced no new result.** This session, get one: pick the "
-                 "smallest experiment that answers a real question, and run it.")
+        text += (f"\n\n**Your last {since} sessions produced no new result.** If you're on a bigger swing that "
+                 "your agenda declares, with a checkpoint, that's fine: carry on, and judge it honestly when the "
+                 "checkpoint comes. Otherwise, get a result this session: pick the smallest experiment that "
+                 "answers a real question, and run it.")
     return text
 
 
