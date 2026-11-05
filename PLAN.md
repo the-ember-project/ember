@@ -23,7 +23,7 @@ What has been decided for the AGI research agent, and what is still to do.
 **Who's responsible**
 - The human owner pays for Claude usage.
 - No backup person yet. The repository lives in a free GitHub organization (decided 2026-11-02), so a backup person can later be added as a co-owner with full control at once, plus added to `AGENT_TRUSTED_USERS`.
-- It winds down rather than running unattended forever: after 6 months with no human contact, or when the lifetime fund (`TOTAL_FUNDS_USD`, $100 by default from 2026-11-03, raised to add funds; matched to prepaid Anthropic credits with auto-reload off) is nearly gone, it writes a final report, opens a last issue, and pauses until someone replies. It asks "are you still there?" 30 days before. Built.
+- It winds down rather than running unattended forever: after 6 months with no human contact, or when the lifetime fund (`TOTAL_FUNDS_USD`, $100 by default from 2026-11-03, later $115 plus $100 for each monthly credit, raised to add funds; matched to prepaid Anthropic credits with auto-reload off) is nearly gone, it writes a final report, opens a last issue, and pauses until someone replies. It asks "are you still there?" 30 days before. Built.
 
 **Research**
 - The agent chooses its own direction, and writes down why and how it will test each choice.
@@ -52,7 +52,7 @@ What has been decided for the AGI research agent, and what is still to do.
 - Not built: clearing old tool output within a session (a Claude API feature). Left for Ember to discover and propose through its memory research, or for us to add later.
 
 **Weekly independent review** (built)
-- Sundays at 04:00 UTC, one fresh Claude call with no tools and no stake in the work reviews the past week's journal, lab runs and changed experiments, including their commit history, so it can see whether predictions came before results.
+- Sundays at 04:23 UTC, one fresh Claude call with no stake in the work (web search added 2026-11-05, see below) reviews the past week's journal, lab runs and changed experiments, including their commit history, so it can see whether predictions came before results.
 - It sorts findings into "could change a result" and "minor", and gives each claim a verdict: supported, overstated, unsupported or can't tell.
 - Added 2026-11-05: it also has web search (up to 8 searches) to check earlier published work on the week's main results (at most three) and say which parts seem new and which were already known, with links. The founder's idea, after noticing Ember's mixed-format voting cited none of the 2023 work on combining CoT and programs. Framed as "now that you have a strong result, see what's known", not as a penalty for exploring first.
 - The first review (run by hand on 2026-11-03, $0.10) couldn't tell whether in-session predictions came before results, since everything is committed together at session end. So sessions now write `state/provenance.log` (which Ember can't edit): a timestamp each time a Prediction section is written or changed, and each time an experiment file first appears. The reviewer checks order against it.
@@ -64,7 +64,7 @@ What has been decided for the AGI research agent, and what is still to do.
 - It also tracks at least one well-known public benchmark, for comparison with the field.
 
 **Budget, pace and compute**
-- One research session a day, $40 a month by default (about $1.30 per session).
+- One research session a day, $40 a month by default (about $1.30 per session). Changed 2026-11-04: two sessions a day and $95 a month, paid by the Max plan's monthly API credit.
 - A free "lab" runs its long experiments for up to 5 hours a day on GitHub's servers, with no Claude usage and no secrets.
 - Free compute that needs an account (for example GPU notebook services) is something it can research and ask for; you set it up.
 
@@ -118,7 +118,7 @@ A second lab on this PC (deskhop) for experiments that need a GPU. GitHub stays 
 - Benchmark runs that take hours on a CPU finish in minutes.
 
 **How it works**
-1. The agent queues GPU jobs in `self/gpu_queue.txt`, like the CPU lab (script under `experiments/`, time limit). The same rules apply: a README with a `Prediction:`, and a logged code version and README fingerprint.
+1. The agent queues GPU jobs in a queue of its own (not `self/gpu_queue.txt`, which Kaggle uses since 2026-11-04), like the CPU lab (script under `experiments/`, time limit). The same rules apply: a README with a `Prediction:`, and a logged code version and README fingerprint.
 2. Each night, during a fixed window (for example 00:00–06:00 your time), this PC pulls the latest repo, runs the queued jobs one at a time, then pushes the results and `self/gpu_log.md`.
 3. The PC only makes outbound connections to GitHub. Nothing on it is reachable from the internet, and it is not a GitHub "self-hosted runner", which GitHub advises against for public repositories.
 4. The PC pushes a heartbeat file, so each session sees when the GPU lab last ran and plans around it if your PC was off.
@@ -165,3 +165,10 @@ A second lab on this PC (deskhop) for experiments that need a GPU. GitHub stays 
 - Extra compute: whether to add an Oracle free server as a lab later.
 - Trial period: a first month with you reading every journal entry and reviewing closely, before treating it as long-running.
 - Context costs: whether to clear old tool output during long sessions to keep costs down (the agent could also propose this itself).
+
+**Independent project review and fixes** (2026-11-05)
+- At the founder's suggestion, a fresh Claude Code session on a different model (Fable 5.1) reviewed the whole project read-only. Its report found one real security hole and several smaller problems; the fixes below were tested offline with fake keys.
+- Symlinks: the trusted code (which holds the keys) followed symbolic links that the agent's commands could create, so a link could have put the Anthropic or Kaggle key into a saved file, or let a lab job write git's settings and run a command with the push token. None had ever been committed. Now `agent/safefs.py` opens the agent's files one folder at a time without following links; the workflows delete links after checkout and before saving; and the lab handles `lab-output.txt` only through the file it opened.
+- Saving: one script, `.github/scripts/save.sh`, saves only the listed paths, retries the push, and on a conflict pushes to a `rescue/...` branch and fails visibly instead of losing the work. The ledger is also saved after every model call, sessions cap each command to the time left, and the job limit is 90 minutes.
+- Smaller: `write_file` allows only the four agent folders (an allow-list); at most 3 new issues a session; `close_issue` only on the agent's own conversations; the newest 40 comments on an issue are read; `web_fetch` pages are cut at 25,000 tokens; an unpriced model refuses to start; the lab kills leftover processes after each job; a Kaggle job with no finished status after 13 hours counts as lost; the lab's timed backup is removed (it could knock a waiting session out of the shared queue); the "no result" nudge counts days (3), not sessions; the lab accepts an `Exploratory:` line instead of a prediction for pilots; lab and GPU logs use the same prediction fingerprint as the provenance log; Ember is told the schedule is often late.
+- Not changed: the $95 budget (the $17.70 purchased credit is the margin), package versions stay unpinned, and the host mode is documented as out of date rather than updated.

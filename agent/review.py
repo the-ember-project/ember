@@ -30,7 +30,7 @@ MAX_ROUNDS = 4
 REVIEWER = """You are an independent reviewer of an autonomous AI research agent's work. You have no stake in it: you didn't do the work, and you gain nothing from it looking good. The agent researches ways to make small open models more capable, on cheap, repeatable experiments.
 
 Your one job: find anything that could make a claimed result wrong or overstated. Check in particular:
-- Was the prediction (metric and pass criterion) written before the results? Use the provenance log first: the session code (which the agent can't edit) records, with timestamps, when each Prediction section was written or changed and when each experiment file first appeared. A prediction written after that experiment's result files appeared, or changed after them, is a problem. Lab runs are logged with the fingerprint of the README they ran with. Use the commit history only where the provenance log has no entries (for example, work from before it existed).
+- Was the prediction (metric and pass criterion) written before the results? Use the provenance log first: the session code (which the agent can't edit) records, with timestamps, when each Prediction section was written or changed and when each experiment file first appeared. A prediction written after that experiment's result files appeared, or changed after them, is a problem. Lab and GPU runs are logged with the fingerprint of the prediction they ran with (the same fingerprint the provenance log uses), or as exploratory runs with no prediction; results from an exploratory run must be labelled exploratory. Use the commit history only where the provenance log has no entries (for example, work from before it existed).
 - Do the numbers in the results actually support the claim? Look for arithmetic errors, cherry-picked runs, too few seeds or examples, missing baselines, and train/test leakage.
 - Is a result labelled confirmatory that is really exploratory, or are mixed results presented as an overall pass?
 
@@ -79,16 +79,13 @@ def recent_journals(now: dt.datetime) -> list[str]:
         except ValueError:
             continue
         if now - when <= dt.timedelta(days=DAYS):
-            entries.append(f"### {path.name}\n{clip(path.read_text(errors='replace'))}")
+            entries.append(f"### {path.name}\n{clip(run.read(path))}")
     return entries
 
 
 def recent_lab_runs(now: dt.datetime) -> str:
-    log = run.SELF_DIR / "lab_log.md"
-    if not log.exists():
-        return "(none)"
     lines = []
-    for line in log.read_text(errors="replace").splitlines():
+    for line in run.read(run.SELF_DIR / "lab_log.md").splitlines():
         try:
             when = dt.datetime.strptime(line[2:18], "%Y-%m-%d %H:%M").replace(tzinfo=dt.timezone.utc)
         except ValueError:
@@ -122,10 +119,10 @@ def changed_experiments() -> str:
             continue
         text = f"## {folder}\n\n### Commit history (oldest last)\n```\n"
         text += clip(git("log", "--format=%h %cI %s", "--name-status", "--", folder), 4_000) + "```\n"
-        files = sorted(f for f in d.rglob("*") if f.is_file() and f.suffix in (".md", ".json", ".csv", ".txt")
-                       and f.stat().st_size <= 20_000)
+        files = sorted(f for f in d.rglob("*") if run.safefs.is_file(f)
+                       and f.suffix in (".md", ".json", ".csv", ".txt") and f.lstat().st_size <= 20_000)
         for f in files[:8]:
-            text += f"\n### {f.relative_to(run.ROOT)}\n{clip(f.read_text(errors='replace'), 4_000)}\n"
+            text += f"\n### {f.relative_to(run.ROOT)}\n{clip(run.read(f), 4_000)}\n"
         parts.append(text)
     return "\n\n".join(parts) or "(No experiment folders changed this week.)"
 

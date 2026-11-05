@@ -33,6 +33,10 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Remove symlinks from the agent's folders
+        # The reviewer reads these folders while holding the API key; a link could point at it.
+        run: find self knowledge research experiments -type l -print -delete 2>/dev/null || true
+
       - name: Review the week
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -48,11 +52,4 @@ jobs:
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "agi-research-agent"
-          git config user.email "agi-research-agent@users.noreply.github.com"
-          git add reviews state
-          git -c core.hooksPath=/dev/null commit -qm "Weekly review $(date -u +'%Y-%m-%d')" || exit 0
-          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
-          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"
+        run: bash .github/scripts/save.sh "Weekly review $(date -u +'%Y-%m-%d')" reviews state

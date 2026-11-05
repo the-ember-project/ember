@@ -31,6 +31,10 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Remove symlinks from the agent's folders
+        # Trusted code could follow one to a secret, such as the Kaggle key.
+        run: find self knowledge research experiments -type l -print -delete 2>/dev/null || true
+
       - name: Check for work
         id: work
         run: |
@@ -63,18 +67,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Only experiment outputs, the GPU queue and logs, and the usage record are saved.
-          git config user.name "agi-research-agent"
-          git config user.email "agi-research-agent@users.noreply.github.com"
-          git ls-files -z -m -o --exclude-standard -- experiments | while IFS= read -r -d '' f; do
-            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 5242880 ]; then
-              echo "Not saved (over 5 MB): $f"
-              git checkout -q -- "$f" 2>/dev/null || rm -f "$f"
-            fi
-          done
-          for f in experiments self/gpu_queue.txt self/gpu_log.md self/service_log.md state/kaggle_usage.json; do
-            if [ -e "$f" ]; then git add -- "$f"; fi
-          done
-          git -c core.hooksPath=/dev/null commit -qm "GPU jobs $(date -u +'%Y-%m-%d %H:%M')" || exit 0
-          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
-          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"
+          bash .github/scripts/save.sh "GPU jobs $(date -u +'%Y-%m-%d %H:%M')" \
+            experiments self/gpu_queue.txt self/gpu_log.md self/service_log.md state/kaggle_usage.json

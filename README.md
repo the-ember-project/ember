@@ -22,7 +22,7 @@ Each session it reads its notes, chooses what to work on, searches and reads the
 | `.github/workflows/research.yml` | The session schedule | You only |
 | `state/budget.json` | Spending ledger | `run.py` only |
 
-The agent can't change its code, charter, schedule or ledger directly; any direct change there is undone after each session. To change its own code or charter, it opens a pull request. Nothing changes until you review and merge it. It can't merge pull requests itself, and it can't propose changes to the core rules in its charter, its schedule or its budget. It can propose changes to its working rules.
+The agent can write only in its own folders (`self/`, `knowledge/`, `research/`, `experiments/`); only those, its ledger and logs, and the transcripts are saved after a session, so it can't change its code, charter, schedule or ledger directly. Symlinks are never followed by the code that holds the keys, and are removed before anything is saved. To change its own code or charter, it opens a pull request. Nothing changes until you review and merge it. It can't merge pull requests itself, and it can't propose changes to the core rules in its charter, its schedule or its budget. It can propose changes to its working rules.
 
 To change the core rules yourself, edit the "Core rules" section of `agent/charter.md` directly and push.
 
@@ -58,7 +58,9 @@ git clone https://github.com/the-ember-project/ember.git ~/ember
 bash ~/ember/agent/host/install.sh
 ```
 
-The install script creates the separate `researcher` user, a private settings file for your keys, and a daily schedule. It then tells you what to fill in. Use a fine-grained GitHub token that only covers this one repository. Disable the three GitHub workflows when you switch, so the agent doesn't run in two places.
+The install script creates the separate `researcher` user, a private settings file for your keys, and a daily schedule. It then tells you what to fill in. Use a fine-grained GitHub token that only covers this one repository. Disable the GitHub workflows (Research session, Lab, GPU jobs, Weekly review and the monthly credit reminder) when you switch, so the agent doesn't run in two places.
+
+Note: this host mode hasn't been kept up to date with the GitHub setup. Its install script still sets the old defaults ($40 a month, one session a day, a $100 fund) and it doesn't send Kaggle GPU jobs. On your own PC the `researcher` user can also read any file that's readable by everyone and reach your home network, so it isolates the agent less than GitHub's fresh machines do. Bring it up to date before using it.
 
 The scripts update themselves. Before each run, `agent/host/launch.sh` pulls the latest approved code from GitHub, so merged pull requests take effect on the next run, including changes to these scripts. The agent can propose improvements to them like any other change to its code.
 
@@ -93,7 +95,7 @@ The agent doesn't run unattended forever:
 - **Contact:** it counts as contact when you push a commit, merge a pull request, or open or comment on an issue or pull request. The agent's own posts don't count.
 - **After 150 days without contact:** it opens an issue asking if you're still there. Any reply keeps it going.
 - **After 180 days:** it spends one last session writing `research/FINAL_REPORT.md`, a complete account of its work, then opens an issue saying it has paused and stops. The lab stops too.
-- **Lifetime fund:** $115 by default (the first month's credit plus $17.70 of purchased credit), and it grows by `MONTHLY_CREDIT_USD` ($100) each month on the 26th. When it's almost spent, Ember writes its final report and pauses the same way. To add funds, add or raise a repository variable `TOTAL_FUNDS_USD` to the new total (for example `150` adds $50 to the default), and top up your Anthropic credits by the same amount. Ember's ledger in `state/budget.json` shows its lifetime spending.
+- **Lifetime fund:** $115 by default (the first month's credit plus $17.70 of purchased credit), and it grows by `MONTHLY_CREDIT_USD` ($100) each month on the 26th. When it's almost spent, Ember writes its final report and pauses the same way. To add funds, add or raise a repository variable `TOTAL_FUNDS_USD` to the new total (for example `150` adds $35 to the default), and top up your Anthropic credits by the same amount. Ember's ledger in `state/budget.json` shows its lifetime spending.
 - **Waking it up:** comment on any issue (or raise `TOTAL_FUNDS_USD` if the fund ran out), and it resumes at its next scheduled time. GitHub disables scheduled workflows in repositories with no activity for 60 days, so after a long pause you may also need to re-enable the workflows in the Actions tab.
 
 To change the 180 days, add a repository variable `WIND_DOWN_DAYS`.

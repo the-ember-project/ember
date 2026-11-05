@@ -27,10 +27,13 @@ from pathlib import Path
 
 import anthropic
 
-from lab import PREDICTION  # one definition of what counts as a written prediction
+from lab import PREDICTION, prediction_fingerprint  # one definition of a prediction and its fingerprint
+import safefs  # symlink-safe reads and writes of the agent's files
 
 ROOT = Path(__file__).resolve().parent.parent
-PROTECTED = ("agent", ".github", "state", ".git", "requirements.txt", "reviews", "transcripts")
+# The only places the agent can write (with write_file, its commands, and what a session saves).
+# Everything else, including its code, schedule, ledger, reviews and transcripts, is protected.
+WRITABLE = ("self", "knowledge", "research", "experiments")
 # A full record of each session (gzipped Markdown) and a short plain index of it, written by
 # this code after the session. The agent can read and search them but not change them.
 TRANSCRIPTS_DIR = ROOT / "transcripts"
@@ -71,6 +74,7 @@ RUNS_PER_DAY = int(os.environ.get("RUNS_PER_DAY") or 1)
 MIN_SESSION_BUDGET = 0.30
 MAX_TURNS = 80
 MAX_SECONDS = 45 * 60
+SESSION_DEADLINE = None  # time.monotonic() value after which commands get no more time
 MAX_TOOL_OUTPUT = 20_000
 # A cheaper model the agent can hand simple bulk work to (reading, summarising, checking), with
 # the `delegate` tool. It costs a fraction of the main model, and makes more mistakes.
@@ -244,7 +248,7 @@ def last_human_contact() -> dt.datetime | None:
 def human_messages() -> str:
     """Open issues and pull requests labelled 'agent', with their trusted comments."""
     try:
-        issues = github("GET", "/issues?labels=agent&state=open&per_page=20")
+        issues = github("GET", "/issues?labels=agent&state=open&per_page=50")
     except Exception as e:
         return f"(Could not read GitHub issues: {e})"
     issues = [i for i in issues or [] if trusted(i)]
@@ -254,7 +258,8 @@ def human_messages() -> str:
     for issue in issues:
         kind = "Pull request" if "pull_request" in issue else "Issue"
         text = f"### {kind} #{issue['number']}: {issue['title']}\n{issue.get('body') or ''}\n"
-        comments = github("GET", f"/issues/{issue['number']}/comments?per_page=30") or []
+        # Comments come oldest first; keep the latest 40, so the newest replies are never cut off.
+        comments = (github("GET", f"/issues/{issue['number']}/comments?per_page=100") or [])[-40:]
         for c in comments:
             if trusted(c):
                 who = "you (the agent)" if by_agent(c) else c["user"]["login"]
@@ -268,12 +273,21 @@ def human_messages() -> str:
 
 # ---------------------------------------------------------------- tools
 
+def read(path, default: str = "") -> str:
+    """Text of one of the agent's files, never through a symlink (see safefs); default if unreadable."""
+    text = safefs.read_text(path)
+    return default if text is None else text
+
+
 def resolve(path: str, writing: bool = False) -> Path:
-    p = (ROOT / path).resolve()
+    # Normalised without following symlinks; reads and writes then go through safefs, which
+    # refuses links, so a link can't lead outside the repository or into a protected place.
+    p = Path(os.path.normpath(ROOT / path))
     if p != ROOT and ROOT not in p.parents:
         raise ValueError("path is outside the repository")
-    if writing and p.relative_to(ROOT).parts[:1] and p.relative_to(ROOT).parts[0] in PROTECTED:
-        raise ValueError(f"{path} is protected; ask the human with request_human_help to change it")
+    if writing and (p.relative_to(ROOT).parts[:1] or ("",))[0] not in WRITABLE:
+        raise ValueError(f"{path} is protected: you can write only under {', '.join(f'{w}/' for w in WRITABLE)}. "
+                         "To change anything else, propose it with propose_change or ask the human.")
     return p
 
 
@@ -285,34 +299,32 @@ def clip(text: str) -> str:
 
 
 def tool_read_file(path: str) -> str:
-    return clip(resolve(path).read_text(errors="replace"))
+    text = safefs.read_text(resolve(path))
+    if text is None:
+        raise ValueError(f"{path} doesn't exist, or isn't a plain file (symlinks aren't followed)")
+    return clip(text)
 
 
 def tool_write_file(path: str, content: str) -> str:
-    p = resolve(path, writing=True)
-    new_dirs = [d for d in reversed(p.parents) if not d.exists()]
-    p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(content)
-    # Keep it editable by the separate user the agent's commands run as.
-    for d in new_dirs:
-        d.chmod(0o777)
-    if p.stat().st_uid == os.getuid():
-        p.chmod(0o666)
+    # New folders and files stay editable by the separate user the agent's commands run as.
+    safefs.write_text(resolve(path, writing=True), content, mode=0o666, dir_mode=0o777)
     return f"Wrote {len(content)} characters to {path}"
 
 
 def tool_list_dir(path: str = ".") -> str:
-    p = resolve(path)
     entries = []
-    for child in sorted(p.iterdir()):
-        if child.name == ".git":
+    for name, kind, size in safefs.list_dir(resolve(path)):
+        if name == ".git":
             continue
-        entries.append(child.name + ("/" if child.is_dir() else f"  ({child.stat().st_size} bytes)"))
+        entries.append(name + {"dir": "/", "file": f"  ({size} bytes)", "link": "  (symlink, not followed)",
+                               "other": "  (not a plain file)"}[kind])
     return "\n".join(entries) or "(empty)"
 
 
 def tool_run_command(command: str, timeout_seconds: int = 300) -> str:
     timeout_seconds = max(1, min(int(timeout_seconds), 900))
+    if SESSION_DEADLINE is not None:  # never run past the end of the session (plus a little to save)
+        timeout_seconds = max(1, min(timeout_seconds, int(SESSION_DEADLINE - time.monotonic())))
     # The agent's commands never see the API key or the GitHub token.
     env = {k: v for k, v in os.environ.items()
            if k in ("PATH", "HOME", "LANG", "LC_ALL", "TMPDIR", "PYTHONPATH", "VIRTUAL_ENV")}
@@ -338,22 +350,40 @@ def tool_run_command(command: str, timeout_seconds: int = 300) -> str:
         return clip(f"{status}\n--- stdout ---\n{out.read()}\n--- stderr ---\n{err.read()}")
 
 
+# New issues per session. Each one emails the human, so the code backs the "never spam" rule.
+MAX_NEW_ISSUES = 3
+new_issues = 0
+
+
 def tool_request_human_help(title: str, body: str) -> str:
+    global new_issues
+    if new_issues >= MAX_NEW_ISSUES:
+        raise ValueError(f"You've opened {MAX_NEW_ISSUES} issues this session, the most allowed. Put further "
+                         "questions in one of them with comment_on_issue, or wait for the next session.")
+    new_issues += 1
     issue = github("POST", "/issues", {"title": title, "body": body + AGENT_MARK, "labels": ["agent"]})
     return f"Opened issue #{issue['number']}. The human's reply will appear in a later session."
 
 
-def tool_comment_on_issue(number: int, comment: str) -> str:
+def own_conversation(number) -> int:
+    """The issue number, if it's one of the agent's open conversations; otherwise an error."""
+    number = int(number)
     issue = github("GET", f"/issues/{number}")
     labels = [label["name"] for label in issue.get("labels", [])]
     if issue.get("state") != "open" or "agent" not in labels or not trusted(issue):
         raise ValueError(f"#{number} isn't one of your open conversations (an open issue or pull request "
                          "labelled 'agent', started by you or the human)")
+    return number
+
+
+def tool_comment_on_issue(number: int, comment: str) -> str:
+    number = own_conversation(number)
     github("POST", f"/issues/{number}/comments", {"body": comment + AGENT_MARK})
     return f"Commented on #{number}. It stays open; the human's reply will appear in a later session."
 
 
 def tool_close_issue(number: int, comment: str) -> str:
+    number = own_conversation(number)
     github("POST", f"/issues/{number}/comments", {"body": comment + AGENT_MARK})
     github("PATCH", f"/issues/{number}", {"state": "closed"})
     return f"Closed issue #{number}"
@@ -426,17 +456,24 @@ def schema(props: dict, required: list) -> dict:
 
 TOOLS = [
     {"type": "web_search_20260209", "name": "web_search", "max_uses": 15},
-    {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 20},
+    # Long pages and PDFs are cut at about 25,000 tokens, since every later turn re-reads them;
+    # the helper (delegate with web=true) can read longer ones without filling your context.
+    {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 20, "max_content_tokens": 25_000},
     {"name": "read_file", "description": "Read a text file in the repository.",
      "input_schema": schema({"path": {"type": "string", "description": "Path relative to the repository root."}}, ["path"])},
     {"name": "write_file", "description": "Create or overwrite a text file in the repository. "
-                                          "Files under agent/, .github/ and state/ are protected.",
+                                          "You can write only under self/, knowledge/, research/ and "
+                                          "experiments/; everything else is protected.",
      "input_schema": schema({"path": {"type": "string"}, "content": {"type": "string"}}, ["path", "content"])},
     {"name": "list_dir", "description": "List a directory in the repository.",
      "input_schema": schema({"path": {"type": "string", "description": "Defaults to the repository root."}}, [])},
     {"name": "run_command", "description": "Run a shell command (bash) from the repository root on the "
                                            "Linux machine running this session: run experiments, pip install packages, "
-                                           "inspect output. 4 CPU cores, ~16 GB RAM, no GPU. Max 900 s per command.",
+                                           "inspect output. 4 CPU cores, ~16 GB RAM, no GPU. Max 900 s per command, and "
+                                           "never past the end of the session. Your conversation is cached for "
+                                           "about 5 minutes: after a command that takes longer, the next turn "
+                                           "pays to re-read the whole conversation, so run long work in the "
+                                           "background and check back.",
      "input_schema": schema({"command": {"type": "string"},
                              "timeout_seconds": {"type": "integer", "description": "Default 300, max 900."}}, ["command"])},
     {"name": "request_human_help", "description": "Open a GitHub issue asking the human for something you cannot "
@@ -445,7 +482,8 @@ TOOLS = [
     {"name": "comment_on_issue", "description": "Reply on one of your open issues or pull requests and leave "
                                                 "it open, to keep a conversation with the human going.",
      "input_schema": schema({"number": {"type": "integer"}, "comment": {"type": "string"}}, ["number", "comment"])},
-    {"name": "close_issue", "description": "Comment on and close a GitHub issue that has been dealt with.",
+    {"name": "close_issue", "description": "Comment on and close one of your open conversations (an issue or "
+                                           "pull request labelled 'agent') once it has been dealt with.",
      "input_schema": schema({"number": {"type": "integer"}, "comment": {"type": "string"}}, ["number", "comment"])},
     {"name": "propose_change", "description": "Propose changes to your own code (agent/) or requirements.txt as a "
                                               "pull request for the human to review. Give the full new content of "
@@ -499,29 +537,16 @@ def run_tool(name: str, args: dict) -> tuple[str, bool]:
 
 # ---------------------------------------------------------------- session
 
-def prediction_fingerprint(text: str) -> str | None:
-    """A short hash of a README's Prediction section, or None if it has none."""
-    found = PREDICTION.search(text)
-    if not found:
-        return None
-    rest = text[found.start():]
-    next_heading = re.search(r"\n\s*#+\s", rest[1:])
-    section = rest[:next_heading.start() + 1] if next_heading else rest
-    return hashlib.sha256(section.strip().encode()).hexdigest()[:12]
-
 
 def scan_experiments() -> dict[str, str]:
     """Every file under experiments/: READMEs by their prediction's fingerprint, others as 'file'."""
     found = {}
     for p in (ROOT / "experiments").rglob("*"):
-        if not p.is_file():
+        if not safefs.is_file(p):
             continue
         rel = p.relative_to(ROOT).as_posix()
         if p.name == "README.md":
-            try:
-                fp = prediction_fingerprint(p.read_text(errors="replace"))
-            except OSError:
-                fp = None
+            fp = prediction_fingerprint(read(p))
             found[rel] = f"prediction {fp}" if fp else "readme"
         else:
             found[rel] = "file"
@@ -564,10 +589,10 @@ def days_since_date(text: str, label: str, now: dt.datetime) -> int | None:
 
 def system_prompt() -> str:
     charter = (ROOT / "agent" / "charter.md").read_text()
-    playbook = SELF_DIR / "playbook.md"
-    if not playbook.exists():
+    playbook = safefs.read_text(SELF_DIR / "playbook.md")
+    if playbook is None:
         return charter
-    text = capped("self/playbook.md", playbook.read_text(errors="replace"), PLAYBOOK_LIMIT)
+    text = capped("self/playbook.md", playbook, PLAYBOOK_LIMIT)
     return (f"{charter}\n\n---\n\n# Your playbook (self/playbook.md)\n\n"
             "You wrote this yourself in earlier sessions. Where it conflicts with the charter above, "
             f"the charter wins.\n\n{text}")
@@ -575,16 +600,18 @@ def system_prompt() -> str:
 
 def startup_files() -> str:
     """Files the agent listed in self/startup.txt, one path per line, loaded at the start of each session."""
-    listing = SELF_DIR / "startup.txt"
-    if not listing.exists():
+    listing = safefs.read_text(SELF_DIR / "startup.txt")
+    if listing is None:
         return "(None. List files in self/startup.txt, one per line, to have them loaded here.)"
     parts, total = [], 0
-    for line in listing.read_text().splitlines():
+    for line in listing.splitlines():
         path = line.strip()
         if not path or path.startswith("#"):
             continue
         try:
-            text = resolve(path).read_text(errors="replace")
+            text = safefs.read_text(resolve(path))
+            if text is None:
+                raise ValueError("missing, or not a plain file (symlinks aren't followed)")
         except Exception as e:
             parts.append(f"### {path}\n(Could not read: {e})")
             continue
@@ -600,20 +627,23 @@ def startup_files() -> str:
     return "\n\n".join(parts) or "(self/startup.txt lists no files.)"
 
 
+# After this many days of sessions with no new result, the session asks for one (unless the
+# agent has declared a bigger swing). Counted in days so it doesn't change with the schedule.
+NUDGE_DAYS = 3
+
+
 def progress_line(ledger: dict, now: dt.datetime) -> str:
     since = ledger.get("sessions_since_result", 0)
     finished = 0
-    log = SELF_DIR / "lab_log.md"
-    if log.exists():
-        for line in log.read_text(errors="replace").splitlines():
-            try:
-                when = dt.datetime.strptime(line[2:18], "%Y-%m-%d %H:%M").replace(tzinfo=dt.timezone.utc)
-            except ValueError:
-                continue
-            finished += "exit code 0" in line and (now - when).days < 30
+    for line in read(SELF_DIR / "lab_log.md").splitlines():
+        try:
+            when = dt.datetime.strptime(line[2:18], "%Y-%m-%d %H:%M").replace(tzinfo=dt.timezone.utc)
+        except ValueError:
+            continue
+        finished += "exit code 0" in line and (now - when).days < 30
     text = (f"Progress: {since} session(s) since your last new result; {ledger.get('lifetime_results', 0)} "
             f"new results in total; {finished} lab job(s) finished successfully in the last 30 days.")
-    if since >= 3:
+    if since >= NUDGE_DAYS * RUNS_PER_DAY:
         text += (f"\n\n**Your last {since} sessions produced no new result.** If you're on a bigger swing that "
                  "your agenda declares, with a checkpoint, that's fine: carry on, and judge it honestly when the "
                  "checkpoint comes. Otherwise, get a result this session: pick the smallest experiment that "
@@ -623,12 +653,11 @@ def progress_line(ledger: dict, now: dt.datetime) -> str:
 
 def roadmap_section(now: dt.datetime) -> str:
     """The agent's roadmap, plus a reminder when it is missing or its monthly check is due."""
-    roadmap = ROOT / "research" / "roadmap.md"
-    if not roadmap.exists():
+    text = safefs.read_text(ROOT / "research" / "roadmap.md")
+    if text is None:
         return ("## Your long-term roadmap (research/roadmap.md)\n\n**It doesn't exist yet.** Write it this "
                 "session, briefly: your vision, 3–5 milestones with how each is measured, where you stand, "
                 "and `Last checked:` with today's date. See \"Your long-term roadmap\" in your charter.\n")
-    text = roadmap.read_text(errors="replace")
     days = days_since_date(text, "Last checked", now)
     due = ""
     if days is None:
@@ -642,7 +671,7 @@ def roadmap_section(now: dt.datetime) -> str:
 def journal_entry(path: Path) -> str:
     """A past journal entry without its list of actions, cut to its limit. Entries are never
     edited afterwards, so a long one means the agent should write shorter summaries."""
-    text = re.sub(r"<details>.*?</details>", "", path.read_text(errors="replace"), flags=re.S).strip()
+    text = re.sub(r"<details>.*?</details>", "", read(path), flags=re.S).strip()
     if len(text) > JOURNAL_ENTRY_LIMIT:
         size_notes.append(f"- Journal entry {path.name} is {len(text):,} characters, over its "
                           f"{JOURNAL_ENTRY_LIMIT:,} limit, so it was cut. Keep your end_session summaries shorter.")
@@ -652,7 +681,7 @@ def journal_entry(path: Path) -> str:
 
 def memory_tidy_section(now: dt.datetime) -> str:
     """A reminder when the monthly memory tidy-up is due; nothing otherwise."""
-    text = MEMORY_LOG.read_text(errors="replace") if MEMORY_LOG.exists() else ""
+    text = read(MEMORY_LOG)
     days = days_since_date(text, "Last tidied", now)
     if days is not None and days < TIDY_DAYS:
         return ""
@@ -683,7 +712,7 @@ def latest_review(now: dt.datetime) -> str:
             "A fresh reviewer with no stake in your work checked last week's claims. Fix anything under "
             "\"Could change a result\" (or, if you disagree, say why in the experiment's README), and "
             "relabel any claim it found overstated. Note the minor points and move on.\n\n"
-            f"{reviews[-1].read_text(errors='replace')[:10_000]}\n")
+            f"{read(reviews[-1])[:10_000]}\n")
 
 
 def approved_services() -> str:
@@ -698,17 +727,16 @@ def approved_services() -> str:
 
 
 def lab_status() -> str:
-    log, queue = SELF_DIR / "lab_log.md", SELF_DIR / "lab_queue.txt"
-    text = log.read_text(errors="replace")[-4000:] if log.exists() else "(The lab hasn't run anything yet.)"
-    waiting = [l for l in queue.read_text().splitlines() if l.strip() and not l.startswith("#")] if queue.exists() else []
+    text = read(SELF_DIR / "lab_log.md")[-4000:] or "(The lab hasn't run anything yet.)"
+    waiting = [l for l in read(SELF_DIR / "lab_queue.txt").splitlines() if l.strip() and not l.startswith("#")]
     return f"{text}\n\nStill queued: {len(waiting)} job(s)."
 
 
 def gpu_status() -> str:
     """Recent Kaggle GPU jobs, what's queued, and the GPU minutes used in the last 7 days."""
-    log, queue, usage = SELF_DIR / "gpu_log.md", SELF_DIR / "gpu_queue.txt", ROOT / "state" / "kaggle_usage.json"
-    text = log.read_text(errors="replace")[-3000:].strip() if log.exists() else ""
-    waiting = [l for l in queue.read_text().splitlines() if l.strip() and not l.startswith("#")] if queue.exists() else []
+    usage = ROOT / "state" / "kaggle_usage.json"
+    text = read(SELF_DIR / "gpu_log.md")[-3000:].strip()
+    waiting = [l for l in read(SELF_DIR / "gpu_queue.txt").splitlines() if l.strip() and not l.startswith("#")]
     try:
         jobs = json.loads(usage.read_text())["jobs"]
     except Exception:
@@ -735,11 +763,11 @@ After this session you will pause. You'll start again on your own as soon as the
 
 
 def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = "") -> str:
-    agenda = ROOT / "research" / "agenda.md"
+    agenda = safefs.read_text(ROOT / "research" / "agenda.md")
     journals = sorted(JOURNAL_DIR.glob("*.md"))
     recent = "\n\n---\n\n".join(journal_entry(j) for j in journals[-3:]) or "(No earlier sessions.)"
-    agenda_text = (capped("research/agenda.md", agenda.read_text(errors="replace"), AGENDA_LIMIT)
-                   if agenda.exists() else "(missing - create it)")
+    agenda_text = (capped("research/agenda.md", agenda, AGENDA_LIMIT)
+                   if agenda is not None else "(missing - create it)")
     contact = ledger.get("last_human_contact")
     contact_line = (f"Last contact from the human: {(now - dt.datetime.fromisoformat(contact)).days} days ago. "
                     f"After {WIND_DOWN_DAYS} days without contact you write a final report and pause."
@@ -750,9 +778,10 @@ def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = ""
     reserve_line = (f"Discretionary reserve left this month: ${reserve:.2f} of ${RESERVE:.2f} "
                     "(add it to this session with use_reserve if the work is worth it)."
                     if RESERVE else "")
-    runs_line = (f"There are {RUNS_PER_DAY} sessions a day (about 06:17 and 18:17 UTC), each with "
-                 "its share of the budget; the lab and GPU jobs run after each one, so results from the "
-                 "morning can be ready by the evening.\n" if RUNS_PER_DAY > 1 else "")
+    runs_line = (f"There are {RUNS_PER_DAY} sessions a day, each with its share of the budget. They're "
+                 "scheduled for 06:17 and 18:17 UTC, but GitHub often starts them hours late, so don't count "
+                 "on the exact time. The lab and GPU jobs run after each session, so results are often "
+                 "ready by the next one.\n" if RUNS_PER_DAY > 1 else "")
     return f"""Session started {now:%Y-%m-%d %H:%M} UTC. This is session #{ledger['lifetime_sessions'] + 1}.
 
 {runs_line}Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent_usd']:.2f} of ${MONTHLY_BUDGET:.2f}.{funds_line}
@@ -828,7 +857,9 @@ def delegate(client, s: dict, task: str, files=None, web: bool = False) -> tuple
     parts, total = [task.strip()], 0
     try:
         for path in files or []:
-            text = resolve(path).read_text(errors="replace")
+            text = safefs.read_text(resolve(path))
+            if text is None:
+                raise ValueError(f"{path} doesn't exist, or isn't a plain file (symlinks aren't followed)")
             if total + len(text) > HELPER_FILE_CHARS:
                 return (f"Error: the files add up to over {HELPER_FILE_CHARS:,} characters; "
                         "split the task or give fewer files."), True
@@ -871,11 +902,10 @@ def delegate(client, s: dict, task: str, files=None, web: bool = False) -> tuple
     s["helper_spent"] = s.get("helper_spent", 0.0) + cost
     answer = "".join(text).strip() or "(The helper gave no answer.)"
     try:
-        with open(HELPER_LOG, "a") as log:
-            log.write(f"- {dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%M} UTC, ${cost:.4f}"
-                      f"{f', {len(files)} file(s)' if files else ''}"
-                      f"{f', {searches} search(es), {fetches} fetch(es)' if web else ''}: "
-                      f"{' '.join(task.split())[:160]}\n")
+        safefs.append_text(HELPER_LOG, f"- {dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%M} UTC, ${cost:.4f}"
+                                       f"{f', {len(files)} file(s)' if files else ''}"
+                                       f"{f', {searches} search(es), {fetches} fetch(es)' if web else ''}: "
+                                       f"{' '.join(task.split())[:160]}\n")
     except OSError:
         pass
     return (f"[Helper ({HELPER_MODEL}), cost ${cost:.4f}.{note} Its answers can be wrong; check what matters.]\n\n"
@@ -1023,7 +1053,9 @@ def save_transcript(messages: list, s: dict, stamp: str, number: int, summary: s
 
 def run_session(client, charter: str, messages: list, s: dict) -> str:
     """The agent loop. Updates s["spent"], s["budget"], s["turns"] and s["log"] as it goes; returns the summary."""
+    global SESSION_DEADLINE
     started = time.monotonic()
+    SESSION_DEADLINE = started + MAX_SECONDS + 120
     warned = False
     for s["turns"] in range(1, MAX_TURNS + 1):
         response = client.beta.messages.create(
@@ -1040,6 +1072,8 @@ def run_session(client, charter: str, messages: list, s: dict) -> str:
         turn_cost = call_cost(response.usage)
         s["spent"] += turn_cost
         s.setdefault("turn_costs", []).append(turn_cost)
+        if s.get("checkpoint"):
+            s["checkpoint"]()  # record the spend so far, in case the job is stopped before the end
         messages.append({"role": "assistant", "content": response.content})
 
         for block in response.content:
@@ -1167,6 +1201,11 @@ def plan_session(ledger: dict, now: dt.datetime, budget: float) -> tuple[str, st
 
 
 def main() -> int:
+    unpriced = [m for m in (MODEL, HELPER_MODEL) if m not in PRICES]
+    if unpriced:
+        # Its spend would be counted at the wrong price, so the budget couldn't be trusted.
+        print(f"No price is listed for {', '.join(unpriced)} in agent/run.py (PRICES); add it before using it.")
+        return 1
     now = dt.datetime.now(dt.timezone.utc)
     ledger = load_ledger(now.date())
     budget = session_budget(ledger, now.date())
@@ -1188,6 +1227,20 @@ def main() -> int:
     s = {"spent": 0.0, "budget": budget, "turns": 0, "log": [], "new_result": "", "seen": scan_experiments(),
          "events": [], "reserve_left": reserve_left(ledger), "reserve_used": 0.0, "reserve_reasons": []}
     summary = "(The session crashed; see the GitHub Actions log.)"
+
+    def checkpoint() -> None:
+        """Save the ledger with this session's spend so far. The end of the session saves it again
+        properly; this copy only matters if the job is stopped before it gets there."""
+        try:
+            from_reserve = min(max(0.0, s["spent"] - budget), s["reserve_used"])
+            save_ledger({**ledger,
+                         "spent_usd": round(ledger["spent_usd"] + s["spent"] - from_reserve, 4),
+                         "reserve_spent_usd": round(ledger["reserve_spent_usd"] + from_reserve, 4),
+                         "lifetime_spent_usd": round(ledger["lifetime_spent_usd"] + s["spent"], 4)})
+        except Exception as e:
+            print(f"Could not save the ledger checkpoint: {e}")
+
+    s["checkpoint"] = checkpoint
     try:
         summary = run_session(anthropic.Anthropic(), charter, messages, s)
     finally:
@@ -1228,10 +1281,9 @@ def main() -> int:
             print(f"Could not save the transcript: {type(e).__name__}: {e}")
             index_path = ""
 
-        JOURNAL_DIR.mkdir(parents=True, exist_ok=True)
         entry = JOURNAL_DIR / f"{now:%Y-%m-%d-%H%M}.md"
         actions = "\n".join(f"- `{a}`" for a in s["log"]) or "- (none)"
-        entry.write_text(f"# Session {ledger['lifetime_sessions']} — {now:%Y-%m-%d %H:%M} UTC\n\n"
+        safefs.write_text(entry, f"# Session {ledger['lifetime_sessions']} — {now:%Y-%m-%d %H:%M} UTC\n\n"
                          f"Cost: ${s['spent']:.2f} (budget ${budget:.2f}), turns: {s['turns']}\n\n"
                          + (f"Reserve used: ${from_reserve:.2f} ({'; '.join(s['reserve_reasons'])})\n\n"
                             if s["reserve_reasons"] else "") +

@@ -24,6 +24,8 @@ main() {
     [ -x "$venv/bin/python" ] || python3 -m venv "$venv"
     "$venv/bin/pip" install -q -r requirements.txt
 
+    # Remove any symlinks in the agent's folders: trusted code could follow one to a secret.
+    find self knowledge research experiments -type l -print -delete 2>/dev/null || true
     mkdir -p self knowledge research experiments "$AGENT_CACHE_DIR"
     # Folders the agent's commands may write. Files the agent created are already writable.
     chmod -R a+rwX self knowledge research experiments "$AGENT_CACHE_DIR" 2>/dev/null || true
@@ -55,6 +57,7 @@ save() {
     esac
     git checkout -q HEAD -- "${protected[@]}"
     git clean -fdq -- "${protected[@]}"
+    find self knowledge research experiments -type l -print -delete 2>/dev/null || true
 
     # Leave out files too big for the repository.
     git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do

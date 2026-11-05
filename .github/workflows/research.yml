@@ -19,7 +19,9 @@ concurrency:
 jobs:
   session:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # A session stops itself after 45 minutes and caps each command to the time left; the rest
+    # is room for setup and saving, so a long session is never cut off before it saves.
+    timeout-minutes: 90
     env:
       PYTHONUNBUFFERED: "1"  # show output live in the log
     steps:
@@ -43,6 +45,8 @@ jobs:
       - name: Create a separate user for the agent's commands
         run: |
           sudo useradd -m researcher
+          # Remove any symlinks in the agent's folders: trusted code could follow one to a secret.
+          find self knowledge research experiments -type l -print -delete 2>/dev/null || true
           mkdir -p "$RUNNER_TEMP/agent-cache" self knowledge research experiments
           # The agent's commands may write its own folders and the cache, but not its code,
           # schedule, budget ledger or the git internals.
@@ -83,21 +87,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Stop anything the agent left running in the background.
-          sudo pkill -KILL -u researcher || true
+          # Stop anything the agent left running in the background (repeated, in case one respawns).
+          for i in 1 2 3 4 5; do sudo pkill -KILL -u researcher || break; sleep 1; done
           git checkout HEAD -- agent .github requirements.txt reviews
           git clean -fdq -- agent .github reviews
-          # Drop anything too big for the repo.
-          git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
-            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 5242880 ]; then
-              echo "Not saved (over 5 MB): $f"
-              git checkout -q -- "$f" 2>/dev/null || rm -f "$f"
-            fi
-          done
-          git config user.name "agi-research-agent"
-          git config user.email "agi-research-agent@users.noreply.github.com"
-          git add -A
-          git -c core.hooksPath=/dev/null commit -qm "Research session $(date -u +'%Y-%m-%d %H:%M')" || exit 0
-          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
-          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"
+          # Only the agent's own folders, the ledger and logs, and the transcripts are saved.
+          bash .github/scripts/save.sh "Research session $(date -u +'%Y-%m-%d %H:%M')" \
+            self knowledge research experiments state transcripts

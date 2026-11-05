@@ -30,6 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lab import EXPERIMENTS, ROOT, parse, provenance  # noqa: E402  (same queue rules as the lab)
+import safefs  # noqa: E402  (symlink-safe reads and writes of the agent's files)
 
 QUEUE = ROOT / "self" / "gpu_queue.txt"
 LOG = ROOT / "self" / "gpu_log.md"
@@ -41,6 +42,7 @@ WEEKLY_MINUTES = int(os.environ.get("GPU_WEEKLY_MINUTES") or 900)    # half of K
 POLL_MINUTES = int(os.environ.get("GPU_POLL_MINUTES") or 320)        # how long this run waits
 MAX_JOB_MINUTES = 540                                                  # Kaggle stops sessions at 12 h
 OVERHEAD = 10                                                          # start-up and download, per job
+GIVE_UP_HOURS = 13                                                     # after this, a job counts as lost
 MAX_FILE, MAX_BUNDLE = 500_000, 2_000_000
 SKIP = {"gpu-output", "__pycache__", ".git"}
 DONE = ("complete", "error", "cancel")
@@ -183,12 +185,10 @@ def finish(job: dict, state: str, u: dict) -> None:
     save_usage(u)
     entry = (f"- {stamp()} `{job['line']}` on Kaggle ({job['kernel']}): {state} after about "
              f"{job['charged']} min of GPU time ({job['source']}). Output: `{job['folder']}/gpu-output/`{note}")
-    with open(LOG, "a") as f:
-        f.write(entry + "\n")
-    with open(SERVICE_LOG, "a") as f:
-        f.write(f"- {stamp()} Kaggle: ran `{job['line']}`, used about {job['charged']} GPU minutes "
-                f"({used_this_week(u)} of {WEEKLY_MINUTES} in the last 7 days), result: {state}. "
-                "(Logged automatically by the GPU workflow.)\n")
+    safefs.append_text(LOG, entry + "\n")
+    safefs.append_text(SERVICE_LOG, f"- {stamp()} Kaggle: ran `{job['line']}`, used about {job['charged']} GPU "
+                                    f"minutes ({used_this_week(u)} of {WEEKLY_MINUTES} in the last 7 days), "
+                                    f"result: {state}. (Logged automatically by the GPU workflow.)\n")
     print(entry)
 
 
@@ -215,11 +215,20 @@ def main() -> int:
     u = load_usage()
 
     for job in [j for j in u["jobs"] if j.get("pending")]:  # still running from an earlier run
+        age = (now() - dt.datetime.fromisoformat(job["submitted"])).total_seconds() / 3600
+        if age > GIVE_UP_HOURS:
+            # Kaggle stops a job within 12 hours, so its status should have settled by now. Stop
+            # waiting on it, or it would hold up every later job.
+            finish(job, f"lost (no finished status after {GIVE_UP_HOURS} hours)", u)
+            continue
         if not wait(job, u, deadline):
             print(f"{job['kernel']} is still running; the next run will collect it.")
             return 0
 
-    lines = [l.strip() for l in QUEUE.read_text().splitlines()] if QUEUE.exists() else []
+    # Read without following a symlink: a queue pointing at this process's own environment
+    # would otherwise put the Kaggle key into the log as an unreadable job line.
+    queue = safefs.read_text(QUEUE)
+    lines = [l.strip() for l in queue.splitlines()] if queue is not None else []
     jobs = [l for l in lines if l and not l.startswith("#")]
     entries, remaining = [], []
     for i, line in enumerate(jobs):
@@ -250,11 +259,10 @@ def main() -> int:
             break
 
     if entries:
-        with open(LOG, "a") as f:
-            f.write("\n".join(entries) + "\n")
+        safefs.append_text(LOG, "\n".join(entries) + "\n")
     comments = [l for l in lines if l.startswith("#")]
-    if QUEUE.exists():
-        QUEUE.write_text("".join(f"{l}\n" for l in comments + remaining))
+    if queue is not None:
+        safefs.write_text(QUEUE, "".join(f"{l}\n" for l in comments + remaining))
     u["jobs"] = u["jobs"][-200:]
     save_usage(u)
     return 0

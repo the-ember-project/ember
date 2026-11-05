@@ -6,11 +6,11 @@ name: Lab
 on:
   # Straight after each research session, so queued jobs don't wait on GitHub's timer, which can
   # run hours late or skip a day. The lab does nothing if the queue is empty.
+  # No timed backup: it shares a queue with the sessions, where GitHub keeps only one waiting
+  # run, so a late backup could knock out a waiting session. A missed queue runs after the next one.
   workflow_run:
     workflows: ["Research session"]
     types: [completed]
-  schedule:
-    - cron: "43 8 * * *"  # a daily backup in case a run after a session is missed (odd minute: on the hour is busiest)
   workflow_dispatch:
 
 permissions:
@@ -52,6 +52,8 @@ jobs:
         if: steps.queue.outputs.jobs == 'yes'
         run: |
           sudo useradd -m researcher
+          # Remove any symlinks in the agent's folders: trusted code could follow one to a secret.
+          find self knowledge research experiments -type l -print -delete 2>/dev/null || true
           mkdir -p "$RUNNER_TEMP/agent-cache" self knowledge research experiments
           chmod -R a+rwX "$RUNNER_TEMP/agent-cache" self knowledge research experiments
           # Let it pass through (not list) the folders above the repo and the cache, so it can
@@ -75,20 +77,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          sudo pkill -KILL -u researcher || true
+          for i in 1 2 3 4 5; do sudo pkill -KILL -u researcher || break; sleep 1; done
           # The lab only saves experiment results and its own queue and log.
           git checkout HEAD -- agent .github requirements.txt state research knowledge reviews
           git clean -fdq -- agent .github state research knowledge reviews
-          git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
-            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 5242880 ]; then
-              echo "Not saved (over 5 MB): $f"
-              git checkout -q -- "$f" 2>/dev/null || rm -f "$f"
-            fi
-          done
-          git config user.name "agi-research-agent"
-          git config user.email "agi-research-agent@users.noreply.github.com"
-          git add -A
-          git -c core.hooksPath=/dev/null commit -qm "Lab run $(date -u +'%Y-%m-%d %H:%M')" || exit 0
-          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git -c core.hooksPath=/dev/null pull -q --rebase "$REMOTE" "${GITHUB_REF_NAME}"
-          git push "$REMOTE" "HEAD:${GITHUB_REF_NAME}"
+          bash .github/scripts/save.sh "Lab run $(date -u +'%Y-%m-%d %H:%M')" \
+            experiments self/lab_queue.txt self/lab_log.md
