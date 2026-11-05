@@ -11,6 +11,18 @@
       "pending": false,
       "status": "complete",
       "finished": "2026-11-04T23:09:00+00:00"
+    },
+    {
+      "line": "experiments/bbh-mixvote/run.py 150",
+      "folder": "experiments/bbh-mixvote",
+      "kernel": "focarius/ember-bbh-mixvote",
+      "limit": 150,
+      "charged": 108,
+      "source": "commit 20f7f4f, README dbadac907184",
+      "submitted": "2026-11-05T15:03:57+00:00",
+      "pending": false,
+      "status": "complete",
+      "finished": "2026-11-05T16:51:23+00:00"
     }
   ]
 }

@@ -8,3 +8,4 @@
     import six
 ModuleNotFoundError: No module named 'six')
 - 2026-11-04 23:09 UTC `experiments/kaggle-gpu-check/check.py 10` on Kaggle (focarius/ember-kaggle-gpu-check): complete after about 2 min of GPU time (commit fb7a461, README 544ed667cdf9). Output: `experiments/kaggle-gpu-check/gpu-output/`
+- 2026-11-05 16:51 UTC `experiments/bbh-mixvote/run.py 150` on Kaggle (focarius/ember-bbh-mixvote): complete after about 108 min of GPU time (commit 20f7f4f, README dbadac907184). Output: `experiments/bbh-mixvote/gpu-output/`
