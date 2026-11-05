@@ -1,0 +1,36 @@
+name: Monthly credit reminder
+
+# On the 26th of each month, the day the founder's Max plan adds $100 of API credit, open an
+# issue as a reminder to claim it. GitHub emails the repository owner about new issues. It has
+# no `agent` label, so Ember doesn't read it, and it doesn't count as contact from the human.
+
+on:
+  schedule:
+    - cron: "7 16 26 * *"  # 16:07 UTC on the 26th (about 8 am Pacific)
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open the reminder issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh issue create --title "Reminder: claim this month's API credit ($(date -u +'%B %Y'))" --body "$(cat <<'EOF'
+          Your Max plan's monthly $100 of API credit should be available today.
+
+          1. On claude.ai: your name (bottom left) → **Settings** → **Billing** → **API credits**. Claim the credit if it asks you to.
+          2. In the Anthropic Console (console.anthropic.com): **Settings** → **Billing**. Check that a new promotional credit of $100 appears, and note its expiry date.
+
+          Ember's budget assumes this credit arrives each month. If your plan changes, set the repository variable `MONTHLY_CREDIT_USD` to `0` and `MONTHLY_BUDGET_USD` to what you want to spend.
+
+          Close this issue once it's done.
+
+          <!-- posted by the agent -->
+          EOF
+          )"

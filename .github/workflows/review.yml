@@ -36,9 +36,12 @@ jobs:
       - name: Review the week
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          MONTHLY_BUDGET_USD: ${{ vars.MONTHLY_BUDGET_USD }}
+          # Keep these in step with research.yml.
+          MONTHLY_BUDGET_USD: ${{ vars.MONTHLY_BUDGET_USD || '95' }}
           AGENT_MODEL: ${{ vars.AGENT_MODEL }}
           TOTAL_FUNDS_USD: ${{ vars.TOTAL_FUNDS_USD || '115' }}
+          MONTHLY_CREDIT_USD: ${{ vars.MONTHLY_CREDIT_USD || '100' }}
+          MONTHLY_CREDIT_FROM: "2026-11-26"
         run: python agent/review.py
 
       - name: Save the review

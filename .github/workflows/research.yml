@@ -2,8 +2,9 @@ name: Research session
 
 on:
   schedule:
-    - cron: "17 6 * * *"  # once a day at 06:17 UTC (odd minute: GitHub delays on-the-hour runs most)
-    - cron: "17 18 * * *"  # a second session, only until 2026-11-29 (see "Run the agent" below)
+    # Twice a day (odd minutes: GitHub delays on-the-hour runs most). RUNS_PER_DAY below must match.
+    - cron: "17 6 * * *"
+    - cron: "17 18 * * *"
   workflow_dispatch:
 
 permissions:
@@ -58,7 +59,14 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MONTHLY_BUDGET_USD: ${{ vars.MONTHLY_BUDGET_USD }}
+          # The founder's Max plan includes $100 of API credit a month (it expires if unused), so
+          # Ember gets $95 a month over two sessions a day, leaving room for the weekly review.
+          MONTHLY_BUDGET_USD: ${{ vars.MONTHLY_BUDGET_USD || '95' }}
+          RUNS_PER_DAY: "2"
+          # The lifetime fund grows by this much each month from MONTHLY_CREDIT_FROM (the day the
+          # credit arrives), on top of TOTAL_FUNDS_USD. Set MONTHLY_CREDIT_USD to 0 if the plan changes.
+          MONTHLY_CREDIT_USD: ${{ vars.MONTHLY_CREDIT_USD || '100' }}
+          MONTHLY_CREDIT_FROM: "2026-11-26"
           DISCRETIONARY_USD: ${{ vars.DISCRETIONARY_USD }}
           GPU_WEEKLY_MINUTES: ${{ vars.GPU_WEEKLY_MINUTES }}
           AGENT_MODEL: ${{ vars.AGENT_MODEL }}
@@ -68,18 +76,7 @@ jobs:
           AGENT_TRUSTED_USERS: ${{ vars.AGENT_TRUSTED_USERS }}
           AGENT_RUN_AS: researcher
           AGENT_CACHE_DIR: ${{ runner.temp }}/agent-cache
-          SCHEDULE: ${{ github.event.schedule }}
-        run: |
-          # Until 2026-11-29, use up the human's promotional API credit before it expires that day:
-          # two sessions a day and a $97 budget for November. From Nov 30 everything is back to
-          # normal with nothing to change: one session a day, the usual monthly budget.
-          if [ "$(date -u +%Y%m%d)" -le 20261129 ]; then
-            export MONTHLY_BUDGET_USD=97 RUNS_PER_DAY=2
-          elif [ "$SCHEDULE" = "17 18 * * *" ]; then
-            echo "The 18:17 UTC session only ran until 2026-11-29."
-            exit 0
-          fi
-          python agent/run.py
+        run: python agent/run.py
 
       - name: Undo changes to protected files and save the session
         if: always()

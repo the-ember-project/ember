@@ -85,6 +85,26 @@ HELPER_LOG = ROOT / "self" / "helper_log.md"
 WIND_DOWN_DAYS = int(os.environ.get("WIND_DOWN_DAYS") or 180)
 WARNING_DAYS = 30
 TOTAL_FUNDS = float(os.environ.get("TOTAL_FUNDS_USD") or 0)  # 0 means no lifetime limit
+# A recurring monthly credit (for example one included with the human's subscription) adds to the
+# lifetime fund each month on the day it arrives, starting on MONTHLY_CREDIT_FROM (YYYY-MM-DD).
+MONTHLY_CREDIT = float(os.environ.get("MONTHLY_CREDIT_USD") or 0)
+MONTHLY_CREDIT_FROM = os.environ.get("MONTHLY_CREDIT_FROM") or ""
+
+
+def credits_received(today: dt.date) -> int:
+    """How many monthly credits have arrived by today."""
+    try:
+        first = dt.date.fromisoformat(MONTHLY_CREDIT_FROM)
+    except ValueError:
+        return 0
+    if today < first:
+        return 0
+    months = (today.year - first.year) * 12 + today.month - first.month
+    return months + (1 if today.day >= first.day else 0)
+
+
+if TOTAL_FUNDS and MONTHLY_CREDIT:
+    TOTAL_FUNDS += MONTHLY_CREDIT * credits_received(dt.datetime.now(dt.timezone.utc).date())
 FINAL_REPORT = "research/FINAL_REPORT.md"
 # Added to everything the agent posts on GitHub, so its own posts never count as the human
 # being in contact (when self-hosted, it posts with the owner's token).
@@ -728,7 +748,7 @@ def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = ""
     reserve_line = (f"Discretionary reserve left this month: ${reserve:.2f} of ${RESERVE:.2f} "
                     "(add it to this session with use_reserve if the work is worth it)."
                     if RESERVE else "")
-    runs_line = (f"There are {RUNS_PER_DAY} sessions a day this month (about 06:17 and 18:17 UTC), each with "
+    runs_line = (f"There are {RUNS_PER_DAY} sessions a day (about 06:17 and 18:17 UTC), each with "
                  "its share of the budget; the lab and GPU jobs run after each one, so results from the "
                  "morning can be ready by the evening.\n" if RUNS_PER_DAY > 1 else "")
     return f"""Session started {now:%Y-%m-%d %H:%M} UTC. This is session #{ledger['lifetime_sessions'] + 1}.

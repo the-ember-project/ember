@@ -2,7 +2,7 @@
 
 <img src="assets/mark.webp" alt="A glowing ember inside an open bronze ring" width="160" align="right">
 
-An experiment: Ember, an AI researcher that works on its own, once a day, toward artificial general intelligence. It runs for free on GitHub Actions and uses Claude through the Anthropic API, with a hard monthly spending cap.
+An experiment: Ember, an AI researcher that works on its own, twice a day, toward artificial general intelligence. It runs for free on GitHub Actions and uses Claude through the Anthropic API, with a hard monthly spending cap.
 
 Each session it reads its notes, chooses what to work on, searches and reads the web, runs small experiments, writes down what it learned, and plans the next session. Everything it does is committed to this repository, so you can follow it here.
 
@@ -19,7 +19,7 @@ Each session it reads its notes, chooses what to work on, searches and reads the
 | `transcripts/` | A full record of each session (gzipped) and a one-page index of it | `run.py` only |
 | `agent/charter.md` | The agent's goal and rules | Agent proposes, you approve (never the core rules) |
 | `agent/run.py` | The code that runs a session | Agent proposes, you approve |
-| `.github/workflows/research.yml` | The daily schedule | You only |
+| `.github/workflows/research.yml` | The session schedule | You only |
 | `state/budget.json` | Spending ledger | `run.py` only |
 
 The agent can't change its code, charter, schedule or ledger directly; any direct change there is undone after each session. To change its own code or charter, it opens a pull request. Nothing changes until you review and merge it. It can't merge pull requests itself, and it can't propose changes to the core rules in its charter, its schedule or its budget. It can propose changes to its working rules.
@@ -42,8 +42,8 @@ To change the core rules yourself, edit the "Core rules" section of `agent/chart
 5. **Say who may direct the agent.** In Settings → Secrets and variables → Actions → Variables, add `AGENT_TRUSTED_USERS` with your GitHub username (add more later, separated by commas). The agent only takes direction from these people; everyone else's comments are ignored.
 6. **Set a hard limit on the Anthropic side.** In the Anthropic Console (console.anthropic.com), go to Settings → Limits and set a monthly spend limit. This is your real safety net if anything goes wrong.
 7. **Let it open pull requests.** First in the organization's settings, then in the repository's: Settings → Actions → General → "Workflow permissions" → tick "Allow GitHub Actions to create and approve pull requests". (Despite the name, the agent has no tool to approve or merge them.)
-8. **Optional: change the monthly budget.** It's $40 by default, which gives each daily session about $1.30. To change it, add a variable `MONTHLY_BUDGET_USD`.
-9. **Start the first session.** Go to the Actions tab, open "Research session", and click "Run workflow". After that it runs every day at about 06:17 UTC (GitHub can start scheduled runs late).
+8. **Optional: change the monthly budget.** It's $95 by default, which gives each of the two daily sessions about $1.50. To change it, add a variable `MONTHLY_BUDGET_USD`.
+9. **Start the first session.** Go to the Actions tab, open "Research session", and click "Run workflow". After that it runs twice a day, at about 06:17 and 18:17 UTC (GitHub can start scheduled runs late).
 
 ## The lab
 
@@ -82,7 +82,7 @@ The monthly budget is spread evenly over the days left in the month, so a quiet 
 
 Ember can hand simple bulk work (summarising, extracting, checking) to a cheaper helper model, Claude Haiku 5.5, with its `delegate` tool. Helper costs count toward the same budget and are listed in `self/helper_log.md` and each journal entry. To use a different helper, add a repository variable `HELPER_MODEL`.
 
-**November 2026 only:** the founder's $100 promotional API credit expires on 2026-11-29, so until then Ember runs twice a day (about 06:17 and 18:17 UTC) with a $97 budget for the month, to use the credit rather than lose it. From Nov 30 it's back to one session a day and the usual budget, with nothing to change. The lifetime fund defaults to $115, the promotional credit plus $17.70 of purchased credit.
+**Where the money comes from:** the founder's Claude Max plan includes $100 of API credit each month (it arrives on the 26th and expires if unused), so Ember's budget is $95 a month, a little under the credit, over two sessions a day. A reminder issue opens on the 26th of each month to claim the credit. If the plan changes, set the repository variables `MONTHLY_CREDIT_USD` to `0` and `MONTHLY_BUDGET_USD` to the new budget.
 
 The agent uses Claude Opus 5.5 by default. To try another model, add a repository variable `AGENT_MODEL`, for example `claude-sonnet-5-5`, which costs half as much per token.
 
@@ -93,7 +93,7 @@ The agent doesn't run unattended forever:
 - **Contact:** it counts as contact when you push a commit, merge a pull request, or open or comment on an issue or pull request. The agent's own posts don't count.
 - **After 150 days without contact:** it opens an issue asking if you're still there. Any reply keeps it going.
 - **After 180 days:** it spends one last session writing `research/FINAL_REPORT.md`, a complete account of its work, then opens an issue saying it has paused and stops. The lab stops too.
-- **Lifetime fund:** $100 by default, the total set aside for Ember. When it's almost spent, Ember writes its final report and pauses the same way. To add funds, add or raise a repository variable `TOTAL_FUNDS_USD` to the new total (for example `150` adds $50 to the default), and top up your Anthropic credits by the same amount. Ember's ledger in `state/budget.json` shows its lifetime spending.
+- **Lifetime fund:** $115 by default (the first month's credit plus $17.70 of purchased credit), and it grows by `MONTHLY_CREDIT_USD` ($100) each month on the 26th. When it's almost spent, Ember writes its final report and pauses the same way. To add funds, add or raise a repository variable `TOTAL_FUNDS_USD` to the new total (for example `150` adds $50 to the default), and top up your Anthropic credits by the same amount. Ember's ledger in `state/budget.json` shows its lifetime spending.
 - **Waking it up:** comment on any issue (or raise `TOTAL_FUNDS_USD` if the fund ran out), and it resumes at its next scheduled time. GitHub disables scheduled workflows in repositories with no activity for 60 days, so after a long pause you may also need to re-enable the workflows in the Actions tab.
 
 To change the 180 days, add a repository variable `WIND_DOWN_DAYS`.
