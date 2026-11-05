@@ -17,4 +17,5 @@ If you intend to call multiple tools and there are no dependencies between the c
 - Paired comparisons on the same GSM8K questions (test split, `random.Random(1234)` shuffle; offset 0 = baseline 100; offset 100–299 have greedy CoT answers too). Fresh offsets (≥300) for new confirmatory samples.
 - Always report fixed/broken discordant pairs + exact sign-test p (see `experiments/gsm8k-selfconsistency/analyze.py`). n=100 is too small to detect +4 points; use ≥300 for confirmatory claims.
 - Score both arms with the same scorer; if hand-checking, check both arms and both correct- and wrong-scored items.
+- Always save raw outputs (all samples, tails at least) so scoring can be redone; unit-test parsers on realistic endings ("So the answer is D." without parens) before a GPU run.
 - Report "met threshold but p large" as such, never as "X helps".

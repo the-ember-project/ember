@@ -17,3 +17,6 @@ Known weaknesses: the fallback "last number" scorer can give credit to outputs w
 | 2026-11-05 | same | maj5 CoT | GSM8K 300–599 | 71.0% | +5.7, p=0.024, 4.9× tokens |
 | 2026-11-05 | same | maj5 CoT + greedy PAL (w1.5) | GSM8K 300–599 | 74.0% | +8.7, p=0.001, 5.5× |
 | 2026-11-05 | same | vote 5 CoT + 5 PAL samples | GSM8K 300–599 | 79.0% | +13.7, p<0.001, 7.7× |
+| 2026-11-05 | same | greedy CoT | GSM8K 600–899 | 61.3% | lab |
+| 2026-11-05 | same | vote 2 CoT + 5 PAL | GSM8K 600–899 | 73.0% | +11.7, p<0.001, 4.75× (M1 full pass) |
+| 2026-11-05 | Qwen2.5-1.5B-Instruct fp16 | greedy CoT / vote 5 CoT+5 PAL | BBH tracking_5 + navigate (public, 500 q) | 39.8% / 49.2% | +9.4, p<0.001; scorer caveat in bbh-mixvote README |

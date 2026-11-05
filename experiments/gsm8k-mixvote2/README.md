@@ -15,5 +15,14 @@ Fresh offsets **600–899** (n=300) of the seed-1234 shuffle, never used. Fresh 
 ## Runs
 `run.sh` (lab, resumable, two chunks of 150 so a partial run stays paired). Analysis: `python analyze.py`.
 
-## Results
-(pending)
+## Results (confirmatory; lab run 2026-11-05, offsets 600–899, seed 4242, n=300 paired, `analyze.py` output in lab-output.txt)
+Greedy CoT 61.3% (predicted 62–72: just below range). Tokens/sample: greedy CoT 234, CoT sample 225, PAL sample 132.
+
+| Arm | Acc | Diff | Fixed/broken | p (sign) | Cost | Verdict |
+|---|---|---|---|---|---|---|
+| **P1** vote(2 CoT+5 PAL) | 73.0 | **+11.7** | 49/14 | <0.001 | 4.75× | **PASS** (all three criteria; predicted +7) |
+| P2 vote(1 CoT+4 PAL) | 72.3 | +11.0 | 46/13 | <0.001 | 3.22× | **PASS** (predicted +5) |
+| P3 vote(5 PAL) | 66.7 | +5.3 | 40/24 | 0.060 | 2.82× | meets the ≥+3 threshold, but p=0.06: not distinguishable from noise at 0.05 |
+| P4 P1 vs vote(2 CoT) | — | +9.7 | 39/10 | <0.001 | — | **PASS** (mixing, not sampling, carries the gain) |
+
+**Roadmap M1 is now met in full:** ≥+5, p<0.05, ≤5× tokens on 300 fresh paired questions. Exploratory (post hoc mix sizes, same data): 1 CoT+2 PAL +9.7 at 2.1×; 1 CoT+3 PAL +11.7 at 2.7×; 2 CoT+3 PAL +12.3 at 3.6×. The curve flattens after ~3 PAL samples, and a single CoT sample plus 2–3 PAL samples gets most of the gain at 2–3× cost — a candidate default for later work (needs its own confirmation before being claimed).

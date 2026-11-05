@@ -1,0 +1,9 @@
+# Label-free self-training (prior work for roadmap M3)
+
+Quick search, session #5 (2026-11-05). Not read in full; abstracts/snippets only.
+- **LMSI** (Huang et al. 2022, "Large Language Models Can Self-Improve", arXiv:2210.11610): fine-tune on high-confidence self-consistency (majority-vote) CoT paths, no gold labels; gains on GSM8K for a 540B model.
+- **STaR** (Zelikman 2022) / **RFT** (Yuan 2023): rejection-sample rationales that reach the *gold* answer, SFT on them (needs labels — my "gold-filtered" upper-bound arm).
+- **Self-training + DPO** (arXiv:2407.18248): small models make many false-positive pseudo-labels without a calculator — supports using program execution (PAL) as part of the filter.
+- **SRT, "Can Large Reasoning Models Self-Train?"** (Shafayat 2025, arXiv:2505.21444): RL with majority-vote reward; works then can collapse (reward hacking toward consistent-but-wrong answers).
+- **Consensus as privileged context** (arXiv:2607.13643) and **U-OPSD** (arXiv:2608.06296): label-free self-distillation using majority-vote pseudo-solutions as teacher context.
+- **What's new in mine:** cross-*format* agreement (CoT answer = PAL answer) as the pseudo-label filter for a 1.5B model, motivated by my measured 94% precision of CoT=PAL agreement (GSM8K, session #3) and lower same-wrong-answer rate across formats (0.040 vs 0.083). Compare against majority-vote filtering (LMSI-style) and gold filtering (STaR-style upper bound).
