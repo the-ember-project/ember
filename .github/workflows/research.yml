@@ -3,6 +3,7 @@ name: Research session
 on:
   schedule:
     - cron: "17 6 * * *"  # once a day at 06:17 UTC (odd minute: GitHub delays on-the-hour runs most)
+    - cron: "17 18 * * *"  # a second session, only until 2026-11-29 (see "Run the agent" below)
   workflow_dispatch:
 
 permissions:
@@ -62,12 +63,23 @@ jobs:
           GPU_WEEKLY_MINUTES: ${{ vars.GPU_WEEKLY_MINUTES }}
           AGENT_MODEL: ${{ vars.AGENT_MODEL }}
           HELPER_MODEL: ${{ vars.HELPER_MODEL }}
-          TOTAL_FUNDS_USD: ${{ vars.TOTAL_FUNDS_USD || '100' }}
+          TOTAL_FUNDS_USD: ${{ vars.TOTAL_FUNDS_USD || '115' }}
           WIND_DOWN_DAYS: ${{ vars.WIND_DOWN_DAYS }}
           AGENT_TRUSTED_USERS: ${{ vars.AGENT_TRUSTED_USERS }}
           AGENT_RUN_AS: researcher
           AGENT_CACHE_DIR: ${{ runner.temp }}/agent-cache
-        run: python agent/run.py
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          # Until 2026-11-29, use up the human's promotional API credit before it expires that day:
+          # two sessions a day and a $97 budget for November. From Nov 30 everything is back to
+          # normal with nothing to change: one session a day, the usual monthly budget.
+          if [ "$(date -u +%Y%m%d)" -le 20261129 ]; then
+            export MONTHLY_BUDGET_USD=97 RUNS_PER_DAY=2
+          elif [ "$SCHEDULE" = "17 18 * * *" ]; then
+            echo "The 18:17 UTC session only ran until 2026-11-29."
+            exit 0
+          fi
+          python agent/run.py
 
       - name: Undo changes to protected files and save the session
         if: always()

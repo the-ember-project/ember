@@ -82,6 +82,8 @@ The monthly budget is spread evenly over the days left in the month, so a quiet 
 
 Ember can hand simple bulk work (summarising, extracting, checking) to a cheaper helper model, Claude Haiku 5.5, with its `delegate` tool. Helper costs count toward the same budget and are listed in `self/helper_log.md` and each journal entry. To use a different helper, add a repository variable `HELPER_MODEL`.
 
+**November 2026 only:** the founder's $100 promotional API credit expires on 2026-11-29, so until then Ember runs twice a day (about 06:17 and 18:17 UTC) with a $97 budget for the month, to use the credit rather than lose it. From Nov 30 it's back to one session a day and the usual budget, with nothing to change. The lifetime fund defaults to $115, the promotional credit plus $17.70 of purchased credit.
+
 The agent uses Claude Opus 5.5 by default. To try another model, add a repository variable `AGENT_MODEL`, for example `claude-sonnet-5-5`, which costs half as much per token.
 
 ## If you go quiet

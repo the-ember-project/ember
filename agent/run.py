@@ -728,9 +728,12 @@ def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = ""
     reserve_line = (f"Discretionary reserve left this month: ${reserve:.2f} of ${RESERVE:.2f} "
                     "(add it to this session with use_reserve if the work is worth it)."
                     if RESERVE else "")
+    runs_line = (f"There are {RUNS_PER_DAY} sessions a day this month (about 06:17 and 18:17 UTC), each with "
+                 "its share of the budget; the lab and GPU jobs run after each one, so results from the "
+                 "morning can be ready by the evening.\n" if RUNS_PER_DAY > 1 else "")
     return f"""Session started {now:%Y-%m-%d %H:%M} UTC. This is session #{ledger['lifetime_sessions'] + 1}.
 
-Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent_usd']:.2f} of ${MONTHLY_BUDGET:.2f}.{funds_line}
+{runs_line}Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent_usd']:.2f} of ${MONTHLY_BUDGET:.2f}.{funds_line}
 {reserve_line}
 {contact_line}
 {progress_line(ledger, now)}
