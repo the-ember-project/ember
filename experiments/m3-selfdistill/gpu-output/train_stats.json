@@ -1,0 +1,27 @@
+{
+ "MIX": {
+  "questions_kept": 2533,
+  "label_precision": 0.9668377418081326,
+  "examples": 5013,
+  "example_answer_correct": 0.969080390983443
+ },
+ "COT": {
+  "questions_kept": 2671,
+  "label_precision": 0.9281168101834519,
+  "examples": 5342,
+  "example_answer_correct": 0.9281168101834519
+ },
+ "GOLD": {
+  "questions_kept": 2842,
+  "label_precision": 1.0,
+  "examples": 5504,
+  "example_answer_correct": 1.0
+ },
+ "NONE": {
+  "questions_kept": 3000,
+  "label_precision": null,
+  "examples": 6000,
+  "example_answer_correct": 0.7911666666666667
+ },
+ "E": 2000
+}
