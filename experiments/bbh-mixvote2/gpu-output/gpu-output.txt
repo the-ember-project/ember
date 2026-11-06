@@ -1,0 +1,57 @@
+Tesla T4, 15360 MiB
+Tesla T4, 15360 MiB
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<03:21,  1.67it/s]Loading weights:  43%|████▎     | 147/338 [00:00<00:00, 277.99it/s]Loading weights:  67%|██████▋   | 227/338 [00:00<00:00, 280.87it/s]Loading weights:  84%|████████▎ | 283/338 [00:01<00:00, 278.77it/s]Loading weights:  97%|█████████▋| 328/338 [00:01<00:00, 284.99it/s]Loading weights: 100%|██████████| 338/338 [00:01<00:00, 248.90it/s]
+device cuda Tesla T4
+tracking_shuffled_objects_three_objects 16/250 greedyCoT=0.438 greedyPAL=0.500 100s
+tracking_shuffled_objects_three_objects 32/250 greedyCoT=0.312 greedyPAL=0.500 207s
+tracking_shuffled_objects_three_objects 48/250 greedyCoT=0.312 greedyPAL=0.583 314s
+tracking_shuffled_objects_three_objects 64/250 greedyCoT=0.359 greedyPAL=0.578 405s
+tracking_shuffled_objects_three_objects 80/250 greedyCoT=0.362 greedyPAL=0.588 531s
+tracking_shuffled_objects_three_objects 96/250 greedyCoT=0.365 greedyPAL=0.573 622s
+tracking_shuffled_objects_three_objects 112/250 greedyCoT=0.366 greedyPAL=0.562 744s
+tracking_shuffled_objects_three_objects 128/250 greedyCoT=0.359 greedyPAL=0.555 835s
+tracking_shuffled_objects_three_objects 144/250 greedyCoT=0.347 greedyPAL=0.528 938s
+tracking_shuffled_objects_three_objects 160/250 greedyCoT=0.375 greedyPAL=0.525 1033s
+tracking_shuffled_objects_three_objects 176/250 greedyCoT=0.358 greedyPAL=0.517 1123s
+tracking_shuffled_objects_three_objects 192/250 greedyCoT=0.370 greedyPAL=0.505 1237s
+tracking_shuffled_objects_three_objects 208/250 greedyCoT=0.370 greedyPAL=0.495 1343s
+tracking_shuffled_objects_three_objects 224/250 greedyCoT=0.362 greedyPAL=0.500 1439s
+tracking_shuffled_objects_three_objects 240/250 greedyCoT=0.358 greedyPAL=0.504 1539s
+tracking_shuffled_objects_three_objects 250/250 greedyCoT=0.348 greedyPAL=0.504 1607s
+logical_deduction_five_objects 16/250 greedyCoT=0.312 greedyPAL=0.062 202s
+logical_deduction_five_objects 32/250 greedyCoT=0.281 greedyPAL=0.062 385s
+logical_deduction_five_objects 48/250 greedyCoT=0.229 greedyPAL=0.062 587s
+logical_deduction_five_objects 64/250 greedyCoT=0.203 greedyPAL=0.078 773s
+logical_deduction_five_objects 80/250 greedyCoT=0.212 greedyPAL=0.087 977s
+logical_deduction_five_objects 96/250 greedyCoT=0.219 greedyPAL=0.083 1142s
+logical_deduction_five_objects 112/250 greedyCoT=0.259 greedyPAL=0.071 1338s
+logical_deduction_five_objects 128/250 greedyCoT=0.258 greedyPAL=0.070 1518s
+logical_deduction_five_objects 144/250 greedyCoT=0.278 greedyPAL=0.083 1708s
+logical_deduction_five_objects 160/250 greedyCoT=0.275 greedyPAL=0.081 1917s
+logical_deduction_five_objects 176/250 greedyCoT=0.267 greedyPAL=0.091 2143s
+logical_deduction_five_objects 192/250 greedyCoT=0.276 greedyPAL=0.083 2339s
+logical_deduction_five_objects 208/250 greedyCoT=0.269 greedyPAL=0.091 2527s
+logical_deduction_five_objects 224/250 greedyCoT=0.268 greedyPAL=0.089 2714s
+logical_deduction_five_objects 240/250 greedyCoT=0.275 greedyPAL=0.100 2902s
+logical_deduction_five_objects 250/250 greedyCoT=0.272 greedyPAL=0.096 3046s
+date_understanding 16/250 greedyCoT=0.438 greedyPAL=0.062 151s
+date_understanding 32/250 greedyCoT=0.500 greedyPAL=0.031 327s
+date_understanding 48/250 greedyCoT=0.458 greedyPAL=0.042 525s
+date_understanding 64/250 greedyCoT=0.453 greedyPAL=0.031 668s
+date_understanding 80/250 greedyCoT=0.450 greedyPAL=0.050 820s
+date_understanding 96/250 greedyCoT=0.438 greedyPAL=0.062 991s
+date_understanding 112/250 greedyCoT=0.429 greedyPAL=0.062 1175s
+date_understanding 128/250 greedyCoT=0.453 greedyPAL=0.055 1326s
+date_understanding 144/250 greedyCoT=0.458 greedyPAL=0.049 1497s
+date_understanding 160/250 greedyCoT=0.438 greedyPAL=0.050 1640s
+date_understanding 176/250 greedyCoT=0.432 greedyPAL=0.051 1825s
+date_understanding 192/250 greedyCoT=0.438 greedyPAL=0.047 1997s
+date_understanding 208/250 greedyCoT=0.442 greedyPAL=0.048 2155s
+date_understanding 224/250 greedyCoT=0.442 greedyPAL=0.049 2337s
+date_understanding 240/250 greedyCoT=0.442 greedyPAL=0.046 2473s
+date_understanding 250/250 greedyCoT=0.452 greedyPAL=0.044 2598s
+DONE
+
+[exit code 0 after 122 min]

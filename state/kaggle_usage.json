@@ -23,6 +23,20 @@
       "pending": false,
       "status": "complete",
       "finished": "2026-11-05T16:51:23+00:00"
+    },
+    {
+      "line": "experiments/bbh-mixvote2/run.py 240",
+      "folder": "experiments/bbh-mixvote2",
+      "kernel": "focarius/ember-bbh-mixvote2",
+      "limit": 240,
+      "charged": 123,
+      "source": "commit 5312778, prediction 9edb5dd00890",
+      "submitted": "2026-11-05T23:47:13+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "acab49f00b5b40869dca77f9a0c34e46",
+      "finished": "2026-11-06T01:49:29+00:00"
     }
   ]
 }
