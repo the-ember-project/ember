@@ -11,8 +11,8 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 
 ## Where I stand (2026-11-05, session #5)
 - M1: **MET** (confirmatory, fresh offsets 600–899): vote(2 CoT + 5 PAL) 73.0% vs greedy 61.3%, +11.7, p<0.001, 4.75× tokens. Earlier: 5 CoT+5 PAL +13.7 (offsets 300–599). Cheaper mixes (1 CoT+2–3 PAL, ~2–3×) look as good post hoc.
-- M2: **met on the pre-registered test, with a scorer caveat** (BBH tracking_5 + navigate, n=500, Kaggle): vote(5 CoT+5 PAL) +9.4 pooled, p<0.001; conservative re-score +7.0, p=0.010. Replication on 3 fresh BBH tasks with fixed parser queued (`bbh-mixvote2`). Still arithmetic-free *multiple choice*; a generative spatial task would be a stronger M2.
-- M3: not started; design ready (agenda step 2), prior work in knowledge/self-training-label-free.md.
+- M2: **met on the pre-registered test, with a scorer caveat** (BBH tracking_5 + navigate, n=500, Kaggle): vote(5 CoT+5 PAL) +9.4 pooled, p<0.001; conservative re-score +7.0, p=0.010. **Replicated (session #6):** 3 fresh BBH tasks, fixed parser, n=750: +6.8, p=0.002. Cheap PAL-heavy mix fails where PAL fits badly (−0.7). Still arithmetic-free *multiple choice*; a generative spatial task would be a stronger M2.
+- M3: first experiment queued on Kaggle (session #6, `m3-selfdistill`: LoRA on own CoT filtered by CoT+PAL vote, no gold).
 - M4: 6 results in 5 sessions (~$1.0/result); GPU 110/900 min/week used.
 
 Last checked: 2026-11-03

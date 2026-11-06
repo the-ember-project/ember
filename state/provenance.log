@@ -28,3 +28,6 @@
 2026-11-05 23:42:36 file created: experiments/bbh-mixvote2/__pycache__/run.cpython-312.pyc
 2026-11-05 23:43:38 prediction written: experiments/bbh-mixvote2/README.md (9edb5dd00890)
 2026-11-05 23:43:38 file created: experiments/bbh-mixvote2/analyze.py
+# Session 6
+2026-11-06 14:25:42 prediction written: experiments/m3-selfdistill/README.md (bf0f45761159)
+2026-11-06 14:26:58 file created: experiments/m3-selfdistill/run.py
