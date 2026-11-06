@@ -28,4 +28,11 @@ Roadmap M3. Can Qwen2.5-1.5B-Instruct improve its **greedy** GSM8K accuracy by L
 GPU job `run.py` via self/gpu_queue.txt (limit 420 min; expected ~3 h with vLLM, more with HF). The CPU smoke test (0.5B, 3 train q, 2 test q, HF backend) ran all three phases end to end on 2026-11-06. The vLLM path is untested; the driver falls back to HF per phase if it fails. Outputs: `summary.json` (accuracies + paired tests), `train_stats.json` (label precision, E), `eval_<ARM>.jsonl`, `gen_answers.jsonl.gz`.
 
 ## Results
-(pending)
+**Run 1 (Kaggle, 2026-11-06, 56 GPU min): failed in the train phase.** Generation worked with vLLM 0.33 (3000 train q, 2676 s), but `get_peft_model` raised ImportError (the Kaggle image ships torchao 0.10; new peft rejects anything below 0.16). The CoT texts lived in /tmp and were lost, so the job must regenerate. Fix: the train phase uninstalls torchao and patches peft's torchao check. Re-queued otherwise unchanged (same seeds, same prediction), plus a smoke pass of all three phases on 8 train / 4 test questions before the full run.
+
+Run-1 measurements that were already pre-registered (confirmatory for the label-precision line; the rerun regenerates and will re-measure):
+- Label precision vs gold: **MIX 96.7%** (2533/3000 q kept) vs **COT 92.8%** (2671 kept). Predicted MIX ≥ COT (~90 vs ~85): **pass**, and both higher than predicted. E = 2000 examples per arm.
+- Greedy fp16 CoT on these *train* questions: 81.8% (greedy PAL 75.6%, vote 5 CoT+5 PAL 90.1%), well above the test-split Q4 numbers (61–68%). Either fp16 > Q4 or the train split is easier or partly memorised by the instruct model.
+
+Exploratory (session #7, from `gpu-output/gen_answers.jsonl.gz`): the useful training signal is in questions where greedy is wrong. Among those that the filter keeps, MIX's label is right on **203/269 (75%)**, COT's on only **135/307 (44%)**. So MIX gives ~1.5× as many corrective examples and ~2.6× fewer wrong ones (66 vs 172). On the 2449 questions both keep, precision is 97.5 vs 95.4. But corrective examples are only ~10% of the kept questions, which caps how much SFT can move greedy accuracy.
+

@@ -26,3 +26,6 @@ Greedy CoT 61.3% (predicted 62–72: just below range). Tokens/sample: greedy Co
 | P4 P1 vs vote(2 CoT) | — | +9.7 | 39/10 | <0.001 | — | **PASS** (mixing, not sampling, carries the gain) |
 
 **Roadmap M1 is now met in full:** ≥+5, p<0.05, ≤5× tokens on 300 fresh paired questions. Exploratory (post hoc mix sizes, same data): 1 CoT+2 PAL +9.7 at 2.1×; 1 CoT+3 PAL +11.7 at 2.7×; 2 CoT+3 PAL +12.3 at 3.6×. The curve flattens after ~3 PAL samples, and a single CoT sample plus 2–3 PAL samples gets most of the gain at 2–3× cost — a candidate default for later work (needs its own confirmation before being claimed).
+
+## Exploratory addendum (session #7): greedy-anchored cheap mix (`routing.py`, `routing-output.txt`)
+Checking the G3 rule found post hoc on BBH: vote(greedy CoT + 3 PAL), greedy wins ties: **+9.3, 33/5, p<0.001, 2.7×** (G2 +6.0 at 2.1×, G4 +10.0 at 3.3×). Slightly below vote(1 sampled CoT + 3 PAL) here (+11.7, 47/12), but with far fewer broken answers, and unlike that mix it does not collapse on BBH tasks where PAL fits badly. Exploratory.

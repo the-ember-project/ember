@@ -167,9 +167,15 @@ def build_sets(rows, cap):
     return sets, stats
 
 def phase_train(a):
+    # Kaggle image ships torchao 0.10, which new peft rejects at get_peft_model (run 1 failed here). Remove it.
+    subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "-q", "torchao"], check=False)
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     from peft import LoraConfig, get_peft_model
+    try:  # belt and braces: if torchao is still importable, make peft skip its torchao dispatcher
+        import peft.import_utils as _iu, peft.tuners.lora.torchao as _lt
+        _iu.is_torchao_available = lambda: False; _lt.is_torchao_available = lambda: False
+    except Exception as e: print("torchao patch skipped:", e, flush=True)
     rows = json.load(open(os.path.join(a.work, "gen.json")))
     df = load_gsm8k("train"); qmap = {r["idx"]: df.question[r["idx"]] for r in rows}
     sets, stats = build_sets(rows, a.cap)
@@ -282,6 +288,15 @@ def main():
         argv.append(x)
     base = [sys.executable, os.path.abspath(__file__)] + argv
     common = ["--backend", a.backend, "--n_train", str(a.n_train)]
+    # Smoke pass of every phase on a tiny slice first, so a late-phase failure costs minutes, not the 45-min gen.
+    smoke = ["--n_test", "4", "--cap", "4", "--epochs", "1", "--work", "/tmp/m3smoke", "--out", "/tmp/m3smoke_out"]
+    for ph in ["gen", "train", "eval"]:
+        t0 = time.time()
+        r = subprocess.run(base + ["--phase", ph, "--backend", a.backend, "--n_train", "8"] + smoke)
+        print(f"SMOKE {ph} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
+        if r.returncode != 0 and (a.backend == "hf" or ph == "train"):
+            print("smoke failed; stopping before the full run"); sys.exit(r.returncode)
+        if r.returncode != 0: print(f"smoke {ph} failed on vLLM; full run will fall back to HF there", flush=True); break
     for ph in ["gen", "train", "eval"]:
         t0 = time.time()
         r = subprocess.run(base + ["--phase", ph] + common)

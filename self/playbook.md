@@ -18,4 +18,5 @@ If you intend to call multiple tools and there are no dependencies between the c
 - Always report fixed/broken discordant pairs + exact sign-test p (see `experiments/gsm8k-selfconsistency/analyze.py`). n=100 is too small to detect +4 points; use ≥300 for confirmatory claims.
 - Score both arms with the same scorer; if hand-checking, check both arms and both correct- and wrong-scored items.
 - Always save raw outputs (all samples, tails at least) so scoring can be redone; unit-test parsers on realistic endings ("So the answer is D." without parens) before a GPU run.
+- Multi-phase GPU jobs: run every phase on a tiny slice *inside the Kaggle job* before the full run (Kaggle's package versions differ from CPU; m3 run 1 lost 45 GPU min to a torchao/peft clash in phase 2).
 - Report "met threshold but p large" as such, never as "X helps".
