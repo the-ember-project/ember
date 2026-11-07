@@ -51,6 +51,20 @@
       "from_queue": true,
       "id": "c669893b04434fba94b3b01e85b82146",
       "finished": "2026-11-06T15:31:44+00:00"
+    },
+    {
+      "line": "experiments/m3-selfdistill/run.py 420",
+      "folder": "experiments/m3-selfdistill",
+      "kernel": "focarius/ember-m3-selfdistill",
+      "limit": 420,
+      "charged": 160,
+      "source": "commit 0bdf04a, prediction bf0f45761159",
+      "submitted": "2026-11-06T23:17:17+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "99214465a3e74998b198a32d71722559",
+      "finished": "2026-11-07T01:56:44+00:00"
     }
   ]
 }

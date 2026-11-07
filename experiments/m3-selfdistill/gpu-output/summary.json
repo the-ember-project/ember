@@ -1,0 +1,45 @@
+{
+ "MIX-BASE": {
+  "diff": 0.0,
+  "fixed": 26,
+  "broken": 26,
+  "p": 1.0
+ },
+ "MIX-NONE": {
+  "diff": 1.0,
+  "fixed": 29,
+  "broken": 25,
+  "p": 0.6835
+ },
+ "MIX-COT": {
+  "diff": 0.7,
+  "fixed": 31,
+  "broken": 28,
+  "p": 0.7948
+ },
+ "GOLD-BASE": {
+  "diff": -0.5,
+  "fixed": 24,
+  "broken": 26,
+  "p": 0.8877
+ },
+ "NONE-BASE": {
+  "diff": -1.0,
+  "fixed": 22,
+  "broken": 26,
+  "p": 0.6655
+ },
+ "COT-BASE": {
+  "diff": -0.7,
+  "fixed": 27,
+  "broken": 30,
+  "p": 0.7914
+ },
+ "acc": {
+  "BASE": 0.7017,
+  "MIX": 0.7017,
+  "COT": 0.6945,
+  "GOLD": 0.6969,
+  "NONE": 0.6921
+ }
+}

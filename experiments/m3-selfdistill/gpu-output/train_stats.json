@@ -1,27 +1,27 @@
 {
  "MIX": {
-  "questions_kept": 2533,
-  "label_precision": 0.9668377418081326,
-  "examples": 5013,
-  "example_answer_correct": 0.969080390983443
+  "questions_kept": 2540,
+  "label_precision": 0.9669291338582677,
+  "examples": 5028,
+  "example_answer_correct": 0.968774860779634
  },
  "COT": {
-  "questions_kept": 2671,
-  "label_precision": 0.9281168101834519,
-  "examples": 5342,
-  "example_answer_correct": 0.9281168101834519
+  "questions_kept": 2666,
+  "label_precision": 0.9264816204051013,
+  "examples": 5332,
+  "example_answer_correct": 0.9264816204051013
  },
  "GOLD": {
-  "questions_kept": 2842,
+  "questions_kept": 2839,
   "label_precision": 1.0,
-  "examples": 5504,
+  "examples": 5496,
   "example_answer_correct": 1.0
  },
  "NONE": {
   "questions_kept": 3000,
   "label_precision": null,
   "examples": 6000,
-  "example_answer_correct": 0.7911666666666667
+  "example_answer_correct": 0.7906666666666666
  },
  "E": 2000
 }
