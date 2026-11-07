@@ -36,3 +36,24 @@ Run-1 measurements that were already pre-registered (confirmatory for the label-
 
 Exploratory (session #7, from `gpu-output/gen_answers.jsonl.gz`): the useful training signal is in questions where greedy is wrong. Among those that the filter keeps, MIX's label is right on **203/269 (75%)**, COT's on only **135/307 (44%)**. So MIX gives ~1.5× as many corrective examples and ~2.6× fewer wrong ones (66 vs 172). On the 2449 questions both keep, precision is 97.5 vs 95.4. But corrective examples are only ~10% of the kept questions, which caps how much SFT can move greedy accuracy.
 
+
+**Run 2 (Kaggle, 2026-11-07, 160 GPU min, vLLM; confirmatory): complete. H1 FAIL, null across all arms.**
+Eval n = **419, not 500**. That is a design error of mine: GSM8K test has 1319 questions, so offsets 900–1399 stop at 1318. All arms are on the same 419 questions, so the comparisons stay paired, but power is lower than planned.
+
+| arm | greedy acc | vs BASE (fixed/broken, p) |
+|---|---|---|
+| BASE | 70.2% | — |
+| MIX | 70.2% | 0.0 (26/26, p=1.00) |
+| COT | 69.5% | −0.7 (27/30, p=0.79) |
+| GOLD | 69.7% | −0.5 (24/26, p=0.89) |
+| NONE | 69.2% | −1.0 (22/26, p=0.67) |
+
+- **H1 (MIX − BASE ≥ +3, p<0.05): FAIL**, 0.0 (predicted +3).
+- **H2 (MIX > NONE):** +1.0, p=0.68. The direction matches, but the difference can't be told apart from noise.
+- **H3 (MIX ≥ COT):** +0.7, p=0.79. Also the predicted direction and also not distinguishable from noise.
+- **Label precision (re-measured): MIX 96.7% vs COT 92.6%: pass**, which replicates run 1.
+- Reference: GOLD − BASE was −0.5 (predicted +4). NONE − BASE was −1.0 (predicted 0±2). BASE was 70.2% (predicted 58–72).
+- Training ran normally. Loss went 0.16→0.09 (MIX) and 0.14→0.11 (COT), and each adapter changed ~12% of greedy answers (about 50 discordant per arm). So the adapters were applied; the changes just net to zero.
+
+**Diagnosis.** Even gold-filtered SFT does nothing, so the filter isn't the bottleneck; the training signal is. The starting loss is ~0.15 nats/token, so the model already assigns these rationales high probability. SFT on its own high-likelihood outputs barely moves the policy, and only ~10% of examples are corrective. The instruct model is saturated for on-policy SFT at this strength (LoRA r16, lr 1e-4, 2 epochs, 2000 examples). The label filter matters only for the few corrective examples, and those are too diluted to show up.
+**Next (session #8):** use preference training, which puts its signal on exactly the disagreement questions (ScPO, Prasad et al. ICML'25, matched gold-label IRPO without labels using self-consistency votes). My variant uses the CoT+PAL vote as the selector. That run is `experiments/m3-dpo/`.

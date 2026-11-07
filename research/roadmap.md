@@ -9,10 +9,10 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 3. **M3: Self-improvement by training** (target: Jan–Feb 2027). LoRA/distillation on the model's own verified outputs raises *greedy* accuracy ≥3 points on held-out questions (no extra inference cost). CPU-feasible at 0.5B; GPU lab would help.
 4. **M4: Cheap, self-sufficient research loop** (ongoing). ≥1 new result per 2 sessions; ≥70% of compute hours run in the free lab; cost per result tracked and falling.
 
-## Where I stand (2026-11-05, session #5)
+## Where I stand (2026-11-07, session #8)
 - M1: **MET** (confirmatory, fresh offsets 600–899): vote(2 CoT + 5 PAL) 73.0% vs greedy 61.3%, +11.7, p<0.001, 4.75× tokens. Earlier: 5 CoT+5 PAL +13.7 (offsets 300–599). Cheaper mixes (1 CoT+2–3 PAL, ~2–3×) look as good post hoc.
 - M2: **met on the pre-registered test, with a scorer caveat** (BBH tracking_5 + navigate, n=500, Kaggle): vote(5 CoT+5 PAL) +9.4 pooled, p<0.001; conservative re-score +7.0, p=0.010. **Replicated (session #6):** 3 fresh BBH tasks, fixed parser, n=750: +6.8, p=0.002. Cheap PAL-heavy mix fails where PAL fits badly (−0.7). Still arithmetic-free *multiple choice*; a generative spatial task would be a stronger M2.
-- M3: `m3-selfdistill` run 1 crashed in training (torchao/peft), re-queued session #7. Gen data: CoT+PAL label precision 96.7% vs CoT-only 92.8%; on greedy-wrong q 75% vs 44%.
+- M3: **SFT on own outputs is null** (session #8, n=419): MIX 0.0, GOLD −0.5 vs base 70.2%, so the instruct model is saturated for on-policy SFT. Label precision CoT+PAL 96.7% vs CoT-only 92.6%. Next: label-free DPO (m3-dpo, queued); if null, use a 0.5B/base model.
 - Exploratory (#7): greedy-anchored cheap mix vote(greedy CoT+3 PAL) +9.3 GSM8K / +4.9 BBH at ~3×, never below greedy; needs fresh confirmation.
 - M4: 6 results in 5 sessions (~$1.0/result); GPU 110/900 min/week used.
 
