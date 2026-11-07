@@ -5,3 +5,4 @@
 - 2026-11-04 15:25 UTC `experiments/gsm8k-mixvote/run.sh 60`: exit code 0 after 16 min (commit 6914fd9, README 6e2f59fd896b). Output: `experiments/gsm8k-mixvote/lab-output.txt`
 - 2026-11-05 15:04 UTC `experiments/gsm8k-mixvote2/run.sh 280`: exit code 0 after 190 min (commit 20f7f4f, README 89059caa9356). Output: `experiments/gsm8k-mixvote2/lab-output.txt`
 - 2026-11-05 23:48 UTC `experiments/save-check/run.sh 2`: exit code 0 after 0 min (commit 5312778, exploratory run, no prediction). Output: `experiments/save-check/lab-output.txt`
+- 2026-11-07 13:34 UTC `experiments/gsm8k-g3confirm/run.sh 290`: exit code 0 after 211 min (commit be48bdb, prediction ed8ebaad9e27). Output: `experiments/gsm8k-g3confirm/lab-output.txt`
