@@ -44,3 +44,16 @@
 2026-11-07 13:30:11 file created: experiments/gsm8k-g3confirm/analyze.py
 2026-11-07 13:30:11 prediction written: experiments/gsm8k-g3confirm/README.md (ed8ebaad9e27)
 2026-11-07 13:30:11 file created: experiments/gsm8k-g3confirm/run.sh
+# Session 9
+2026-11-07 21:55:45 file created: experiments/m3-dpo/pair_difficulty.py
+2026-11-07 21:55:45 file created: experiments/m3-dpo/pair_difficulty.txt
+2026-11-07 21:56:50 file created: experiments/m3-dpo2/run.py
+2026-11-07 21:56:56 file created: experiments/m3-dpo2/__pycache__/run.cpython-312.pyc
+2026-11-07 21:57:10 prediction written: experiments/m3-dpo2/README.md (a2136106c536)
+2026-11-07 21:57:35 prediction changed: experiments/m3-dpo2/README.md (53a0be5b8173)
+2026-11-07 21:58:40 file created: experiments/g3-scale/cot_0.5b.jsonl
+2026-11-07 21:58:40 file created: experiments/g3-scale/analyze.py
+2026-11-07 21:58:40 file created: experiments/g3-scale/pal_0.5b.jsonl
+2026-11-07 21:58:40 file created: experiments/g3-scale/run.sh
+2026-11-07 21:58:40 file created: experiments/g3-scale/analysis_0.5b.txt
+2026-11-07 21:59:44 prediction written: experiments/g3-scale/README.md (f18af18089f9)

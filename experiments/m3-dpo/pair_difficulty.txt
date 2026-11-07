@@ -1,0 +1,6 @@
+MIX: pair_q=1126 wrong_label=52 mean_cot_correct=5.82/8 hard(<=4/8 correct)=15.5% easy(>=7/8)=45.9%
+COT: pair_q=1172 wrong_label=122 mean_cot_correct=5.79/8 hard(<=4/8 correct)=10.4% easy(>=7/8)=45.8%
+GOLD: pair_q=1606 wrong_label=0 mean_cot_correct=5.03/8 hard(<=4/8 correct)=34.6% easy(>=7/8)=33.4%
+MIX thr>=5/13: pair_q=1301 precision=93.2% hard(<=4/8)=24.7% hard_q=321
+MIX thr>=6/13: pair_q=1223 precision=94.6% hard(<=4/8)=19.9% hard_q=243
+MIX thr>=7/13: pair_q=1126 precision=95.4% hard(<=4/8)=15.5% hard_q=175

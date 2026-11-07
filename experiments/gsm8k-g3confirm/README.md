@@ -12,5 +12,10 @@ Session #7 found G3 post hoc (exploratory): vote(greedy CoT + 3 PAL samples), wi
 - Secondary (reported, not pass/fail): G4 ≥ G3; G2 > greedy. vote(4PAL) alone vs greedy is only a reference.
 - Everything else is exploratory.
 
-## Results
-(pending: lab run)
+## Results (session #9; confirmatory; CPU lab, 211 min)
+From `analysis.txt` (n=419, offsets 900–1318, fresh PAL seed 5151):
+- greedy CoT 66.8% (predicted ~65, in range).
+- **Primary PASS:** G3 vote(greedy+3 PAL, greedy wins ties) 73.7%, **+6.9**, 41 fixed / 12 broken, p=0.0001, cost 2.65× (≤3.5×). Predicted +8 — a bit below but inside range.
+- Secondary: G4 +6.4 (46/19, p=0.001, 3.20×) — G4 ≥ G3 **not** met (−0.5, noise). G2 +4.5 (29/10, p=0.003, 2.10×) > greedy: met.
+- Reference: vote(4 PAL) without the greedy anchor +1.4, p=0.62 — the anchor/mix carries the gain, not PAL alone.
+- Conclusion: the cheap greedy-anchored mix found post hoc in session #7 replicates on fresh GSM8K data: ~+7 points at ~2.7× tokens (vs +11.7 at 4.75× for vote(2 CoT+5 PAL)). GSM8K test is now exhausted (offsets 0–1318 all used).

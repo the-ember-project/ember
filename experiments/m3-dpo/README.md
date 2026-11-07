@@ -26,5 +26,28 @@ Roadmap M3, run 3. In m3-selfdistill (run 2), SFT on the model's own rationales 
 ## Runs
 GPU job `run.py` via self/gpu_queue.txt (limit 330 min; expected ~3.5 h with vLLM). Outputs: `summary.json`, `train_stats.json`, `train_log.json`, `eval_<ARM>.jsonl` (GSM8K and BBH tails), `gen_answers.jsonl.gz`.
 
-## Results
-(pending)
+## Results (session #9; Kaggle, 166 GPU min, vLLM)
+Training learned in every arm (`train_log.json`): DPO loss 0.694 → 0.52–0.59, reward margin ~0 → 3.4–5.1, pair accuracy 0.33 → 0.68–0.83 over 108 steps, E=1727 pairs per arm.
+
+GSM8K test, full 1319, greedy (`summary.json`):
+| arm | acc | vs BASE | fixed/broken | p |
+|---|---|---|---|---|
+| BASE | 69.8% | — | — | — |
+| MIX (CoT+PAL vote ≥7/13) | 72.2% | +2.35 | 155/124 | 0.072 |
+| COT (CoT majority ≥5/8, ScPO-like) | 72.9% | +3.11 | 145/104 | 0.011 |
+| GOLD | 75.4% | +5.53 | 164/91 | <0.001 |
+
+BBH date_understanding drift (n=250): BASE 50.0, MIX 48.0 (−2.0, p=0.64), COT 47.2 (−2.8, p=0.48), GOLD 45.2 (−4.8, p=0.21).
+
+Pre-registered criteria, each as measured (confirmatory):
+- **H1 FAIL:** MIX−BASE +2.35 meets the +2 threshold but p=0.072 > 0.05. Close to the predicted +2.5, but not distinguishable from noise at this n.
+- **H2 FAIL:** MIX−COT −0.76 (111/121, p=0.55). No difference detectable.
+- **H3 PASS:** MIX BBH drift −2.0 ≥ −3 (all drift estimates are noisy, n=250; GOLD's −4.8 would fail the same bar).
+- Pair-label precision PASS: MIX 95.4% vs COT 89.6% on pair questions (predicted ~92 vs ~85).
+- Reference arms: BASE 69.8% (predicted 70); GOLD +5.5 (predicted +3); COT +3.1 (predicted +2).
+
+Interpretation:
+- **DPO moves this model where SFT did not** (m3-selfdistill: GOLD SFT −0.5; here GOLD DPO +5.5, p<0.001). Negative examples are the missing signal.
+- A **label-free** arm (COT, ScPO-like) gave +3.1, p=0.011 — this meets the M3 bar (≥+3) numerically, but it was a reference arm, so it is not the confirmed primary; it needs a fresh test.
+- Better pseudo-labels (MIX) did not translate into a bigger gain. Exploratory (`pair_difficulty.py` → `pair_difficulty.txt`): MIX and COT pair questions are equally easy (mean 5.8/8 CoT samples correct; only 15.5% / 10.4% "hard" with ≤4/8 correct), while GOLD pairs are 34.6% hard. GOLD's extra gain likely comes from hard questions where the model's majority is wrong — which a strict vote filter excludes. A relaxed MIX (plurality ≥5/13, both formats) keeps 1301 pair questions, 93.2% precision, 24.7% hard — better than COT on both precision and hard coverage. Candidate label for a next round.
+- GOLD shows the largest BBH-date drop (−4.8, n.s.); watch drift in later rounds.
