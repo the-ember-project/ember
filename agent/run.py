@@ -72,6 +72,8 @@ MONTHLY_BUDGET = float(os.environ.get("MONTHLY_BUDGET_USD") or 40)
 RESERVE = float(os.environ.get("DISCRETIONARY_USD") or 5)
 RUNS_PER_DAY = int(os.environ.get("RUNS_PER_DAY") or 1)
 MIN_SESSION_BUDGET = 0.30
+# The agent may raise a session's budget up to this many times its even share, from the monthly budget.
+RAISE_FACTOR = 3
 MAX_TURNS = 80
 MAX_SECONDS = 45 * 60
 SESSION_DEADLINE = None  # time.monotonic() value after which commands get no more time
@@ -177,6 +179,15 @@ def session_budget(ledger: dict, today: dt.date) -> float:
     days_left = calendar.monthrange(today.year, today.month)[1] - today.day + 1
     even_share = remaining / (days_left * RUNS_PER_DAY)
     return min(remaining, max(even_share, MIN_SESSION_BUDGET))
+
+
+def budget_ceiling(share: float, ledger: dict) -> float:
+    """The most this session may spend from the monthly budget if the agent raises it: up to
+    RAISE_FACTOR times its even share, never more than the month or the lifetime fund has left."""
+    ceiling = min(RAISE_FACTOR * share, MONTHLY_BUDGET - ledger["spent_usd"])
+    if TOTAL_FUNDS:
+        ceiling = min(ceiling, TOTAL_FUNDS - ledger["lifetime_spent_usd"])
+    return round(max(share, ceiling), 2)
 
 
 def call_cost(usage, model: str = "") -> float:
@@ -520,6 +531,16 @@ TOOLS = [
          "files": {"type": "array", "items": schema({"path": {"type": "string"}, "content": {"type": "string"}},
                                                     ["path", "content"])},
      }, ["title", "description", "files"])},
+    {"name": "raise_budget", "description": "Raise this session's budget above its even share, up to 3 times "
+                                            "that share, from the monthly budget. Use it when this session's "
+                                            "work is worth more, for example building and checking a big "
+                                            "experiment. Later sessions get correspondingly less, and money you "
+                                            "don't spend still rolls forward. The reason is recorded in your "
+                                            "journal.",
+     "input_schema": schema({
+         "new_budget_usd": {"type": "number", "description": "The session's new total budget, in US dollars."},
+         "reason": {"type": "string", "description": "What the extra money is for, in one sentence."},
+     }, ["new_budget_usd", "reason"])},
     {"name": "use_reserve", "description": "Add money from this month's discretionary reserve to this "
                                            "session's budget, when the work in hand is worth more than the "
                                            "session's share. The reason is recorded in your journal.",
@@ -842,6 +863,7 @@ def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = ""
     return f"""Session started {now:%Y-%m-%d %H:%M} UTC. This is session #{ledger['lifetime_sessions'] + 1}.
 
 {runs_line}Budget for this session: ${budget:.2f}. Spent so far this month: ${ledger['spent_usd']:.2f} of ${MONTHLY_BUDGET:.2f}.{funds_line}
+You can raise this session's budget up to ${budget_ceiling(budget, ledger):.2f} with raise_budget when the work is worth it; later sessions then get a little less. Money you don't spend rolls forward to later sessions.
 {reserve_line}
 {contact_line}
 {progress_line(ledger, now)}
@@ -873,6 +895,30 @@ def first_message(budget: float, ledger: dict, now: dt.datetime, extra: str = ""
 {memory_tidy_section(now)}
 {memory_size_section()}
 Begin."""
+
+
+def raise_budget(s: dict, new_budget, reason: str) -> tuple[str, bool]:
+    """Raise this session's share of the monthly budget, up to its ceiling."""
+    try:
+        new_budget = round(float(new_budget), 2)
+    except (TypeError, ValueError):
+        return "Error: new_budget_usd must be a number.", True
+    if not reason.strip():
+        return "Error: give a reason.", True
+    current = round(s["share"] + s["raised"], 2)
+    if new_budget <= current:
+        return f"Error: this session's share is already ${current:.2f}; give a higher new_budget_usd.", True
+    target = min(new_budget, s["ceiling"])
+    if target <= current:
+        return (f"Error: this session's share is already at its ceiling of ${s['ceiling']:.2f} "
+                "(3 times its even share, or what the month has left). use_reserve can add more."), True
+    extra = round(target - current, 2)
+    s["raised"] = round(s["raised"] + extra, 2)
+    s["budget"] = round(s["budget"] + extra, 2)
+    s["raise_reasons"].append(f"+${extra:.2f}: {reason.strip()}")
+    capped = f" (capped at the ceiling of ${s['ceiling']:.2f})" if target < new_budget else ""
+    return (f"Raised this session's budget by ${extra:.2f} to ${s['budget']:.2f}{capped}. It comes from the "
+            "monthly budget, so later sessions get a little less. The time limit still applies."), False
 
 
 def use_reserve(s: dict, amount, reason: str) -> tuple[str, bool]:
@@ -1163,6 +1209,10 @@ def run_session(client, charter: str, messages: list, s: dict) -> str:
                 summary = tu.input.get("summary", "")
                 s["new_result"] = tu.input.get("new_result", "").strip()
                 output, is_error = "Session ended.", False
+            elif tu.name == "raise_budget":
+                output, is_error = raise_budget(s, tu.input.get("new_budget_usd", 0), tu.input.get("reason", ""))
+                if not is_error:
+                    warned = False
             elif tu.name == "use_reserve":
                 output, is_error = use_reserve(s, tu.input.get("amount_usd", 0), tu.input.get("reason", ""))
                 if not is_error:
@@ -1286,14 +1336,15 @@ def main() -> int:
     charter = system_prompt()
     messages = [{"role": "user", "content": first_message(budget, ledger, now, note)}]
     s = {"spent": 0.0, "budget": budget, "turns": 0, "log": [], "new_result": "", "seen": scan_experiments(),
-         "events": [], "reserve_left": reserve_left(ledger), "reserve_used": 0.0, "reserve_reasons": []}
+         "events": [], "reserve_left": reserve_left(ledger), "reserve_used": 0.0, "reserve_reasons": [],
+         "share": budget, "raised": 0.0, "ceiling": budget_ceiling(budget, ledger), "raise_reasons": []}
     summary = "(The session crashed; see the GitHub Actions log.)"
 
     def checkpoint() -> None:
         """Save the ledger with this session's spend so far. The end of the session saves it again
         properly; this copy only matters if the job is stopped before it gets there."""
         try:
-            from_reserve = min(max(0.0, s["spent"] - budget), s["reserve_used"])
+            from_reserve = min(max(0.0, s["spent"] - budget - s["raised"]), s["reserve_used"])
             save_ledger({**ledger,
                          "spent_usd": round(ledger["spent_usd"] + s["spent"] - from_reserve, 4),
                          "reserve_spent_usd": round(ledger["reserve_spent_usd"] + from_reserve, 4),
@@ -1306,8 +1357,8 @@ def main() -> int:
         summary = run_session(anthropic.Anthropic(), charter, messages, s)
     finally:
         # Always record the spend, even after a crash, and overwrite any change the agent made to the ledger.
-        # Spending beyond the session's own share comes out of the reserve, not the monthly budget.
-        from_reserve = min(max(0.0, s["spent"] - budget), s["reserve_used"])
+        # Spending beyond the session's own share (as raised) comes out of the reserve, not the monthly budget.
+        from_reserve = min(max(0.0, s["spent"] - budget - s["raised"]), s["reserve_used"])
         ledger["spent_usd"] = round(ledger["spent_usd"] + s["spent"] - from_reserve, 4)
         ledger["reserve_spent_usd"] = round(ledger["reserve_spent_usd"] + from_reserve, 4)
         ledger["lifetime_spent_usd"] = round(ledger["lifetime_spent_usd"] + s["spent"], 4)
@@ -1346,6 +1397,8 @@ def main() -> int:
         actions = "\n".join(f"- `{a}`" for a in s["log"]) or "- (none)"
         safefs.write_text(entry, f"# Session {ledger['lifetime_sessions']} — {now:%Y-%m-%d %H:%M} UTC\n\n"
                          f"Cost: ${s['spent']:.2f} (budget ${budget:.2f}), turns: {s['turns']}\n\n"
+                         + (f"Budget raised by ${s['raised']:.2f} ({'; '.join(s['raise_reasons'])})\n\n"
+                            if s["raise_reasons"] else "")
                          + (f"Reserve used: ${from_reserve:.2f} ({'; '.join(s['reserve_reasons'])})\n\n"
                             if s["reserve_reasons"] else "") +
                          (f"Helper model: {s['helper_calls']} task(s), ${s.get('helper_spent', 0):.2f} "
