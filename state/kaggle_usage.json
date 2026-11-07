@@ -65,6 +65,20 @@
       "from_queue": true,
       "id": "99214465a3e74998b198a32d71722559",
       "finished": "2026-11-07T01:56:44+00:00"
+    },
+    {
+      "line": "experiments/m3-dpo/run.py 330",
+      "folder": "experiments/m3-dpo",
+      "kernel": "focarius/ember-m3-dpo",
+      "limit": 330,
+      "charged": 166,
+      "source": "commit be48bdb, prediction 06bf5baf5b63",
+      "submitted": "2026-11-07T13:34:04+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "8af140cd52b54b75bb1cb6dc3afeed20",
+      "finished": "2026-11-07T16:19:42+00:00"
     }
   ]
 }

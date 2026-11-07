@@ -1,0 +1,66 @@
+{
+ "MIX-BASE": {
+  "diff": 2.35,
+  "fixed": 155,
+  "broken": 124,
+  "p": 0.0723
+ },
+ "bbh_date MIX-BASE": {
+  "diff": -2.0,
+  "fixed": 34,
+  "broken": 39,
+  "p": 0.64
+ },
+ "MIX-COT": {
+  "diff": -0.76,
+  "fixed": 111,
+  "broken": 121,
+  "p": 0.5547
+ },
+ "bbh_date MIX-COT": {
+  "diff": 0.8,
+  "fixed": 34,
+  "broken": 32,
+  "p": 0.9022
+ },
+ "GOLD-BASE": {
+  "diff": 5.53,
+  "fixed": 164,
+  "broken": 91,
+  "p": 0.0
+ },
+ "bbh_date GOLD-BASE": {
+  "diff": -4.8,
+  "fixed": 33,
+  "broken": 45,
+  "p": 0.2127
+ },
+ "COT-BASE": {
+  "diff": 3.11,
+  "fixed": 145,
+  "broken": 104,
+  "p": 0.0111
+ },
+ "bbh_date COT-BASE": {
+  "diff": -2.8,
+  "fixed": 32,
+  "broken": 39,
+  "p": 0.4767
+ },
+ "acc": {
+  "BASE": 0.6983,
+  "MIX": 0.7218,
+  "COT": 0.7293,
+  "GOLD": 0.7536
+ },
+ "bbh_date_acc": {
+  "BASE": 0.5,
+  "MIX": 0.48,
+  "COT": 0.472,
+  "GOLD": 0.452
+ },
+ "n": {
+  "gsm8k": 1319,
+  "bbh_date": 250
+ }
+}

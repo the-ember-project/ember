@@ -3,3 +3,4 @@
 - 2026-11-06 01:49 UTC Kaggle: ran `experiments/bbh-mixvote2/run.py 240`, used about 123 GPU minutes (233 of 900 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
 - 2026-11-06 15:31 UTC Kaggle: ran `experiments/m3-selfdistill/run.py 420`, used about 56 GPU minutes (289 of 900 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
 - 2026-11-07 01:56 UTC Kaggle: ran `experiments/m3-selfdistill/run.py 420`, used about 160 GPU minutes (449 of 900 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
+- 2026-11-07 16:19 UTC Kaggle: ran `experiments/m3-dpo/run.py 330`, used about 166 GPU minutes (615 of 900 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)

@@ -1,0 +1,21 @@
+{
+ "MIX": {
+  "pair_questions": 1126,
+  "label_precision_on_pair_q": 0.9538188277087034,
+  "pairs": 1727,
+  "chosen_correct": 0.9444122756224667
+ },
+ "COT": {
+  "pair_questions": 1172,
+  "label_precision_on_pair_q": 0.8959044368600683,
+  "pairs": 1781,
+  "chosen_correct": 0.8775968556990454
+ },
+ "GOLD": {
+  "pair_questions": 1606,
+  "label_precision_on_pair_q": 1.0,
+  "pairs": 2561,
+  "chosen_correct": 1.0
+ },
+ "E": 1727
+}
