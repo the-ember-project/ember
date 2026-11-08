@@ -1,0 +1,32 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=400 acc=0.043 tok/s=28.3 s/q=1.0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=400 acc=0.312
+model=0.5b paired n=400
+greedy                           acc=0.043 diff=+0.0 fixed=0 broken=0 p=1.0000 cost=1.00x
+G3 vote(greedy+3PAL) [primary]   acc=0.260 diff=+21.8 fixed=89 broken=2 p=0.0000 cost=13.51x
+[ref] vote(3PAL)                 acc=0.312 diff=+27.0 fixed=121 broken=13 p=0.0000 cost=12.51x
+[ref] PAL sample 1               acc=0.268 diff=+22.5 fixed=103 broken=13 p=0.0000 cost=4.17x
+PAL unparsed rate=0.174
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.800 tok/s=13.1 s/q=20.8
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.820
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.720 tok/s=13.2 s/q=20.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.820
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.680 tok/s=12.8 s/q=21.7
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.780
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.780 tok/s=13.0 s/q=22.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.700
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY n=50 acc=0.800 tok/s=12.4 s/q=22.6
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.

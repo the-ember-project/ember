@@ -1,0 +1,400 @@
+{"idx": 1097, "gold": 480.0, "pred": 1150.0, "ok": false, "secs": 0.89, "tokens": 16, "preds": [1150.0], "output": "#### 1150\n\n#### 1150 <number>"}
+{"idx": 1209, "gold": 29.0, "pred": Infinity, "ok": false, "secs": 8.97, "tokens": 400, "preds": [Infinity], "output": "#### 15000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+{"idx": 704, "gold": 50.0, "pred": 90.0, "ok": false, "secs": 8.19, "tokens": 400, "preds": [90.0], "output": "#### $90.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000.000"}
+{"idx": 651, "gold": 2100.0, "pred": 1200.0, "ok": false, "secs": 0.64, "tokens": 7, "preds": [1200.0], "output": "#### $1200$"}
+{"idx": 640, "gold": 43500.0, "pred": 40000.0, "ok": false, "secs": 1.13, "tokens": 12, "preds": [40000.0], "output": "#### $40,000.000"}
+{"idx": 203, "gold": 31.0, "pred": 80.0, "ok": false, "secs": 0.84, "tokens": 8, "preds": [80.0], "output": "#### 80#### <number>"}
+{"idx": 120, "gold": 240.0, "pred": 720.0, "ok": false, "secs": 0.84, "tokens": 28, "preds": [720.0], "output": "#### 720.00\n#### 720.00 = 2 * (30 * 4)"}
+{"idx": 447, "gold": 5.0, "pred": 51.0, "ok": false, "secs": 0.44, "tokens": 4, "preds": [51.0], "output": "#### 51"}
+{"idx": 44, "gold": 20.0, "pred": 18.0, "ok": false, "secs": 0.69, "tokens": 8, "preds": [18.0], "output": "#### $18.00$"}
+{"idx": 1043, "gold": 130000.0, "pred": Infinity, "ok": false, "secs": 8.35, "tokens": 400, "preds": [Infinity], "output": "#### 13000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+{"idx": 544, "gold": 80.0, "pred": 40.0, "ok": false, "secs": 0.35, "tokens": 4, "preds": [40.0], "output": "#### 40"}
+{"idx": 40, "gold": 8.0, "pred": 4.0, "ok": false, "secs": 0.48, "tokens": 8, "preds": [4.0], "output": "#### 4\n\n#### 4 ###"}
+{"idx": 122, "gold": 48.0, "pred": 18.0, "ok": false, "secs": 0.61, "tokens": 8, "preds": [18.0], "output": "#### 18#### 18"}
+{"idx": 1272, "gold": 296.0, "pred": 160.0, "ok": false, "secs": 0.95, "tokens": 23, "preds": [160.0], "output": "#### $160.00 + $80.00 = $240.00"}
+{"idx": 391, "gold": 15.0, "pred": 6.0, "ok": false, "secs": 0.44, "tokens": 6, "preds": [6.0], "output": "#### 9 #### 6"}
+{"idx": 47, "gold": 800.0, "pred": 2000.0, "ok": false, "secs": 0.57, "tokens": 10, "preds": [2000.0], "output": "#### $2000.00$"}
+{"idx": 45, "gold": 104.0, "pred": 24.0, "ok": false, "secs": 1.66, "tokens": 52, "preds": [24.0], "output": "#### 24\n\n#### 24 = 4 + 2/5 * 5 + 2 * 2/5 * 5 = 4 + 2 + 8 = 14 + 8 = 24."}
+{"idx": 1044, "gold": 1.0, "pred": 47.0, "ok": false, "secs": 0.93, "tokens": 25, "preds": [47.0], "output": "#### Cole's height now - Xavier's height now = 50 inches - 3 inches = 47 inches."}
+{"idx": 446, "gold": 2.0, "pred": 100.0, "ok": false, "secs": 0.59, "tokens": 6, "preds": [100.0], "output": "#### 100 ####"}
+{"idx": 426, "gold": 11.0, "pred": 10.0, "ok": false, "secs": 0.63, "tokens": 8, "preds": [10.0], "output": "#### $10.00$"}
+{"idx": 219, "gold": 54.0, "pred": 153.0, "ok": false, "secs": 0.59, "tokens": 10, "preds": [153.0], "output": "#### 153#### 153"}
+{"idx": 950, "gold": 5.0, "pred": 15.0, "ok": false, "secs": 0.49, "tokens": 4, "preds": [15.0], "output": "#### 15"}
+{"idx": 1291, "gold": 27.0, "pred": 36.0, "ok": false, "secs": 0.44, "tokens": 8, "preds": [36.0], "output": "#### 18 #### 36"}
+{"idx": 1131, "gold": 96.0, "pred": 120.0, "ok": false, "secs": 0.65, "tokens": 9, "preds": [120.0], "output": "#### $120.00$"}
+{"idx": 237, "gold": 90.0, "pred": 30.0, "ok": false, "secs": 0.47, "tokens": 7, "preds": [30.0], "output": "#### $30.00"}
+{"idx": 952, "gold": 360.0, "pred": 300000.0, "ok": false, "secs": 0.65, "tokens": 16, "preds": [300000.0], "output": "#### 300000#### 300000"}
+{"idx": 587, "gold": 30.0, "pred": 2500.0, "ok": false, "secs": 0.91, "tokens": 16, "preds": [2500.0], "output": "#### 2500\n\n#### 2500 <number>"}
+{"idx": 838, "gold": 15.0, "pred": 10.0, "ok": false, "secs": 0.48, "tokens": 4, "preds": [10.0], "output": "#### 10"}
+{"idx": 1014, "gold": 3.0, "pred": 10.0, "ok": false, "secs": 0.83, "tokens": 12, "preds": [10.0], "output": "#### 10\n\n#### 10.00"}
+{"idx": 486, "gold": 6.0, "pred": 60.0, "ok": false, "secs": 0.5, "tokens": 12, "preds": [60.0], "output": "#### 60.0 #### 60.0"}
+{"idx": 1271, "gold": 43.0, "pred": 108.0, "ok": false, "secs": 0.65, "tokens": 14, "preds": [108.0], "output": "#### 108\n\n#### 108 <number>"}
+{"idx": 1305, "gold": 2325.0, "pred": 3075.0, "ok": false, "secs": 0.54, "tokens": 7, "preds": [3075.0], "output": "#### 3075 ###"}
+{"idx": 368, "gold": 18.0, "pred": 14.0, "ok": false, "secs": 0.44, "tokens": 10, "preds": [14.0], "output": "#### 14.0 #### 14"}
+{"idx": 1091, "gold": 1000.0, "pred": 10000.0, "ok": false, "secs": 0.56, "tokens": 11, "preds": [10000.0], "output": "#### $10000.00 ####"}
+{"idx": 680, "gold": 20.0, "pred": 800.0, "ok": false, "secs": 0.58, "tokens": 11, "preds": [800.0], "output": "#### 120 #### 800 kg"}
+{"idx": 351, "gold": 10.0, "pred": 100.0, "ok": false, "secs": 0.67, "tokens": 10, "preds": [100.0], "output": "#### 100 #### 100"}
+{"idx": 667, "gold": 53.0, "pred": 115.0, "ok": false, "secs": 0.57, "tokens": 13, "preds": [115.0], "output": "#### 115\n\n#### 115 minutes."}
+{"idx": 231, "gold": 50.0, "pred": 30.0, "ok": false, "secs": 0.97, "tokens": 29, "preds": [30.0], "output": "#### 20 + 2 * 5 = 20 + 10 = 30\n\n#### 30 shells."}
+{"idx": 687, "gold": 13.0, "pred": 13.0, "ok": true, "secs": 0.55, "tokens": 12, "preds": [13.0], "output": "#### 13\n\n#### 13 <number>"}
+{"idx": 999, "gold": 25.0, "pred": 40.0, "ok": false, "secs": 0.61, "tokens": 13, "preds": [40.0], "output": "#### 40.0#### 40.0%"}
+{"idx": 681, "gold": 298.0, "pred": 105.0, "ok": false, "secs": 0.59, "tokens": 10, "preds": [105.0], "output": "#### 105 #### 105"}
+{"idx": 283, "gold": 68.0, "pred": 100.0, "ok": false, "secs": 0.75, "tokens": 8, "preds": [100.0], "output": "#### 100.0 ####"}
+{"idx": 271, "gold": 20.0, "pred": 14.0, "ok": false, "secs": 0.71, "tokens": 19, "preds": [14.0], "output": "#### 14\n\n#### 14\n\n#### 14\n\n#### 14"}
+{"idx": 829, "gold": 14000.0, "pred": 50000.0, "ok": false, "secs": 0.96, "tokens": 21, "preds": [50000.0], "output": "#### 50,000\n\n#### 50,000 bars of chocolate."}
+{"idx": 1149, "gold": 93.0, "pred": 300.0, "ok": false, "secs": 0.67, "tokens": 20, "preds": [300.0], "output": "#### $300.00\n\n#### 300.00 <number>"}
+{"idx": 752, "gold": 240.0, "pred": 20.0, "ok": false, "secs": 0.44, "tokens": 8, "preds": [20.0], "output": "#### $20.00$"}
+{"idx": 1170, "gold": 2.0, "pred": 12.0, "ok": false, "secs": 0.75, "tokens": 14, "preds": [12.0], "output": "#### 4.5 #### 12 = 4.5"}
+{"idx": 992, "gold": 52.0, "pred": 192.0, "ok": false, "secs": 0.85, "tokens": 18, "preds": [192.0], "output": "#### 192\n\n#### Buford writes 192 checks per year."}
+{"idx": 737, "gold": 2.0, "pred": 8.0, "ok": false, "secs": 0.75, "tokens": 11, "preds": [8.0], "output": "#### 16#### 8 ounces of water."}
+{"idx": 1089, "gold": 32.0, "pred": 12.0, "ok": false, "secs": 0.66, "tokens": 13, "preds": [12.0], "output": "#### 12.0#### 12.0 feet"}
+{"idx": 282, "gold": 195.0, "pred": 1500.0, "ok": false, "secs": 0.74, "tokens": 18, "preds": [1500.0], "output": "#### $1500.00#### $1500.00"}
+{"idx": 960, "gold": 11.0, "pred": 15.0, "ok": false, "secs": 1.0, "tokens": 12, "preds": [15.0], "output": "#### 15\n\n#### 15 <number>"}
+{"idx": 157, "gold": 80.0, "pred": 15.0, "ok": false, "secs": 0.91, "tokens": 12, "preds": [15.0], "output": "#### 15.0 #### 15.0"}
+{"idx": 543, "gold": 6.0, "pred": 0.3, "ok": false, "secs": 0.49, "tokens": 8, "preds": [0.3], "output": "#### $0.3 <number}$"}
+{"idx": 1178, "gold": 17.0, "pred": 23.0, "ok": false, "secs": 0.33, "tokens": 4, "preds": [23.0], "output": "#### 23"}
+{"idx": 288, "gold": 3.0, "pred": 40.0, "ok": false, "secs": 0.68, "tokens": 15, "preds": [40.0], "output": "#### 40\n\n#### 40 <number> 80"}
+{"idx": 1003, "gold": 480.0, "pred": 375.0, "ok": false, "secs": 0.62, "tokens": 9, "preds": [375.0], "output": "#### $375.00$"}
+{"idx": 305, "gold": 4.0, "pred": 20.0, "ok": false, "secs": 0.88, "tokens": 35, "preds": [20.0], "output": "#### 20 - 80% of 20 = 16\n\n#### 20 - 80% of 20 = 16"}
+{"idx": 1117, "gold": 9.0, "pred": 9.0, "ok": true, "secs": 2.78, "tokens": 131, "preds": [9.0], "output": "#### 1. **Determine the rate of light blinking:**\n   - The light blinks 255 times in 5 minutes.\n   - Rate = \\(\\frac{255 \\text{ times}}{5 \\text{ minutes}} = 51 \\text{ times per minute}\\).\n\n2. **Calculate the time for 459 times:**\n   - Time = \\(\\frac{459 \\text{ times}}{51 \\text{ times per minute}} = 9 \\text{ minutes}\\).\n\n#### 9. **Final Answer:**\n#### 9.0 <number>"}
+{"idx": 934, "gold": 410.0, "pred": 38.5, "ok": false, "secs": 0.76, "tokens": 12, "preds": [38.5], "output": "#### 38.5 #### 38.5"}
+{"idx": 792, "gold": 75.0, "pred": 75.0, "ok": true, "secs": 0.57, "tokens": 8, "preds": [75.0], "output": "#### $75.00$"}
+{"idx": 567, "gold": 9.0, "pred": 6.0, "ok": false, "secs": 0.74, "tokens": 7, "preds": [6.0], "output": "#### $6.00$"}
+{"idx": 220, "gold": 70.0, "pred": 38.0, "ok": false, "secs": 0.59, "tokens": 11, "preds": [38.0], "output": "#### 38\n\n#### 38 minutes."}
+{"idx": 844, "gold": 180.0, "pred": 120.0, "ok": false, "secs": 0.64, "tokens": 14, "preds": [120.0], "output": "#### 120\n\n#### 120 <number>"}
+{"idx": 437, "gold": 7.0, "pred": 102.0, "ok": false, "secs": 0.5, "tokens": 10, "preds": [102.0], "output": "#### 102 #### 102"}
+{"idx": 111, "gold": 16.0, "pred": 2400.0, "ok": false, "secs": 0.68, "tokens": 9, "preds": [2400.0], "output": "#### 2400.0####"}
+{"idx": 1070, "gold": 18.0, "pred": 24.0, "ok": false, "secs": 6.84, "tokens": 312, "preds": [24.0], "output": "#### $24.00\n\nTo calculate the total cost, we need to determine the cost of butter for 6 dozen croissants and then apply the promotion's discount.\n\n1. **Cost of butter for 6 dozen croissants:**\n   - Dennis uses 1 pound of butter for every dozen croissants.\n   - He needs to make 6 dozen croissants.\n   - Therefore, he needs 6 pounds of butter.\n\n2. **Cost of 6 pounds of butter:**\n   - The butter costs $4.00 per pound.\n   - So, the total cost for 6 pounds is:\n     \\[\n     6 \\text{ pounds} \\times \\$4.00 \\text{ per pound} = \\$24.00\n     \\]\n\n3. **Discounted price:**\n   - The promotion offers a buy one pound get one half off.\n   - For 6 pounds, Dennis will get 3 pounds at half price.\n   - The cost for 3 pounds is:\n     \\[\n     3 \\text{ pounds} \\times \\$4.00 \\text{ per pound} \\times 0.5 = \\$6.00\n     \\]\n\n4. **Total cost:**\n   - Adding the cost of the butter and the discounted price:\n     \\[\n     \\$24.00 + \\$6.00 = \\$24.00\n     \\]\n\n#### $24.00 <number>"}
+{"idx": 1297, "gold": 60.0, "pred": 6000.0, "ok": false, "secs": 5.83, "tokens": 256, "preds": [6000.0], "output": "#### $5000.00$\n\nTo calculate the profit, we need to determine the total cost of making 10 jars and then subtract that from the total revenue from selling 10 jars.\n\n1. **Calculate the cost of making 10 jars:**\n\n   - **Passion fruit:** 10 jars * 2 pounds/jar * $6/pound = $120\n   - **Jackfruit:** 10 jars * 1.5 pounds/jar * $8/pound = $120\n   - **Special honey:** 10 jars * 2 pounds/jar * $10/pound = $200\n\n   Total cost = $120 + $120 + $200 = $440\n\n2. **Calculate the total revenue from selling 10 jars:**\n\n   - **Price per jar:** $50\n   - **Total revenue = 10 jars * $50/jar = $500**\n\n3. **Calculate the profit:**\n\n   - **Profit = Total revenue - Total cost = $500 - $440 = $60**\n\n#### $6000.00"}
+{"idx": 628, "gold": 4.0, "pred": 20.0, "ok": false, "secs": 0.61, "tokens": 11, "preds": [20.0], "output": "#### 20\n\n#### 20 years."}
+{"idx": 1233, "gold": 81.0, "pred": 180.0, "ok": false, "secs": 0.56, "tokens": 9, "preds": [180.0], "output": "#### $180.00$"}
+{"idx": 1165, "gold": 1248.0, "pred": 120.0, "ok": false, "secs": 0.68, "tokens": 9, "preds": [120.0], "output": "#### $120.00$"}
+{"idx": 337, "gold": 1.0, "pred": 2.0, "ok": false, "secs": 0.35, "tokens": 3, "preds": [2.0], "output": "#### 2"}
+{"idx": 774, "gold": 10.0, "pred": 110.0, "ok": false, "secs": 0.53, "tokens": 10, "preds": [110.0], "output": "#### 110 #### 110"}
+{"idx": 733, "gold": 5.0, "pred": 20.0, "ok": false, "secs": 0.49, "tokens": 9, "preds": [20.0], "output": "#### Each of them got $20."}
+{"idx": 225, "gold": 9.0, "pred": 6.0, "ok": false, "secs": 0.6, "tokens": 10, "preds": [6.0], "output": "#### 6.0 #### 6.0"}
+{"idx": 1301, "gold": 23.0, "pred": 24.0, "ok": false, "secs": 0.7, "tokens": 9, "preds": [24.0], "output": "#### 24\n\n#### 24"}
+{"idx": 1083, "gold": 2.0, "pred": 2.0, "ok": true, "secs": 0.57, "tokens": 7, "preds": [2.0], "output": "#### $2.00$"}
+{"idx": 1119, "gold": 18.0, "pred": 10.000000000000002, "ok": false, "secs": 1.19, "tokens": 25, "preds": [10.000000000000002], "output": "#### 10\n\n#### 10.000000000000001"}
+{"idx": 12, "gold": 13.0, "pred": 7.5, "ok": false, "secs": 0.67, "tokens": 10, "preds": [7.5], "output": "#### 2.5 #### 7.5"}
+{"idx": 1210, "gold": 288.0, "pred": 120.0, "ok": false, "secs": 0.52, "tokens": 5, "preds": [120.0], "output": "#### 120"}
+{"idx": 1216, "gold": 20.0, "pred": 200.0, "ok": false, "secs": 0.98, "tokens": 17, "preds": [200.0], "output": "#### 200\n\n#### 200\n\n#### 200"}
+{"idx": 407, "gold": 2000.0, "pred": 2000.0, "ok": true, "secs": 0.77, "tokens": 7, "preds": [2000.0], "output": "#### 2000 ####"}
+{"idx": 629, "gold": 17500.0, "pred": 10000.0, "ok": false, "secs": 1.94, "tokens": 77, "preds": [10000.0], "output": "#### $25,000.00 * 0.30 + 10% * (10 * 25,000) = $7,500.00 + $2,500.00 = $10,000.00 #### $10,000.00"}
+{"idx": 1113, "gold": -3.0, "pred": 3.0, "ok": false, "secs": 0.42, "tokens": 6, "preds": [3.0], "output": "#### 1#### 3"}
+{"idx": 904, "gold": 8.0, "pred": 7.2, "ok": false, "secs": 0.59, "tokens": 12, "preds": [7.2], "output": "#### $7.20#### $7.20"}
+{"idx": 1132, "gold": 45000.0, "pred": 15000.0, "ok": false, "secs": 0.54, "tokens": 11, "preds": [15000.0], "output": "#### $15000.00$"}
+{"idx": 490, "gold": 4.0, "pred": 32.0, "ok": false, "secs": 0.62, "tokens": 12, "preds": [32.0], "output": "#### 32.0 #### 32.0"}
+{"idx": 1086, "gold": 131250.0, "pred": 180000.0, "ok": false, "secs": 8.98, "tokens": 400, "preds": [180000.0], "output": "#### $180000.0000000000055555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555"}
+{"idx": 1186, "gold": 19.0, "pred": 15.0, "ok": false, "secs": 0.51, "tokens": 12, "preds": [15.0], "output": "#### 15\n\n#### 15 <number>"}
+{"idx": 646, "gold": 79.0, "pred": 14.5, "ok": false, "secs": 0.66, "tokens": 16, "preds": [14.5], "output": "#### 14.5\n\n#### 14.5 <number>"}
+{"idx": 307, "gold": 16.0, "pred": 4.0, "ok": false, "secs": 0.56, "tokens": 8, "preds": [4.0], "output": "#### 4 #### 4 weeks."}
+{"idx": 922, "gold": 60.0, "pred": 50.0, "ok": false, "secs": 2.74, "tokens": 123, "preds": [50.0], "output": "#### 50\n\nTo calculate the number of shells Martha has collected by her 10th birthday, we need to consider the following:\n\n1. Martha starts collecting shells at age 5.\n2. She collects one shell every month.\n3. She has been collecting shells until her 10th birthday.\n\nSince she starts at age 5 and collects one shell per month, by her 10th birthday, she has collected shells for 10 months. \n\nTherefore, the total number of shells collected by her 10th birthday is:\n\n#### 50\n\n#### 50"}
+{"idx": 1250, "gold": 22.0, "pred": 11.0, "ok": false, "secs": 0.65, "tokens": 15, "preds": [11.0], "output": "#### 11.0 #### Each person gets 11 chips."}
+{"idx": 433, "gold": 6.0, "pred": 1800.0, "ok": false, "secs": 0.49, "tokens": 9, "preds": [1800.0], "output": "#### 1800.0####"}
+{"idx": 766, "gold": 12.0, "pred": 12.0, "ok": true, "secs": 0.55, "tokens": 8, "preds": [12.0], "output": "#### $12.00$"}
+{"idx": 52, "gold": 15.0, "pred": 150.0, "ok": false, "secs": 0.77, "tokens": 17, "preds": [150.0], "output": "#### 150\n\n#### 150\n\n#### 150"}
+{"idx": 918, "gold": 56.0, "pred": 14.0, "ok": false, "secs": 0.53, "tokens": 9, "preds": [14.0], "output": "#### 14\n\n#### 14"}
+{"idx": 539, "gold": 35.0, "pred": 25.0, "ok": false, "secs": 0.42, "tokens": 7, "preds": [25.0], "output": "#### $25.00"}
+{"idx": 143, "gold": 16.0, "pred": 10.0, "ok": false, "secs": 0.57, "tokens": 8, "preds": [10.0], "output": "#### $10.00$"}
+{"idx": 572, "gold": 100.0, "pred": 1200.0, "ok": false, "secs": 0.81, "tokens": 16, "preds": [1200.0], "output": "#### 1200\n\n#### 1200 <number>"}
+{"idx": 495, "gold": 200.0, "pred": 1200.0, "ok": false, "secs": 0.55, "tokens": 10, "preds": [1200.0], "output": "#### 1200#### <number>"}
+{"idx": 112, "gold": 24.0, "pred": 12.0, "ok": false, "secs": 0.57, "tokens": 6, "preds": [12.0], "output": "#### 12.0"}
+{"idx": 765, "gold": 490.0, "pred": 2400.0, "ok": false, "secs": 0.54, "tokens": 16, "preds": [2400.0], "output": "#### 2400\n\n#### 2400 <number>"}
+{"idx": 1008, "gold": 230.0, "pred": 150.0, "ok": false, "secs": 0.46, "tokens": 6, "preds": [150.0], "output": "#### 150 ####"}
+{"idx": 208, "gold": 76.0, "pred": 40.0, "ok": false, "secs": 0.93, "tokens": 25, "preds": [40.0], "output": "#### 40\n\n#### 40.000000000000002"}
+{"idx": 34, "gold": 23.0, "pred": 42.0, "ok": false, "secs": 0.47, "tokens": 8, "preds": [42.0], "output": "#### 42 #### 42"}
+{"idx": 412, "gold": 5.0, "pred": 240.0, "ok": false, "secs": 0.66, "tokens": 8, "preds": [240.0], "output": "#### 240.0 ####"}
+{"idx": 1122, "gold": 18.0, "pred": 2.5, "ok": false, "secs": 0.73, "tokens": 5, "preds": [2.5], "output": "#### 2.5"}
+{"idx": 818, "gold": 16.0, "pred": 160.0, "ok": false, "secs": 0.61, "tokens": 10, "preds": [160.0], "output": "#### 160 #### 160"}
+{"idx": 1142, "gold": 9.0, "pred": 28.0, "ok": false, "secs": 0.64, "tokens": 8, "preds": [28.0], "output": "#### 28 #### 28"}
+{"idx": 987, "gold": 3.0, "pred": 12.0, "ok": false, "secs": 0.7, "tokens": 12, "preds": [12.0], "output": "#### 12.0 #### 12.0"}
+{"idx": 88, "gold": 8000.0, "pred": 88000.0, "ok": false, "secs": 0.59, "tokens": 14, "preds": [88000.0], "output": "#### 88000 #### 88000"}
+{"idx": 1031, "gold": 5.0, "pred": 200.0, "ok": false, "secs": 0.63, "tokens": 8, "preds": [200.0], "output": "#### 200.0 ####"}
+{"idx": 924, "gold": 12.0, "pred": 3.0, "ok": false, "secs": 0.71, "tokens": 3, "preds": [3.0], "output": "#### 3"}
+{"idx": 460, "gold": 84.0, "pred": Infinity, "ok": false, "secs": 8.49, "tokens": 400, "preds": [Infinity], "output": "#### 60000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+{"idx": 1114, "gold": 8.0, "pred": 15.0, "ok": false, "secs": 0.49, "tokens": 9, "preds": [15.0], "output": "#### $15. #### <number>"}
+{"idx": 364, "gold": 49.0, "pred": 4.0, "ok": false, "secs": 0.72, "tokens": 17, "preds": [4.0], "output": "#### 4\n\n#### 4 boys were at Small Tree  School on Friday."}
+{"idx": 639, "gold": 216.0, "pred": 360.0, "ok": false, "secs": 0.5, "tokens": 8, "preds": [360.0], "output": "#### 360.0####"}
+{"idx": 579, "gold": 7.0, "pred": 8.000000000000002, "ok": false, "secs": 0.67, "tokens": 23, "preds": [8.000000000000002], "output": "#### 8\n\n#### 8.000000000000001"}
+{"idx": 637, "gold": 17.0, "pred": 12.0, "ok": false, "secs": 0.55, "tokens": 12, "preds": [12.0], "output": "#### 12.0 #### 12.0"}
+{"idx": 682, "gold": 80.0, "pred": 1400.0, "ok": false, "secs": 0.69, "tokens": 9, "preds": [1400.0], "output": "#### 1400.0 ####"}
+{"idx": 359, "gold": 4.0, "pred": 8.0, "ok": false, "secs": 0.67, "tokens": 10, "preds": [8.0], "output": "#### 8.0 #### 8.0"}
+{"idx": 443, "gold": 59.0, "pred": 50.0, "ok": false, "secs": 0.72, "tokens": 9, "preds": [50.0], "output": "#### 50.0 <number>"}
+{"idx": 134, "gold": 720.0, "pred": 600.0, "ok": false, "secs": 0.63, "tokens": 20, "preds": [600.0], "output": "#### $600.00\n\n#### $600.00 <number>"}
+{"idx": 118, "gold": 4.0, "pred": 10.0, "ok": false, "secs": 0.57, "tokens": 4, "preds": [10.0], "output": "#### 10"}
+{"idx": 1151, "gold": 50.0, "pred": 110.0, "ok": false, "secs": 0.63, "tokens": 17, "preds": [110.0], "output": "#### 110.0 #### 110.0 miles per hour"}
+{"idx": 258, "gold": 6.0, "pred": 16.0, "ok": false, "secs": 0.57, "tokens": 7, "preds": [16.0], "output": "#### $16.00"}
+{"idx": 717, "gold": 5.0, "pred": 3.0, "ok": false, "secs": 0.47, "tokens": 7, "preds": [3.0], "output": "#### $3.00$"}
+{"idx": 1105, "gold": 40.0, "pred": 20.0, "ok": false, "secs": 0.79, "tokens": 18, "preds": [20.0], "output": "#### 20\n\n#### 20 years #### 20.000"}
+{"idx": 113, "gold": 25.0, "pred": 20.0, "ok": false, "secs": 0.41, "tokens": 8, "preds": [20.0], "output": "#### 20 #### 20"}
+{"idx": 1046, "gold": 189.0, "pred": 1200.0, "ok": false, "secs": 0.61, "tokens": 16, "preds": [1200.0], "output": "#### 1200.0#### 1200.0"}
+{"idx": 1121, "gold": 35.0, "pred": 10.0, "ok": false, "secs": 0.52, "tokens": 12, "preds": [10.0], "output": "#### Brian will walk 10 miles in seven days."}
+{"idx": 1298, "gold": 31.0, "pred": 105000.00000000001, "ok": false, "secs": 0.77, "tokens": 21, "preds": [105000.00000000001], "output": "#### 105000.00000000001####"}
+{"idx": 14, "gold": 60.0, "pred": 25.0, "ok": false, "secs": 0.52, "tokens": 7, "preds": [25.0], "output": "#### 25.0####"}
+{"idx": 147, "gold": 75.0, "pred": 12.0, "ok": false, "secs": 0.98, "tokens": 8, "preds": [12.0], "output": "#### 12 #### 12"}
+{"idx": 865, "gold": 23.0, "pred": 75.0, "ok": false, "secs": 0.64, "tokens": 9, "preds": [75.0], "output": "#### 75\n\n#### 75"}
+{"idx": 1171, "gold": 3160.0, "pred": 44000.0, "ok": false, "secs": 0.62, "tokens": 8, "preds": [44000.0], "output": "#### 44000####"}
+{"idx": 802, "gold": 6.0, "pred": 120.0, "ok": false, "secs": 0.61, "tokens": 9, "preds": [120.0], "output": "#### 120#### <number>"}
+{"idx": 103, "gold": 140.0, "pred": 1260.0, "ok": false, "secs": 0.65, "tokens": 10, "preds": [1260.0], "output": "#### 1260 #### <number>"}
+{"idx": 394, "gold": 92.0, "pred": 28.0, "ok": false, "secs": 0.47, "tokens": 8, "preds": [28.0], "output": "#### 28 #### 28"}
+{"idx": 946, "gold": 450.0, "pred": 730.0, "ok": false, "secs": 0.45, "tokens": 6, "preds": [730.0], "output": "#### 730 ####"}
+{"idx": 115, "gold": 90.0, "pred": 100.0, "ok": false, "secs": 0.97, "tokens": 18, "preds": [100.0], "output": "#### $100.00$\n\n#### $100.00$"}
+{"idx": 564, "gold": 240.0, "pred": 3000.0, "ok": false, "secs": 0.58, "tokens": 9, "preds": [3000.0], "output": "#### 3000.0####"}
+{"idx": 23, "gold": 8.0, "pred": 3000.0, "ok": false, "secs": 0.46, "tokens": 7, "preds": [3000.0], "output": "#### 3000 ####"}
+{"idx": 942, "gold": 205.0, "pred": 64.0, "ok": false, "secs": 0.55, "tokens": 8, "preds": [64.0], "output": "#### $64.00$"}
+{"idx": 1304, "gold": 1000.0, "pred": 1000.0, "ok": true, "secs": 0.58, "tokens": 7, "preds": [1000.0], "output": "#### 1000 ####"}
+{"idx": 396, "gold": 3.0, "pred": 52.0, "ok": false, "secs": 0.45, "tokens": 7, "preds": [52.0], "output": "#### 5 #### 52"}
+{"idx": 1227, "gold": 66.0, "pred": 12.000000000000002, "ok": false, "secs": 0.79, "tokens": 20, "preds": [12.000000000000002], "output": "#### 12.000000000000002"}
+{"idx": 451, "gold": 11050.0, "pred": 1000.0, "ok": false, "secs": 0.58, "tokens": 7, "preds": [1000.0], "output": "#### $1000$"}
+{"idx": 929, "gold": 60.0, "pred": 30.0, "ok": false, "secs": 8.42, "tokens": 400, "preds": [30.0], "output": "#### 30\n\n#### 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 30 miles per hour**: 3"}
+{"idx": 1080, "gold": 72000.0, "pred": Infinity, "ok": false, "secs": 8.51, "tokens": 400, "preds": [Infinity], "output": "#### 20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+{"idx": 6, "gold": 260.0, "pred": 80.0, "ok": false, "secs": 0.6, "tokens": 12, "preds": [80.0], "output": "#### 80\n\n#### 80 <number>"}
+{"idx": 1055, "gold": 2304.0, "pred": 2304.0, "ok": true, "secs": 1.41, "tokens": 53, "preds": [2304.0], "output": "#### $120 * 1.6 = $192.00 a month\n\n#### $192 * 12 = $2304.00 a year\n\n#### $2304.00 a year"}
+{"idx": 592, "gold": 1.0, "pred": 13.0, "ok": false, "secs": 0.7, "tokens": 10, "preds": [13.0], "output": "#### $13 - $4 = $9"}
+{"idx": 1290, "gold": 90.0, "pred": 120.00000000000001, "ok": false, "secs": 0.83, "tokens": 26, "preds": [120.00000000000001], "output": "#### 120\n\n#### 120.00000000000001"}
+{"idx": 367, "gold": 19.0, "pred": 50.0, "ok": false, "secs": 0.94, "tokens": 19, "preds": [50.0], "output": "#### 15 #### 50 - 3 * 5 = 35."}
+{"idx": 751, "gold": 43.0, "pred": 79.0, "ok": false, "secs": 1.26, "tokens": 28, "preds": [79.0], "output": "#### 48 + 25 + 6 = 79\n\n#### 79 + 12 = 91"}
+{"idx": 2, "gold": 70000.0, "pred": 35000.0, "ok": false, "secs": 0.62, "tokens": 12, "preds": [35000.0], "output": "#### $35,000.00$"}
+{"idx": 1224, "gold": 5.0, "pred": 1.0, "ok": false, "secs": 0.45, "tokens": 7, "preds": [1.0], "output": "#### 1#### 1 inch"}
+{"idx": 532, "gold": 25.0, "pred": 13.0, "ok": false, "secs": 0.56, "tokens": 12, "preds": [13.0], "output": "#### 13\n\n#### 13 <number>"}
+{"idx": 1195, "gold": 320.0, "pred": 120.0, "ok": false, "secs": 1.05, "tokens": 14, "preds": [120.0], "output": "#### 120\n\n#### 120 <number>"}
+{"idx": 570, "gold": 23.0, "pred": 100.0, "ok": false, "secs": 0.72, "tokens": 12, "preds": [100.0], "output": "#### $100$\n\n#### $100$"}
+{"idx": 956, "gold": 1.0, "pred": 12.0, "ok": false, "secs": 0.49, "tokens": 8, "preds": [12.0], "output": "#### 12 #### 12"}
+{"idx": 435, "gold": 5.0, "pred": 6.5, "ok": false, "secs": 0.42, "tokens": 5, "preds": [6.5], "output": "#### 6.5"}
+{"idx": 60, "gold": 17.0, "pred": 25.0, "ok": false, "secs": 0.66, "tokens": 19, "preds": [25.0], "output": "#### 25 - 1 - 20% - 2 = 23"}
+{"idx": 673, "gold": 9.0, "pred": 14.0, "ok": false, "secs": 0.43, "tokens": 8, "preds": [14.0], "output": "#### 14 #### 14"}
+{"idx": 22, "gold": 7.0, "pred": 14.0, "ok": false, "secs": 0.46, "tokens": 4, "preds": [14.0], "output": "#### 14"}
+{"idx": 724, "gold": 18.0, "pred": 12.000000000000002, "ok": false, "secs": 0.79, "tokens": 20, "preds": [12.000000000000002], "output": "#### 12.000000000000002"}
+{"idx": 465, "gold": 30.0, "pred": 1500.0, "ok": false, "secs": 0.74, "tokens": 12, "preds": [1500.0], "output": "#### 1500 #### 1500"}
+{"idx": 910, "gold": 700.0, "pred": 200.0, "ok": false, "secs": 1.94, "tokens": 85, "preds": [200.0], "output": "#### 300\n\nFarmer Brown's farm is 200 acres, and Farmer Smith's farm is 100 acres more than twice that. To find the total number of acres, we add Farmer Brown's and Farmer Smith's acres together:\n\n#### 200 + (2 * 200) = 200 + 400 = 600 acres."}
+{"idx": 1035, "gold": 35.0, "pred": 1800.0, "ok": false, "secs": 0.8, "tokens": 7, "preds": [1800.0], "output": "#### 1800 ####"}
+{"idx": 152, "gold": 4.0, "pred": 0.0, "ok": false, "secs": 1.3, "tokens": 51, "preds": [0.0], "output": "#### $0.10 per cookie * 10 packs = $10.00\n#### $10.00 - $10.00 = $0.00\n\n#### $0.00 <number>"}
+{"idx": 13, "gold": 18.0, "pred": 15.000000000000002, "ok": false, "secs": 0.78, "tokens": 20, "preds": [15.000000000000002], "output": "#### 15.000000000000002"}
+{"idx": 948, "gold": 15.0, "pred": 3.9, "ok": false, "secs": 0.87, "tokens": 16, "preds": [3.9], "output": "#### $3.90\n\n#### 3.90 <number>"}
+{"idx": 562, "gold": 82.0, "pred": 15.0, "ok": false, "secs": 0.78, "tokens": 12, "preds": [15.0], "output": "#### 15\n\n#### 15 <number>"}
+{"idx": 554, "gold": 54.0, "pred": 3.0, "ok": false, "secs": 0.55, "tokens": 8, "preds": [3.0], "output": "#### 14 #### 3 minutes"}
+{"idx": 581, "gold": 215.0, "pred": 115.00000000000001, "ok": false, "secs": 0.84, "tokens": 26, "preds": [115.00000000000001], "output": "#### 115\n\n#### 115.00000000000001"}
+{"idx": 778, "gold": 38.0, "pred": 24.0, "ok": false, "secs": 0.9, "tokens": 18, "preds": [24.0], "output": "#### $24.00\n\n#### $24.00 <number>"}
+{"idx": 119, "gold": 95200.0, "pred": 44000.0, "ok": false, "secs": 0.71, "tokens": 8, "preds": [44000.0], "output": "#### $44000$"}
+{"idx": 655, "gold": 10.0, "pred": 12.0, "ok": false, "secs": 0.44, "tokens": 8, "preds": [12.0], "output": "#### 12#### 12"}
+{"idx": 164, "gold": 15.0, "pred": 35.0, "ok": false, "secs": 0.58, "tokens": 5, "preds": [35.0], "output": "#### $35$"}
+{"idx": 245, "gold": 7.0, "pred": 16.0, "ok": false, "secs": 0.6, "tokens": 8, "preds": [16.0], "output": "#### 16 #### 16"}
+{"idx": 1314, "gold": 8.0, "pred": 15.0, "ok": false, "secs": 0.52, "tokens": 4, "preds": [15.0], "output": "#### 15"}
+{"idx": 522, "gold": 29.0, "pred": 29.0, "ok": true, "secs": 1.87, "tokens": 64, "preds": [29.0], "output": "#### Tony: 6 quarts per hour\n#### Bobby: 5 quarts per hour\n#### Kathy: 10 quarts per hour\n#### Ricky: 8 quarts per hour\n\n#### Total: 6 + 5 + 10 + 8 = 29 quarts per hour"}
+{"idx": 917, "gold": 12.0, "pred": 11.0, "ok": false, "secs": 0.35, "tokens": 4, "preds": [11.0], "output": "#### 11"}
+{"idx": 1282, "gold": 12.0, "pred": 2.0, "ok": false, "secs": 0.6, "tokens": 7, "preds": [2.0], "output": "#### $2.00$"}
+{"idx": 51, "gold": 5.0, "pred": 12.0, "ok": false, "secs": 0.5, "tokens": 8, "preds": [12.0], "output": "#### 2 #### 12 hours"}
+{"idx": 1315, "gold": 5.0, "pred": 120.0, "ok": false, "secs": 0.61, "tokens": 10, "preds": [120.0], "output": "#### 120 #### 120"}
+{"idx": 302, "gold": 15.0, "pred": 20.0, "ok": false, "secs": 0.45, "tokens": 8, "preds": [20.0], "output": "#### $20.00$"}
+{"idx": 261, "gold": 62.0, "pred": 6000.0, "ok": false, "secs": 0.48, "tokens": 10, "preds": [6000.0], "output": "#### 6000.00 ####"}
+{"idx": 1029, "gold": 34.0, "pred": 145.0, "ok": false, "secs": 1.1, "tokens": 15, "preds": [145.0], "output": "#### 145\n\n#### 145 #### <number>"}
+{"idx": 138, "gold": 105.0, "pred": 150.0, "ok": false, "secs": 0.61, "tokens": 6, "preds": [150.0], "output": "#### 150 ####"}
+{"idx": 106, "gold": 72.0, "pred": 640.0, "ok": false, "secs": 0.53, "tokens": 10, "preds": [640.0], "output": "#### 640#### 640"}
+{"idx": 116, "gold": 42.0, "pred": 180.0, "ok": false, "secs": 0.52, "tokens": 8, "preds": [180.0], "output": "#### 180.00"}
+{"idx": 892, "gold": 1.0, "pred": 2.5, "ok": false, "secs": 0.59, "tokens": 9, "preds": [2.5], "output": "#### $2.50 <number>"}
+{"idx": 163, "gold": 50.0, "pred": 14.5, "ok": false, "secs": 0.55, "tokens": 8, "preds": [14.5], "output": "#### $14.50$"}
+{"idx": 369, "gold": 1198.0, "pred": 47.0, "ok": false, "secs": 1.88, "tokens": 65, "preds": [47.0], "output": "#### $1000.00\n\n#### $20.00 + $20.00 + $5.00 + $12.00 = $47.00\n\n#### $47.00 * 44 = $2008.00"}
+{"idx": 473, "gold": 10.0, "pred": 0.2, "ok": false, "secs": 0.56, "tokens": 13, "preds": [0.2], "output": "#### 20.0% #### 0.20"}
+{"idx": 478, "gold": 621.0, "pred": 4000.0, "ok": false, "secs": 0.64, "tokens": 13, "preds": [4000.0], "output": "#### 4000\n\n#### 4000"}
+{"idx": 402, "gold": 4.0, "pred": 2.0, "ok": false, "secs": 0.52, "tokens": 3, "preds": [2.0], "output": "#### 2"}
+{"idx": 276, "gold": 9.0, "pred": 120.0, "ok": false, "secs": 0.66, "tokens": 9, "preds": [120.0], "output": "#### 120#### <number>"}
+{"idx": 565, "gold": 5.0, "pred": 12.0, "ok": false, "secs": 0.88, "tokens": 33, "preds": [12.0], "output": "#### 7 #### 12 - 3/12 = 7\n\n#### 7 #### 12 - 4/12 = 7"}
+{"idx": 841, "gold": 5600.0, "pred": 1800.0, "ok": false, "secs": 0.59, "tokens": 10, "preds": [1800.0], "output": "#### $1800.00 ###"}
+{"idx": 578, "gold": 48.0, "pred": 20.000000000000004, "ok": false, "secs": 0.78, "tokens": 21, "preds": [20.000000000000004], "output": "#### 20.000000000000002####"}
+{"idx": 428, "gold": 26.0, "pred": 24.0, "ok": false, "secs": 0.65, "tokens": 8, "preds": [24.0], "output": "#### 24 #### 24"}
+{"idx": 1211, "gold": 448.0, "pred": 480.0000000000001, "ok": false, "secs": 0.68, "tokens": 19, "preds": [480.0000000000001], "output": "#### 480.0000000000001"}
+{"idx": 634, "gold": 14.0, "pred": 30.000000000000004, "ok": false, "secs": 0.75, "tokens": 25, "preds": [30.000000000000004], "output": "#### 30\n\n#### 30.000000000000002"}
+{"idx": 837, "gold": 120.0, "pred": 1450.0, "ok": false, "secs": 0.98, "tokens": 9, "preds": [1450.0], "output": "#### $1450.00"}
+{"idx": 703, "gold": 50.0, "pred": 24.0, "ok": false, "secs": 0.57, "tokens": 8, "preds": [24.0], "output": "#### 24 #### 24"}
+{"idx": 981, "gold": 7.0, "pred": 12.0, "ok": false, "secs": 0.63, "tokens": 12, "preds": [12.0], "output": "#### 12.0 #### 12.0"}
+{"idx": 972, "gold": 120.0, "pred": 48.0, "ok": false, "secs": 0.58, "tokens": 8, "preds": [48.0], "output": "#### 48#### <number>"}
+{"idx": 59, "gold": 187.0, "pred": 13420.000000000002, "ok": false, "secs": 0.8, "tokens": 28, "preds": [13420.000000000002], "output": "#### 13420\n\n#### 13420.000000000001"}
+{"idx": 688, "gold": 100.0, "pred": 100.0, "ok": true, "secs": 0.68, "tokens": 10, "preds": [100.0], "output": "#### 100 #### 100"}
+{"idx": 692, "gold": 32.0, "pred": 10.0, "ok": false, "secs": 0.78, "tokens": 8, "preds": [10.0], "output": "#### $10.00$"}
+{"idx": 1281, "gold": 20.0, "pred": 200.0, "ok": false, "secs": 0.57, "tokens": 14, "preds": [200.0], "output": "#### 200\n\n#### 200 <number>"}
+{"idx": 472, "gold": 6.0, "pred": 3.0, "ok": false, "secs": 0.8, "tokens": 18, "preds": [3.0], "output": "#### 3 #### Matt has to eat 3 carrot sticks to get 5 cookies."}
+{"idx": 487, "gold": 4.0, "pred": 250.0, "ok": false, "secs": 0.55, "tokens": 8, "preds": [250.0], "output": "#### 250.0 ####"}
+{"idx": 866, "gold": 28.0, "pred": 32.0, "ok": false, "secs": 0.52, "tokens": 9, "preds": [32.0], "output": "#### Fawn has 32 books."}
+{"idx": 334, "gold": 6.0, "pred": 10.0, "ok": false, "secs": 0.58, "tokens": 9, "preds": [10.0], "output": "#### 10.0 <number>"}
+{"idx": 521, "gold": 39.0, "pred": 68.0, "ok": false, "secs": 0.65, "tokens": 8, "preds": [68.0], "output": "#### 68 #### 68"}
+{"idx": 263, "gold": 8.0, "pred": 6.0, "ok": false, "secs": 0.5, "tokens": 6, "preds": [6.0], "output": "#### 5 #### 6"}
+{"idx": 248, "gold": 300.0, "pred": 60.0, "ok": false, "secs": 0.54, "tokens": 14, "preds": [60.0], "output": "#### $60.00#### $60.00"}
+{"idx": 172, "gold": 51.0, "pred": 20.0, "ok": false, "secs": 0.54, "tokens": 5, "preds": [20.0], "output": "#### 20####"}
+{"idx": 871, "gold": 48.0, "pred": 28.0, "ok": false, "secs": 0.58, "tokens": 8, "preds": [28.0], "output": "#### 28 #### 28"}
+{"idx": 158, "gold": 34.0, "pred": 10.0, "ok": false, "secs": 0.68, "tokens": 16, "preds": [10.0], "output": "#### $10.00\n\n#### $10.00$"}
+{"idx": 430, "gold": 132.0, "pred": 120.0, "ok": false, "secs": 1.95, "tokens": 75, "preds": [120.0], "output": "#### $120.00 + $20.00 + $5.00 \\times 5 + 20\\% \\times 120 = $120.00 + $20.00 + $25.00 + $24.00 = $189.00$"}
+{"idx": 408, "gold": 20.0, "pred": 10.0, "ok": false, "secs": 0.73, "tokens": 9, "preds": [10.0], "output": "#### 10.0 <number>"}
+{"idx": 1057, "gold": 24.0, "pred": 16.0, "ok": false, "secs": 0.53, "tokens": 12, "preds": [16.0], "output": "#### 16\n\n#### 16 <number>"}
+{"idx": 0, "gold": 18.0, "pred": 16.0, "ok": false, "secs": 0.62, "tokens": 8, "preds": [16.0], "output": "#### $16.00$"}
+{"idx": 1316, "gold": 230.0, "pred": 200.0, "ok": false, "secs": 0.67, "tokens": 9, "preds": [200.0], "output": "#### $200.00$"}
+{"idx": 595, "gold": 13.0, "pred": 15.0, "ok": false, "secs": 0.36, "tokens": 8, "preds": [15.0], "output": "#### 15 #### 15"}
+{"idx": 931, "gold": 50.0, "pred": 40.0, "ok": false, "secs": 0.59, "tokens": 12, "preds": [40.0], "output": "#### 40\n\n#### 40 <number>"}
+{"idx": 125, "gold": 10.0, "pred": 12.0, "ok": false, "secs": 0.85, "tokens": 5, "preds": [12.0], "output": "#### 12 ###"}
+{"idx": 224, "gold": 180.0, "pred": 30.0, "ok": false, "secs": 1.04, "tokens": 29, "preds": [30.0], "output": "#### $54.00\n\n#### $30.00 + $18.00 = $54.00"}
+{"idx": 937, "gold": 159.0, "pred": 115.0, "ok": false, "secs": 6.16, "tokens": 295, "preds": [115.0], "output": "#### 115\n\nTo find the total amount of hay Nate needs, we'll calculate the amount each type of animal needs and then sum them up.\n\n1. **Goats**: Each goat needs 5 pounds of hay.\n   - Number of goats: 15\n   - Total for goats: \\( 5 \\text{ pounds/goat} \\times 15 \\text{ goats} = 75 \\text{ pounds} \\)\n\n2. **Sheep**: Each sheep needs 3 pounds less than twice the amount each goat needs.\n   - Twice the amount each goat needs: \\( 5 \\text{ pounds/goat} \\times 2 = 10 \\text{ pounds/goat} \\)\n   - Amount each sheep needs: \\( 10 \\text{ pounds/goat} - 3 \\text{ pounds} = 7 \\text{ pounds/goat} \\)\n   - Number of sheep: 12\n   - Total for sheep: \\( 7 \\text{ pounds/goat} \\times 12 \\text{ sheep} = 84 \\text{ pounds} \\)\n\n3. **Total**: Sum the amounts for goats and sheep.\n   - Total: \\( 75 \\text{ pounds} + 84 \\text{ pounds} = 159 \\text{ pounds} \\)\n\n#### 115 <number> 159"}
+{"idx": 642, "gold": 10800.0, "pred": 10500.0, "ok": false, "secs": 0.69, "tokens": 11, "preds": [10500.0], "output": "#### $10500.00$"}
+{"idx": 95, "gold": 40.0, "pred": 120.0, "ok": false, "secs": 0.51, "tokens": 10, "preds": [120.0], "output": "#### 120 #### 120"}
+{"idx": 515, "gold": 160.0, "pred": 32.0, "ok": false, "secs": 0.47, "tokens": 8, "preds": [32.0], "output": "#### $32.00$"}
+{"idx": 850, "gold": 70.0, "pred": 105.0, "ok": false, "secs": 0.69, "tokens": 14, "preds": [105.0], "output": "#### 105\n\n#### 105 <number>"}
+{"idx": 799, "gold": 4.0, "pred": 3.0, "ok": false, "secs": 0.68, "tokens": 21, "preds": [3.0], "output": "#### 1\n\n#### 3 loaves of bread cost $6 more than 2 bagels."}
+{"idx": 507, "gold": 2.0, "pred": 20.0, "ok": false, "secs": 0.49, "tokens": 10, "preds": [20.0], "output": "#### $20.00 <number>"}
+{"idx": 1252, "gold": 70.0, "pred": 40.0, "ok": false, "secs": 0.82, "tokens": 25, "preds": [40.0], "output": "#### 40\n\n#### 40.000000000000002"}
+{"idx": 1166, "gold": 2350.0, "pred": 1200.0, "ok": false, "secs": 1.06, "tokens": 16, "preds": [1200.0], "output": "#### 1200\n\n#### 1200 <number>"}
+{"idx": 1155, "gold": 13.0, "pred": 11.0, "ok": false, "secs": 0.51, "tokens": 11, "preds": [11.0], "output": "#### 11\n\n#### 11 minutes ###"}
+{"idx": 749, "gold": 3.0, "pred": 4.0, "ok": false, "secs": 0.35, "tokens": 3, "preds": [4.0], "output": "#### 4"}
+{"idx": 901, "gold": 1.0, "pred": 2.5, "ok": false, "secs": 0.62, "tokens": 5, "preds": [2.5], "output": "#### 2.5"}
+{"idx": 379, "gold": 21.0, "pred": 19.0, "ok": false, "secs": 0.44, "tokens": 8, "preds": [19.0], "output": "#### 19 #### 19"}
+{"idx": 177, "gold": 350.0, "pred": 13000.0, "ok": false, "secs": 0.89, "tokens": 14, "preds": [13000.0], "output": "#### 13000#### 13000"}
+{"idx": 56, "gold": 3.0, "pred": 42.077528848, "ok": false, "secs": 0.93, "tokens": 31, "preds": [42.077528848], "output": "#### 6 #### 42.077528848 #### 42.077528848"}
+{"idx": 1168, "gold": 20.0, "pred": 14.0, "ok": false, "secs": 0.69, "tokens": 15, "preds": [14.0], "output": "#### 14.0 #### 14.0 centimeters."}
+{"idx": 7, "gold": 160.0, "pred": 1600.0, "ok": false, "secs": 0.61, "tokens": 7, "preds": [1600.0], "output": "#### 1600 ####"}
+{"idx": 393, "gold": 20.0, "pred": 15.0, "ok": false, "secs": 0.55, "tokens": 13, "preds": [15.0], "output": "#### 15.0#### 15.0%"}
+{"idx": 716, "gold": 770.0, "pred": 1200.0, "ok": false, "secs": 0.68, "tokens": 13, "preds": [1200.0], "output": "#### 1200\n\n#### 1200"}
+{"idx": 849, "gold": 75.0, "pred": 2.5, "ok": false, "secs": 0.5, "tokens": 9, "preds": [2.5], "output": "#### $2.5000$"}
+{"idx": 328, "gold": 2.0, "pred": 60.0, "ok": false, "secs": 0.65, "tokens": 17, "preds": [60.0], "output": "#### 2.0 #### 60/3 = 20 minutes."}
+{"idx": 21, "gold": 14.0, "pred": 18.0, "ok": false, "secs": 0.54, "tokens": 10, "preds": [18.0], "output": "#### 18 #### 18 years ago"}
+{"idx": 246, "gold": 27000.0, "pred": 25000.0, "ok": false, "secs": 0.97, "tokens": 20, "preds": [25000.0], "output": "#### $25000.00#### $25000.00"}
+{"idx": 137, "gold": 29.0, "pred": 10.0, "ok": false, "secs": 0.65, "tokens": 7, "preds": [10.0], "output": "#### $10.00"}
+{"idx": 976, "gold": 540.0, "pred": 1800.0, "ok": false, "secs": 0.75, "tokens": 10, "preds": [1800.0], "output": "#### $1800.00$"}
+{"idx": 1181, "gold": 20.0, "pred": 15.0, "ok": false, "secs": 0.47, "tokens": 8, "preds": [15.0], "output": "#### 15 #### 15"}
+{"idx": 1123, "gold": 105.0, "pred": 120.0, "ok": false, "secs": 0.66, "tokens": 14, "preds": [120.0], "output": "#### 120\n\n#### 120 <number>"}
+{"idx": 54, "gold": 40.0, "pred": 25.0, "ok": false, "secs": 0.73, "tokens": 9, "preds": [25.0], "output": "#### 25\n\n#### 25"}
+{"idx": 213, "gold": 250.0, "pred": 500.0, "ok": false, "secs": 0.55, "tokens": 6, "preds": [500.0], "output": "#### 500 ###"}
+{"idx": 947, "gold": 13.0, "pred": 27.0, "ok": false, "secs": 0.47, "tokens": 4, "preds": [27.0], "output": "#### 27"}
+{"idx": 372, "gold": 5.0, "pred": 4.0, "ok": false, "secs": 0.62, "tokens": 13, "preds": [4.0], "output": "#### 4\n#### 4.0 hours a week."}
+{"idx": 355, "gold": 34.0, "pred": 16.0, "ok": false, "secs": 0.62, "tokens": 10, "preds": [16.0], "output": "#### 16 #### 16.0"}
+{"idx": 62, "gold": 25000.0, "pred": 50000.0, "ok": false, "secs": 0.71, "tokens": 12, "preds": [50000.0], "output": "#### $50,000.00$"}
+{"idx": 373, "gold": 240000.0, "pred": 240000.0, "ok": true, "secs": 0.65, "tokens": 12, "preds": [240000.0], "output": "#### $240000.00 ###"}
+{"idx": 1072, "gold": 85.0, "pred": 30.0, "ok": false, "secs": 0.45, "tokens": 8, "preds": [30.0], "output": "#### $30.00$"}
+{"idx": 168, "gold": 18.0, "pred": 16.0, "ok": false, "secs": 0.35, "tokens": 7, "preds": [16.0], "output": "#### $16.00"}
+{"idx": 1138, "gold": 700.0, "pred": 700.0, "ok": true, "secs": 0.58, "tokens": 6, "preds": [700.0], "output": "#### 700 ####"}
+{"idx": 175, "gold": 15.0, "pred": 10.0, "ok": false, "secs": 0.61, "tokens": 8, "preds": [10.0], "output": "#### $10.00 ###"}
+{"idx": 1146, "gold": 16.0, "pred": 20.0, "ok": false, "secs": 0.62, "tokens": 10, "preds": [20.0], "output": "#### $20.00 <number}"}
+{"idx": 926, "gold": 1.0, "pred": 100.0, "ok": false, "secs": 1.02, "tokens": 10, "preds": [100.0], "output": "#### 100 #### 100"}
+{"idx": 162, "gold": 92.0, "pred": 20.0, "ok": false, "secs": 1.01, "tokens": 36, "preds": [20.0], "output": "#### $20 \\times (1 + 0.20)^{36} = $#### $20 \\times 1.20^{36}$"}
+{"idx": 1284, "gold": 25.0, "pred": 10.000000000000002, "ok": false, "secs": 1.11, "tokens": 25, "preds": [10.000000000000002], "output": "#### 10\n\n#### 10.000000000000001"}
+{"idx": 448, "gold": 539.0, "pred": 356.0, "ok": false, "secs": 1.09, "tokens": 32, "preds": [356.0], "output": "#### $356.00 < 576 - 20 - 25 \\times 17 < 576$"}
+{"idx": 331, "gold": 8400.0, "pred": 150000.0, "ok": false, "secs": 0.92, "tokens": 12, "preds": [150000.0], "output": "#### $150000.00 ####"}
+{"idx": 425, "gold": 150.0, "pred": 1000.0, "ok": false, "secs": 0.79, "tokens": 7, "preds": [1000.0], "output": "#### 1000 ####"}
+{"idx": 1067, "gold": 245.0, "pred": 35000.0, "ok": false, "secs": 1.1, "tokens": 35, "preds": [35000.0], "output": "#### 35000\n\n#### 35000 = 700 * 5 + 2 * 15 * 700"}
+{"idx": 1184, "gold": 306.0, "pred": 18.0, "ok": false, "secs": 8.39, "tokens": 400, "preds": [18.0], "output": "#### $18.00/50 kg = $3.60/100 kg = $3.60/50 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.60/100 kg = $3.6"}
+{"idx": 191, "gold": 5.0, "pred": 35.0, "ok": false, "secs": 0.53, "tokens": 12, "preds": [35.0], "output": "#### 35.0 #### 35.0"}
+{"idx": 828, "gold": 60.0, "pred": 200.0, "ok": false, "secs": 0.46, "tokens": 7, "preds": [200.0], "output": "#### $200. ####"}
+{"idx": 1232, "gold": 15.0, "pred": 40.0, "ok": false, "secs": 0.52, "tokens": 8, "preds": [40.0], "output": "#### 40 #### 40"}
+{"idx": 153, "gold": 48.0, "pred": 1400.0, "ok": false, "secs": 0.8, "tokens": 7, "preds": [1400.0], "output": "#### 1400 ###"}
+{"idx": 104, "gold": 500.0, "pred": 700.0, "ok": false, "secs": 0.48, "tokens": 6, "preds": [700.0], "output": "#### 700 ####"}
+{"idx": 1172, "gold": 93.0, "pred": 15.0, "ok": false, "secs": 1.0, "tokens": 24, "preds": [15.0], "output": "#### 15\n\n#### 15\n\n#### 15\n\n#### 15\n\n#### 15"}
+{"idx": 740, "gold": 25.0, "pred": 30.0, "ok": false, "secs": 0.66, "tokens": 12, "preds": [30.0], "output": "#### 30\n\n#### 30 <number>"}
+{"idx": 1306, "gold": 2.0, "pred": 2.0, "ok": true, "secs": 1.08, "tokens": 10, "preds": [2.0], "output": "#### 2 ### 2 beakers lost."}
+{"idx": 481, "gold": 84.0, "pred": 9748.000000000002, "ok": false, "secs": 0.99, "tokens": 26, "preds": [9748.000000000002], "output": "#### 9748\n\n#### 9748.000000000001"}
+{"idx": 686, "gold": 80.0, "pred": 100.0, "ok": false, "secs": 0.52, "tokens": 6, "preds": [100.0], "output": "#### 100 ####"}
+{"idx": 963, "gold": 147.0, "pred": 189.0, "ok": false, "secs": 0.77, "tokens": 14, "preds": [189.0], "output": "#### 189\n\n#### 189 <number>"}
+{"idx": 732, "gold": 87.0, "pred": 33.0, "ok": false, "secs": 0.62, "tokens": 12, "preds": [33.0], "output": "#### 33\n\n#### 33 <number>"}
+{"idx": 1093, "gold": 144.0, "pred": 144.0, "ok": true, "secs": 0.6, "tokens": 8, "preds": [144.0], "output": "#### $144.00"}
+{"idx": 387, "gold": 36.0, "pred": 28.0, "ok": false, "secs": 0.61, "tokens": 21, "preds": [28.0], "output": "#### 28\n\n#### 28 = 6 \u00d7 $2 + 8 \u00d7 $3"}
+{"idx": 375, "gold": 48.0, "pred": 48.0, "ok": true, "secs": 0.56, "tokens": 10, "preds": [48.0], "output": "#### 48.0 #### 48"}
+{"idx": 475, "gold": 20.0, "pred": 4.5, "ok": false, "secs": 0.68, "tokens": 14, "preds": [4.5], "output": "#### 4.5\n\n#### 4.5 <number>"}
+{"idx": 582, "gold": 129200.0, "pred": 152000.0, "ok": false, "secs": 0.63, "tokens": 13, "preds": [152000.0], "output": "#### $152,000.00$"}
+{"idx": 883, "gold": 25.0, "pred": 65.0, "ok": false, "secs": 0.73, "tokens": 12, "preds": [65.0], "output": "#### 15.0 #### 65.0"}
+{"idx": 41, "gold": 200.0, "pred": 1000.0, "ok": false, "secs": 1.17, "tokens": 18, "preds": [1000.0], "output": "#### 1000 - 3 = 997 #### <number>"}
+{"idx": 769, "gold": 110.0, "pred": 31.0, "ok": false, "secs": 1.57, "tokens": 58, "preds": [31.0], "output": "#### $15 + $5 = $20\n\n#### $20 + $5 = $25\n\n#### $4 + $2 = $6\n\n#### $6 + $25 = $31\n\n#### $31 < $25 #### <number>"}
+{"idx": 763, "gold": 100.0, "pred": 500.0, "ok": false, "secs": 0.62, "tokens": 8, "preds": [500.0], "output": "#### 500.00"}
+{"idx": 1007, "gold": 34.0, "pred": 17.0, "ok": false, "secs": 0.57, "tokens": 9, "preds": [17.0], "output": "#### 17\n\n#### 17"}
+{"idx": 895, "gold": 74.0, "pred": 53.0, "ok": false, "secs": 0.49, "tokens": 5, "preds": [53.0], "output": "#### 53####"}
+{"idx": 241, "gold": 6.0, "pred": 3.0, "ok": false, "secs": 0.59, "tokens": 15, "preds": [3.0], "output": "#### 3\n\n#### Dolly and Pandora together read 3 books."}
+{"idx": 457, "gold": 45.0, "pred": 200.0, "ok": false, "secs": 1.01, "tokens": 26, "preds": [200.0], "output": "#### 200\n\n#### 200.00000000000001"}
+{"idx": 66, "gold": 48.0, "pred": 20.0, "ok": false, "secs": 0.7, "tokens": 16, "preds": [20.0], "output": "#### 20\n\n#### 20 people all of the schools sent."}
+{"idx": 75, "gold": 60.0, "pred": 16.0, "ok": false, "secs": 0.7, "tokens": 12, "preds": [16.0], "output": "#### 16.0 #### 16.0"}
+{"idx": 665, "gold": 360.0, "pred": 900.0, "ok": false, "secs": 0.55, "tokens": 6, "preds": [900.0], "output": "#### 900 ####"}
+{"idx": 1223, "gold": 8.0, "pred": 7.0, "ok": false, "secs": 0.48, "tokens": 6, "preds": [7.0], "output": "#### $7.00"}
+{"idx": 27, "gold": 16.0, "pred": 240.0, "ok": false, "secs": 0.72, "tokens": 16, "preds": [240.0], "output": "#### $240.00#### $240.00"}
+{"idx": 676, "gold": 240.0, "pred": 1200.0, "ok": false, "secs": 1.08, "tokens": 34, "preds": [1200.0], "output": "#### $1200 - 2/5 * 1200 = $1200 - $480 = $720."}
+{"idx": 49, "gold": 30.0, "pred": 12.0, "ok": false, "secs": 0.47, "tokens": 8, "preds": [12.0], "output": "#### 12 #### 12"}
+{"idx": 200, "gold": 55.0, "pred": 350.0, "ok": false, "secs": 0.53, "tokens": 8, "preds": [350.0], "output": "#### 350.00"}
+{"idx": 863, "gold": 110.0, "pred": 70.0, "ok": false, "secs": 2.53, "tokens": 117, "preds": [70.0], "output": "#### 100\n\nTo find the total number of coins Gretchen had, we need to add the number of gold coins to the number of silver coins. Given that she had 70 gold coins and 30 more than silver coins, we can calculate the total as follows:\n\n- Number of gold coins: 70\n- Number of silver coins: 70 - 30 = 40\n\n#### 70 + 40 = 100\n\nTherefore, the total number of coins Gretchen had is 100."}
+{"idx": 1115, "gold": 5.0, "pred": 1.25, "ok": false, "secs": 0.66, "tokens": 9, "preds": [1.25], "output": "#### $1.25 <number>"}
+{"idx": 528, "gold": 172.0, "pred": 42.0, "ok": false, "secs": 0.64, "tokens": 12, "preds": [42.0], "output": "#### 42\n\n#### 42 <number>"}
+{"idx": 1179, "gold": 50.0, "pred": 20.0, "ok": false, "secs": 0.54, "tokens": 13, "preds": [20.0], "output": "#### 20.0#### 20.0%"}
+{"idx": 736, "gold": 3.0, "pred": 10.0, "ok": false, "secs": 0.4, "tokens": 5, "preds": [10.0], "output": "#### 10 ###"}
+{"idx": 240, "gold": 21.0, "pred": 54.0, "ok": false, "secs": 0.65, "tokens": 17, "preds": [54.0], "output": "#### 18 #### 54 - 18 = 36."}
+{"idx": 891, "gold": 55.0, "pred": Infinity, "ok": false, "secs": 8.46, "tokens": 400, "preds": [Infinity], "output": "#### 50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+{"idx": 786, "gold": 142.0, "pred": 116.0, "ok": false, "secs": 0.68, "tokens": 14, "preds": [116.0], "output": "#### 116\n\n#### 116 <number>"}
+{"idx": 816, "gold": 4500.0, "pred": 8500.0, "ok": false, "secs": 0.46, "tokens": 9, "preds": [8500.0], "output": "#### 8500.00"}
+{"idx": 1228, "gold": 31.0, "pred": 27.0, "ok": false, "secs": 0.44, "tokens": 7, "preds": [27.0], "output": "#### 5 #### 27"}
+{"idx": 1198, "gold": 140.0, "pred": 50.0, "ok": false, "secs": 0.79, "tokens": 12, "preds": [50.0], "output": "#### 50\n\n#### 50 <number>"}
+{"idx": 945, "gold": 17.0, "pred": 12.0, "ok": false, "secs": 0.85, "tokens": 13, "preds": [12.0], "output": "#### 12.0#### 12.0 hours"}
+{"idx": 782, "gold": 54.0, "pred": 19.0, "ok": false, "secs": 4.02, "tokens": 181, "preds": [19.0], "output": "#### 15\n\nTo calculate the total number of bike rides Chase and Rider make in a week, we need to consider the usual days and the days they ride twice as much.\n\n1. **Usual days**: Chase and Rider ride thrice a day for 5 days.\n   - Total rides on usual days: \\(3 \\times 5 = 15\\)\n\n2. **Days they ride twice as much**: They ride twice as much as usual on 2 days.\n   - Total rides on these days: \\(2 \\times 2 = 4\\)\n\n3. **Total rides in a week**: We add the rides from the usual days and the days they ride twice as much.\n   - Total rides in a week: \\(15 + 4 = 19\\)\n\n#### 19\n\nTherefore, the final answer is '#### 19'."}
+{"idx": 909, "gold": 38.0, "pred": 60.0, "ok": false, "secs": 0.64, "tokens": 16, "preds": [60.0], "output": "#### 12 #### 60 - 8 = 52."}
+{"idx": 591, "gold": 220.0, "pred": 4400.000000000001, "ok": false, "secs": 1.51, "tokens": 38, "preds": [4400.000000000001], "output": "#### 4400.000000000001#### 4400.000000000001"}
+{"idx": 1071, "gold": 251.0, "pred": 399.0, "ok": false, "secs": 1.77, "tokens": 62, "preds": [399.0], "output": "#### $125 + (25 + 7 + 13) * $6 + 4 = $125 + 45 * $6 + 4 = $125 + $270 + 4 = $399. #### $399"}
+{"idx": 804, "gold": 20.0, "pred": 200.0, "ok": false, "secs": 0.59, "tokens": 6, "preds": [200.0], "output": "#### 200 ####"}
+{"idx": 506, "gold": 144.0, "pred": 240.0, "ok": false, "secs": 0.56, "tokens": 9, "preds": [240.0], "output": "#### $240.00 ###"}
+{"idx": 832, "gold": 42.0, "pred": 40.0, "ok": false, "secs": 0.54, "tokens": 8, "preds": [40.0], "output": "#### $40.00$"}
+{"idx": 957, "gold": 45.0, "pred": 15.0, "ok": false, "secs": 0.53, "tokens": 11, "preds": [15.0], "output": "#### Shawna's father = 15 years."}
+{"idx": 471, "gold": 80.0, "pred": 120.0, "ok": false, "secs": 0.58, "tokens": 6, "preds": [120.0], "output": "#### 120 ####"}
+{"idx": 874, "gold": 132.0, "pred": 114.0, "ok": false, "secs": 0.62, "tokens": 18, "preds": [114.0], "output": "#### $114.00 < 33 \\times 12$"}
+{"idx": 1258, "gold": 60.0, "pred": 40.0, "ok": false, "secs": 0.48, "tokens": 8, "preds": [40.0], "output": "#### $40.00$"}
+{"idx": 846, "gold": 11.0, "pred": 14.0, "ok": false, "secs": 0.58, "tokens": 5, "preds": [14.0], "output": "#### 14 ###"}
+{"idx": 880, "gold": 10.0, "pred": 5.0, "ok": false, "secs": 2.1, "tokens": 86, "preds": [5.0], "output": "#### $5$\n\nSarah will have $5 left after buying the new rope. This is because she initially has $20, and she uses the profit to buy a new rope that costs $1.5 a meter. The difference between the initial amount and the cost of the new rope is $20 - $1.5 = $18.5, which is the amount of money she will have left over."}
+{"idx": 762, "gold": 85.0, "pred": 130.0, "ok": false, "secs": 0.57, "tokens": 9, "preds": [130.0], "output": "#### $130.00 ###"}
+{"idx": 340, "gold": 4.0, "pred": 4.0, "ok": true, "secs": 2.96, "tokens": 99, "preds": [4.0], "output": "#### 4\n\nJosh starts with 3 balls and adds 1 ball each week. After 4 weeks, he has 3 + 4 = 7 balls. When he slips and drops 3 balls, he has 7 - 3 = 4 balls left. 2 of the balls are caught, but one gets lost, so he has 4 - 2 - 1 = 1 ball left. Therefore, Josh juggling on stage with 1 ball."}
+{"idx": 251, "gold": 70.0, "pred": 52.0, "ok": false, "secs": 0.44, "tokens": 8, "preds": [52.0], "output": "#### 52 #### 52"}
+{"idx": 442, "gold": 49.0, "pred": 42.5, "ok": false, "secs": 0.77, "tokens": 12, "preds": [42.5], "output": "#### 42.5 #### 42.5"}
+{"idx": 267, "gold": 91.0, "pred": 100.0, "ok": false, "secs": 0.75, "tokens": 10, "preds": [100.0], "output": "#### 100.000 ####"}
+{"idx": 689, "gold": 7.0, "pred": 10.8, "ok": false, "secs": 0.5, "tokens": 8, "preds": [10.8], "output": "#### $10.80$"}
+{"idx": 1189, "gold": 6.0, "pred": 8.0, "ok": false, "secs": 0.81, "tokens": 24, "preds": [8.0], "output": "#### 8\n\n#### 8 slices of apple were eaten by Doxa, her sister, and her brother."}
+{"idx": 349, "gold": 2640.0, "pred": 1000.0, "ok": false, "secs": 3.17, "tokens": 141, "preds": [1000.0], "output": "#### $1000.00\n\nMadeline spends $25 per week on food, $20 per month on treats, and $100 per month on medicine. There are 4 weeks in a month, so she spends $25 * 4 = $100 on food per month. She also spends $20 * 4 = $80 on treats per month. Therefore, she spends $100 + $80 = $180 per month on her dog. Since there are 12 months in a year, she spends $180 * 12 = $2160 on her dog per year."}
+{"idx": 1174, "gold": 240.0, "pred": 200000.0, "ok": false, "secs": 0.72, "tokens": 9, "preds": [200000.0], "output": "#### 200000 ####"}
+{"idx": 764, "gold": 14.0, "pred": 10.000000000000002, "ok": false, "secs": 1.02, "tokens": 25, "preds": [10.000000000000002], "output": "#### 10\n\n#### 10.000000000000001"}
+{"idx": 230, "gold": 276000.0, "pred": 24000.0, "ok": false, "secs": 0.66, "tokens": 12, "preds": [24000.0], "output": "#### $24,000.00 ###"}
+{"idx": 1182, "gold": 1800.0, "pred": 30000.0, "ok": false, "secs": 0.52, "tokens": 10, "preds": [30000.0], "output": "#### 30000.0 ####"}
+{"idx": 1060, "gold": 31.0, "pred": 44.0, "ok": false, "secs": 0.57, "tokens": 9, "preds": [44.0], "output": "#### 44\n\n#### 44"}
+{"idx": 988, "gold": 6.0, "pred": 24000.0, "ok": false, "secs": 2.47, "tokens": 105, "preds": [24000.0], "output": "#### $2000.00 / month * 12 months/year = $24,000.00\n\n#### $1,000.00 / pair * 25% = $250.00\n\n#### $250.00 / pair / shoe = $10.00 / shoe\n\n#### $24,000.00 / $10.00 / shoe = 2,400 shoes"}
+{"idx": 1009, "gold": 1875.0, "pred": 1500.0, "ok": false, "secs": 0.87, "tokens": 16, "preds": [1500.0], "output": "#### 1500\n\n#### 1500 <number>"}
+{"idx": 1135, "gold": 32.0, "pred": 25.000000000000004, "ok": false, "secs": 0.78, "tokens": 25, "preds": [25.000000000000004], "output": "#### 25\n\n#### 25.000000000000002"}
+{"idx": 477, "gold": 20.0, "pred": 32.0, "ok": false, "secs": 0.7, "tokens": 18, "preds": [32.0], "output": "#### 19#### 32 - 3 + 6 = 31"}
+{"idx": 598, "gold": 69.0, "pred": 102.0, "ok": false, "secs": 0.57, "tokens": 11, "preds": [102.0], "output": "#### 102\n\n#### 102"}
+{"idx": 723, "gold": 160.0, "pred": 147.0, "ok": false, "secs": 0.55, "tokens": 10, "preds": [147.0], "output": "#### 147#### 147"}
+{"idx": 1199, "gold": 2.0, "pred": 21.0, "ok": false, "secs": 1.22, "tokens": 12, "preds": [21.0], "output": "#### 21.0 #### 21.0"}
+{"idx": 226, "gold": 33.0, "pred": 12.5, "ok": false, "secs": 0.71, "tokens": 12, "preds": [12.5], "output": "#### 12.5#### 12.5"}
+{"idx": 1161, "gold": 170.0, "pred": 100.0, "ok": false, "secs": 0.68, "tokens": 9, "preds": [100.0], "output": "#### $100.00$"}
+{"idx": 775, "gold": 276.0, "pred": 650.0, "ok": false, "secs": 0.63, "tokens": 10, "preds": [650.0], "output": "#### 125 #### 650"}
+{"idx": 648, "gold": 54.0, "pred": 100.0, "ok": false, "secs": 0.59, "tokens": 5, "preds": [100.0], "output": "#### 100"}
+{"idx": 973, "gold": 79.0, "pred": 8.0, "ok": false, "secs": 0.38, "tokens": 9, "preds": [8.0], "output": "#### 8\n\n#### 8.0"}
+{"idx": 385, "gold": 16.0, "pred": 160.0, "ok": false, "secs": 0.88, "tokens": 14, "preds": [160.0], "output": "#### 160\n\n#### 160 <number>"}
+{"idx": 602, "gold": 5.0, "pred": 1.0, "ok": false, "secs": 2.82, "tokens": 132, "preds": [1.0], "output": "#### 1. **Calculate the plane's speed:**\n   - The plane travels 1200 miles in 3 hours.\n   - Speed = Distance / Time = 1200 miles / 3 hours = 400 miles per hour.\n\n2. **Determine the additional distance to travel:**\n   - Additional distance = 2000 miles.\n\n3. **Calculate the additional time needed to travel the additional distance:**\n   - Additional time = Additional distance / Speed = 2000 miles / 400 miles per hour = 5 hours.\n\n#### **Final Answer: 5 hours**"}
+{"idx": 1134, "gold": 7.0, "pred": 14.0, "ok": false, "secs": 0.63, "tokens": 15, "preds": [14.0], "output": "#### 14\n\n#### 14 <number> 14"}
+{"idx": 155, "gold": 280.0, "pred": 1000.0000000000002, "ok": false, "secs": 0.89, "tokens": 20, "preds": [1000.0000000000002], "output": "#### 1000.0000000000002"}
+{"idx": 1217, "gold": 75.0, "pred": 1800.0, "ok": false, "secs": 0.7, "tokens": 10, "preds": [1800.0], "output": "#### $1800.00$"}
+{"idx": 121, "gold": 27.0, "pred": 13.0, "ok": false, "secs": 0.55, "tokens": 9, "preds": [13.0], "output": "#### 13\n\n#### 13"}
+{"idx": 1005, "gold": 1490.0, "pred": 1200.0, "ok": false, "secs": 0.57, "tokens": 7, "preds": [1200.0], "output": "#### 1200 ####"}
+{"idx": 1036, "gold": 10.0, "pred": 20.0, "ok": false, "secs": 0.49, "tokens": 8, "preds": [20.0], "output": "#### 20#### <number>"}
+{"idx": 663, "gold": 193.0, "pred": 209.0, "ok": false, "secs": 0.47, "tokens": 6, "preds": [209.0], "output": "#### 209 ####"}
+{"idx": 383, "gold": 2.0, "pred": 18.0, "ok": false, "secs": 3.78, "tokens": 163, "preds": [18.0], "output": "#### $12.00\n\nTo calculate the profit, we need to determine the total revenue and subtract the total cost. Let's break it down:\n\n1. **Total cost**: $18\n2. **Revenue per cup**: $1\n3. **Number of cups per hour**: 4\n4. **Total cups sold**: 3 pitchers * 12 cups per pitcher = 36 cups\n5. **Total revenue**: 36 cups * $1 per cup = $36\n\nNow, we calculate the profit:\n\n- **Total revenue**: $36\n- **Total cost**: $18\n\nProfit = Total revenue - Total cost\nProfit = $36 - $18\nProfit = $18\n\n#### $18.00"}
+{"idx": 382, "gold": 350.0, "pred": 170.0, "ok": false, "secs": 0.61, "tokens": 14, "preds": [170.0], "output": "#### 170\n\n#### 170 <number>"}
+{"idx": 193, "gold": 24.0, "pred": 18.0, "ok": false, "secs": 0.93, "tokens": 8, "preds": [18.0], "output": "#### 18 #### 18"}
+{"idx": 518, "gold": 32.0, "pred": 100.0, "ok": false, "secs": 0.64, "tokens": 9, "preds": [100.0], "output": "#### $100.00$"}
+{"idx": 93, "gold": 36.0, "pred": 41.8, "ok": false, "secs": 1.39, "tokens": 43, "preds": [41.8], "output": "#### Gerald's speed = Lee's speed * 1.10\n#### Gerald's speed = 38 * 1.10\n#### Gerald's speed = 41.80 seconds."}
+{"idx": 352, "gold": 21.0, "pred": 31.0, "ok": false, "secs": 0.48, "tokens": 8, "preds": [31.0], "output": "#### $31.00$"}
+{"idx": 965, "gold": 374.0, "pred": 120.0, "ok": false, "secs": 1.05, "tokens": 10, "preds": [120.0], "output": "#### 120 #### 120"}
+{"idx": 868, "gold": 15.0, "pred": 45.0, "ok": false, "secs": 0.91, "tokens": 18, "preds": [45.0], "output": "#### $45.00\n\n#### $45.00 <number>"}
+{"idx": 459, "gold": 2.0, "pred": 1000.0, "ok": false, "secs": 1.22, "tokens": 16, "preds": [1000.0], "output": "#### 1000\n\n#### 1000 <number>"}
+{"idx": 1145, "gold": 291.0, "pred": 120.0, "ok": false, "secs": 0.77, "tokens": 14, "preds": [120.0], "output": "#### 120\n\n#### 120 <number>"}
+{"idx": 1127, "gold": 750.0, "pred": 19200.0, "ok": false, "secs": 0.78, "tokens": 10, "preds": [19200.0], "output": "#### 19200.0 ####"}
+{"idx": 1012, "gold": 94.0, "pred": 100.00000000000001, "ok": false, "secs": 1.17, "tokens": 21, "preds": [100.00000000000001], "output": "#### 100.00000000000001 ####"}
+{"idx": 311, "gold": 91.0, "pred": 91.0, "ok": true, "secs": 3.71, "tokens": 172, "preds": [91.0], "output": "#### 140\n\nTo calculate the total number of eggs consumed in a week, we need to consider the daily consumption of each family member and the number of days in a week.\n\n1. **Daily consumption of each family member:**\n   - Three people eat three eggs each day.\n   - The rest (two people) eat two eggs each day.\n\n2. **Total daily consumption:**\n   - Total daily consumption = (3 people * 3 eggs/day) + (2 people * 2 eggs/day) = 9 eggs/day + 4 eggs/day = 13 eggs/day.\n\n3. **Total weekly consumption:**\n   - Total weekly consumption = 13 eggs/day * 7 days = 91 eggs.\n\n#### 91\n\nTherefore, the family will consume **91 eggs** in a week."}
+{"idx": 986, "gold": 70.0, "pred": 60.0, "ok": false, "secs": 0.62, "tokens": 7, "preds": [60.0], "output": "#### $60.00"}
+{"idx": 1190, "gold": 19.0, "pred": 142.0, "ok": false, "secs": 1.01, "tokens": 18, "preds": [142.0], "output": "#### 142\n\n#### 142 <number> 142"}
+{"idx": 659, "gold": 3.0, "pred": 5.0, "ok": false, "secs": 0.58, "tokens": 7, "preds": [5.0], "output": "#### $5.00$"}
+{"idx": 494, "gold": 21.0, "pred": 1000.0, "ok": false, "secs": 0.75, "tokens": 9, "preds": [1000.0], "output": "#### 1000.0 ####"}
+{"idx": 209, "gold": 145.0, "pred": 12000.000000000002, "ok": false, "secs": 0.69, "tokens": 21, "preds": [12000.000000000002], "output": "#### $12000.000000000001$"}
+{"idx": 199, "gold": 7500.0, "pred": 50000.0, "ok": false, "secs": 0.69, "tokens": 8, "preds": [50000.0], "output": "#### $50000$"}
+{"idx": 915, "gold": 23.0, "pred": 12.0, "ok": false, "secs": 0.73, "tokens": 19, "preds": [12.0], "output": "#### 12\n\n#### 12\n\n#### 12\n\n#### 12"}
+{"idx": 218, "gold": 45.0, "pred": 22.0, "ok": false, "secs": 0.65, "tokens": 17, "preds": [22.0], "output": "#### 22.0 #### Harriet is 21 years old now."}
+{"idx": 395, "gold": 38.0, "pred": 49.0, "ok": false, "secs": 2.67, "tokens": 111, "preds": [49.0], "output": "#### 49\n\nErica started with 20 cards. Her dad brought her 2 boxes of cards, each containing 15 cards, for a total of 2 * 15 = 30 cards. She then passed out 24 cards to her classmates, 5 cards to her family, and received 17 cards from family and friends. Therefore, the total number of cards she has now is 20 + 30 + 24 + 5 + 17 = 49."}
+{"idx": 851, "gold": 110.0, "pred": 1320.0, "ok": false, "secs": 0.65, "tokens": 18, "preds": [1320.0], "output": "#### $1320.00 #### 1320.00"}
+{"idx": 318, "gold": 123.0, "pred": 40.00000000000001, "ok": false, "secs": 0.85, "tokens": 25, "preds": [40.00000000000001], "output": "#### 40\n\n#### 40.000000000000004"}
+{"idx": 206, "gold": 860.0, "pred": 1600.0, "ok": false, "secs": 0.67, "tokens": 7, "preds": [1600.0], "output": "#### 1600 ####"}
+{"idx": 48, "gold": 8.0, "pred": 60.0, "ok": false, "secs": 0.8, "tokens": 25, "preds": [60.0], "output": "#### 60\n\n#### 60.000000000000002"}
+{"idx": 760, "gold": 16.0, "pred": 100.0, "ok": false, "secs": 0.64, "tokens": 10, "preds": [100.0], "output": "#### 100 #### 100"}
