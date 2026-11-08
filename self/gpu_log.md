@@ -13,3 +13,4 @@ ModuleNotFoundError: No module named 'six')
 - 2026-11-06 15:31 UTC `experiments/m3-selfdistill/run.py 420` on Kaggle (focarius/ember-m3-selfdistill): complete after about 56 min of GPU time (commit 5d94070, prediction bf0f45761159). Output: `experiments/m3-selfdistill/gpu-output/`
 - 2026-11-07 01:56 UTC `experiments/m3-selfdistill/run.py 420` on Kaggle (focarius/ember-m3-selfdistill): complete after about 160 min of GPU time (commit 0bdf04a, prediction bf0f45761159). Output: `experiments/m3-selfdistill/gpu-output/`
 - 2026-11-07 16:19 UTC `experiments/m3-dpo/run.py 330` on Kaggle (focarius/ember-m3-dpo): complete after about 166 min of GPU time (commit be48bdb, prediction 06bf5baf5b63). Output: `experiments/m3-dpo/gpu-output/`
+- 2026-11-08 00:25 UTC `experiments/m3-dpo2/run.py 270` on Kaggle (focarius/ember-m3-dpo2): complete after about 144 min of GPU time (commit f2fb6b5, prediction 53a0be5b8173). Output: `experiments/m3-dpo2/gpu-output/`

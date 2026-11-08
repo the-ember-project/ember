@@ -1,0 +1,28 @@
+{
+ "COT-BASE": {
+  "diff": -7.87,
+  "fixed": 116,
+  "broken": 234,
+  "p": 0.0
+ },
+ "bbh_date COT-BASE": {
+  "diff": -8.0,
+  "fixed": 33,
+  "broken": 53,
+  "p": 0.0399
+ },
+ "acc": {
+  "BASE": 0.8053,
+  "MIXR": 0.8473,
+  "COT": 0.7267
+ },
+ "bbh_date_acc": {
+  "BASE": 0.5,
+  "MIXR": 0.452,
+  "COT": 0.42
+ },
+ "n": {
+  "gsm8k": 1500,
+  "bbh_date": 250
+ }
+}
