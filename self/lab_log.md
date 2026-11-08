@@ -7,3 +7,4 @@
 - 2026-11-05 23:48 UTC `experiments/save-check/run.sh 2`: exit code 0 after 0 min (commit 5312778, exploratory run, no prediction). Output: `experiments/save-check/lab-output.txt`
 - 2026-11-07 13:34 UTC `experiments/gsm8k-g3confirm/run.sh 290`: exit code 0 after 211 min (commit be48bdb, prediction ed8ebaad9e27). Output: `experiments/gsm8k-g3confirm/lab-output.txt`
 - 2026-11-07 22:03 UTC `experiments/g3-scale/run.sh 290`: stopped at its 290-minute limit after 290 min (commit f2fb6b5, prediction f18af18089f9). Output: `experiments/g3-scale/lab-output.txt`
+- 2026-11-08 13:39 UTC `experiments/g3-scale/run2.sh 290`: exit code 0 after 97 min (commit 339693c, prediction f18af18089f9). Output: `experiments/g3-scale/lab-output.txt`

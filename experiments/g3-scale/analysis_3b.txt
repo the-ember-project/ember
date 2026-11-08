@@ -1,6 +1,6 @@
-model=3b paired n=200
-greedy                           acc=0.745 diff=+0.0 fixed=0 broken=0 p=1.0000 cost=1.00x
-G3 vote(greedy+3PAL) [primary]   acc=0.810 diff=+6.5 fixed=17 broken=4 p=0.0072 cost=2.71x
-[ref] vote(3PAL)                 acc=0.780 diff=+3.5 fixed=20 broken=13 p=0.2962 cost=1.71x
-[ref] PAL sample 1               acc=0.770 diff=+2.5 fixed=21 broken=16 p=0.5114 cost=0.57x
-PAL unparsed rate=0.022
+model=3b paired n=300
+greedy                           acc=0.757 diff=+0.0 fixed=0 broken=0 p=1.0000 cost=1.00x
+G3 vote(greedy+3PAL) [primary]   acc=0.813 diff=+5.7 fixed=23 broken=6 p=0.0023 cost=2.72x
+[ref] vote(3PAL)                 acc=0.780 diff=+2.3 fixed=27 broken=20 p=0.3817 cost=1.72x
+[ref] PAL sample 1               acc=0.737 diff=-2.0 fixed=26 broken=32 p=0.5118 cost=0.57x
+PAL unparsed rate=0.036
