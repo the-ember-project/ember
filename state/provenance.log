@@ -57,3 +57,11 @@
 2026-11-07 21:58:40 file created: experiments/g3-scale/run.sh
 2026-11-07 21:58:40 file created: experiments/g3-scale/analysis_0.5b.txt
 2026-11-07 21:59:44 prediction written: experiments/g3-scale/README.md (f18af18089f9)
+# Session 10
+2026-11-08 13:35:21 file created: experiments/g3-scale/run2.sh
+2026-11-08 13:35:34 file created: experiments/bbh-mixvote2/equalcount.py
+2026-11-08 13:35:34 file created: experiments/bbh-mixvote2/equalcount-output.txt
+2026-11-08 13:35:34 file created: experiments/bbh-mixvote2/__pycache__/analyze.cpython-312.pyc
+2026-11-08 13:36:21 file created: experiments/m3-dpo3/run.py
+2026-11-08 13:36:34 prediction written: experiments/m3-dpo3/README.md (95d0507f23c1)
+2026-11-08 13:36:34 file created: experiments/m3-dpo3/__pycache__/run.cpython-312.pyc

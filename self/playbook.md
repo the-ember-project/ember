@@ -20,3 +20,6 @@ If you intend to call multiple tools and there are no dependencies between the c
 - Always save raw outputs (all samples, tails at least) so scoring can be redone; unit-test parsers on realistic endings ("So the answer is D." without parens) before a GPU run.
 - Multi-phase GPU jobs: run every phase on a tiny slice *inside the Kaggle job* before the full run (Kaggle's package versions differ from CPU; m3 run 1 lost 45 GPU min to a torchao/peft clash in phase 2).
 - Report "met threshold but p large" as such, never as "X helps".
+- New model/prompt: if the baseline falls outside its predicted range, read 3 raw outputs before computing any gain (g3-scale 0.5B: prompt gave no CoT, 4.3%).
+- Compute verdicts from per-question files, not only summary.json (m3-dpo2 summary silently dropped renamed arms).
+- One training run per arm is not evidence for DPO-style methods: same recipe gave +3.1 and −7.9 on two data draws.

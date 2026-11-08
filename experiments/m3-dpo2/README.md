@@ -27,5 +27,21 @@ pairs are 34.6% hard. A relaxed MIX (plurality ≥5/13, both formats agreeing) k
 ## Runs
 GPU job `run.py` via `self/gpu_queue.txt` (limit 270 min, to fit the remaining weekly GPU quota; expected ~2.5 h with vLLM). Outputs as in m3-dpo.
 
-## Results
-(pending)
+## Results (Kaggle, 144 GPU min, 2026-11-08; confirmatory)
+**Bug in summary.json:** the summary loop still used the m3-dpo arm name `MIX`, so `MIXR-BASE` and `MIXR-COT` were never written. All paired stats below were recomputed in session #10 from the saved per-question files `gpu-output/eval_*.jsonl` (same sign test). COT-BASE matches summary.json exactly.
+
+Accuracy, greedy, held-out GSM8K-train idx[3000:4500] (n=1500): BASE 80.5%, **MIXR 84.7%**, COT 72.7%. BBH date (n=250): BASE 50.0, MIXR 45.2, COT 42.0.
+
+| Hypothesis | Measured | Verdict |
+|---|---|---|
+| H1 MIXR−BASE ≥+2, p<0.05 | **+4.2**, 142 fixed / 79 broken, p<0.001 | **PASS** (predicted +2.5) |
+| H2 COT−BASE ≥+2, p<0.05 | **−7.9**, 116/234, p<0.001 (significant harm) | **FAIL** |
+| H3 MIXR ≥ COT | +12.1, 247/66, p<0.001 | PASS |
+| H4 MIXR drift on BBH date ≥−3 | **−4.8**, 31/43, p=0.20 | **FAIL** (not significant, but below the tolerance I set) |
+| BASE ~80% | 80.5% | as predicted |
+
+Training: both arms E=1799 pairs, 113 steps. Final DPO margin MIXR 2.2 (pair acc 0.63), COT 5.0 (0.76). Pair labels: MIXR precision 93.0% on 1313 pair questions (chosen correct 92.0%); COT 89.7% on 1190 (chosen correct 88.2%). COT outputs got ~9% longer (mean 791 vs 725 chars); hand-check of 3 COT-broken items: genuine reasoning errors (extra multiplications, wrong subtraction), not format/parse failures.
+
+**Interpretation (exploratory).** The pre-registered label-free cross-format arm passed with +4.2 — above the M3 bar of +3 — on held-out questions. But the same recipe with CoT-majority labels, which gave +3.1 on GSM8K test in m3-dpo, here *lost* 7.9 points. The only differences from m3-dpo for COT are the generation seed (3031), the eval set, and E. So label-free DPO is **unstable across data samples**: one run per arm is not enough, and the MIXR win may partly be luck of the draw too. The COT arm's training stats looked like m3-dpo's (margin ~5), so training curves do not flag the collapse. Possible mechanism (untested): COT's 12% wrong chosen answers plus its larger margin push harder in wrong directions; MIXR's lower margin suggests its pairs are harder to separate (more conflicting signal = implicit regularisation?). Drift on BBH date is negative for every DPO arm in both runs (−2 to −8), so some general-skill cost is likely real.
+**Next:** replicate MIXR (and COT) with 2 more generation seeds, smaller eval; add an NLL-only control (reviewer); track drift on a second non-GSM8K task.
+

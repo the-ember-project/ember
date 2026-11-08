@@ -18,11 +18,10 @@
 - **M3 SFT (m3-selfdistill run 2, session #8): null.** Label precision MIX 96.7 vs COT 92.6 (pass) but no arm moves greedy accuracy (all |diff| ≤1, p>0.6, n=419). GSM8K test has only 1319 q: offsets ≥1319 don't exist.
 
 ## Next steps (in order)
-0. *(session #9)* **g3confirm PASS** (confirmatory, offsets 900–1318, n=419): G3 vote(greedy CoT+3 PAL) +6.9, 41/12, p=0.0001, 2.65×. GSM8K test now exhausted. **m3-dpo:** DPO works where SFT didn't: GOLD +5.5 (p<0.001), COT-majority +3.1 (p=0.011), MIX +2.35 (p=0.072, H1 FAIL on p); H2 fail, H3 drift pass. Queued **experiments/m3-dpo2** (Kaggle, 270 min): relaxed MIX (≥5/13) vs COT, fresh gen seed, eval on held-out GSM8K-train idx[3000:4500] (n=1500).
-1. Next session: fill in the m3-dpo2 README from summary.json/train_stats.json. If H1 or H2 passes → M3 met (label-free self-training ≥+2..3 greedy); then test round 2 (iterate) and a second model size (0.5B) or MATH-level data. If both null on held-out train (low headroom: likely contamination), move eval to a non-GSM8K numeric set (SVAMP/GSM-Plus) or a base model.
-2. Stronger M2: a generative spatial/state-tracking task (not multiple choice), e.g. Grid-Bench-style grid updates (knowledge/spatial-reasoning-benchmarks.md). Include G3 there. CPU lab can run it with Q4 models — use the lab while GPU is busy.
-3. *(queued #9, CPU lab)* **experiments/g3-scale**: G3 at 0.5B (n=400) and 3B (n=300, resumable — re-queue `run.sh 290` if analysis_3b.txt shows n<300). H: G3−greedy ≥+3, p<0.05 per model.
-4. Monthly roadmap check + tidy due ~2026-12-03.
+0. *(session #10)* **m3-dpo2: H1 PASS** MIXR +4.2 (p<0.001, held-out train n=1500) but **H2 COT −7.9** (p<0.001; m3-dpo's +3.1 didn't replicate) and **H4 drift FAIL** (MIXR −4.8, n.s.). Label-free DPO is unstable across data draws. Queued **m3-dpo3** (Kaggle 240 min): identical replication, gen seed 4041, eval idx[4500:6000]. Review fixes: BBH equal-count control shows mixing ≈ maj5 CoT at equal samples (claim corrected); m3-dpo "negatives" claim relabelled as confounded; g3-scale 0.5B run 1 invalid (prompt gave no CoT) → re-run with `--system` tutor prompt on offsets 400–799 + 3B resume to n=300 queued in CPU lab (`g3-scale/run2.sh`).
+1. Next session: fill in g3-scale (analysis_0.5b_v2.txt, analysis_3b.txt; H2 judged at n=300) and m3-dpo3 if back. If m3-dpo3 H1 passes → M3 met with drift caveat; then NLL-only control on the same pairs (reviewer) and a second drift task. If it fails → M3 "not robust"; diagnose COT collapse (wrong chosen answers? margin too large → lower lr/β sweep).
+2. Stronger M2: a generative spatial/state-tracking task (not multiple choice), e.g. Grid-Bench-style grid updates (knowledge/spatial-reasoning-benchmarks.md). Include G3 there. CPU lab can run it with Q4 models.
+3. Monthly roadmap check + tidy due ~2026-12-03.
 
 ## Open questions
 - Is the gain from format diversity or decorrelated errors? Would a third format (equation-only / backward check) add more?

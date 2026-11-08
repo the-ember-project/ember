@@ -1,0 +1,76 @@
+== tracking_shuffled_objects_three_objects n=250  tokens/q: greedyCoT 173, 5CoT 925, 5PAL 675, greedyPAL 122
+   unparsed: CoT greedy 5, PAL greedy 46, PAL samples 345/1250
+   [H2] S2 vs S3: diff=+10.4 fixed=36 broken=10 p=0.000
+   [H3] cost of C = 3.41x greedy; unparsed greedy CoT = 2.0%
+   greedy CoT                               acc=0.348 diff=+0.0 fixed=0 broken=0 p=1.000
+   C vote(1CoT+3PAL) [H3]                   acc=0.504 diff=+15.6 fixed=81 broken=42 p=0.001
+   S2 vote(5CoT+5PAL)                       acc=0.480 diff=+13.2 fixed=71 broken=38 p=0.002
+   S3 maj5 CoT                              acc=0.376 diff=+2.8 fixed=53 broken=46 p=0.547
+   greedy PAL                               acc=0.504 diff=+15.6 fixed=81 broken=42 p=0.001
+   [expl] maj5 PAL                          acc=0.592 diff=+24.4 fixed=93 broken=32 p=0.000
+   [expl] vote(2CoT+5PAL)                   acc=0.548 diff=+20.0 fixed=86 broken=36 p=0.000
+   [expl] vote(greedyCoT+greedyPAL+5CoT)    acc=0.412 diff=+6.4 fixed=37 broken=21 p=0.048
+   [expl] pass@10 = 0.976
+== logical_deduction_five_objects n=250  tokens/q: greedyCoT 334, 5CoT 1910, 5PAL 1117, greedyPAL 180
+   unparsed: CoT greedy 12, PAL greedy 179, PAL samples 976/1250
+   [H2] S2 vs S3: diff=+0.8 fixed=7 broken=5 p=0.774
+   [H3] cost of C = 3.15x greedy; unparsed greedy CoT = 4.8%
+   greedy CoT                               acc=0.272 diff=+0.0 fixed=0 broken=0 p=1.000
+   C vote(1CoT+3PAL) [H3]                   acc=0.212 diff=-6.0 fixed=32 broken=47 p=0.115
+   S2 vote(5CoT+5PAL)                       acc=0.304 diff=+3.2 fixed=43 broken=35 p=0.428
+   S3 maj5 CoT                              acc=0.296 diff=+2.4 fixed=41 broken=35 p=0.567
+   greedy PAL                               acc=0.096 diff=-17.6 fixed=17 broken=61 p=0.000
+   [expl] maj5 PAL                          acc=0.140 diff=-13.2 fixed=25 broken=58 p=0.000
+   [expl] vote(2CoT+5PAL)                   acc=0.256 diff=-1.6 fixed=39 broken=43 p=0.741
+   [expl] vote(greedyCoT+greedyPAL+5CoT)    acc=0.348 diff=+7.6 fixed=34 broken=15 p=0.009
+   [expl] pass@10 = 0.720
+== date_understanding n=250  tokens/q: greedyCoT 285, 5CoT 1580, 5PAL 703, greedyPAL 116
+   unparsed: CoT greedy 13, PAL greedy 233, PAL samples 1153/1250
+   [H2] S2 vs S3: diff=+4.4 fixed=11 broken=0 p=0.001
+   [H3] cost of C = 2.59x greedy; unparsed greedy CoT = 5.2%
+   greedy CoT                               acc=0.452 diff=+0.0 fixed=0 broken=0 p=1.000
+   C vote(1CoT+3PAL) [H3]                   acc=0.336 diff=-11.6 fixed=36 broken=65 p=0.005
+   S2 vote(5CoT+5PAL)                       acc=0.492 diff=+4.0 fixed=48 broken=38 p=0.332
+   S3 maj5 CoT                              acc=0.448 diff=-0.4 fixed=45 broken=46 p=1.000
+   greedy PAL                               acc=0.044 diff=-40.8 fixed=4 broken=106 p=0.000
+   [expl] maj5 PAL                          acc=0.192 diff=-26.0 fixed=22 broken=87 p=0.000
+   [expl] vote(2CoT+5PAL)                   acc=0.404 diff=-4.8 fixed=44 broken=56 p=0.271
+   [expl] vote(greedyCoT+greedyPAL+5CoT)    acc=0.528 diff=+7.6 fixed=28 broken=9 p=0.003
+   [expl] pass@10 = 0.824
+== POOLED n=750  tokens/q: greedyCoT 264, 5CoT 1472, 5PAL 832, greedyPAL 140
+   unparsed: CoT greedy 30, PAL greedy 458, PAL samples 2474/3750
+   [H2] S2 vs S3: diff=+5.2 fixed=54 broken=15 p=0.000
+   [H3] cost of C = 3.01x greedy; unparsed greedy CoT = 4.0%
+   greedy CoT                               acc=0.357 diff=+0.0 fixed=0 broken=0 p=1.000
+   C vote(1CoT+3PAL) [H3]                   acc=0.351 diff=-0.7 fixed=149 broken=154 p=0.818
+   S2 vote(5CoT+5PAL)                       acc=0.425 diff=+6.8 fixed=162 broken=111 p=0.002
+   S3 maj5 CoT                              acc=0.373 diff=+1.6 fixed=139 broken=127 p=0.500
+   greedy PAL                               acc=0.215 diff=-14.3 fixed=102 broken=209 p=0.000
+   [expl] maj5 PAL                          acc=0.308 diff=-4.9 fixed=140 broken=177 p=0.043
+   [expl] vote(2CoT+5PAL)                   acc=0.403 diff=+4.5 fixed=169 broken=135 p=0.058
+   [expl] vote(greedyCoT+greedyPAL+5CoT)    acc=0.429 diff=+7.2 fixed=99 broken=45 p=0.000
+   [expl] pass@10 = 0.840
+== tracking_shuffled_objects_three_objects n=250 maj5CoT=0.376
+   maj5 CoT  acc=0.376 vs maj5 +0.0 fixed=0 broken=0 p=1.000
+   4C+1P     acc=0.372 vs maj5 -0.4 fixed=13 broken=14 p=1.000
+   3C+2P     acc=0.420 vs maj5 +4.4 fixed=29 broken=18 p=0.144
+   2C+3P     acc=0.492 vs maj5 +11.6 fixed=50 broken=21 p=0.001
+   5P        acc=0.592 vs maj5 +21.6 fixed=87 broken=33 p=0.000
+== logical_deduction_five_objects n=250 maj5CoT=0.296
+   maj5 CoT  acc=0.296 vs maj5 +0.0 fixed=0 broken=0 p=1.000
+   4C+1P     acc=0.300 vs maj5 +0.4 fixed=13 broken=12 p=1.000
+   3C+2P     acc=0.272 vs maj5 -2.4 fixed=16 broken=22 p=0.418
+   2C+3P     acc=0.240 vs maj5 -5.6 fixed=19 broken=33 p=0.070
+   5P        acc=0.140 vs maj5 -15.6 fixed=21 broken=60 p=0.000
+== date_understanding n=250 maj5CoT=0.448
+   maj5 CoT  acc=0.448 vs maj5 +0.0 fixed=0 broken=0 p=1.000
+   4C+1P     acc=0.404 vs maj5 -4.4 fixed=8 broken=19 p=0.052
+   3C+2P     acc=0.392 vs maj5 -5.6 fixed=15 broken=29 p=0.049
+   2C+3P     acc=0.396 vs maj5 -5.2 fixed=23 broken=36 p=0.117
+   5P        acc=0.192 vs maj5 -25.6 fixed=24 broken=88 p=0.000
+== POOLED n=750 maj5CoT=0.373
+   maj5 CoT  acc=0.373 vs maj5 +0.0 fixed=0 broken=0 p=1.000
+   4C+1P     acc=0.359 vs maj5 -1.5 fixed=34 broken=45 p=0.260
+   3C+2P     acc=0.361 vs maj5 -1.2 fixed=60 broken=69 p=0.481
+   2C+3P     acc=0.376 vs maj5 +0.3 fixed=92 broken=90 p=0.941
+   5P        acc=0.308 vs maj5 -6.5 fixed=132 broken=181 p=0.007

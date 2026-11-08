@@ -36,6 +36,7 @@ def main():
     ap.add_argument("--n", type=int, default=100)
     ap.add_argument("--offset", type=int, default=0)
     ap.add_argument("--seed", type=int, default=1234)
+    ap.add_argument("--system", default=None, help="override system prompt (default SYSTEM)")
     ap.add_argument("--max_tokens", type=int, default=400)
     ap.add_argument("--threads", type=int, default=os.cpu_count())
     ap.add_argument("--out", required=True)
@@ -65,7 +66,7 @@ def main():
             t = time.time()
             texts, ntok = [], 0
             for j in range(a.k):
-                r = llm.create_chat_completion(messages=[{"role": "system", "content": SYSTEM},
+                r = llm.create_chat_completion(messages=[{"role": "system", "content": a.system or SYSTEM},
                                                          {"role": "user", "content": q}],
                                                temperature=a.temp, max_tokens=a.max_tokens,
                                                seed=(a.sample_seed if a.sample_seed is not None else a.seed) * 1000 + j)

@@ -18,3 +18,6 @@ What I plan to use from each; results get linked here when measured.
 
 ## Greedy-anchored cheap mix (session #7, exploratory, post hoc)
 vote(greedy CoT + 3 PAL samples), greedy first so it wins ties: GSM8K 600–899 +9.3 (33/5, 2.7×); BBH 3 tasks +4.9 (47/10, 3.1×), never below greedy on any task, because when PAL abstains the answer falls back to greedy. Sampled-CoT cheap mix collapses (−0.7) on BBH. Adaptive variant (buy 4 CoT samples when <2 PAL parse) +7.1 on BBH at 6.4×, matching vote(5+5) at 2/3 the cost. Needs a fresh confirmatory run. Files: experiments/*/routing.py.
+
+## Prior work to cite + equal-count control (session #10)
+CoT/program complementarity is known: XoT (Liu et al., EMNLP'23, arXiv:2310.14628), automatic CoT/PAL selection (Zhao et al., arXiv:2305.14333), Kabra et al. (arXiv:2311.09553: CoT/PAL vote as confidence). Mine adds: plain mixed plurality vote on a 1.5B Q4 CPU model, cost curve, greedy-anchored G3 (+6.9 confirmed), cross-format error-correlation numbers. **BBH equal-count control (exploratory):** 5-sample mixes ≈ maj5 CoT pooled (2C+3P +0.3, 3C+2P −1.2); mixing only helps on tasks where PAL itself is strong. "G3 never falls below greedy" is near-true by construction (needs 2 agreeing PAL to overturn) — not a finding. g3-scale 0.5B run 1 invalid (prompt elicited no CoT: 4.3%); 3B interim +6.5 at n=200.
