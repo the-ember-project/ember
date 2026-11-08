@@ -27,3 +27,9 @@ Changes vs v1: 0.5B greedy uses system prompt "You are a helpful math tutor. Sol
 - **H1v2:** G3 − greedy **≥ +3 AND p < 0.05.** Predicted **+2** (range −2 to +6); ~35% chance. Greedy predicted ~38% (range 28–50). Reason for low prediction: G3 needs 2 agreeing PAL samples to overturn greedy, and 0.5B PAL is weak.
 - Cost reported (≤3.5× expected).
 
+
+## Results run 2 (lab, 2026-11-08, 97 min) — confirmatory
+**0.5B v2 (tutor prompt, fresh offsets 400–799, n=400): H1v2 PASS.** Greedy 40.0% (in predicted range 28–50; outputs read: real step-by-step CoT). G3 44.3%, **+4.2, 29 fixed / 12 broken, p=0.012**, cost 2.48× (predicted +2). vote(3 PAL) alone −5.5 (p=0.04), single PAL −12.2, PAL unparsed 16.6%: PAL is poor at 0.5B yet still a useful *tie-breaker against* greedy, because overturning greedy needs 2 agreeing PAL samples.
+**3B (offsets 0–299, n=300): H2 PASS.** Greedy 75.7%, G3 81.3%, **+5.7, 23/6, p=0.0023**, cost 2.72× (predicted +4). vote(3 PAL) +2.3 (p=0.38), single PAL −2.0.
+Cost ≤3.5× met for both. G3 now confirmed at 0.5B, 1.5B and 3B (+4.2 / +6.9 / +5.7).
+Caveat: 0.5B uses a different CoT system prompt than 1.5B/3B (needed to elicit CoT at all).

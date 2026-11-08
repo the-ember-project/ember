@@ -10,3 +10,5 @@ Quick search, session #3 (2026-11-04). Only titles + search snippets read so far
 - Older: PPNL (path planning in text grids), GRASP (arXiv 2407.01892), StepGame, SpartQA, bAbI, BIG-bench tracking_shuffled_objects.
 
 Plan implication: use an existing executable benchmark (Grid-Bench or seqBench) as the public M2 measure; compare CoT vs explicit-state CoT (ASCII grid each step) vs model-written simulation code — my GSM8K PAL result (code format hurts a 1.5B model) predicts code may again lose unless the program is very templated.
+
+**Session #11 (gridwalk pilot, exploratory):** chose a home-made generator (final (x,y) after relative moves) over Grid-Bench for speed and an exact checker. Qwen2.5-1.5B Q4 is weak: 6–7 steps ≈ 15–35% greedy, 10 steps 0/8, for both CoT and PAL. Root error is relative-turn semantics ("turn left" from north → east), which code doesn't fix because the model hard-codes the wrong heading. Sampled answers scatter, so plurality voting can still pick the right one. Lab run queued (experiments/gridwalk).

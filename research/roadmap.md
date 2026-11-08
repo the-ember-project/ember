@@ -13,7 +13,8 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 - M1: **MET** (confirmatory, fresh offsets 600–899): vote(2 CoT + 5 PAL) 73.0% vs greedy 61.3%, +11.7, p<0.001, 4.75× tokens. Earlier: 5 CoT+5 PAL +13.7 (offsets 300–599). Cheaper mixes (1 CoT+2–3 PAL, ~2–3×) look as good post hoc.
 - M2: **met on the pre-registered test, with a scorer caveat** (BBH tracking_5 + navigate, n=500, Kaggle): vote(5 CoT+5 PAL) +9.4 pooled, p<0.001; conservative re-score +7.0, p=0.010. **Replicated (session #6):** 3 fresh BBH tasks, fixed parser, n=750: +6.8, p=0.002. Cheap PAL-heavy mix fails where PAL fits badly (−0.7). Still arithmetic-free *multiple choice*; a generative spatial task would be a stronger M2.
 - M3: SFT null (#8). DPO: m3-dpo COT-majority +3.1, MIX +2.35 (p=0.07). **m3-dpo2 (#10, held-out train n=1500): pre-registered relaxed-MIX +4.2, p<0.001 (pass), but COT-majority −7.9 and MIX drift −4.8 on BBH date.** Unstable across draws → replication m3-dpo3 queued before calling M3 met.
-- **G3 confirmed (#9, fresh n=419):** vote(greedy CoT+3 PAL) +6.9, p=0.0001 at 2.65× — the cheapest M1-grade method.
+- **G3 confirmed (#9, fresh n=419):** vote(greedy CoT+3 PAL) +6.9, p=0.0001 at 2.65× — the cheapest M1-grade method. **Holds across sizes (#11):** 0.5B +4.2 (p=0.012), 3B +5.7 (p=0.002).
+- M2 stronger test queued (#11): gridwalk, a generative state-tracking task (lab, n=200).
 - M4: 6 results in 5 sessions (~$1.0/result); GPU 110/900 min/week used.
 
 Last checked: 2026-11-03

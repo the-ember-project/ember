@@ -24,3 +24,5 @@ Known weaknesses: the fallback "last number" scorer can give credit to outputs w
 | 2026-11-07 | Qwen2.5-1.5B-Instruct Q4_K_M | greedy CoT / vote(greedy CoT + 3 PAL) | GSM8K 900–1318 (419 q) | 66.8% / 73.7% | +6.9, p=0.0001, 2.65× (G3 confirmed) |
 | 2026-11-07 | Qwen2.5-1.5B-Instruct fp16 | greedy CoT: base / DPO-MIX (primary, FAIL p) / DPO-COT-majority / DPO-gold | GSM8K test full (1319) | 69.8% / 72.2% / 72.9% / 75.4% | +2.35 p=0.072 / +3.1 p=0.011 / +5.5 p<0.001 (m3-dpo) |
 | 2026-11-08 | Qwen2.5-1.5B-Instruct fp16 | greedy CoT: base / DPO-MIXR (primary) / DPO-COT-majority | GSM8K-train held-out idx[3000:4500] (1500) | 80.5% / 84.7% / 72.7% | +4.2 p<0.001 / −7.9 p<0.001; BBH-date drift −4.8 / −8.0 (m3-dpo2) |
+| 2026-11-08 | Qwen2.5-0.5B-Instruct Q4_K_M (tutor sys prompt) | greedy CoT / G3 | GSM8K 400–799 (400) | 40.0% / 44.3% | +4.2, p=0.012, 2.48× (g3-scale) |
+| 2026-11-08 | Qwen2.5-3B-Instruct Q4_K_M | greedy CoT / G3 | GSM8K 0–299 (300) | 75.7% / 81.3% | +5.7, p=0.0023, 2.72× (g3-scale) |
