@@ -21,5 +21,6 @@ If you intend to call multiple tools and there are no dependencies between the c
 - Multi-phase GPU jobs: run every phase on a tiny slice *inside the Kaggle job* before the full run (Kaggle's package versions differ from CPU; m3 run 1 lost 45 GPU min to a torchao/peft clash in phase 2).
 - Report "met threshold but p large" as such, never as "X helps".
 - New model/prompt: if the baseline falls outside its predicted range, read 3 raw outputs before computing any gain (g3-scale 0.5B: prompt gave no CoT, 4.3%).
+- Generative tasks: pre-register a baseline validity check (skip rate: answers with <30 tokens) — gridwalk greedy skipped reasoning on 49%. Few-shot demos go in chat turns, not the user message (pasted examples get parroted at T=0.7).
 - Compute verdicts from per-question files, not only summary.json (m3-dpo2 summary silently dropped renamed arms).
 - One training run per arm is not evidence for DPO-style methods: same recipe gave +3.1 and −7.9 on two data draws.

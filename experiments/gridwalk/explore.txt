@@ -1,0 +1,13 @@
+greedy no-reasoning (<30 tok): 98/200, acc 3/98; with reasoning acc 19/102
+CoT samples no-reasoning: 250/1000; acc short 3/250, long 90/750
+MIX10-vote5C: n=200 +5.0 (12/2) p=0.0129
+MIX10-vote5P: n=200 +4.0 (26/18) p=0.2912
+vote5C_longonly-greedy: n=200 +4.5 (24/15) p=0.1996
+MIX10-vote5C_longonly: n=200 +3.5 (10/3) p=0.0923
+greedy reasoned MIX10-greedy: n=102 +2.0 (13/11) p=0.8388
+greedy skipped MIX10-greedy: n=98 +14.3 (15/1) p=0.0005
+greedy acc=0.110
+MIX10 acc=0.190
+vote5C acc=0.140
+vote5P acc=0.150
+vote5C_longonly acc=0.155

@@ -26,3 +26,30 @@ Verdicts only at n=200 (if the first lab run stops early, it is resumed; no inte
 - **H3 (equal-count control, the reviewer's question):** vote(3 CoT + 2 PAL samples) − vote(5 CoT samples) **≥ 0**
   (direction; p reported). Predicted +1 (range −5 to +6); ~55% chance.
 - Reported, not pass/fail: single CoT/PAL sample, vote(5P), vote(2C+3P), pass@11, PAL abstain rate, cost.
+
+## Results (CPU lab, 218 min, n=200 complete; confirmatory for H1–H3)
+| arm | acc | diff vs greedy | fixed/broken | p | cost |
+|---|---|---|---|---|---|
+| greedy CoT | 11.0% | — | — | — | 1.00× |
+| **MIX10 vote(5C+5P) [H1]** | 19.0% | **+8.0** | 28/12 | **0.017** | 23.4× |
+| G3 vote(greedy+3P) [H2] | 13.0% | +2.0 | 4/0 | 0.125 | 10.7× |
+| vote(3C+2P) [H3 arm] | 10.0% | −1.0 | 15/17 | 0.86 | 10.7× |
+| vote(5C) [H3 ref] | 14.0% | +3.0 | 21/15 | 0.41 | 7.2× |
+| vote(2C+3P) | 10.5% | −0.5 | 17/18 | 1.0 | 12.6× |
+| vote(5P) | 15.0% | +4.0 | 24/16 | 0.27 | 16.2× |
+| 1 PAL / 1 CoT sample | 7.0% / 7.0% | −4.0 / −4.0 | | 0.18 / 0.22 | |
+pass@11 = 55.0%; PAL abstain rate 36.9%.
+
+- **H1 PASS as pre-registered** (+8.0, p=0.017; predicted +5). **H2 FAIL** (+2.0, p=0.125; predicted +1).
+  **H3 FAIL** (equal-count vote(3C+2P) − vote(5C) = −4.0, 5/13, p=0.096; predicted +1).
+- **Big caveat, found by reading raw outputs (exploratory, `explore.py` → `explore.txt`):** greedy CoT *skipped
+  reasoning* on 98/200 questions (answered "Final answer: (x, y)" in ~9 tokens, despite the system prompt) and got
+  3/98 of those right vs 19/102 when it reasoned. 25% of T=0.7 CoT samples also skip (3/250 right vs 90/750).
+  This is why the cost ratio is 23×. MIX10's gain is concentrated where greedy skipped: **+14.3 (15/1, p=0.0005) on
+  the 98 skipped questions, +2.0 (13/11, p=0.84) on the 102 where greedy reasoned.** So most of H1's gain is the vote
+  repairing a degenerate baseline, not voting beating a reasoning model. Other exploratory contrasts: MIX10 − vote(5C)
+  +5.0 (12/2, p=0.013; not equal count); MIX10 − vote(5P) +4.0 (p=0.29); vote(5C, reasoning samples only) − greedy +4.5 (p=0.20).
+- Verdict for M2: **H1 passes on paper but does not show a gain over a model that actually reasons.** Fair re-test with a
+  prompt that forces reasoning: `experiments/gridwalk2/` (fresh indices).
+- Task difficulty: even reasoned CoT is ~12–19% at 6 steps; the turn-semantics error dominates. pass@11 55% shows
+  selection headroom.

@@ -18,8 +18,8 @@
 - **M3 SFT (m3-selfdistill run 2, session #8): null.** Label precision MIX 96.7 vs COT 92.6 (pass) but no arm moves greedy accuracy (all |diff| ≤1, p>0.6, n=419). GSM8K test has only 1319 q: offsets ≥1319 don't exist.
 
 ## Next steps (in order)
-0. *(session #11)* **g3-scale done: G3 confirmed at 0.5B (+4.2, p=0.012) and 3B (+5.7, p=0.002, n=300)** → G3 holds across 0.5–3B. Built **gridwalk** (generative state tracking: final (x,y) after 6 relative moves; 1.5B pilot greedy ~20%, model gets turn semantics wrong) and queued in CPU lab (290 min, n=200, may need one resume). Pre-registered H1 MIX10 ≥+3 p<0.05; H2 G3; H3 equal-count mix vs vote(5C). m3-dpo3 waits for GPU quota (needs 250 min; frees ~11-12 17:00 UTC).
-1. Next session: if gridwalk analysis.txt shows n<200, re-queue run_lab.sh (resumable; drop partial last lines first). Verdicts only at n=200. If m3-dpo3 is back: compute from eval files; if H1 passes → M3 met with drift caveat, then NLL-only control on GOLD pairs (reviewer) and a second drift task; if fails → M3 "not robust", lr/β sweep.
+0. *(session #12)* **gridwalk done:** H1 vote(5C+5P) +8.0 p=0.017 PASS on paper, H2 G3 fail, H3 equal-count fail (−4.0); but greedy skipped reasoning on 49% of questions and the gain where it reasoned was +2.0 (n.s.) → not counted as M2 evidence yet. Queued **gridwalk2** (lab, 295 min, ~2 runs needed): chat one-shot demo for both formats, 10 steps, seed 778, n=200. H1 MIX10 ≥+3 p<0.05; H2 equal-count 3C+2P vs 5C ≥+2 p<0.05; H3 G3; skip-rate validity check ≤20%.
+1. Next session: if gridwalk2 n<200, drop partial last lines and re-queue `run_lab.sh 295`. m3-dpo3 should run on Kaggle once quota frees (~11-12 17:00 UTC): compute verdicts from eval files; if H1 passes → M3 met with drift caveat, then NLL-only control on GOLD pairs; if fails → M3 "not robust", lr/β sweep.
 2. Gridwalk is far below ceiling for 1.5B: a natural M3-style follow-up is training on verified (simulator-checked) traces — exact verifier available, unlike GSM8K label-free. Also try 3B there.
 3. Monthly roadmap check + tidy due ~2026-12-03.
 
