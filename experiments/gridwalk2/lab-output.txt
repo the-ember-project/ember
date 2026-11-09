@@ -1,0 +1,44 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.440 tok/s=25.6 s/q=10.0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.440 tok/s=28.6 s/q=44.3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.760 tok/s=27.8 s/q=48.5
+SUMMARY mode=cot n=25 acc(first)=0.560 tok/s=25.7 s/q=10.0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.240 tok/s=28.7 s/q=44.1
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.640 tok/s=28.6 s/q=46.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.240 tok/s=26.1 s/q=9.9
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.120 tok/s=29.1 s/q=44.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.640 tok/s=28.7 s/q=45.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.480 tok/s=26.1 s/q=9.8
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.160 tok/s=29.2 s/q=42.9
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.640 tok/s=28.2 s/q=46.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.480 tok/s=25.7 s/q=10.0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=28.9 s/q=43.7
+SUMMARY mode=pal n=25 acc(first)=0.680 tok/s=28.6 s/q=45.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=25.8 s/q=9.9
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.160 tok/s=28.9 s/q=43.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.680 tok/s=28.6 s/q=46.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.160 tok/s=25.9 s/q=9.9
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.200 tok/s=28.8 s/q=44.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.320 tok/s=28.6 s/q=47.0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.

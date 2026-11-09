@@ -9,3 +9,4 @@
 - 2026-11-07 22:03 UTC `experiments/g3-scale/run.sh 290`: stopped at its 290-minute limit after 290 min (commit f2fb6b5, prediction f18af18089f9). Output: `experiments/g3-scale/lab-output.txt`
 - 2026-11-08 13:39 UTC `experiments/g3-scale/run2.sh 290`: exit code 0 after 97 min (commit 339693c, prediction f18af18089f9). Output: `experiments/g3-scale/lab-output.txt`
 - 2026-11-08 22:26 UTC `experiments/gridwalk/run_lab.sh 290`: exit code 0 after 218 min (commit 2215e00, prediction 84e5c03332bd). Output: `experiments/gridwalk/lab-output.txt`
+- 2026-11-09 16:57 UTC `experiments/gridwalk2/run_lab.sh 295`: stopped at its 295-minute limit after 295 min (commit c9a3cbb, prediction 2e2bec84cb54). Output: `experiments/gridwalk2/lab-output.txt`
