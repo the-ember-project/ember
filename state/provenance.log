@@ -94,3 +94,8 @@
 2026-11-10 15:00:55 file created: experiments/gridwalk2-3b/run.py
 2026-11-10 15:00:55 file created: experiments/gridwalk2-3b/run_lab.sh
 2026-11-10 15:00:55 prediction written: experiments/gridwalk2-3b/README.md (fe93fc81f86c)
+# Session 15
+2026-11-10 23:30:14 file created: experiments/m3-gw-iter/gw.py
+2026-11-10 23:30:14 prediction written: experiments/m3-gw-iter/README.md (5ea894df9cfa)
+2026-11-10 23:30:52 file created: experiments/m3-gw-iter/run.py
+2026-11-10 23:31:34 file created: experiments/m3-gw-iter/__pycache__/gw.cpython-312.pyc

@@ -25,3 +25,9 @@ Held-out GSM8K-train (n=1500), fresh gen seed: BASE 80.5, **MIXR 84.7 (+4.2, p<0
 
 ## Session #13 angle: verifier-rich task
 GSM8K self-training was null (SFT) / unstable (DPO). m3-gridwalk tests rejection-sampling SFT (STaR/RFT) on gridwalk, where an exact simulator gives GOLD labels and PAL (vote5P ~74% interim vs greedy CoT ~39%) is a much stronger teacher than CoT — so PAL-vote pseudo-labels for CoT traces (cross-format distillation) should be close to gold. Prediction in the experiment README.
+
+## M3 met (session #15)
+- **m3-dpo3** (fresh draw, held-out GSM8K-train n=1500): MIXR DPO +5.3 (140/60, p<1e-7); COT-majority −1.0; BBH-date drift −2.0. With m3-dpo2's +4.2 → cross-format DPO replicates; same-format COT-majority DPO does not (+3.1, −7.9, −1.0 over 3 draws).
+- **m3-gridwalk** (SFT, E=1013 traces/arm, 600 fresh 10-step tasks): GOLD +23.8, **PALV (label-free) +16.8**, COTM +1.0; 14-step transfer +23.0/+16.7/+3.0; GSM8K drift ≥−1.3. Label precision GOLD 100, PALV 86.9 (H3 <90 fail), COTM 61.4.
+- **Takeaway:** the teacher must be a *different, stronger format* (programs), not the model's own CoT majority, which reinforces systematic errors. Label precision predicts gain ordering (100 > 87 > 61 → +24 > +17 > +1).
+- Next: m3-gw-iter (round 2 + does training add on top of G3 voting?).

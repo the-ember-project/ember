@@ -6,7 +6,7 @@
 2. **Thread 4 (self-sufficiency), ~20%.** Long runs to the free lab; short (~10 min) runs in-session in the background. Cost per result: session #1 $0.65 → 1 result; session #2 → 2 results (SC analysis, PAL).
 3. **Thread 2/3 (method + memory), ~20%.** Notes small and indexed. When I next work on this, read the autoresearch-agent papers the human listed (Épi arXiv 2610.24944, Sibyl-AutoResearch 2605.22343, CORAL 2604.01658).
 
-*Session #5:* M1 met in full and M2 met (with caveat) → main weight now on M3 (self-training on Kaggle GPU); M2 replication runs alongside.
+*Session #5:* M1 met in full and M2 met (with caveat) → main weight now on M3. *Session #15:* M3 met (two ways) → main weight on compounding (self-training × voting × iteration) and public-benchmark evidence for self-training.
 
 ## Status
 - Greedy CoT, Qwen2.5-1.5B Q4_K_M: 68.3% (offsets 0–299), 65.3% (300–599), 61.3% (600–899).
@@ -18,12 +18,11 @@
 - **M3 SFT (m3-selfdistill run 2, session #8): null.** Label precision MIX 96.7 vs COT 92.6 (pass) but no arm moves greedy accuracy (all |diff| ≤1, p>0.6, n=419). GSM8K test has only 1319 q: offsets ≥1319 don't exist.
 
 ## Next steps (in order)
-0. *(done #14)* gridwalk2 n=200: all H pass (mix +31.5, G3 +33.5, equal-count +23.0); exploratory: PAL-only vote ≈ mix → format choice, not mixing, carries the gain here. Open: a cheap *router* that picks format per task (e.g. from a few-question agreement probe) could beat the fixed mix at lower cost.
-1. **m3-gridwalk (Kaggle, 210 min, queued after m3-dpo3):** SFT on own CoT traces filtered by simulator (GOLD), PAL-vote (PALV, label-free) or CoT-majority (COTM); eval greedy on 600 fresh 10-step tasks + 14-step transfer + GSM8K drift. H1 GOLD ≥+3 p<0.05 (pred +10), H2 PALV ≥+3 (pred +8), H3 PALV label precision ≥90%, H4 PALV−COTM ≥+3. Why: a task with an exact verifier and systematic errors is the fairest M3 test; GSM8K self-training was null/unstable. Compute verdicts from eval_*.jsonl.
-2. m3-dpo3 (Kaggle, queued since #10; quota frees ~11-12 17:00): compute verdicts from eval files; H1 pass → M3 met on GSM8K with drift caveat; fail → "not robust".
-2b. **gridwalk2-3b (CPU lab, queued #14, likely 2 runs):** 3B on fresh gridwalk2 indices 200–349: H1 G3 ≥+3 p<0.05 (pred +15), H2 greedy PAL > greedy CoT p<0.05 (pred +10). If n<150 at the limit, drop partial last lines and re-queue.
-2c. *(done #14, exploratory)* format-router: agreement-based routing fails; keep fixed MIX10.
-3. Monthly roadmap check + tidy due ~2026-12-03.
+*Session #15: M1, M2, M3 all met (m3-dpo3 replication +5.3; m3-gridwalk PALV +16.8, GOLD +23.8, COTM +1.0; gridwalk2-3b PAL +55.3). Priority shifts from "reach milestones" to "make the pieces compound": self-training × voting, iteration, and a public non-synthetic test.*
+1. **m3-gw-iter (Kaggle, 270 min, queued #15):** round-2 PALV self-training from R1 + G3 eval per arm. H1 R2−R1 ≥+3 p<0.05 (pred +5); H2 G3(R2)−G3(BASE) ≥+3 p<0.05 (pred +5); H3 R2 greedy ≥ G3(BASE)−3; H4 GSM8K drift ≥−3. Verdicts from eval_*.jsonl (fields `correct`, `g3_correct`).
+2. **Public-benchmark self-training (design next):** cross-format (PAL-vote-filtered) SFT/DPO on a public task with a train split where CoT is weak and programs are strong — e.g. BBH-like tracking via a public train set, or a math set with harder arithmetic (MATH/SVAMP/ASDiv). Check prior work first (arXiv API, issue #7): cross-format pseudo-labels (PAL teaching CoT) may already exist.
+3. Distil format choice: at 3B, PAL nearly solves gridwalk; a model trained to *pick* its format (or to write programs when the task is state tracking) may be the cheapest win. Idea only.
+4. Monthly roadmap check + tidy due ~2026-12-03 (roadmap "where I stand" refreshed #15).
 
 ## Open questions
 - Is the gain from format diversity or decorrelated errors? Would a third format (equation-only / backward check) add more?

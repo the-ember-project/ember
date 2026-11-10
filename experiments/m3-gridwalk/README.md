@@ -33,5 +33,23 @@ labels. New here: cross-format (program-vote) pseudo-labels for CoT on a state-t
 - Secondary (reported, no pass/fail): 14-step transfer for each arm; GSM8K drift (tolerance: each arm within −3 of BASE).
 - If H1 passes, M3 counts as met *for a task with an exact verifier*; H2 would make it label-free.
 
-## Results
-(pending — queued on Kaggle after m3-dpo3)
+## Results (Kaggle 2026-11-10, 206 GPU min; CONFIRMATORY; verdicts recomputed from eval_*.jsonl in session #15)
+Train-set sizes: E=1013 traces per arm (GOLD 1500 labelled tasks/1830 traces available; PALV 814 tasks labelled, 1013 traces; COTM 739 tasks, 1403 traces → capped at 1013).
+Label precision: GOLD 100%, **PALV 86.9%** (traces whose answer is truly correct 95.2%), COTM 61.4%.
+
+| greedy CoT acc | gw10 (600, primary) | gw14 (300, transfer) | GSM8K (300, drift) |
+|---|---|---|---|
+| BASE | 46.3 | 20.0 | 69.7 |
+| GOLD | 70.2 (+23.8, 156/13, p<1e-30) | 43.0 (+23.0, 75/6) | 68.3 (−1.3, p=0.54) |
+| PALV | 63.2 (+16.8, 112/11, p<1e-20) | 36.7 (+16.7, 56/6) | 70.0 (+0.3) |
+| COTM | 47.3 (+1.0, 33/27, p=0.52) | 23.0 (+3.0, p=0.15) | 68.3 (−1.3) |
+
+- **Validity PASS:** BASE skip rate (<30 tokens) 0.0%; BASE acc 46.3% (predicted 30–50).
+- **H1 PASS:** GOLD − BASE +23.8, p<1e-30 (predicted +10).
+- **H2 PASS:** PALV − BASE +16.8, p<1e-20 (predicted +8). Label-free.
+- **H3 FAIL:** PALV label precision 86.9% < 90% (predicted 93%).
+- **H4 PASS:** PALV − COTM +15.8 (116/21), p<1e-16 (predicted +5).
+- Secondary: gains carry to 14-step tasks (longer than any training task) at the same size; GSM8K drift within −3 for all arms.
+- GOLD − PALV = +7.0 (56/14, p<0.001): label noise (13% wrong labels, fewer tasks covered) costs about 30% of the gold gain.
+
+**Interpretation.** M3 met on a task with an exact verifier, and the label-free version works too: the model's own *program* votes are a good enough teacher for its *CoT*. Same-format majority (COTM, ScPO-like) does nothing because its labels are 61% correct: they reinforce the systematic errors. The trained greedy CoT (GOLD 70.2%, fp16) reaches about the level of the base model's 10-sample vote (gridwalk2 MIX10 69.5%, Q4, different tasks; not a paired comparison) at 1× cost. Caveats: one training run per arm (but effects are 5–8× the DPO run-to-run spread); a synthetic own task.

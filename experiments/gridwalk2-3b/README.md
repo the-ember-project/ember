@@ -11,3 +11,10 @@ Verdicts only at n=150.
 - **H1:** G3 = vote(greedy CoT + 3 PAL samples) − greedy CoT **≥ +3 AND p < 0.05** (exact sign test). Predicted +15 (range +3 to +30); ~85%.
 - **H2 (format):** greedy PAL − greedy CoT **> 0 AND p < 0.05.** Predicted +10 (range −10 to +25); ~60%.
 - Reported: vote(3P), vote(greedy PAL + 3P), PAL abstain rate, token cost.
+
+## Results (CPU lab 2026-11-10, 241 min, n=150 complete; CONFIRMATORY)
+- **Validity PASS:** greedy CoT skip rate 0.0%; greedy CoT 41.3% (predicted 50).
+- **H1 PASS:** G3 95.3%, **+54.0 (81/0), p<1e-4**, 3.9× tokens (predicted +15).
+- **H2 PASS:** greedy PAL 96.7%, **+55.3 (83/0), p<1e-4**, 0.96× tokens (predicted +10).
+- vote(3P) 95.3%, vote(greedy PAL+3P) 95.3%; PAL abstain 0%.
+- Reading: at 3B the program format nearly solves 10-step gridwalk (1.5B: single PAL sample ~62%, vote 73%), while CoT barely improves with scale (38% → 41%). Scale helps *program writing* far more than *step-by-step simulation in text*. For this task one greedy program beats any vote — the cheapest method is just picking the right format.

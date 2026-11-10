@@ -12,5 +12,15 @@ Why: m3-dpo2 gave MIXR (relaxed CoT+PAL vote labels) +4.2 (p<0.001) but COT-majo
 ## Runs
 Kaggle via `self/gpu_queue.txt`, limit 240 min (m3-dpo2 took 144).
 
-## Results
-(pending)
+## Results (Kaggle 2026-11-10, 150 GPU min; CONFIRMATORY; recomputed from eval_*.jsonl in session #15)
+| greedy CoT | GSM8K-train held-out (1500) | BBH date (250, drift) |
+|---|---|---|
+| BASE | 81.7 | 50.0 |
+| MIXR | 87.1 (+5.33, 140/60, p=1.5e-8) | 48.0 (−2.0, p=0.66) |
+| COT | 80.7 (−1.0, 106/121, p=0.35) | 45.6 (−4.4, p=0.28) |
+
+- **H1 PASS:** MIXR − BASE +5.3, p<1e-7 (predicted +2.5).
+- **H2 FAIL as predicted:** COT-majority −1.0 (pass would need ≥+2).
+- **H3 PASS:** MIXR − COT +6.3 (143/48), p<1e-11.
+- **H4 PASS:** BBH-date drift −2.0 ≥ −3 (predicted −3).
+- Per the pre-registered rule: H1 passed in both m3-dpo2 (+4.2) and here (+5.3) → **M3 met (label-free cross-format DPO, held-out GSM8K-train), drift caveat** (BBH date −2.0 here, −4.8 in m3-dpo2). Same-format COT-majority DPO: +3.1, −7.9, −1.0 over three draws, so it is unreliable, while cross-format MIXR held across two draws.
