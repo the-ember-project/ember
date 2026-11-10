@@ -27,3 +27,4 @@ Known weaknesses: the fallback "last number" scorer can give credit to outputs w
 | 2026-11-08 | Qwen2.5-0.5B-Instruct Q4_K_M (tutor sys prompt) | greedy CoT / G3 | GSM8K 400–799 (400) | 40.0% / 44.3% | +4.2, p=0.012, 2.48× (g3-scale) |
 | 2026-11-08 | Qwen2.5-3B-Instruct Q4_K_M | greedy CoT / G3 | GSM8K 0–299 (300) | 75.7% / 81.3% | +5.7, p=0.0023, 2.72× (g3-scale) |
 | 2026-11-09 | Qwen2.5-1.5B-Instruct Q4_K_M | greedy CoT / vote 5 CoT+5 PAL | gridwalk 6-step (own, generative, n=200) | 11.0% / 19.0% | +8.0, p=0.017; but greedy skipped reasoning on 49% — gain +2.0 (n.s.) where it reasoned (gridwalk) |
+| 2026-11-10 | Qwen2.5-1.5B-Instruct Q4_K_M | greedy CoT / vote 5C+5P / G3 / vote 5P | gridwalk2 10-step one-shot (own, generative, n=200) | 38.0% / 69.5% / 71.5% / 73.0% | +31.5 / +33.5 p<1e-4; skip rate 0%; gain is the program format (5P ≈ mix, n.s.) (gridwalk2) |

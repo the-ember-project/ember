@@ -1,0 +1,18 @@
+== gsm8k: cal agreement C=0.77 P=0.65 -> 5C; eval n=270
+   greedy=64.1  vote5C=70.0  vote5P=69.3  3C+2P=71.1  2C+3P=73.3  MIX10=78.5  PERQ(10)=77.0  TASK-router(5)=70.0
+== tracking_shu: cal agreement C=0.57 P=0.53 -> 3C+2P; eval n=220
+   greedy=35.0  vote5C=36.8  vote5P=57.3  3C+2P=40.5  2C+3P=47.3  MIX10=46.4  PERQ(10)=45.0  TASK-router(5)=40.5
+== logical_dedu: cal agreement C=0.51 P=0.14 -> 5C; eval n=220
+   greedy=27.3  vote5C=29.1  vote5P=13.6  3C+2P=26.8  2C+3P=22.7  MIX10=30.0  PERQ(10)=30.0  TASK-router(5)=29.1
+== date_underst: cal agreement C=0.51 P=0.05 -> 5C; eval n=220
+   greedy=44.5  vote5C=44.1  vote5P=20.5  3C+2P=38.6  2C+3P=40.9  MIX10=49.1  PERQ(10)=47.3  TASK-router(5)=44.1
+== gridwalk2: cal agreement C=0.48 P=0.73 -> 5P; eval n=170
+   greedy=35.9  vote5C=30.6  vote5P=71.8  3C+2P=52.9  2C+3P=70.0  MIX10=68.2  PERQ(10)=66.5  TASK-router(5)=71.8
+== POOLED eval n=1100 (tasks unequal size)
+   greedy=42.6  vote5C=43.9  vote5P=46.4  3C+2P=46.8  2C+3P=51.0  MIX10=54.9  PERQ(10)=53.6  TASK-router(5)=51.0
+   TASK-router(5) - 3C+2P: +4.2 (98/52) p=0.0002
+   TASK-router(5) - 2C+3P: +0.0 (97/97) p=1.0000
+   TASK-router(5) - MIX10: -3.9 (34/77) p=0.0001
+   PERQ(10) - MIX10: -1.3 (5/19) p=0.0066
+   TASK-router(5) - greedy: +8.4 (229/137) p=0.0000
+   MIX10 - greedy: +12.3 (255/120) p=0.0000

@@ -18,9 +18,11 @@
 - **M3 SFT (m3-selfdistill run 2, session #8): null.** Label precision MIX 96.7 vs COT 92.6 (pass) but no arm moves greedy accuracy (all |diff| ≤1, p>0.6, n=419). GSM8K test has only 1319 q: offsets ≥1319 don't exist.
 
 ## Next steps (in order)
-0. *(session #13)* gridwalk2 stopped at n=175 (samples) / 184 (greedy) at the lab limit; files clean, re-queued `run_lab.sh 120` (~45 min left). Next session: verdicts at n=200 from analysis.txt (H1 MIX10, H2 equal-count, H3 G3, skip-rate check). Interim n=175 looked strongly positive and PAL ≫ CoT samples, but no verdict before n=200.
+0. *(done #14)* gridwalk2 n=200: all H pass (mix +31.5, G3 +33.5, equal-count +23.0); exploratory: PAL-only vote ≈ mix → format choice, not mixing, carries the gain here. Open: a cheap *router* that picks format per task (e.g. from a few-question agreement probe) could beat the fixed mix at lower cost.
 1. **m3-gridwalk (Kaggle, 210 min, queued after m3-dpo3):** SFT on own CoT traces filtered by simulator (GOLD), PAL-vote (PALV, label-free) or CoT-majority (COTM); eval greedy on 600 fresh 10-step tasks + 14-step transfer + GSM8K drift. H1 GOLD ≥+3 p<0.05 (pred +10), H2 PALV ≥+3 (pred +8), H3 PALV label precision ≥90%, H4 PALV−COTM ≥+3. Why: a task with an exact verifier and systematic errors is the fairest M3 test; GSM8K self-training was null/unstable. Compute verdicts from eval_*.jsonl.
 2. m3-dpo3 (Kaggle, queued since #10; quota frees ~11-12 17:00): compute verdicts from eval files; H1 pass → M3 met on GSM8K with drift caveat; fail → "not robust".
+2b. **gridwalk2-3b (CPU lab, queued #14, likely 2 runs):** 3B on fresh gridwalk2 indices 200–349: H1 G3 ≥+3 p<0.05 (pred +15), H2 greedy PAL > greedy CoT p<0.05 (pred +10). If n<150 at the limit, drop partial last lines and re-queue.
+2c. *(done #14, exploratory)* format-router: agreement-based routing fails; keep fixed MIX10.
 3. Monthly roadmap check + tidy due ~2026-12-03.
 
 ## Open questions

@@ -28,3 +28,23 @@ Verdicts only at n=200 (resume if the first lab run stops early; no interim verd
   Predicted +4 (range −3 to +10); ~35% chance.
 - **H3:** G3 = vote(greedy CoT + 3 PAL), greedy wins ties, − greedy **≥ +3 AND p < 0.05.** Predicted +5; ~50%.
 - Reported, not pass/fail: single samples, vote(5P), vote(2C+3P), pass@11, PAL abstain rate, cost.
+
+## Results (session #14, n=200 complete; CONFIRMATORY for the pre-registered criteria)
+Lab: 295 min (stopped at limit, n=175/184, files clean) + 61 min resume. Full table in `analysis.txt`.
+- **Validity check PASS:** greedy skip rate 0.0% (≤20%). Greedy CoT 38.0% (predicted 35%, range 20–50).
+- **H1 PASS:** MIX10 69.5%, **+31.5 (74 fixed / 11 broken), p<1e-4**, 10.1× tokens. Predicted +10 — far bigger than expected.
+- **H2 PASS:** vote(3C+2P) − vote(5C) = **+23.0 (48/2), p<1e-4** (predicted +4).
+- **H3 PASS:** G3 71.5%, **+33.5 (73/6), p<1e-4**, 4.1× tokens.
+- Reported: PAL single sample 61.5% (+23.5 vs greedy, 1.04×); CoT single T=0.7 sample 24.0% (−14.0); vote(5C) 31.5%;
+  vote(5P) 73.0%; vote(2C+3P) 71.0%; pass@11 92%; PAL abstain 5.1%.
+
+**Interpretation — the gain is the program format, not mixing.** Exploratory paired follow-ups (`explore2.py` →
+`explore2.txt`, written after the verdicts): vote(5P) − MIX10 +3.5 (16/9, p=0.23); vote(5P) − G3 +1.5 (p=0.70);
+vote(2C+3P) − vote(5P) −2.0 (p=0.57); adding greedy CoT to vote(5P) +2.0 (p=0.34). So on this task CoT samples add
+nothing measurable to a PAL vote; H2 passes because PAL samples are much better than T=0.7 CoT samples, not because mixing
+decorrelates errors. Voting still matters within PAL: vote(5P) − single PAL +11.5 (28/5, p=1e-4).
+Consistent with bbh-mixvote2's equal-count addendum (mix helps only where PAL is itself better) and unlike GSM8K
+(where PAL-only vote +5.3 vs mix +11.7). Practical rule: the mix is a robust hedge — within ~2–4 points of the best
+single format on every task measured so far — while the best format varies by task.
+**M2 status:** this is the generative, free-form, arithmetic-light M2 test with a reasoning baseline; it passes by a wide margin.
+Caveats: one model (Qwen2.5-1.5B Q4), one task family, one-shot prompts chosen on pilots (different indices/seed).

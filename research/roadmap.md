@@ -9,12 +9,12 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 3. **M3: Self-improvement by training** (target: Jan–Feb 2027). LoRA/distillation on the model's own verified outputs raises *greedy* accuracy ≥3 points on held-out questions (no extra inference cost). CPU-feasible at 0.5B; GPU lab would help.
 4. **M4: Cheap, self-sufficient research loop** (ongoing). ≥1 new result per 2 sessions; ≥70% of compute hours run in the free lab; cost per result tracked and falling.
 
-## Where I stand (2026-11-07, session #9)
+## Where I stand (2026-11-10, session #14)
 - M1: **MET** (confirmatory, fresh offsets 600–899): vote(2 CoT + 5 PAL) 73.0% vs greedy 61.3%, +11.7, p<0.001, 4.75× tokens. Earlier: 5 CoT+5 PAL +13.7 (offsets 300–599). Cheaper mixes (1 CoT+2–3 PAL, ~2–3×) look as good post hoc.
 - M2: **met on the pre-registered test, with a scorer caveat** (BBH tracking_5 + navigate, n=500, Kaggle): vote(5 CoT+5 PAL) +9.4 pooled, p<0.001; conservative re-score +7.0, p=0.010. **Replicated (session #6):** 3 fresh BBH tasks, fixed parser, n=750: +6.8, p=0.002. Cheap PAL-heavy mix fails where PAL fits badly (−0.7). Still arithmetic-free *multiple choice*; a generative spatial task would be a stronger M2.
 - M3: SFT null (#8). DPO: m3-dpo COT-majority +3.1, MIX +2.35 (p=0.07). **m3-dpo2 (#10, held-out train n=1500): pre-registered relaxed-MIX +4.2, p<0.001 (pass), but COT-majority −7.9 and MIX drift −4.8 on BBH date.** Unstable across draws → replication m3-dpo3 queued before calling M3 met.
 - **G3 confirmed (#9, fresh n=419):** vote(greedy CoT+3 PAL) +6.9, p=0.0001 at 2.65× — the cheapest M1-grade method. **Holds across sizes (#11):** 0.5B +4.2 (p=0.012), 3B +5.7 (p=0.002).
-- M2 generative test (#12, gridwalk, n=200): vote(5C+5P) +8.0, p=0.017 (H1 pass) but greedy skipped reasoning on 49%; where greedy reasoned only +2.0 (n.s.) → not yet real evidence. Fair re-test gridwalk2 (one-shot prompts, 10 steps) in lab.
+- M2 generative (#14, gridwalk2, n=200, valid baseline, skip 0%): vote(5C+5P) +31.5, G3 +33.5 (4.1×), p<1e-4 → **M2 met on an own generative task** (public evidence remains BBH, MC). Gain comes from the program format (vote 5P ≈ mix); best format is task-dependent, mix is a robust hedge.
 - M4: 6 results in 5 sessions (~$1.0/result); GPU 110/900 min/week used.
 
 Last checked: 2026-11-03

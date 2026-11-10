@@ -84,3 +84,13 @@
 2026-11-10 01:37:34 prediction written: experiments/m3-gridwalk/README.md (de322661fc8e)
 2026-11-10 01:38:24 file created: experiments/m3-gridwalk/run.py
 2026-11-10 01:41:26 file created: experiments/m3-gridwalk/__pycache__/gw.cpython-312.pyc
+# Session 14
+2026-11-10 14:58:53 file created: experiments/gridwalk2/explore2.py
+2026-11-10 14:59:00 file created: experiments/gridwalk2/explore2.txt
+2026-11-10 14:59:00 file created: experiments/gridwalk2/__pycache__/analyze.cpython-312.pyc
+2026-11-10 15:00:10 file created: experiments/format-router/router.py
+2026-11-10 15:00:10 file created: experiments/format-router/router-output.txt
+2026-11-10 15:00:55 file created: experiments/gridwalk2-3b/analyze.py
+2026-11-10 15:00:55 file created: experiments/gridwalk2-3b/run.py
+2026-11-10 15:00:55 file created: experiments/gridwalk2-3b/run_lab.sh
+2026-11-10 15:00:55 prediction written: experiments/gridwalk2-3b/README.md (fe93fc81f86c)
