@@ -1,0 +1,46 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=12.0 s/q=21.1
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.920 tok/s=11.8 s/q=20.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.920 tok/s=13.2 s/q=55.0
+SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=11.9 s/q=21.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=1.000 tok/s=11.8 s/q=20.6
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.960 tok/s=13.4 s/q=54.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.480 tok/s=12.1 s/q=21.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.920 tok/s=11.8 s/q=20.3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.920 tok/s=13.3 s/q=54.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.440 tok/s=12.2 s/q=20.8
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.960 tok/s=12.0 s/q=20.6
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.960 tok/s=13.4 s/q=54.9
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=12.0 s/q=20.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=1.000 tok/s=12.0 s/q=20.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=1.000 tok/s=13.4 s/q=55.1
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.360 tok/s=12.2 s/q=20.5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=1.000 tok/s=12.0 s/q=20.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.960 tok/s=13.2 s/q=55.2
+gridwalk2-3b paired n=150
+greedy CoT                   acc=0.413 diff=+0.0 fixed=0 broken=0 p=1.0000 cost=1.00x
+greedy PAL [H2]              acc=0.967 diff=+55.3 fixed=83 broken=0 p=0.0000 cost=0.96x
+G3 vote(greedyCoT+3P) [H1]   acc=0.953 diff=+54.0 fixed=81 broken=0 p=0.0000 cost=3.89x
+vote(3P)                     acc=0.953 diff=+54.0 fixed=81 broken=0 p=0.0000 cost=2.89x
+vote(greedyPAL+3P)           acc=0.953 diff=+54.0 fixed=81 broken=0 p=0.0000 cost=3.85x
+greedy CoT skip rate (<30 tokens) = 0.000 (pre-registered: >0.20 flags degenerate baseline); PAL sample abstain = 0.000
+DONE

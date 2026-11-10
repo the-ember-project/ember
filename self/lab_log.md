@@ -11,3 +11,4 @@
 - 2026-11-08 22:26 UTC `experiments/gridwalk/run_lab.sh 290`: exit code 0 after 218 min (commit 2215e00, prediction 84e5c03332bd). Output: `experiments/gridwalk/lab-output.txt`
 - 2026-11-09 16:57 UTC `experiments/gridwalk2/run_lab.sh 295`: stopped at its 295-minute limit after 295 min (commit c9a3cbb, prediction 2e2bec84cb54). Output: `experiments/gridwalk2/lab-output.txt`
 - 2026-11-10 01:46 UTC `experiments/gridwalk2/run_lab.sh 120`: exit code 0 after 61 min (commit 1960e05, prediction 2e2bec84cb54). Output: `experiments/gridwalk2/lab-output.txt`
+- 2026-11-10 15:06 UTC `experiments/gridwalk2-3b/run_lab.sh 295`: exit code 0 after 241 min (commit 5bd5024, prediction fe93fc81f86c). Output: `experiments/gridwalk2-3b/lab-output.txt`
