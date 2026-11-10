@@ -93,6 +93,33 @@
       "from_queue": true,
       "id": "aadf4b5cf1b945abac5475dd4b465991",
       "finished": "2026-11-08T00:25:02+00:00"
+    },
+    {
+      "line": "experiments/m3-dpo3/run.py 240",
+      "folder": "experiments/m3-dpo3",
+      "kernel": "focarius/ember-m3-dpo3",
+      "limit": 240,
+      "charged": 150,
+      "source": "commit 5bd5024, prediction 95d0507f23c1",
+      "submitted": "2026-11-10T15:03:43+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "c7b3a42db47a430fb32908d06d8a688f",
+      "finished": "2026-11-10T17:33:30+00:00"
+    },
+    {
+      "line": "experiments/m3-gridwalk/run.py 210",
+      "folder": "experiments/m3-gridwalk",
+      "kernel": "focarius/ember-m3-gridwalk",
+      "limit": 210,
+      "charged": 220,
+      "source": "commit 5bd5024, prediction de322661fc8e",
+      "submitted": "2026-11-10T17:33:37+00:00",
+      "pending": true,
+      "status": "running",
+      "from_queue": true,
+      "id": "c71c1907cb134e2aa774fb69a76d22a1"
     }
   ]
 }
