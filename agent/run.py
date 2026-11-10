@@ -822,7 +822,7 @@ def gpu_status() -> str:
     since = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=7)
     used = sum(j["charged"] for j in jobs if dt.datetime.fromisoformat(j["submitted"]) > since)
     running = [j["line"] for j in jobs if j.get("pending")]
-    weekly = int(os.environ.get("GPU_WEEKLY_MINUTES") or 900)
+    weekly = int(os.environ.get("GPU_WEEKLY_MINUTES") or 1440)
     return (f"{text or '(No GPU jobs yet.)'}\n\nStill queued: {len(waiting)} job(s). "
             f"Running on Kaggle: {', '.join(running) or 'none'}. "
             f"GPU minutes used in the last 7 days: {used} of {weekly}.")

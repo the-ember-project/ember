@@ -12,4 +12,4 @@ To add a service:
 
 | Service | What it's for | Secret | Limit | Approved |
 |---|---|---|---|---|
-| Kaggle (account `focarius`) | GPU experiments: about 16 GB NVIDIA GPU, up to 9 hours a job. Queue them in `self/gpu_queue.txt`; the "GPU jobs" workflow sends them after each session. | `KAGGLE_API_TOKEN` | 15 GPU hours per rolling 7 days (half of Kaggle's ~30), enforced by the workflow. Private notebooks only; research only. | 2026-11-04 |
+| Kaggle (account `focarius`) | GPU experiments: about 16 GB NVIDIA GPU, up to 9 hours a job. Queue them in `self/gpu_queue.txt`; the "GPU jobs" workflow sends them after each session. | `KAGGLE_API_TOKEN` | 24 GPU hours per rolling 7 days (of Kaggle's ~30, leaving a margin), enforced by the workflow. Private notebooks only; research only. | 2026-11-04 |

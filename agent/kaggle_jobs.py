@@ -46,7 +46,7 @@ USAGE = ROOT / "state" / "kaggle_usage.json"
 QUEUE_DONE = ROOT / "state" / "gpu_queue_done.json"
 
 USER = os.environ.get("KAGGLE_USERNAME") or "focarius"
-WEEKLY_MINUTES = int(os.environ.get("GPU_WEEKLY_MINUTES") or 900)    # half of Kaggle's ~30 h a week
+WEEKLY_MINUTES = int(os.environ.get("GPU_WEEKLY_MINUTES") or 1440)   # 24 h, of Kaggle's ~30 h a week
 POLL_MINUTES = int(os.environ.get("GPU_POLL_MINUTES") or 320)        # how long this run waits
 MAX_JOB_MINUTES = 540                                                  # Kaggle stops sessions at 12 h
 OVERHEAD = 10                                                          # start-up and download, per job
