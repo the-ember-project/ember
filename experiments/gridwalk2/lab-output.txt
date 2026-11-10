@@ -2,43 +2,61 @@
 [notice] A new release of pip is available: 26.2.2 -> 26.3
 [notice] To update, run: pip install --upgrade pip
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.440 tok/s=25.6 s/q=10.0
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.440 tok/s=28.6 s/q=44.3
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=pal n=25 acc(first)=0.760 tok/s=27.8 s/q=48.5
-SUMMARY mode=cot n=25 acc(first)=0.560 tok/s=25.7 s/q=10.0
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.240 tok/s=28.7 s/q=44.1
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=pal n=25 acc(first)=0.640 tok/s=28.6 s/q=46.5
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.240 tok/s=26.1 s/q=9.9
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.120 tok/s=29.1 s/q=44.2
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=pal n=25 acc(first)=0.640 tok/s=28.7 s/q=45.5
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.480 tok/s=26.1 s/q=9.8
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.160 tok/s=29.2 s/q=42.9
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=pal n=25 acc(first)=0.640 tok/s=28.2 s/q=46.4
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.480 tok/s=25.7 s/q=10.0
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=28.9 s/q=43.7
-SUMMARY mode=pal n=25 acc(first)=0.680 tok/s=28.6 s/q=45.4
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.400 tok/s=25.8 s/q=9.9
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.160 tok/s=28.9 s/q=43.5
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=pal n=25 acc(first)=0.680 tok/s=28.6 s/q=46.5
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.160 tok/s=25.9 s/q=9.9
+SUMMARY mode=cot n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=cot n=25 acc(first)=0.200 tok/s=28.8 s/q=44.4
+SUMMARY mode=pal n=0 acc(first)=0.000 tok/s=0.0 s/q=0.0
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-SUMMARY mode=pal n=25 acc(first)=0.320 tok/s=28.6 s/q=47.0
+SUMMARY mode=cot n=16 acc(first)=0.312 tok/s=17.2 s/q=14.5
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=cot n=25 acc(first)=0.200 tok/s=18.8 s/q=66.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.560 tok/s=18.8 s/q=69.2
+gridwalk paired n=200
+greedy                       acc=0.380 diff=+0.0 fixed=0 broken=0 p=1.0000 cost=1.00x
+MIX10 vote(5C+5P) [H1]       acc=0.695 diff=+31.5 fixed=74 broken=11 p=0.0000 cost=10.08x
+G3 vote(greedy+3P) [H3]      acc=0.715 diff=+33.5 fixed=73 broken=6 p=0.0000 cost=4.10x
+vote(3C+2P) [H2 arm]         acc=0.545 diff=+16.5 fixed=49 broken=16 p=0.0001 cost=5.02x
+vote(5C) [H2 ref]            acc=0.315 diff=-6.5 fixed=15 broken=28 p=0.0660 cost=4.93x
+vote(2C+3P)                  acc=0.710 diff=+33.0 fixed=77 broken=11 p=0.0000 cost=5.04x
+vote(5P)                     acc=0.730 diff=+35.0 fixed=86 broken=16 p=0.0000 cost=5.15x
+PAL sample1                  acc=0.615 diff=+23.5 fixed=71 broken=24 p=0.0000 cost=1.04x
+CoT sample1                  acc=0.240 diff=-14.0 fixed=13 broken=41 p=0.0002 cost=0.94x
+H2 equal-count: vote(3C+2P) - vote(5C) = +23.0 (48/2) p=0.0000
+pass@11 (any sample correct) = 0.920; PAL abstain rate = 0.051
+greedy skip rate (<30 tokens) = 0.000 (pre-registered: >0.20 flags a degenerate baseline)
+DONE
