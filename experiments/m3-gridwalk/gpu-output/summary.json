@@ -1,0 +1,114 @@
+{
+ "acc": {
+  "BASE": {
+   "gw10": 0.4633,
+   "gw14": 0.2,
+   "gsm": 0.6967
+  },
+  "GOLD": {
+   "gw10": 0.7017,
+   "gw14": 0.43,
+   "gsm": 0.6833
+  },
+  "PALV": {
+   "gw10": 0.6317,
+   "gw14": 0.3667,
+   "gsm": 0.7
+  },
+  "COTM": {
+   "gw10": 0.4733,
+   "gw14": 0.23,
+   "gsm": 0.6833
+  }
+ },
+ "gw10 GOLD-BASE": {
+  "diff": 23.83,
+  "fixed": 156,
+  "broken": 13,
+  "p": 0.0
+ },
+ "gw14 GOLD-BASE": {
+  "diff": 23.0,
+  "fixed": 75,
+  "broken": 6,
+  "p": 0.0
+ },
+ "gsm GOLD-BASE": {
+  "diff": -1.33,
+  "fixed": 10,
+  "broken": 14,
+  "p": 0.5413
+ },
+ "gw10 PALV-BASE": {
+  "diff": 16.83,
+  "fixed": 112,
+  "broken": 11,
+  "p": 0.0
+ },
+ "gw14 PALV-BASE": {
+  "diff": 16.67,
+  "fixed": 56,
+  "broken": 6,
+  "p": 0.0
+ },
+ "gsm PALV-BASE": {
+  "diff": 0.33,
+  "fixed": 11,
+  "broken": 10,
+  "p": 1.0
+ },
+ "gw10 PALV-COTM": {
+  "diff": 15.83,
+  "fixed": 116,
+  "broken": 21,
+  "p": 0.0
+ },
+ "gw14 PALV-COTM": {
+  "diff": 13.67,
+  "fixed": 48,
+  "broken": 7,
+  "p": 0.0
+ },
+ "gsm PALV-COTM": {
+  "diff": 1.67,
+  "fixed": 18,
+  "broken": 13,
+  "p": 0.4731
+ },
+ "gw10 COTM-BASE": {
+  "diff": 1.0,
+  "fixed": 33,
+  "broken": 27,
+  "p": 0.519
+ },
+ "gw14 COTM-BASE": {
+  "diff": 3.0,
+  "fixed": 20,
+  "broken": 11,
+  "p": 0.1496
+ },
+ "gsm COTM-BASE": {
+  "diff": -1.33,
+  "fixed": 15,
+  "broken": 19,
+  "p": 0.6076
+ },
+ "gw10 GOLD-PALV": {
+  "diff": 7.0,
+  "fixed": 56,
+  "broken": 14,
+  "p": 0.0
+ },
+ "gw14 GOLD-PALV": {
+  "diff": 6.33,
+  "fixed": 31,
+  "broken": 12,
+  "p": 0.0054
+ },
+ "gsm GOLD-PALV": {
+  "diff": -1.67,
+  "fixed": 11,
+  "broken": 16,
+  "p": 0.4421
+ }
+}

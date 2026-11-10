@@ -113,13 +113,14 @@
       "folder": "experiments/m3-gridwalk",
       "kernel": "focarius/ember-m3-gridwalk",
       "limit": 210,
-      "charged": 220,
+      "charged": 206,
       "source": "commit 5bd5024, prediction de322661fc8e",
       "submitted": "2026-11-10T17:33:37+00:00",
-      "pending": true,
-      "status": "running",
+      "pending": false,
+      "status": "complete",
       "from_queue": true,
-      "id": "c71c1907cb134e2aa774fb69a76d22a1"
+      "id": "c71c1907cb134e2aa774fb69a76d22a1",
+      "finished": "2026-11-10T20:59:30+00:00"
     }
   ]
 }

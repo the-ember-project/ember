@@ -1,0 +1,21 @@
+{
+ "GOLD": {
+  "labelled_tasks": 1500,
+  "label_precision": 1.0,
+  "traces": 1830,
+  "traces_correct": 1.0
+ },
+ "PALV": {
+  "labelled_tasks": 814,
+  "label_precision": 0.8686,
+  "traces": 1013,
+  "traces_correct": 0.9516
+ },
+ "COTM": {
+  "labelled_tasks": 739,
+  "label_precision": 0.6143,
+  "traces": 1403,
+  "traces_correct": 0.6208
+ },
+ "E": 1013
+}

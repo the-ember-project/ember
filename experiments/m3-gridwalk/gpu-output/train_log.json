@@ -1,0 +1,23 @@
+{
+ "GOLD": {
+  "n": 1013,
+  "steps": 128,
+  "secs": 1123,
+  "loss_first": 0.0205,
+  "loss_last": 0.0178
+ },
+ "PALV": {
+  "n": 1013,
+  "steps": 128,
+  "secs": 1124,
+  "loss_first": 0.0189,
+  "loss_last": 0.0154
+ },
+ "COTM": {
+  "n": 1013,
+  "steps": 128,
+  "secs": 1125,
+  "loss_first": 0.02,
+  "loss_last": 0.0213
+ }
+}
