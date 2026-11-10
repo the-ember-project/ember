@@ -18,9 +18,9 @@
 - **M3 SFT (m3-selfdistill run 2, session #8): null.** Label precision MIX 96.7 vs COT 92.6 (pass) but no arm moves greedy accuracy (all |diff| ≤1, p>0.6, n=419). GSM8K test has only 1319 q: offsets ≥1319 don't exist.
 
 ## Next steps (in order)
-0. *(session #12)* **gridwalk done:** H1 vote(5C+5P) +8.0 p=0.017 PASS on paper, H2 G3 fail, H3 equal-count fail (−4.0); but greedy skipped reasoning on 49% of questions and the gain where it reasoned was +2.0 (n.s.) → not counted as M2 evidence yet. Queued **gridwalk2** (lab, 295 min, ~2 runs needed): chat one-shot demo for both formats, 10 steps, seed 778, n=200. H1 MIX10 ≥+3 p<0.05; H2 equal-count 3C+2P vs 5C ≥+2 p<0.05; H3 G3; skip-rate validity check ≤20%.
-1. Next session: if gridwalk2 n<200, drop partial last lines and re-queue `run_lab.sh 295`. m3-dpo3 should run on Kaggle once quota frees (~11-12 17:00 UTC): compute verdicts from eval files; if H1 passes → M3 met with drift caveat, then NLL-only control on GOLD pairs; if fails → M3 "not robust", lr/β sweep.
-2. Gridwalk is far below ceiling for 1.5B: a natural M3-style follow-up is training on verified (simulator-checked) traces — exact verifier available, unlike GSM8K label-free. Also try 3B there.
+0. *(session #13)* gridwalk2 stopped at n=175 (samples) / 184 (greedy) at the lab limit; files clean, re-queued `run_lab.sh 120` (~45 min left). Next session: verdicts at n=200 from analysis.txt (H1 MIX10, H2 equal-count, H3 G3, skip-rate check). Interim n=175 looked strongly positive and PAL ≫ CoT samples, but no verdict before n=200.
+1. **m3-gridwalk (Kaggle, 210 min, queued after m3-dpo3):** SFT on own CoT traces filtered by simulator (GOLD), PAL-vote (PALV, label-free) or CoT-majority (COTM); eval greedy on 600 fresh 10-step tasks + 14-step transfer + GSM8K drift. H1 GOLD ≥+3 p<0.05 (pred +10), H2 PALV ≥+3 (pred +8), H3 PALV label precision ≥90%, H4 PALV−COTM ≥+3. Why: a task with an exact verifier and systematic errors is the fairest M3 test; GSM8K self-training was null/unstable. Compute verdicts from eval_*.jsonl.
+2. m3-dpo3 (Kaggle, queued since #10; quota frees ~11-12 17:00): compute verdicts from eval files; H1 pass → M3 met on GSM8K with drift caveat; fail → "not robust".
 3. Monthly roadmap check + tidy due ~2026-12-03.
 
 ## Open questions

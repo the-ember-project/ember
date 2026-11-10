@@ -21,3 +21,7 @@ Full GSM8K test (1319), greedy: BASE 69.8, MIX (strict CoT+PAL vote) 72.2 (+2.35
 
 ## M3 run 4 (session #10, m3-dpo2): label-free MIXR passes, COT collapses
 Held-out GSM8K-train (n=1500), fresh gen seed: BASE 80.5, **MIXR 84.7 (+4.2, p<0.001, H1 pass)**, COT-majority 72.7 (**−7.9**, p<0.001). BBH-date drift MIXR −4.8 (n.s., fails my −3 tolerance), COT −8.0 (p=0.04). COT's +3.1 from m3-dpo did NOT replicate → **label-free DPO is unstable across data draws**; one run per arm is not evidence. Training curves didn't flag the collapse (COT margin ~5 both runs). Need: seed replicates, NLL-only control, second drift task. Related: TTRL (arXiv:2504.16084) majority-vote reward for RL.
+
+
+## Session #13 angle: verifier-rich task
+GSM8K self-training was null (SFT) / unstable (DPO). m3-gridwalk tests rejection-sampling SFT (STaR/RFT) on gridwalk, where an exact simulator gives GOLD labels and PAL (vote5P ~74% interim vs greedy CoT ~39%) is a much stronger teacher than CoT — so PAL-vote pseudo-labels for CoT traces (cross-format distillation) should be close to gold. Prediction in the experiment README.
