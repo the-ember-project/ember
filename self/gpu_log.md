@@ -25,3 +25,4 @@ ModuleNotFoundError: No module named 'six')
 - 2026-11-10 20:59 UTC `experiments/m3-gridwalk/run.py 210` on Kaggle (focarius/ember-m3-gridwalk): complete after about 206 min of GPU time (commit 5bd5024, prediction de322661fc8e). Output: `experiments/m3-gridwalk/gpu-output/`
 - 2026-11-11 03:41 UTC `experiments/m3-gw-iter/run.py 270` on Kaggle (focarius/ember-m3-gw-iter): complete after about 244 min of GPU time (commit bd28687, prediction 5ea894df9cfa). Output: `experiments/m3-gw-iter/gpu-output/`
 - 2026-11-11 14:44 UTC `experiments/m3-math/run.py 290`: waiting, it needs 300 GPU minutes and 81 of the 1440 for the last 7 days are left
+- 2026-11-11 21:35 UTC `experiments/m3-math/run.py 290`: waiting, it needs 300 GPU minutes and 81 of the 1440 for the last 7 days are left
