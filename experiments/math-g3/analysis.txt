@@ -1,0 +1,9 @@
+n=250 greedy CoT 50.8% | PAL sample1 34.4% | PAL any-of-3 48.4%
+G3 57.2%  diff +6.4 (fixed 20 / broken 4) sign p=0.001544
+validity: boxed rate 88.8%  (need >=90); CoT acc in 30-60
+token cost G3/greedy = 2.34x; mean secs/q 56
+  Level 1: n=31 cot 27 g3 28
+  Level 2: n=42 cot 32 g3 33
+  Level 3: n=45 cot 27 g3 33
+  Level 4: n=57 cot 26 g3 31
+  Level 5: n=75 cot 15 g3 18
