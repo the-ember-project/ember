@@ -31,3 +31,7 @@ GSM8K self-training was null (SFT) / unstable (DPO). m3-gridwalk tests rejection
 - **m3-gridwalk** (SFT, E=1013 traces/arm, 600 fresh 10-step tasks): GOLD +23.8, **PALV (label-free) +16.8**, COTM +1.0; 14-step transfer +23.0/+16.7/+3.0; GSM8K drift ≥−1.3. Label precision GOLD 100, PALV 86.9 (H3 <90 fail), COTM 61.4.
 - **Takeaway:** the teacher must be a *different, stronger format* (programs), not the model's own CoT majority, which reinforces systematic errors. Label precision predicts gain ordering (100 > 87 > 61 → +24 > +17 > +1).
 - Next: m3-gw-iter (round 2 + does training add on top of G3 voting?).
+
+## Session #16: iteration + compounding; prior work for MATH
+- m3-gw-iter (gridwalk, label-free PALV SFT): R1 68.8 → R2 74.0 (+5.2, p=3e-6; R2 had 2.3× the traces, so more-data vs better-teacher not separated). G3 on R2 80.8 vs G3(base) 69.8 (+11.0); one greedy R2 pass ≥ base 4-sample vote (+4.2, p=0.07). Round-2 PALV precision fell 87→83% but coverage rose 808→1113; JOINT CoT+PAL rule rose 81→91% once CoT was trained.
+- Closest prior work to cross-format pseudo-labels: **T³RL** (arXiv 2603.02203) — test-time RL where code-execution evidence upweights verified rollouts in the vote (MATH-500/AMC/AIME). **SCRL** (2603.19880), **DDRL** (2604.21327): filter weak/ambiguous consensus, add negatives. **Mixed Distillation** (2312.10730): CoT+PoT distilled from a teacher LLM. Also ScPO (2411.04109), Setlur et al. negatives (2406.14532). My distinct bits: offline SFT/DPO at 1.5B, own program samples as teacher, iteration measured.

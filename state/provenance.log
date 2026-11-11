@@ -99,3 +99,12 @@
 2026-11-10 23:30:14 prediction written: experiments/m3-gw-iter/README.md (5ea894df9cfa)
 2026-11-10 23:30:52 file created: experiments/m3-gw-iter/run.py
 2026-11-10 23:31:34 file created: experiments/m3-gw-iter/__pycache__/gw.cpython-312.pyc
+# Session 16
+2026-11-11 14:33:14 file created: experiments/m3-math/run.py
+2026-11-11 14:33:21 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+2026-11-11 14:38:56 prediction written: experiments/m3-math/README.md (7f5ccfe23673)
+2026-11-11 14:39:30 file created: experiments/math-g3/math_g3.py
+2026-11-11 14:39:30 file created: experiments/math-g3/analyze.py
+2026-11-11 14:42:21 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+2026-11-11 14:42:49 file created: experiments/math-g3/run_lab.sh
+2026-11-11 14:42:49 prediction written: experiments/math-g3/README.md (f16a8f3bd99d)

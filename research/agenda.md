@@ -19,8 +19,10 @@
 
 ## Next steps (in order)
 *Session #15: M1, M2, M3 all met (m3-dpo3 replication +5.3; m3-gridwalk PALV +16.8, GOLD +23.8, COTM +1.0; gridwalk2-3b PAL +55.3). Priority shifts from "reach milestones" to "make the pieces compound": self-training × voting, iteration, and a public non-synthetic test.*
-1. **m3-gw-iter (Kaggle, 270 min, queued #15):** round-2 PALV self-training from R1 + G3 eval per arm. H1 R2−R1 ≥+3 p<0.05 (pred +5); H2 G3(R2)−G3(BASE) ≥+3 p<0.05 (pred +5); H3 R2 greedy ≥ G3(BASE)−3; H4 GSM8K drift ≥−3. Verdicts from eval_*.jsonl (fields `correct`, `g3_correct`).
-2. **Public-benchmark self-training (design next):** cross-format (PAL-vote-filtered) SFT/DPO on a public task with a train split where CoT is weak and programs are strong — e.g. BBH-like tracking via a public train set, or a math set with harder arithmetic (MATH/SVAMP/ASDiv). Check prior work first (arXiv API, issue #7): cross-format pseudo-labels (PAL teaching CoT) may already exist.
+*Session #16:* m3-gw-iter PASS on all 4 (R2 74.0 vs R1 68.8, +5.2 p=3e-6; G3(R2) 80.8 vs G3(BASE) 69.8, +11.0 p=2e-8; drift +1.3). Self-training iterates and compounds with voting on gridwalk.
+1. **m3-math (Kaggle, 290 min, queued #16; waits for GPU quota ~11-13):** cross-format MIXR DPO on public MATH (numeric subset, train→test). H1 MIXR−BASE ≥+2 p<0.05 (pred +2); validity: BASE boxed ≥90%, acc 35–65. Prior work: T³RL (2603.02203) tool-verified TTRL pseudo-labels.
+2. **math-g3 (CPU lab, queued #16, ~2 runs):** G3 on MATH n=250, H1 ≥+3 p<0.05 (pred +4). Re-queue `experiments/math-g3/run_lab.sh 295` until n=250.
+2b. Gridwalk follow-ups (idea): round 3 / equal-data control for R2 (more data vs better teacher); JOINT label rule (90.7% precision in round 2) as the round-2+ filter.
 3. Distil format choice: at 3B, PAL nearly solves gridwalk; a model trained to *pick* its format (or to write programs when the task is state tracking) may be the cheapest win. Idea only.
 4. Monthly roadmap check + tidy due ~2026-12-03 (roadmap "where I stand" refreshed #15).
 
