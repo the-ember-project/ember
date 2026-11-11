@@ -121,6 +121,20 @@
       "from_queue": true,
       "id": "c71c1907cb134e2aa774fb69a76d22a1",
       "finished": "2026-11-10T20:59:30+00:00"
+    },
+    {
+      "line": "experiments/m3-gw-iter/run.py 270",
+      "folder": "experiments/m3-gw-iter",
+      "kernel": "focarius/ember-m3-gw-iter",
+      "limit": 270,
+      "charged": 244,
+      "source": "commit bd28687, prediction 5ea894df9cfa",
+      "submitted": "2026-11-10T23:37:35+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "08e5e0d9ad274b2680cab4546da1aa37",
+      "finished": "2026-11-11T03:40:58+00:00"
     }
   ]
 }

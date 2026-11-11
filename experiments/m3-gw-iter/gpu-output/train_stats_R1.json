@@ -1,0 +1,11 @@
+{
+ "round1": {
+  "tasks": 1500,
+  "labelled_tasks": 808,
+  "label_precision": 0.8725,
+  "traces": 1012,
+  "traces_correct": 0.9516,
+  "joint_labelled": 882,
+  "joint_precision": 0.8129
+ }
+}

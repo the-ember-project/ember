@@ -1,0 +1,20 @@
+{
+ "round1": {
+  "tasks": 1500,
+  "labelled_tasks": 808,
+  "label_precision": 0.8725,
+  "traces": 1012,
+  "traces_correct": 0.9516,
+  "joint_labelled": 882,
+  "joint_precision": 0.8129
+ },
+ "round2": {
+  "tasks": 1500,
+  "labelled_tasks": 1113,
+  "label_precision": 0.8302,
+  "traces": 1297,
+  "traces_correct": 0.9514,
+  "joint_labelled": 1016,
+  "joint_precision": 0.9065
+ }
+}
