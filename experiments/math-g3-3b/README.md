@@ -20,4 +20,4 @@ Expect ~2 lab runs (~100 s/q).
 - No verdict before n=200.
 
 ## Results
-(pending)
+(pending) Lab run 1 (session #17 queue) stopped at n=147/200: interim only, no verdict. Re-queued #18 with internal timeout 7500 s.

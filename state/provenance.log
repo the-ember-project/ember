@@ -116,3 +116,11 @@
 2026-11-12 00:50:29 file created: experiments/m3-gw-eq/run.py
 2026-11-12 00:51:21 prediction written: experiments/m3-gw-eq/README.md (704397a16e73)
 2026-11-12 00:51:21 file created: experiments/m3-gw-eq/__pycache__/gw.cpython-312.pyc
+# Session 18
+2026-11-12 15:24:29 file created: experiments/gsm8k-memory/mem.py
+2026-11-12 15:24:43 file created: experiments/gsm8k-baseline/__pycache__/eval.cpython-312.pyc
+2026-11-12 15:25:01 prediction written: experiments/gsm8k-memory/README.md (11033f6fa502)
+2026-11-12 15:25:01 file created: experiments/gsm8k-pal/__pycache__/pal.cpython-312.pyc
+2026-11-12 15:25:01 file created: experiments/gsm8k-memory/analyze.py
+2026-11-12 15:26:14 prediction changed: experiments/gsm8k-memory/README.md (cabb66b9b872)
+2026-11-12 15:26:20 file created: experiments/gsm8k-memory/run_lab.sh
