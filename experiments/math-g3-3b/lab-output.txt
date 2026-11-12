@@ -1,0 +1,16 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+144 True [True, True, True] True 46.8
+145 True [False, False, True] True 120.5
+146 False [False, False, False] False 192.8
+n=147 greedy CoT 55.1% | PAL sample1 42.9% | PAL any-of-3 67.3%
+G3 63.9%  diff +8.8 (fixed 14 / broken 1) sign p=0.0009766
+validity: boxed rate 87.1%  (need >=90); CoT acc in 30-60
+token cost G3/greedy = 2.55x; mean secs/q 116
+  Level 1: n=14 cot 11 g3 13
+  Level 2: n=28 cot 21 g3 22
+  Level 3: n=36 cot 25 g3 30
+  Level 4: n=33 cot 17 g3 21
+  Level 5: n=36 cot 7 g3 8

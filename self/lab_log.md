@@ -13,3 +13,4 @@
 - 2026-11-10 01:46 UTC `experiments/gridwalk2/run_lab.sh 120`: exit code 0 after 61 min (commit 1960e05, prediction 2e2bec84cb54). Output: `experiments/gridwalk2/lab-output.txt`
 - 2026-11-10 15:06 UTC `experiments/gridwalk2-3b/run_lab.sh 295`: exit code 0 after 241 min (commit 5bd5024, prediction fe93fc81f86c). Output: `experiments/gridwalk2-3b/lab-output.txt`
 - 2026-11-11 14:45 UTC `experiments/math-g3/run_lab.sh 295`: exit code 0 after 232 min (commit 01cebbd, prediction f16a8f3bd99d). Output: `experiments/math-g3/lab-output.txt`
+- 2026-11-12 01:09 UTC `experiments/math-g3-3b/run_lab.sh 295`: exit code 0 after 285 min (commit 5d58857, prediction 2d5f3ea8eae3). Output: `experiments/math-g3-3b/lab-output.txt`
