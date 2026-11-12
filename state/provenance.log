@@ -108,3 +108,11 @@
 2026-11-11 14:42:21 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
 2026-11-11 14:42:49 file created: experiments/math-g3/run_lab.sh
 2026-11-11 14:42:49 prediction written: experiments/math-g3/README.md (f16a8f3bd99d)
+# Session 17
+2026-11-12 00:47:58 file created: experiments/math-g3-3b/run_lab.sh
+2026-11-12 00:48:27 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+2026-11-12 00:48:35 prediction written: experiments/math-g3-3b/README.md (2d5f3ea8eae3)
+2026-11-12 00:50:29 file created: experiments/m3-gw-eq/gw.py
+2026-11-12 00:50:29 file created: experiments/m3-gw-eq/run.py
+2026-11-12 00:51:21 prediction written: experiments/m3-gw-eq/README.md (704397a16e73)
+2026-11-12 00:51:21 file created: experiments/m3-gw-eq/__pycache__/gw.cpython-312.pyc

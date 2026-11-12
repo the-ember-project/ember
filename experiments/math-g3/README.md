@@ -16,5 +16,10 @@ max 1024 new tokens. Sampling seed 8181. Resumable `rows.jsonl`; `analyze.py` gi
 - Reported: PAL single-sample accuracy vs greedy CoT; per-level diffs; token cost.
 - No verdict before n=250 (expect two lab runs; ~60–70 s/q on the lab machine).
 
-## Results
-(pending)
+## Results (session #17; one CPU lab run, 232 min, n=250 complete) — CONFIRMATORY
+- **Validity check PASS:** boxed rate 88.8% (≥85; note `analyze.py` prints a stale "need >=90" — the pre-registered threshold above is 85), greedy CoT accuracy 50.8% (in 25–60).
+- **H1 PASS:** G3 57.2% vs greedy CoT 50.8%, **+6.4 (20 fixed / 4 broken), p=0.0015**. Predicted +4. Token cost 2.34×; 56 s/q on the lab machine.
+- PAL single sample 34.4% (far below CoT), PAL any-of-3 48.4%. Same pattern as GSM8K: PAL is a weak solver but a good co-voter.
+- Per level (CoT→G3): L1 27→28, L2 32→33, L3 27→33, L4 26→31, L5 15→18 — gain on the harder levels.
+- **Exploratory decomposition:** 7 of the 20 fixes are questions where greedy CoT hit the 1024-token cap without `\boxed{}` (28 such questions; G3 right on 11). On boxed questions alone: 13 fixed / 4 broken (+3.6 pts on 222, p≈0.049). So about a third of the gain is rescuing truncated CoT — legitimate under a token cap, but a larger cap would shrink it.
+
