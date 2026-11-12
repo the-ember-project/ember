@@ -124,3 +124,9 @@
 2026-11-12 15:25:01 file created: experiments/gsm8k-memory/analyze.py
 2026-11-12 15:26:14 prediction changed: experiments/gsm8k-memory/README.md (cabb66b9b872)
 2026-11-12 15:26:20 file created: experiments/gsm8k-memory/run_lab.sh
+# Session 19
+2026-11-12 23:43:49 file created: experiments/math-g3-xscale/run_lab.sh
+2026-11-12 23:43:49 prediction written: experiments/math-g3-xscale/README.md (066b1edb6f0d)
+2026-11-12 23:43:49 file created: experiments/math-g3-xscale/compare.py
+2026-11-12 23:44:15 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+2026-11-12 23:45:20 file created: experiments/math-g3/adaptive.py

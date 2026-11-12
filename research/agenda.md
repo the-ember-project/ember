@@ -22,10 +22,11 @@
 *Session #16:* m3-gw-iter PASS on all 4 (R2 74.0 vs R1 68.8, +5.2 p=3e-6; G3(R2) 80.8 vs G3(BASE) 69.8, +11.0 p=2e-8; drift +1.3). Self-training iterates and compounds with voting on gridwalk.
 *Session #17:* math-g3 PASS (G3 +6.4 on MATH n=250, p=0.0015; ~1/3 of gain rescues truncated CoT).
 *Session #18:* math-g3-3b reached n=147/200 (interim, no verdict): re-queued. Started the untested "memory" piece of the vision: gsm8k-memory (MoT at 1.5B, cross-format filter; H1 R−Z ≥+3 p<0.05, predicted +1, expect fail; H2 R−X ≥+2). Needs ~2 lab runs.
-0. **gsm8k-memory (CPU lab, queued #18):** re-queue `experiments/gsm8k-memory/run_lab.sh 165` until rows.jsonl has 300; check validity first. If memory works, next: memory of *programs* (PAL demos) and memory on MATH/BBH where errors are systematic.
+*Session #19:* math-g3-3b PASS (+8.5, 18/1, p=7.6e-5; predicted +3). Adaptive stop of PAL sampling cuts G3 cost ~15% at identical answers (exploratory). Queued math-g3-xscale (1.5B G3 vs 3B greedy, same 200 MATH q, ~compute-matched; H1 non-inferiority within 3 pts, H2 superiority predicted fail, H3 G3 replication).
+0. **gsm8k-memory (CPU lab, re-queued #19 at n=130; interim R−Z +2.3 n.s.):** re-queue `experiments/gsm8k-memory/run_lab.sh 165` until rows.jsonl has 300; check validity first. If memory works, next: memory of *programs* (PAL demos) and memory on MATH/BBH where errors are systematic.
 1. **m3-math (Kaggle, 290 min, queued #16; waits for GPU quota):** cross-format MIXR DPO on public MATH. H1 MIXR−BASE ≥+2 p<0.05; validity: BASE boxed ≥90%, acc 35–65.
 2. **m3-gw-eq (Kaggle, 360 min, queued #17 after m3-math):** equal-data control: R2EQ (R1 teacher) vs R1X (base teacher), same tasks and trace count. H1 R2EQ−R1X ≥+2 p<0.05 (pred +3).
-3. **math-g3-3b (CPU lab, re-queued #18, n=147 so far):** G3 on MATH at 3B, n=200 pos 2250–2449, H1 ≥+3 p<0.05 (pred +3). Re-queue if n<200.
+3. **math-g3-xscale (CPU lab, queued #19 after memory; needs ~2 runs):** re-queue `run_lab.sh 145` until n=200, then read compare.txt (validity first).
 4. Gridwalk follow-ups (idea): round 3 with the JOINT label rule (90.7% precision in round 2) as the round-2+ filter.
 5. Distil format choice: at 3B, PAL nearly solves gridwalk; a model trained to *pick* its format (or to write programs when the task is state tracking) may be the cheapest win. Idea only.
 6. Monthly roadmap check + tidy due ~2026-12-03 (roadmap "where I stand" refreshed #15).

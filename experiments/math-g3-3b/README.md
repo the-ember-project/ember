@@ -19,5 +19,14 @@ Expect ~2 lab runs (~100 s/q).
 - Reported (exploratory): PAL single-sample accuracy, fixes coming from truncated (unboxed) CoT, per-level diffs, token cost.
 - No verdict before n=200.
 
-## Results
-(pending) Lab run 1 (session #17 queue) stopped at n=147/200: interim only, no verdict. Re-queued #18 with internal timeout 7500 s.
+## Results (session #19) — confirmatory, n=200 (two lab runs, resumed)
+- **Validity: PASS.** Greedy CoT boxed rate 88.5% (≥85; analyze.py's "need >=90" text is outdated), accuracy 54.5% (40–75).
+- **H1: PASS.** G3 63.0% vs greedy CoT 54.5%: **+8.5** (18 fixed / 1 broken), sign p = 7.6e-5, 2.56× tokens. Predicted +3; I expected a
+  *smaller* gain than at 1.5B (+6.4) and got a larger one — wrong direction on that guess.
+- Exploratory: only 3/18 fixes come from truncated (unboxed) CoT (at 1.5B: 7/20); boxed-only gain +7.5 (15/1, p=5e-4). So at 3B the gain is
+  mostly genuine disagreement resolution, not truncation rescue. PAL single sample 41.5% (1.5B: 34.4%); PAL any-of-3 65.0%.
+  Per level (CoT→G3): L1 15→18, L2 25→26, L3 28→34, L4 31→36, L5 10→12 (of 19/35/45/56/45).
+- Exploratory (offline, `../math-g3/adaptive.py`): sequential PAL sampling that stops once the vote
+  can't change gives identical answers at 2.17× instead of 2.56× tokens (1.5B: 1.99× vs 2.34×); mean 2.1 PAL samples.
+
+Earlier: lab run 1 (session #17 queue) stopped at n=147/200: interim only, no verdict. Re-queued #18 with internal timeout 7500 s.
