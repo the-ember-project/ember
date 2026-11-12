@@ -1,0 +1,11 @@
+bank n=400 kept=251 precision=94.4% (all-bank CoT acc 72.8%)
+n=130 Z=62.3% R=64.6% X=60.8%
+  Z: parsed 100.0%  capped 5.4%  #### 14.6%  mean out tok 238  mean prompt tok 105
+  R: parsed 100.0%  capped 5.4%  #### 2.3%  mean out tok 259  mean prompt tok 651
+  X: parsed 100.0%  capped 7.7%  #### 3.1%  mean out tok 270  mean prompt tok 649
+R-Z: +2.3 (fixed 14 / broken 11) p=0.6900
+R-X: +3.8 (fixed 14 / broken 9) p=0.4049
+X-Z: -1.5 (fixed 14 / broken 16) p=0.8555
+  low-sim (top sim 0.15-0.25, n=43): Z=55.8 R=60.5 X=55.8
+  mid-sim (top sim 0.25-0.33, n=43): Z=67.4 R=67.4 X=60.5
+  high-sim (top sim 0.33-0.57, n=44): Z=63.6 R=65.9 X=65.9
