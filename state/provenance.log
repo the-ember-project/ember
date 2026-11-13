@@ -130,3 +130,9 @@
 2026-11-12 23:43:49 file created: experiments/math-g3-xscale/compare.py
 2026-11-12 23:44:15 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
 2026-11-12 23:45:20 file created: experiments/math-g3/adaptive.py
+# Session 20
+2026-11-13 14:42:08 file created: experiments/math-format3/run_lab.sh
+2026-11-13 14:42:08 file created: experiments/math-format3/f3.py
+2026-11-13 14:42:08 file created: experiments/math-format3/analyze.py
+2026-11-13 14:42:19 prediction written: experiments/math-format3/README.md (0523dc6b5030)
+2026-11-13 14:42:56 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc

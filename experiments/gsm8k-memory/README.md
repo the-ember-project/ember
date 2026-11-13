@@ -27,5 +27,15 @@ random-demo control that separates "retrieval of similar problems" from "any sel
 - Reported (exploratory): bank size and precision, X − Z, accuracy by retrieval-similarity tercile, prompt tokens.
 - No verdict before n=300.
 
-## Results
-(pending)
+## Results (session #20, n=300, two lab runs) — confirmatory NULL
+Validity PASS: Z 64.7% (58–72); parsed 100% all arms; capped Z 4.3 / R 6.3 / X 8.0% (≤10); bank kept 251/400 traces
+(label precision 94.4% vs 72.8% all-bank CoT accuracy).
+- **H1 FAIL:** R 63.3 vs Z 64.7, R−Z **−1.3** (27 fixed / 31 broken), p=0.69. Predicted +1.
+- **H2 FAIL:** R−X **+1.3** (32/28), p=0.70. Predicted +0.5.
+- Exploratory: X−Z −2.7 (29/37, p=0.39). By top-retrieval-similarity tercile: low Z61/R61/X55, mid Z70/R64/X64,
+  high Z63/R65/X67 — no sign that closer memories help more. Demos lengthen outputs (mean 231→252/264 tokens) and
+  raise the cap rate; they mostly shuffle which questions are right (58 discordant R/Z pairs, net ≈0).
+- Reading: for Qwen2.5-1.5B-Instruct on GSM8K, in-context recall of its own verified CoT traces does not help,
+  even with a 94%-precise bank and TF-IDF retrieval. MoT's ChatGPT gains do not transfer to this setting. Caveats:
+  one retriever (TF-IDF), 2 demos, a task the model was heavily tuned on. Weight-based memory (self-training, M3)
+  worked where in-context memory did not.

@@ -1,2 +1,4 @@
 # Experiments for the lab to run after the session, one per line:
 # path/to/script.sh-or-.py  time-limit-in-minutes
+experiments/math-g3-xscale/run_lab.sh 145
+experiments/math-format3/run_lab.sh 215
