@@ -1,0 +1,25 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+247 False False 44.6
+248 False True 17.4
+249 True True 17.5
+n=250
+SYM executes to a number: 52.8%  CS boxed: 86.8%
+stored G3 reproduced: 250/250
+COT     50.8%
+G3      57.2%
+A_SYM   55.6%
+A_CS    56.8%
+G3+SYM  58.0%
+SYM     22.0%
+CS      42.0%
+PAL1    34.4%
+H1: A_SYM-G3 -1.6 (fixed 2 / broken 6) p=0.2891
+H2: G3-A_CS +0.4 (fixed 7 / broken 6) p=1.0000
+expl: G3+SYM-G3 +0.8 (fixed 4 / broken 2) p=0.6875
+expl: A_SYM-A_CS -1.2 (fixed 5 / broken 8) p=0.5811
+expl CoT vs PAL1: both wrong 51, same wrong answer 7
+expl CoT vs SYM: both wrong 42, same wrong answer 6
+expl CoT vs CS: both wrong 104, same wrong answer 18

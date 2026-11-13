@@ -2,21 +2,21 @@
 [notice] A new release of pip is available: 26.2.2 -> 26.3
 [notice] To update, run: pip install --upgrade pip
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-157 True [True, True, True] True 28.3
-158 True [True, True, True] True 27.4
-159 True [True, False, True] True 28.2
-n=160 greedy CoT 47.5% | PAL sample1 27.5% | PAL any-of-3 44.4%
-G3 50.6%  diff +3.1 (fixed 9 / broken 4) sign p=0.2668
-validity: boxed rate 84.4%  (need >=90); CoT acc in 30-60
-token cost G3/greedy = 2.23x; mean secs/q 52
-  Level 1: n=15 cot 12 g3 14
-  Level 2: n=31 cot 21 g3 22
-  Level 3: n=37 cot 22 g3 22
-  Level 4: n=38 cot 15 g3 16
-  Level 5: n=39 cot 6 g3 7
-n paired = 160; 1.5B boxed rate 84.4%
-H1/H2 1.5B G3 vs 3B greedy CoT: 50.6 vs 56.2  diff -5.6  (fixed 17 / broken 26) p=0.2221
-H3 1.5B G3 vs 1.5B greedy CoT: 50.6 vs 47.5  diff +3.1  (fixed 9 / broken 4) p=0.2668
-1.5B greedy vs 3B greedy: 47.5 vs 56.2  diff -8.8  (fixed 12 / broken 26) p=0.03355
-3B G3 vs 1.5B G3: 65.0 vs 50.6  diff +14.4  (fixed 31 / broken 8) p=0.0002941
-compute (tokens x params) 1.5B-G3 / 3B-greedy = 1.06x
+197 False [False, True, True] True 48.4
+198 False [False, True, False] False 88.5
+199 False [False, False, False] False 34.7
+n=200 greedy CoT 44.5% | PAL sample1 27.0% | PAL any-of-3 43.0%
+G3 49.0%  diff +4.5 (fixed 13 / broken 4) sign p=0.04904
+validity: boxed rate 84.5%  (need >=90); CoT acc in 30-60
+token cost G3/greedy = 2.25x; mean secs/q 51
+  Level 1: n=19 cot 15 g3 18
+  Level 2: n=35 cot 23 g3 25
+  Level 3: n=45 cot 24 g3 25
+  Level 4: n=56 cot 19 g3 21
+  Level 5: n=45 cot 8 g3 9
+n paired = 200; 1.5B boxed rate 84.5%
+H1/H2 1.5B G3 vs 3B greedy CoT: 49.0 vs 54.5  diff -5.5  (fixed 20 / broken 31) p=0.1608
+H3 1.5B G3 vs 1.5B greedy CoT: 49.0 vs 44.5  diff +4.5  (fixed 13 / broken 4) p=0.04904
+1.5B greedy vs 3B greedy: 44.5 vs 54.5  diff -10.0  (fixed 13 / broken 33) p=0.004534
+3B G3 vs 1.5B G3: 63.0 vs 49.0  diff +14.0  (fixed 38 / broken 10) p=6.17e-05
+compute (tokens x params) 1.5B-G3 / 3B-greedy = 1.05x
