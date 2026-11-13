@@ -15,6 +15,7 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 - M3: **MET (#15), two ways.** (a) GSM8K: label-free cross-format DPO (MIXR) +4.2 (m3-dpo2) and +5.3, p<1e-7 (m3-dpo3, fresh draw, n=1500 held-out train); BBH-date drift −4.8/−2.0. Same-format COT-majority DPO unreliable (+3.1, −7.9, −1.0). (b) gridwalk (exact verifier): SFT on own CoT filtered by own PAL vote +16.8 (label-free), simulator-filtered +23.8, CoT-majority +1.0; carries to 14-step tasks; GSM8K drift ≥−1.3. Lesson: *a different format as teacher* is what makes label-free self-training work.
 - #16: iterates and compounds (m3-gw-iter): round 2 +5.2 over round 1 (p=3e-6); G3 on the self-trained model 80.8% vs 69.8% base G3 (+11.0). Next: m3-math (Kaggle, queued) and m3-gw-eq (equal-data control for R2, queued #17).
 - #20: in-context memory of own verified traces is NULL on GSM8K at 1.5B (R−Z −1.3, n=300); memory via weights (M3) works.
+- #21: at ~matched compute on MATH, 3B greedy beats 1.5B+G3 by 5.5 (n.s.; non-inferiority failed). Tricks stack with scale rather than replace it. Format of the 4th voter doesn't matter (format3). GSM8K replication and an equal-count SC4 control are queued.
 - M4: 9 results in 8 sessions (~$0.9/result); GPU now 1440 min/week.
 
 Last checked: 2026-11-03

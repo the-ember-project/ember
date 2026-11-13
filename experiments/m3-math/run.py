@@ -23,7 +23,13 @@ def boxed(s):
         d += (s[k] == "{") - (s[k] == "}"); k += 1
     return s[j:k - 1] if d == 0 else None
 
-def num(b):
+def num(b):  # robust wrapper (run 1 crashed: OverflowError on a huge fraction in a PAL output)
+    try:
+        v = _num(b)
+        return v if v is None or math.isfinite(v) else None
+    except (OverflowError, ValueError, ZeroDivisionError): return None
+
+def _num(b):
     if b is None: return None
     b = b.strip()
     for t in ["\\!", "\\$", "$", ",", " ", "\\left", "\\right", "^\\circ", "^{\\circ}", "\\%", "%", "\\text{ }"]: b = b.replace(t, "")
@@ -46,7 +52,13 @@ def extract(text):  # boxed number first; else gsm8k-baseline rule (last number)
     try: return float(s.replace(",", ""))
     except ValueError: return None
 
-def run_code(text, timeout=10):  # identical logic to gsm8k-pal/pal.py
+def run_code(text, timeout=10):
+    try:
+        v = _run_code(text, timeout)
+        return v if v is None or math.isfinite(v) else None
+    except Exception: return None
+
+def _run_code(text, timeout=10):  # identical logic to gsm8k-pal/pal.py
     m = re.findall(r"```(?:python)?\n(.*?)```", text, re.S)
     code = m[0] if m else text
     with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as f:

@@ -26,4 +26,13 @@ harness appends `print(answer)` (the smoke showed notebook-style endings). Store
 - No verdict before n=250. Seeds/versions: llama-cpp-python 0.3.36, Qwen2.5-1.5B-Instruct q4_k_m, seed 7373.
 
 ## Results
+**Run complete, n=250 (session #21, from analysis.txt; one lab run, 115 min).** Confirmatory, verdicts per criterion:
+- **Validity: FAIL on SYM.** SYM gives a number on 52.8% (<60%); CS boxed 86.8% (pass); stored G3 reproduced 250/250 (pass). Verdicts marked **compromised** (for H1 only the SYM arm is affected; H2 does not use SYM).
+- **H1 FAIL:** A_SYM − G3 −1.6 (2 fixed / 6 broken), p=0.29. Predicted +0.4.
+- **H2 FAIL:** G3 − A_CS +0.4 (7/6), p=1.0. Predicted +1.5. A sampled CoT is as good a 4th voter as a third PAL sample.
+- Exploratory: single-sample accuracy SYM 22.0%, CS 42.0%, PAL1 34.4%, greedy CoT 50.8%. G3+SYM (5 voters) +0.8 over G3 (n.s.).
+  CoT and CS share a wrong answer on 18 of 104 both-wrong questions; CoT and PAL1 on 7 of 51; CoT and SYM on 6 of 42.
+  Errors across formats are less correlated, but the sampled CoT is more accurate, and the two effects cancel at the 4th-voter margin.
+- **Reading:** on MATH at 1.5B, the *marginal* voter's format doesn't matter. A third format (declarative SymPy) is too weak to help. The G3 gain is not shown to require format diversity at the margin. It still needs ≥2 agreeing PAL samples to overturn greedy, and the base 2 PAL voters weren't varied here. This answers the 11-08 review's equal-count question for MATH: no evidence that cross-format beats same-format at equal count.
+
 (pending)

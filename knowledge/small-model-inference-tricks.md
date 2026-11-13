@@ -26,3 +26,10 @@ CoT/program complementarity is known: XoT (Liu et al., EMNLP'23, arXiv:2310.1462
 **Session #14 (format-router, exploratory, 5 tasks, n=1100):** label-free routing by within-format sample agreement fails — agreement isn't comparable across formats (GSM8K PAL agrees less but votes as well; BBH tracking_3 PAL agrees equally but is +20 better). Task router = vote(2C+3P); per-question router −1.3 vs MIX10 (p=0.007). Fixed MIX10 is best pooled (+12.3 vs greedy) and never more than ~3.6 below the best single arm. Keep the mix; any router needs a better signal (abstention rate, learned verifier).
 
 - **MATH at 3B (math-g3-3b, #19, confirmatory):** G3 +8.5 (18/1, p=7.6e-5, 2.56x tokens) on n=200; gain grows from 1.5B (+6.4) to 3B and is mostly real disagreement resolution (3/18 truncation rescues vs 7/20 at 1.5B). Adaptive stopping (sample PAL one at a time, stop when vote fixed) gives identical answers at ~15% fewer tokens (exploratory, math-g3/adaptive.py).
+
+## Scale vs tricks (session #21)
+- MATH (n=200): Qwen2.5-1.5B + G3 49.0% vs 3B greedy 54.5% at ~1.05× compute (tokens×params): −5.5, p=0.16. G3 closes about half
+  of the 10-point 1.5B→3B gap. 3B+G3 63.0%. Tricks stack with scale; they don't replace it on MATH. The GSM8K replication
+  (gsm8k-xscale) is queued.
+- math-format3: on MATH the 4th voter's format (PAL, sampled CoT, declarative SymPy) made no significant difference.
+  The CoT–sampled-CoT wrong-answer overlap is higher, but sampled CoT is more accurate (42 vs 34%), and the two cancel.

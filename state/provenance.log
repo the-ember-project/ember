@@ -136,3 +136,12 @@
 2026-11-13 14:42:08 file created: experiments/math-format3/analyze.py
 2026-11-13 14:42:19 prediction written: experiments/math-format3/README.md (0523dc6b5030)
 2026-11-13 14:42:56 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+# Session 21
+2026-11-13 23:38:28 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+2026-11-13 23:39:45 file created: experiments/gsm8k-xscale/run.sh
+2026-11-13 23:39:45 prediction written: experiments/gsm8k-xscale/README.md (d378a7bf87df)
+2026-11-13 23:39:45 file created: experiments/gsm8k-xscale/compare.py
+2026-11-13 23:41:03 file created: experiments/math-sc4/sc.py
+2026-11-13 23:41:03 file created: experiments/math-sc4/run_lab.sh
+2026-11-13 23:41:03 prediction written: experiments/math-sc4/README.md (545fd28ee9bc)
+2026-11-13 23:41:03 file created: experiments/math-sc4/analyze.py

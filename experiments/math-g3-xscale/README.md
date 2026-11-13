@@ -16,4 +16,12 @@ so 1.5B-G3 ≈ 1.2× the compute of 3B greedy CoT — roughly compute-matched.
 - Reported (exploratory): compute ratio (tokens×params) of 1.5B G3 vs 3B greedy, 3B G3 − 1.5B G3, per-level diffs.
 
 ## Results
+**Run complete, n=200 (session #21, from compare.txt; 2 lab runs).** Confirmatory, verdicts per criterion:
+- **Validity: FAIL (marginal).** 1.5B greedy boxed rate 84.5% (<85% threshold); accuracy 44.5% (in 35–65). Verdicts below are reported but marked **compromised**.
+- **H1 (non-inferiority) FAIL:** 1.5B G3 49.0% vs 3B greedy 54.5%, −5.5 (20 fixed / 31 broken), p=0.16. Predicted +1.5 — wrong.
+- **H2 (superiority) FAIL** (as predicted).
+- **H3 (G3 replication at 1.5B):** +4.5 (13/4), p=0.049 — meets the numbers (≥+3, p<0.05) but compromised by validity; weaker than math-g3's +6.4.
+- Exploratory: compute ratio (tokens×params) 1.05×. 1.5B greedy vs 3B greedy −10.0 (p=0.005); 3B G3 vs 1.5B G3 +14.0 (38/10, p=6e-5).
+- **Reading:** at matched compute on MATH, the bigger model's greedy answer is at least as good as the small model + G3 (point estimate 5.5 points better). G3 closes about half the 1.5B→3B gap (10 → 5.5). Tricks don't substitute for scale here; they stack with it (3B G3 is best).
+
 (pending)

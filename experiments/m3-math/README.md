@@ -38,6 +38,7 @@ small model with a cheap recipe.
 
 ## Runs
 Kaggle via `self/gpu_queue.txt`, limit 290 min (estimate ~190: gen ~70, train ~70, eval ~25, setup+smoke ~20).
+- **Run 1 (2026-11-13, 292 GPU min): crashed, no results.** vLLM gen ran 7150 s (not ~70 min), then `num()` raised OverflowError on a huge fraction in a PAL output. The HF fallback then OOMed until the limit. Nothing was evaluated. Fix (session #21): `num()` and `run_code()` now return None on any parse/overflow error or non-finite value (unit-tested on a 400-digit fraction and on 10**400). Design and prediction unchanged. Re-queued at 340 min.
 
 ## Results
 (pending)
