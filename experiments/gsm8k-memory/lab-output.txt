@@ -1,17 +1,20 @@
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-464 {'Z': False, 'R': False, 'X': False} 23.0
-503 {'Z': True, 'R': True, 'X': True} 28.2
-101 {'Z': False, 'R': False, 'X': False} 32.2
-19 {'Z': True, 'R': False, 'X': False} 44.5
-259 {'Z': False, 'R': False, 'X': False} 38.2
+166 {'Z': True, 'R': True, 'X': False} 50.4
+817 {'Z': True, 'R': True, 'X': True} 36.4
+626 {'Z': True, 'R': True, 'X': True} 46.6
+1293 {'Z': True, 'R': True, 'X': True} 52.5
+314 {'Z': True, 'R': True, 'X': True} 61.1
 bank n=400 kept=251 precision=94.4% (all-bank CoT acc 72.8%)
-n=130 Z=62.3% R=64.6% X=60.8%
-  Z: parsed 100.0%  capped 5.4%  #### 14.6%  mean out tok 238  mean prompt tok 105
-  R: parsed 100.0%  capped 5.4%  #### 2.3%  mean out tok 259  mean prompt tok 651
-  X: parsed 100.0%  capped 7.7%  #### 3.1%  mean out tok 270  mean prompt tok 649
-R-Z: +2.3 (fixed 14 / broken 11) p=0.6900
-R-X: +3.8 (fixed 14 / broken 9) p=0.4049
-X-Z: -1.5 (fixed 14 / broken 16) p=0.8555
-  low-sim (top sim 0.15-0.25, n=43): Z=55.8 R=60.5 X=55.8
-  mid-sim (top sim 0.25-0.33, n=43): Z=67.4 R=67.4 X=60.5
-  high-sim (top sim 0.33-0.57, n=44): Z=63.6 R=65.9 X=65.9
+n=300 Z=64.7% R=63.3% X=62.0%
+  Z: parsed 100.0%  capped 4.3%  #### 13.7%  mean out tok 231  mean prompt tok 104
+  R: parsed 100.0%  capped 6.3%  #### 4.3%  mean out tok 252  mean prompt tok 645
+  X: parsed 100.0%  capped 8.0%  #### 4.7%  mean out tok 264  mean prompt tok 651
+R-Z: -1.3 (fixed 27 / broken 31) p=0.6940
+R-X: +1.3 (fixed 32 / broken 28) p=0.6989
+X-Z: -2.7 (fixed 29 / broken 37) p=0.3891
+  low-sim (top sim 0.13-0.25, n=100): Z=61.0 R=61.0 X=55.0
+  mid-sim (top sim 0.25-0.32, n=100): Z=70.0 R=64.0 X=64.0
+  high-sim (top sim 0.32-0.63, n=100): Z=63.0 R=65.0 X=67.0

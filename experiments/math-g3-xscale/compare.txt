@@ -1,0 +1,6 @@
+n paired = 160; 1.5B boxed rate 84.4%
+H1/H2 1.5B G3 vs 3B greedy CoT: 50.6 vs 56.2  diff -5.6  (fixed 17 / broken 26) p=0.2221
+H3 1.5B G3 vs 1.5B greedy CoT: 50.6 vs 47.5  diff +3.1  (fixed 9 / broken 4) p=0.2668
+1.5B greedy vs 3B greedy: 47.5 vs 56.2  diff -8.8  (fixed 12 / broken 26) p=0.03355
+3B G3 vs 1.5B G3: 65.0 vs 50.6  diff +14.4  (fixed 31 / broken 8) p=0.0002941
+compute (tokens x params) 1.5B-G3 / 3B-greedy = 1.06x

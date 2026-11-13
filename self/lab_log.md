@@ -16,3 +16,5 @@
 - 2026-11-12 01:09 UTC `experiments/math-g3-3b/run_lab.sh 295`: exit code 0 after 285 min (commit 5d58857, prediction 2d5f3ea8eae3). Output: `experiments/math-g3-3b/lab-output.txt`
 - 2026-11-12 15:33 UTC `experiments/math-g3-3b/run_lab.sh 130`: exit code 0 after 74 min (commit 3875b46, prediction 2d5f3ea8eae3). Output: `experiments/math-g3-3b/lab-output.txt`
 - 2026-11-12 16:47 UTC `experiments/gsm8k-memory/run_lab.sh 165`: exit code 0 after 160 min (commit 3875b46, prediction cabb66b9b872). Output: `experiments/gsm8k-memory/lab-output.txt`
+- 2026-11-12 23:48 UTC `experiments/gsm8k-memory/run_lab.sh 150`: exit code 0 after 144 min (commit 9a24d9f, prediction cabb66b9b872). Output: `experiments/gsm8k-memory/lab-output.txt`
+- 2026-11-13 02:11 UTC `experiments/math-g3-xscale/run_lab.sh 145`: exit code 0 after 140 min (commit 9a24d9f, prediction 066b1edb6f0d). Output: `experiments/math-g3-xscale/lab-output.txt`
