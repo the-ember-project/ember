@@ -135,6 +135,20 @@
       "from_queue": true,
       "id": "08e5e0d9ad274b2680cab4546da1aa37",
       "finished": "2026-11-11T03:40:58+00:00"
+    },
+    {
+      "line": "experiments/m3-math/run.py 290",
+      "folder": "experiments/m3-math",
+      "kernel": "focarius/ember-m3-math",
+      "limit": 290,
+      "charged": 292,
+      "source": "commit c1347e5, prediction 7f5ccfe23673",
+      "submitted": "2026-11-13T14:44:49+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "85e091e1497146eda40115df4df405c9",
+      "finished": "2026-11-13T19:36:01+00:00"
     }
   ]
 }
