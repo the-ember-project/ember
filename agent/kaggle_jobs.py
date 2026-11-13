@@ -51,6 +51,9 @@ POLL_MINUTES = int(os.environ.get("GPU_POLL_MINUTES") or 320)        # how long 
 MAX_JOB_MINUTES = 540                                                  # Kaggle stops sessions at 12 h
 OVERHEAD = 10                                                          # start-up and download, per job
 GIVE_UP_HOURS = 13                                                     # after this, a job counts as lost
+# Ask for a T4 by name (Kaggle's "GPU T4 x2", its default GPU) rather than any GPU, so a job never
+# lands on an older card that current PyTorch builds don't support (e.g. the retired Pascal P100).
+ACCELERATOR = "NvidiaTeslaT4"
 MAX_FILE, MAX_BUNDLE = 500_000, 2_000_000
 SKIP = {"gpu-output", "__pycache__", ".git"}
 DONE = ("complete", "error", "cancel")
@@ -160,6 +163,7 @@ def submit(script: Path, minutes: int) -> str:
         Path(tmp, "run.py").write_text(code)
         meta = {"id": f"{USER}/{slug}", "title": slug, "code_file": "run.py", "language": "python",
                 "kernel_type": "script", "is_private": True, "enable_gpu": True, "enable_internet": True,
+                "machine_shape": ACCELERATOR,
                 "dataset_sources": [], "competition_sources": [], "kernel_sources": []}
         Path(tmp, "kernel-metadata.json").write_text(json.dumps(meta, indent=2))
         rc, out = kaggle("kernels", "push", "-p", tmp)

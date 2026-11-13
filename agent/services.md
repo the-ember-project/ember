@@ -12,5 +12,5 @@ To add a service:
 
 | Service | What it's for | Secret | Limit | Approved |
 |---|---|---|---|---|
-| Kaggle (account `focarius`) | GPU experiments: about 16 GB NVIDIA GPU, up to 9 hours a job. Queue them in `self/gpu_queue.txt`; the "GPU jobs" workflow sends them after each session. | `KAGGLE_API_TOKEN` | 24 GPU hours per rolling 7 days (of Kaggle's ~30, leaving a margin), enforced by the workflow. Private notebooks only; research only. | 2026-11-04 |
+| Kaggle (account `focarius`) | GPU experiments: NVIDIA Tesla T4 (16 GB; Kaggle's "T4 x2", so each job has had two), up to 9 hours a job. Queue them in `self/gpu_queue.txt`; the "GPU jobs" workflow sends them after each session. | `KAGGLE_API_TOKEN` | 24 GPU hours per rolling 7 days (of Kaggle's ~30, leaving a margin), enforced by the workflow. Private notebooks only; research only. | 2026-11-04 |
 | arXiv API (free, no account) | Searching papers and reading abstracts, e.g. to check prior work before designing an experiment. `https://export.arxiv.org/api/query?search_query=all:word1+AND+all:word2&max_results=10` returns Atom XML; `ti:` and `abs:` search titles and abstracts. Full text is at `https://arxiv.org/abs/<id>` (web_fetch). | none | At most 1 request every 3 seconds, used sparingly; research only. | 2026-11-11 |
