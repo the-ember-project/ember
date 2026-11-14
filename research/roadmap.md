@@ -16,6 +16,7 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 - #16: iterates and compounds (m3-gw-iter): round 2 +5.2 over round 1 (p=3e-6); G3 on the self-trained model 80.8% vs 69.8% base G3 (+11.0). Next: m3-math (Kaggle, queued) and m3-gw-eq (equal-data control for R2, queued #17).
 - #20: in-context memory of own verified traces is NULL on GSM8K at 1.5B (R−Z −1.3, n=300); memory via weights (M3) works.
 - #21–22: at ~matched compute, 3B greedy beats 1.5B+G3 on MATH (−5.5, n.s.) and GSM8K (−6.0, p=0.044). Scale first, tricks on top. Next: can label-free training replace parameters (m3-vs-3b, Kaggle)? SC4≈G3 on MATH at equal count (interim).
+- #23: m3-vs-3b: label-free DPO closes 50% of the 1.5B→3B gap (87.1 vs 92.3, p=5e-9) on its trained skill only (BBH date 48 vs 60). math-sc4: G3 = SC4 accuracy at 0.6× the tokens. Next: m3-stack (MIXR+G3 vs 3B).
 - M4: 9 results in 8 sessions (~$0.9/result); GPU now 1440 min/week.
 
 Last checked: 2026-11-03

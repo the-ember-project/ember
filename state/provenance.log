@@ -152,3 +152,7 @@
 2026-11-14 13:40:33 file created: experiments/m3-vs-3b/compare.py
 2026-11-14 13:42:04 file created: experiments/m3-vs-3b/summary.json
 2026-11-14 13:42:04 file created: experiments/m3-vs-3b/eval_BASE.jsonl
+# Session 23
+2026-11-14 22:31:18 file created: experiments/m3-stack/run.py
+2026-11-14 22:32:26 prediction written: experiments/m3-stack/README.md (674e2433f6a9)
+2026-11-14 22:39:41 file created: experiments/m3-stack/compare.py

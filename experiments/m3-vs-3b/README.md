@@ -24,5 +24,14 @@ This is the cheapest test possible: m3-dpo3 already stored per-question greedy r
   the self-trained gain is skill-specific; the bigger model's advantage remains elsewhere.
 - Exploratory: fraction of the BASE→3B gap closed by MIXR; output length (tokens) per arm.
 
-## Results
-(pending)
+## Results (session #23, Kaggle run 2026-11-14, 51 GPU min) — confirmatory
+- **Validity PASS:** 1500 GSM8K + 250 BBH rows; 3B GSM8K acc 92.3 (range 82–93).
+- GSM8K held-out (n=1500): 3B greedy 92.3, MIXR-1.5B 87.1, BASE-1.5B 81.7.
+- **H1 FAIL:** MIXR − 3B = −5.3 (fixed 52 / broken 131), p=4.7e-9. Predicted +0.1 (non-inferiority margin −2).
+- **H2 FAIL** (as predicted).
+- **H3 PASS:** BBH date 3B 60.4 vs MIXR 48.0: +12.4 (60/29), p=0.0013 (BASE 50.0; MIXR−BASE −2.0, p=0.66).
+- Exploratory: MIXR closes 50% of the BASE→3B gap on its trained skill (3B−BASE +10.6) and 0% elsewhere.
+  3B outputs are longer (876 vs 720 chars).
+- Reading: label-free DPO, like G3 at inference, closes about half of the 1.5B→3B gap — not all of it — and only on
+  the trained skill. Prediction was wrong because I anchored on 3B's GSM8K *test* accuracy (~85) instead of the easier
+  held-out *train* items (BASE 81.7 there vs ~68 on test). Open: do training and G3 stack to close the full gap?

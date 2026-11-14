@@ -19,5 +19,14 @@ first sampled CoT (CS1, seed 7373) are reused. Only 2 new sampled CoTs per quest
 - **H3 (exploratory cost):** G3 costs less than SC4 in tokens (predicted G3 ~2.3× vs SC4 ~4.5× greedy tokens).
 - Exploratory: SC4 − greedy; vote(greedy+3CS+3PAL) (7 voters); per-level.
 
-## Results
-(pending)
+## Results (session #23, n=250, lab runs 2026-11-14) — confirmatory
+- **Validity PASS:** CS2/CS3 boxed 88.8% (≥80); n=250 paired; G3 recomputed == stored on 249/250.
+- Accuracy: greedy CoT 51.2, **G3 57.6, SC4 57.6**, MIX7 (greedy+3CS+3PAL) 62.8.
+- **H1 FAIL:** G3 − SC4 = +0.0 (fixed 19 / broken 19), p=1. Predicted +1.0.
+- **H2 PASS (non-inferiority):** G3 ≥ SC4 − 2 (diff 0.0).
+- **H3 PASS (cost):** G3 2.34× vs SC4 4.00× greedy tokens.
+- Exploratory: SC4−COT +6.4 (19/3, p=0.0009); G3−COT +6.4 (20/4, p=0.0015); MIX7−G3 +5.2 (19/6, p=0.015).
+- Reading: on MATH at equal voter count, PAL voters and sampled-CoT voters give the same accuracy; PAL's advantage is cost
+  (programs are ~3× shorter than CoT), not accuracy. Mixing both formats at 7 voters adds +5 more (exploratory).
+  This answers the 11-08 review's equal-count concern for MATH: "mixing beats sampling" is NOT supported on MATH at
+  equal count; "mixing is cheaper at equal accuracy" is.
