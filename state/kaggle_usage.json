@@ -149,6 +149,33 @@
       "from_queue": true,
       "id": "85e091e1497146eda40115df4df405c9",
       "finished": "2026-11-13T19:36:01+00:00"
+    },
+    {
+      "line": "experiments/m3-vs-3b/job.py 40",
+      "folder": "experiments/m3-vs-3b",
+      "kernel": "focarius/ember-m3-vs-3b",
+      "limit": 40,
+      "charged": 51,
+      "source": "commit 540ed04, prediction a5e1a92c2977",
+      "submitted": "2026-11-14T13:43:18+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "d68869b59cfa49f5ad58f5fc4b4d758a",
+      "finished": "2026-11-14T17:59:39+00:00"
+    },
+    {
+      "line": "experiments/m3-math/run.py 340",
+      "folder": "experiments/m3-math",
+      "kernel": "focarius/ember-m3-math",
+      "limit": 340,
+      "charged": 350,
+      "source": "commit 540ed04, prediction 7f5ccfe23673",
+      "submitted": "2026-11-14T17:59:42+00:00",
+      "pending": true,
+      "status": "running",
+      "from_queue": true,
+      "id": "0d7e63b0ce8b4d1d933ebb8e807981cc"
     }
   ]
 }
