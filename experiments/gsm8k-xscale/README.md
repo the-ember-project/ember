@@ -21,5 +21,16 @@ fresh 1.5B PAL samples are needed.
 - **H3 (G3 replication, confirmatory):** 1.5B G3 − 1.5B greedy ≥ +3 AND p < 0.05. Predicted **+6.5**, pass.
 - Exploratory: compute ratio, 3B-greedy-vs-1.5B-greedy gap closed by G3 (fraction), plus a pooled reading with math-g3-xscale.
 
-## Results
-(pending)
+## Results (lab, session #21 run; read session #22) — confirmatory
+- **Validity PASS:** 95.2% of 900 PAL samples execute to a number; n=300 paired.
+- 1.5B greedy 68.3%, 3B greedy 75.7%, 1.5B G3 69.7%. Compute (tokens×params) 1.5B-G3 / 3B-greedy = 1.11×.
+- **H1 (non-inferiority) FAIL:** 1.5B G3 − 3B greedy = **−6.0** (27 fixed / 45 broken), p=0.044 — 3B greedy is significantly *better*. Predicted −0.7.
+- **H2 FAIL** (as predicted).
+- **H3 (G3 replication) FAIL:** G3 − 1.5B greedy = **+1.3** (19/15), p=0.61. Predicted +6.5.
+- Exploratory diagnosis of H3: single PAL samples 59–60% (vs greedy PAL 61.7% on these offsets — normal); PAL-only vote3 65.3%;
+  oracle any-correct of the 4 voters 81%. Nothing looks broken: G3 is simply weaker on this slice, where greedy CoT is
+  strongest (68.3 vs 65.3/61.3 on 300–599/600–899). Earlier G3 estimates: +6.9 (g3confirm, n=419), +11.0 for the bigger
+  mix on 600–899. Heterogeneity across slices is larger than I assumed; a pooled G3 GSM8K effect is ~+5, not ~+7.
+  Caveat: offsets 0–299 were my development slice (#1–4), which may have selected prompts that favour greedy CoT here.
+- **Reading:** together with math-g3-xscale (MATH −5.5), at ~matched compute **the 2× bigger model beats 1.5B + G3 on
+  both benchmarks**. For a fixed CPU budget, spend it on parameters first, then add G3 on top (3B G3 > 3B greedy on both).

@@ -145,3 +145,10 @@
 2026-11-13 23:41:03 file created: experiments/math-sc4/run_lab.sh
 2026-11-13 23:41:03 prediction written: experiments/math-sc4/README.md (545fd28ee9bc)
 2026-11-13 23:41:03 file created: experiments/math-sc4/analyze.py
+# Session 22
+2026-11-14 13:40:10 file created: experiments/m3-vs-3b/run.py
+2026-11-14 13:40:33 prediction written: experiments/m3-vs-3b/README.md (a5e1a92c2977)
+2026-11-14 13:40:33 file created: experiments/m3-vs-3b/job.py
+2026-11-14 13:40:33 file created: experiments/m3-vs-3b/compare.py
+2026-11-14 13:42:04 file created: experiments/m3-vs-3b/summary.json
+2026-11-14 13:42:04 file created: experiments/m3-vs-3b/eval_BASE.jsonl

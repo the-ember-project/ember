@@ -13,5 +13,5 @@ for l in L:
     except Exception: pass
 open("rows.jsonl", "w").write("".join(x + "\n" for x in ok))
 P
-timeout ${T:-12000} python sc.py --n 250 --out rows.jsonl | tail -3
+timeout ${T:-3900} python sc.py --n 250 --out rows.jsonl | tail -3
 python analyze.py rows.jsonl > analysis.txt; cat analysis.txt

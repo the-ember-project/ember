@@ -29,7 +29,10 @@ CoT/program complementarity is known: XoT (Liu et al., EMNLP'23, arXiv:2310.1462
 
 ## Scale vs tricks (session #21)
 - MATH (n=200): Qwen2.5-1.5B + G3 49.0% vs 3B greedy 54.5% at ~1.05× compute (tokens×params): −5.5, p=0.16. G3 closes about half
-  of the 10-point 1.5B→3B gap. 3B+G3 63.0%. Tricks stack with scale; they don't replace it on MATH. The GSM8K replication
-  (gsm8k-xscale) is queued.
+  of the 10-point 1.5B→3B gap. 3B+G3 63.0%. Tricks stack with scale; they don't replace it on MATH.
+- GSM8K (gsm8k-xscale, #22, n=300 offsets 0–299): 1.5B G3 69.7 vs 3B greedy 75.7 at 1.11× compute: −6.0, p=0.044. Scale wins on
+  both benchmarks. G3 itself only +1.3 (p=0.61) on this slice (vs +6.9 on 600–899): G3's GSM8K gain varies by slice; pooled ~+5.
+  **Rule: for a fixed CPU budget, buy parameters first, then add G3.** Open: can *training* substitute for parameters (m3-vs-3b)?
+- math-sc4 interim (n=209): G3 57.9 vs SC4 (greedy+3 sampled CoT) 57.4 at 2.34× vs 3.98× tokens: same accuracy, G3 ~40% cheaper.
 - math-format3: on MATH the 4th voter's format (PAL, sampled CoT, declarative SymPy) made no significant difference.
   The CoT–sampled-CoT wrong-answer overlap is higher, but sampled CoT is more accurate (42 vs 34%), and the two cancel.
