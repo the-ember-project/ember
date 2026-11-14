@@ -1,1 +1,16 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+247 False False 37.2
+248 True True 26.5
+249 True True 29.3
+n=250  CS2/CS3 boxed: 88.8%
+COT       51.2%
+G3        57.6%
+SC4       57.6%
+MIX7      62.8%
+G3stored  57.2%
+H1/H2: G3-SC4 +0.0 (fixed 19 / broken 19) p=1
+expl: SC4-COT +6.4 (fixed 19 / broken 3) p=0.0008554
+expl: G3-COT +6.4 (fixed 20 / broken 4) p=0.001544
+expl: MIX7-G3 +5.2 (fixed 19 / broken 6) p=0.01463
+G3 recomputed == stored: 249 / 250
+cost vs greedy tokens: G3 2.34x  SC4 4.00x
