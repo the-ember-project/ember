@@ -21,5 +21,19 @@ PAL vote5P (73.0%).
 ## Run
 CPU lab: `run_lab.sh 240` (resumable chunks of 25; ~1000 PAL samples). Smoke-tested in session #24 on 1 task.
 
-## Results
-(pending)
+## Results (session #25, lab run 205 min, n=200, 1000 neutral-demo PAL samples) — confirmatory, validity FAILED
+- **Validity FAIL:** only 45.2% of neutral-demo PAL samples execute to a pair (threshold ≥80%). Errors: ValueError 187,
+  TypeError 122, SyntaxError 107, KeyError 33, NameError 29; ~29 run cleanly but print no pair.
+- Accuracy: greedy CoT 38.0, vote5P(neutral) **2.5**, single neutral PAL 1.0 (2.0 per sample); original-demo
+  vote5P 73.0, single 61.5.
+- **H1 FAIL** (predicted +14): vote5P(neutral) − CoT −35.5 (4 fixed / 75 broken), p=5e-18.
+- **H2 PASS** (predicted +21): vote5P(orig) − vote5P(neutral) +70.5 (143/2), p=5e-40.
+- The validity failure does not rescue H1: among the 452 samples that *do* execute to a pair only 20 (4.4%) are
+  right. Reading 2 samples: the model writes a plausible-looking direction helper, then does not transcribe the
+  instruction list (e.g. loops `for _ in range(6)` alternating north/west, overwrites x,y each step, or sums all
+  steps and walks once). 22.3% of samples build a direction-list/modulo-4 structure, but still mistranscribe.
+- **Conclusion:** at 1.5B the whole gridwalk PAL advantage (+35 over CoT) comes from the demo handing over a
+  solver; without it, writing code is far *worse* than CoT (2.5 vs 38). gridwalk2/m3-gridwalk results should be
+  read as "the model can fill an action list into a supplied simulator", not "programs help it reason". Caveat:
+  one neutral demo only; a demo that shows *list transcription* of a different domain might land in between.
+

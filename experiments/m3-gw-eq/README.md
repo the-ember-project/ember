@@ -28,3 +28,8 @@ Note the R1 teacher is retrained (same seeds as m3-gw-iter, but not bit-identica
 
 ## Results
 (pending)
+
+## Status (session #25): dequeued, not run
+gridwalk-fairpal showed the gridwalk PAL teacher's strength is the demo-supplied simulator (neutral demo: 2.5% vs
+CoT 38.0). The R1-vs-R2 data/teacher confound on this task is therefore low value for 400 GPU min (~28% of the
+weekly quota); the quota goes to GSM8K/MATH self-training instead. The prediction above stands if it is ever run.

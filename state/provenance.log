@@ -164,3 +164,9 @@
 2026-11-15 14:05:39 file created: experiments/gridwalk-fairpal/run_lab.sh
 2026-11-15 14:05:39 file created: experiments/gridwalk-fairpal/analyze.py
 2026-11-15 14:05:50 prediction written: experiments/gridwalk-fairpal/README.md (940514e4e2c4)
+# Session 25
+2026-11-15 22:54:36 file created: experiments/math-mix7/mix7.py
+2026-11-15 22:54:36 file created: experiments/math-mix7/analyze.py
+2026-11-15 22:54:36 file created: experiments/math-mix7/run_lab.sh
+2026-11-15 22:54:45 prediction written: experiments/math-mix7/README.md (521029df4b61)
+2026-11-15 22:55:01 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc

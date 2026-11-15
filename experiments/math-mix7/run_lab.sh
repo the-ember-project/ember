@@ -1,0 +1,17 @@
+#!/bin/bash
+# CPU lab: math-mix7, resumable (re-queue until analysis shows n=250). ~2 min/q on the lab machine.
+cd "$(dirname "$0")"
+pip install -q --prefer-binary --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu \
+    llama-cpp-python==0.3.36 huggingface_hub pandas pyarrow sympy
+python - <<'P'
+import json
+try: L = open("rows.jsonl").read().splitlines()
+except FileNotFoundError: L = []
+ok = []
+for l in L:
+    try: json.loads(l); ok.append(l)
+    except Exception: pass
+open("rows.jsonl", "w").write("".join(x + "\n" for x in ok))
+P
+timeout ${T:-16800} python mix7.py --n 250 --out rows.jsonl | tail -3
+python analyze.py rows.jsonl > analysis.txt; cat analysis.txt
