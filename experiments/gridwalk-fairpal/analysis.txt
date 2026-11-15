@@ -1,0 +1,6 @@
+n 200 {'cot_greedy': 38.0, 'vote5P_neutral': 2.5, 'vote5P_orig': 73.0, 'pal1_neutral': 1.0, 'pal1_orig': 61.5}
+neutral per-sample acc 2.0, exec rate 45.2, mean tokens 274
+neutral samples using a direction list/modulo-4 simulator: 22.3%
+H1 (pass if >= +10, p<.05): vote5P_neutral - cot_greedy -35.5 (fixed 4 / broken 75) p=5.24e-18
+H2 (pass if >= +5, p<.05): vote5P_orig - vote5P_neutral +70.5 (fixed 143 / broken 2) p=4.75e-40
+expl: pal1_neutral - cot_greedy -37.0 (fixed 2 / broken 76) p=2.04e-20

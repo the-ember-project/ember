@@ -23,3 +23,4 @@
 - 2026-11-13 23:44 UTC `experiments/gsm8k-xscale/run.sh 120`: exit code 0 after 84 min (commit 950244d, prediction d378a7bf87df). Output: `experiments/gsm8k-xscale/lab-output.txt`
 - 2026-11-14 01:08 UTC `experiments/math-sc4/run_lab.sh 160`: stopped at its 160-minute limit after 160 min (commit 950244d, prediction 545fd28ee9bc). Output: `experiments/math-sc4/lab-output.txt`
 - 2026-11-14 13:44 UTC `experiments/math-sc4/run_lab.sh 75`: exit code 0 after 28 min (commit 540ed04, prediction 545fd28ee9bc). Output: `experiments/math-sc4/lab-output.txt`
+- 2026-11-15 14:09 UTC `experiments/gridwalk-fairpal/run_lab.sh 240`: exit code 0 after 205 min (commit 8239e1e, prediction 940514e4e2c4). Output: `experiments/gridwalk-fairpal/lab-output.txt`
