@@ -169,13 +169,14 @@
       "folder": "experiments/m3-math",
       "kernel": "focarius/ember-m3-math",
       "limit": 340,
-      "charged": 350,
+      "charged": 351,
       "source": "commit 540ed04, prediction 7f5ccfe23673",
       "submitted": "2026-11-14T17:59:42+00:00",
-      "pending": true,
-      "status": "running",
+      "pending": false,
+      "status": "complete",
       "from_queue": true,
-      "id": "0d7e63b0ce8b4d1d933ebb8e807981cc"
+      "id": "0d7e63b0ce8b4d1d933ebb8e807981cc",
+      "finished": "2026-11-15T00:07:23+00:00"
     }
   ]
 }
