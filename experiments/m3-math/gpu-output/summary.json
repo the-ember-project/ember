@@ -1,0 +1,52 @@
+{
+ "MIXR-BASE": {
+  "diff": 3.75,
+  "fixed": 119,
+  "broken": 74,
+  "p": 0.0015
+ },
+ "bbh_date MIXR-BASE": {
+  "diff": -1.2,
+  "fixed": 25,
+  "broken": 28,
+  "p": 0.7838
+ },
+ "MIXR-COT": {
+  "diff": -0.58,
+  "fixed": 82,
+  "broken": 89,
+  "p": 0.6465
+ },
+ "bbh_date MIXR-COT": {
+  "diff": 4.4,
+  "fixed": 38,
+  "broken": 27,
+  "p": 0.2145
+ },
+ "COT-BASE": {
+  "diff": 4.33,
+  "fixed": 125,
+  "broken": 73,
+  "p": 0.0003
+ },
+ "bbh_date COT-BASE": {
+  "diff": -5.6,
+  "fixed": 27,
+  "broken": 41,
+  "p": 0.1143
+ },
+ "acc": {
+  "BASE": 0.5483,
+  "MIXR": 0.5858,
+  "COT": 0.5917
+ },
+ "bbh_date_acc": {
+  "BASE": 0.496,
+  "MIXR": 0.484,
+  "COT": 0.44
+ },
+ "n": {
+  "gsm8k": 1200,
+  "bbh_date": 250
+ }
+}

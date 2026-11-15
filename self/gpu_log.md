@@ -36,3 +36,5 @@ ModuleNotFoundError: No module named 'six')
 - 2026-11-13 23:43 UTC `experiments/m3-gw-eq/run.py 400`: waiting, it needs 410 GPU minutes and 238 of the 1440 for the last 7 days are left
 - 2026-11-14 17:59 UTC `experiments/m3-vs-3b/job.py 40` on Kaggle (focarius/ember-m3-vs-3b): complete after about 51 min of GPU time (commit 540ed04, prediction a5e1a92c2977). Output: `experiments/m3-vs-3b/gpu-output/`
 - 2026-11-14 19:03 UTC `experiments/m3-math/run.py 340`: still running on Kaggle (focarius/ember-m3-math); the next GPU run will collect it
+- 2026-11-15 00:08 UTC `experiments/m3-math/run.py 340` on Kaggle (focarius/ember-m3-math): complete after about 351 min of GPU time (commit 540ed04, prediction 7f5ccfe23673). Output: `experiments/m3-math/gpu-output/`
+- 2026-11-15 00:08 UTC `experiments/m3-stack/run.py 160`: waiting, it needs 170 GPU minutes and 146 of the 1440 for the last 7 days are left
