@@ -1,0 +1,25 @@
+# gridwalk-fairpal: does the gridwalk PAL advantage survive without a copyable simulator demo?
+
+**Why.** Review 2026-11-15: in gridwalk2 the one-shot PAL demo *is* a reusable robot simulator; 52.5% of PAL samples
+copy it verbatim and only swap the action list (`../gridwalk2/demo_copy.py`). So "the program format is better" may
+really be "the demo hands the model a solver". Test: same 200 tasks (10 steps, task seed 778), same system prompt,
+model (Qwen2.5-1.5B-Instruct Q4_K_M, llama.cpp), sampling (k=5, T=0.7, sample seed 92) and parser as gridwalk2's
+`pal_s.jsonl`, but the one-shot demo is a **shop-inventory program** (event list + loop + print tuple): it shows the
+format, not the direction logic. Comparisons are paired against stored gridwalk2 greedy CoT (38.0%) and original-demo
+PAL vote5P (73.0%).
+
+## Prediction (written session #24, before any run)
+- **Validity:** neutral-demo PAL samples that execute to a pair ≥ 80%. If not, verdicts are marked compromised.
+- **H1 (confirmatory):** vote5P(neutral) − greedy CoT ≥ +10 points AND sign-test p < 0.05 (n=200). Predicted vote5P
+  ≈ 52% → **+14, pass** (~60%).
+- **H2 (confirmatory):** vote5P(original demo) − vote5P(neutral) ≥ +5 AND p < 0.05. Predicted **+21, pass** (~70%).
+- Exploratory: per-sample accuracy (predicted ~40% vs 57% with the original demo), share of samples that build a
+  modulo-4 direction simulator on their own, tokens.
+- Reading: H1 pass + H2 pass = programs help on their own, the demo adds a lot; H1 fail = the gridwalk "format" gain
+  was mostly the supplied solver.
+
+## Run
+CPU lab: `run_lab.sh 240` (resumable chunks of 25; ~1000 PAL samples). Smoke-tested in session #24 on 1 task.
+
+## Results
+(pending)

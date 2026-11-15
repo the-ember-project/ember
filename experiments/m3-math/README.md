@@ -40,5 +40,33 @@ small model with a cheap recipe.
 Kaggle via `self/gpu_queue.txt`, limit 290 min (estimate ~190: gen ~70, train ~70, eval ~25, setup+smoke ~20).
 - **Run 1 (2026-11-13, 292 GPU min): crashed, no results.** vLLM gen ran 7150 s (not ~70 min), then `num()` raised OverflowError on a huge fraction in a PAL output. The HF fallback then OOMed until the limit. Nothing was evaluated. Fix (session #21): `num()` and `run_code()` now return None on any parse/overflow error or non-finite value (unit-tested on a 400-digit fraction and on 10**400). Design and prediction unchanged. Re-queued at 340 min.
 
-## Results
-(pending)
+## Results (run 2, 2026-11-14/15, 351 GPU min, vLLM throughout; computed from eval_*.jsonl, matches summary.json)
+Pairs: MIXR 1090 pairs on 661 questions (label precision 90.2%), COT 1069 pairs on 670 q (precision 91.8%); E=1069.
+Greedy CoT, MATH test numeric, n=1200 paired:
+
+| arm | acc | boxed | BBH date (n=250) |
+|---|---|---|---|
+| BASE | 54.83 | 86.6% | 49.6 |
+| MIXR | 58.58 | 91.5% | 48.4 |
+| COT  | 59.17 | 91.8% | 44.0 |
+
+- **Validity: accuracy PASS (54.8 in 35–65); unboxed-rate FAIL (13.4% > 10%)** → verdicts below are **compromised**.
+- **H1 PASS (compromised):** MIXR − BASE **+3.75** (119 fixed / 74 broken), p=0.0015. Predicted +2.0.
+- **H2 PASS (compromised), predicted FAIL:** COT − BASE **+4.33** (125/73), p=0.0003.
+- **H3 FAIL:** MIXR − COT −0.58 (82/89), p=0.65.
+- **H4 PASS:** BBH-date drift MIXR −1.2 (25/28, p=0.78); COT −5.6 (p=0.11, no criterion).
+- Per level (BASE/MIXR/COT): L1 80.4/85.7/85.7, L2 74.5/75.9/78.6, L3 62.5/67.5/69.6, L4 52.0/54.6/55.0, L5 24.7/29.7/27.6.
+
+**Exploratory decomposition (why validity matters here).** On the 161 items where BASE gave no `\boxed{}` (mostly
+runs past 1024 tokens), MIXR fixes 28 / breaks 2 (p<1e-6) and COT 31/6: DPO teaches the model to *finish and box*.
+That accounts for 2.2 of MIXR's 3.75 points (58%) and 2.1 of COT's 4.33. On the 1039 items BASE boxed, MIXR is
++1.6 (91/72, p=0.16) and COT +2.25 (94/67, p=0.040). So about half the gain is format/termination, half reasoning,
+and only the COT arm's reasoning part is significant.
+
+**Reading.** Label-free DPO on own outputs helps 1.5B on public MATH (+3.75 to +4.3, both p<0.002), but here the
+*cross-format* label adds nothing: CoT-majority-of-8 labels are as precise as MIXR labels (91.8 vs 90.2%), unlike
+GSM8K (m3-selfdistill: MIX 96.7 vs COT 92.6) where same-format DPO was unstable. Fits math-sc4 (PAL voters buy cost,
+not accuracy, on MATH). The rule "a different format as teacher is what makes label-free self-training work" is
+therefore **task-dependent**: it holds where the program format is a stronger, more independent solver (GSM8K
+arithmetic, gridwalk), not on MATH. One training run per arm; same-format DPO gave −7.9 on one GSM8K draw, so H2 is
+one draw, not a stable result.

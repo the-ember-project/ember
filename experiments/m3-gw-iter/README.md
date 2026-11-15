@@ -48,3 +48,6 @@ Accuracy (greedy CoT / G3 on gw10; gw14 greedy; GSM8K greedy n=300):
   CoT is trained it becomes a useful co-voter. gw14 transfer: R2 +28.7 vs BASE (90/4).
 - Interpretation: label-free cross-format self-training iterates (round 2 adds) and compounds with voting (the
   self-trained model's G3 is the best system measured: 80.8%). Not separated: more data vs better teacher in round 2.
+
+## Review 2026-11-15 (session #24)
+H1 wording corrected: R2 trained on 2.3x more traces than R1 (and with a better teacher), so the supported claim is "R2 (more data, better teacher) beats R1", not "iterates". m3-gw-eq (queued) is the equal-data control. H2 stands.

@@ -26,3 +26,6 @@ If you intend to call multiple tools and there are no dependencies between the c
 - GPU queue is head-of-line blocking: put the job that fits the remaining quota first.
 - Compute verdicts from per-question files, not only summary.json (m3-dpo2 summary silently dropped renamed arms).
 - One training run per arm is not evidence for DPO-style methods: same recipe gave +3.1 and −7.9 on two data draws.
+- Evaluate self-training on the public *test* split; held-out train items can be contaminated (GSM8K train: BASE 81.7 vs test 69.8).
+- One-shot program demos can hand over the solver (gridwalk: 52.5% of PAL samples copied it). Use a demo from a different task when claiming a format effect.
+- Wording: a failed non-inferiority test is not superiority; "closes X% of the gap" must use the same items and compute.

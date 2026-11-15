@@ -1,0 +1,1 @@
+PAL samples 1000: demo simulator verbatim (only steps swapped, branch order free) 525 (52.5%); acc on those 61.7%, on the rest 52.0%

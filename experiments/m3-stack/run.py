@@ -261,15 +261,20 @@ def paired(rx, ry):
     f = sum(p and not q for p, q in zip(rx, ry)); b = sum(q and not p for p, q in zip(rx, ry))
     return dict(diff=round(100 * (sum(rx) - sum(ry)) / len(rx), 2), fixed=f, broken=b, p=round(sign_p(f, b), 4))
 
+def eval_items(a):  # session #24: --split test = full GSM8K test set (review 2026-11-15: train items look contaminated)
+    if a.split == "test":
+        df = load_gsm8k("test"); return df, list(range(len(df)))[:a.n_test]
+    df = load_gsm8k("train")                                    # held-out GSM8K-train questions: never used in gen/train
+    idx = list(range(len(df))); random.Random(2029).shuffle(idx); return df, idx[4500:4500 + a.n_test]
+
 def phase_eval(a):
     import pandas as pd
     from huggingface_hub import hf_hub_download
-    df = load_gsm8k("train")                                    # held-out GSM8K-train questions: never used in gen/train
-    idx = list(range(len(df))); random.Random(2029).shuffle(idx); idx = idx[4500:4500 + a.n_test]
+    df, idx = eval_items(a)
     assert a.n_train is None or a.n_train <= 3000
     golds = [gold_of(df.answer[i]) for i in idx]
     bb = pd.read_parquet(hf_hub_download("lukaemon/bbh", "date_understanding/test-00000-of-00001.parquet", repo_type="dataset"))
-    bb = bb.iloc[:a.n_bbh]
+    bb = bb.iloc[:(0 if a.split == "test" else a.n_bbh)]
     arms = ["BASE"] + [x for x in ARMS if os.path.exists(os.path.join(a.work, f"lora_{x}"))]
     g = Gen(a, lora_paths=True); prompts = [g.chat(SYS_COT, df.question[i]) for i in idx]
     bprompts = [g.tok.apply_chat_template([{"role": "user", "content": q + "\n\n" + BBH_COT}], tokenize=False, add_generation_prompt=True)
@@ -284,13 +289,13 @@ def phase_eval(a):
         bouts, _ = g(bprompts, 1, 0.0, lora_id=j + 1)
         bpred = [parse_bbh(o[0]) for o in bouts]
         bres[arm] = [p == t for p, t in zip(bpred, bb["target"])]
-        with open(os.path.join(a.out, f"eval_{arm}.jsonl"), "w") as f:
+        with open(os.path.join(a.out, f"{a.tag}eval_{arm}.jsonl"), "w") as f:
             for i, p, o, c in zip(idx, preds, outs, res[arm]):
                 f.write(json.dumps(dict(idx=i, pred=p, correct=c, len=len(o[0]), tail=o[0][-300:])) + "\n")
             for i, p, o, c in zip(range(len(bb)), bpred, bouts, bres[arm]):
                 f.write(json.dumps(dict(bbh_idx=i, pred=p, correct=c, tail=o[0][-300:])) + "\n")
         toks[arm] = round(ntok / len(idx), 1)
-        print(f"eval {arm}: gsm8k={sum(res[arm])/len(idx):.4f} bbh_date={sum(bres[arm])/len(bb):.3f} "
+        print(f"eval {arm}: gsm8k={sum(res[arm])/len(idx):.4f} bbh_date={sum(bres[arm])/max(1, len(bb)):.3f} "
               f"tok/q={ntok/len(idx):.0f} {time.time()-t0:.0f}s", flush=True)
         if a.backend == "hf" and arm != "BASE":
             del g; g = Gen(a, lora_paths=True)
@@ -299,9 +304,9 @@ def phase_eval(a):
         if x in res and y in res:
             summ[f"{x}-{y}"] = paired(res[x], res[y]); summ[f"bbh_date {x}-{y}"] = paired(bres[x], bres[y])
     summ["acc"] = {k: round(sum(v) / len(idx), 4) for k, v in res.items()}
-    summ["bbh_date_acc"] = {k: round(sum(v) / len(bb), 4) for k, v in bres.items()}
+    summ["bbh_date_acc"] = {k: round(sum(v) / max(1, len(bb)), 4) for k, v in bres.items()}
     summ["n"] = dict(gsm8k=len(idx), bbh_date=len(bb)); summ["greedy_tok_per_q"] = toks
-    json.dump(summ, open(os.path.join(a.out, "summary.json"), "w"), indent=1)
+    json.dump(summ, open(os.path.join(a.out, f"{a.tag}summary.json"), "w"), indent=1)
     print(json.dumps(summ, indent=1), flush=True)
 def vote(c):  # identical to gsm8k-g3confirm/analyze.py: plurality, ties to the earliest (greedy CoT first)
     s = {}
@@ -311,8 +316,7 @@ def vote(c):  # identical to gsm8k-g3confirm/analyze.py: plurality, ties to the 
     return max(s, key=lambda k: s[k]) if s else None
 
 def phase_g3(a):
-    df = load_gsm8k("train")
-    idx = list(range(len(df))); random.Random(2029).shuffle(idx); idx = idx[4500:4500 + a.n_test]
+    df, idx = eval_items(a)
     golds = [gold_of(df.answer[i]) for i in idx]
     arms = ["BASE"] + [x for x in ARMS if os.path.exists(os.path.join(a.work, f"lora_{x}"))]
     g = Gen(a, lora_paths=True); pp = [g.chat(SYS_PAL, df.question[i]) for i in idx]
@@ -320,7 +324,7 @@ def phase_g3(a):
     for j, arm in enumerate(arms):
         t0 = time.time()
         greedy = {}
-        for line in open(os.path.join(a.out, f"eval_{arm}.jsonl")):
+        for line in open(os.path.join(a.out, f"{a.tag}eval_{arm}.jsonl")):
             r = json.loads(line)
             if "idx" in r: greedy[r["idx"]] = r["pred"]
         g.set_lora(None if arm == "BASE" else os.path.join(a.work, f"lora_{arm}"))
@@ -328,7 +332,7 @@ def phase_g3(a):
         texts = [t for o in outs for t in o]
         with ThreadPoolExecutor(8) as ex: ans = list(ex.map(run_code, texts))
         ok = []
-        with gzip.open(os.path.join(a.out, f"g3_{arm}.jsonl.gz"), "wt") as f:
+        with gzip.open(os.path.join(a.out, f"{a.tag}g3_{arm}.jsonl.gz"), "wt") as f:
             for k, (i, gd) in enumerate(zip(idx, golds)):
                 pals = ans[3 * k:3 * k + 3]; v = vote([greedy[i]] + pals); ok.append(same(v, gd))
                 f.write(json.dumps(dict(idx=i, gold=gd, greedy=greedy[i], pal=pals, g3=v, correct=ok[-1],
@@ -339,7 +343,7 @@ def phase_g3(a):
         print(f"g3 {arm}: {json.dumps(summ[arm])} {time.time()-t0:.0f}s", flush=True)
         if a.backend == "hf" and arm != "BASE":
             del g; g = Gen(a, lora_paths=True)
-    json.dump(summ, open(os.path.join(a.out, "g3_summary.json"), "w"), indent=1)
+    json.dump(summ, open(os.path.join(a.out, f"{a.tag}g3_summary.json"), "w"), indent=1)
 
 def main():
     ap = argparse.ArgumentParser()
@@ -353,6 +357,7 @@ def main():
     ap.add_argument("--cap", type=int, default=2000); ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--lr", type=float, default=5e-5); ap.add_argument("--mb", type=int, default=2)
     ap.add_argument("--max_len", type=int, default=768); ap.add_argument("--arms", default="MIXR")
+    ap.add_argument("--split", default="train"); ap.add_argument("--tag", default="")
     ap.add_argument("--work", default="/tmp/m3stack"); ap.add_argument("--out", default=HERE)
     a = ap.parse_args(); os.makedirs(a.work, exist_ok=True); os.makedirs(a.out, exist_ok=True)
     if a.phase != "all":
@@ -380,24 +385,29 @@ def main():
     common = ["--backend", a.backend, "--n_train", str(a.n_train)]
     # Smoke pass of every phase on a tiny slice first, so a late-phase failure costs minutes, not the 45-min gen.
     smoke = ["--n_test", "4", "--n_bbh", "4", "--cap", "4", "--epochs", "1", "--work", "/tmp/m3smoke", "--out", "/tmp/m3smoke_out"]
-    for ph in ["gen", "train", "eval", "g3"]:
+    # session #24 extra steps: GSM8K *test* eval (greedy + G3) for BASE/MIXR, and 3B greedy on test (no LoRA in its work dir)
+    T = ["--split", "test", "--tag", "test_"]
+    T3 = ["--split", "test", "--tag", "test3b_", "--model", "Qwen/Qwen2.5-3B-Instruct", "--work", "/tmp/m3stack_3b_nolora"]
+    steps = [("gen", []), ("train", []), ("eval", []), ("g3", []), ("eval", T), ("g3", T), ("eval", T3)]
+    for ph, ex in steps:
         t0 = time.time()
-        r = subprocess.run(base + ["--phase", ph, "--backend", a.backend, "--n_train", "16"] + smoke)
-        print(f"SMOKE {ph} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
+        sm = smoke if "--work" not in ex else [x for x in smoke if x not in ("--work", "/tmp/m3smoke")]
+        r = subprocess.run(base + ["--phase", ph, "--backend", a.backend, "--n_train", "16"] + sm + ex)
+        print(f"SMOKE {ph} {ex} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
         if r.returncode != 0 and (a.backend == "hf" or ph == "train"):
             print("smoke failed; stopping before the full run"); sys.exit(r.returncode)
         if r.returncode != 0: print(f"smoke {ph} failed on vLLM; full run will fall back to HF there", flush=True); break
-    for ph in ["gen", "train", "eval", "g3"]:
+    for ph, ex in steps:
         t0 = time.time()
-        r = subprocess.run(base + ["--phase", ph] + common)
-        print(f"PHASE {ph} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
+        r = subprocess.run(base + ["--phase", ph] + common + ex)
+        print(f"PHASE {ph} {ex} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
         if r.returncode != 0 and a.backend == "vllm" and ph != "train":  # fall back to HF for this and later phases
             a.backend = "hf"
             if ph == "gen": a.n_train = 1200
             common = ["--backend", "hf", "--n_train", str(a.n_train)]
             print(f"vLLM phase {ph} failed; retrying with HF n_train={a.n_train}", flush=True)
-            r = subprocess.run(base + ["--phase", ph] + common)
-            print(f"PHASE {ph} (hf) exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
+            r = subprocess.run(base + ["--phase", ph] + common + ex)
+            print(f"PHASE {ph} {ex} (hf) exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
         if r.returncode != 0: sys.exit(r.returncode)
     print("DONE")
 

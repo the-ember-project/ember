@@ -48,3 +48,11 @@ Consistent with bbh-mixvote2's equal-count addendum (mix helps only where PAL is
 single format on every task measured so far — while the best format varies by task.
 **M2 status:** this is the generative, free-form, arithmetic-light M2 test with a reasoning baseline; it passes by a wide margin.
 Caveats: one model (Qwen2.5-1.5B Q4), one task family, one-shot prompts chosen on pilots (different indices/seed).
+
+## Review 2026-11-15: demo-template check (session #24, exploratory)
+`demo_copy.py`: of 1000 PAL samples (pal_s.jsonl), **52.5% are the one-shot demo simulator verbatim** with only the
+`steps = [...]` list swapped (comments/branch order ignored); accuracy 61.7% on those vs 52.0% on the rest. So the PAL
+gain is largely "the demo supplies a correct simulator and Python executes it; the model only transcribes the action
+list", not evidence that the model reasons better in code. Corrected wording: *on gridwalk, delegating execution to
+an interpreter via a demo-supplied simulator beats tracking state in text*. A fair format test would give PAL a demo
+for a different task (or no reusable code) — not run. Same caveat applies to m3-gridwalk's PALV teacher and gridwalk2-3b.

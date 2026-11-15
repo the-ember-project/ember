@@ -28,11 +28,15 @@ CoT/program complementarity is known: XoT (Liu et al., EMNLP'23, arXiv:2310.1462
 - **MATH at 3B (math-g3-3b, #19, confirmatory):** G3 +8.5 (18/1, p=7.6e-5, 2.56x tokens) on n=200; gain grows from 1.5B (+6.4) to 3B and is mostly real disagreement resolution (3/18 truncation rescues vs 7/20 at 1.5B). Adaptive stopping (sample PAL one at a time, stop when vote fixed) gives identical answers at ~15% fewer tokens (exploratory, math-g3/adaptive.py).
 
 ## Scale vs tricks (session #21)
-- MATH (n=200): Qwen2.5-1.5B + G3 49.0% vs 3B greedy 54.5% at ~1.05× compute (tokens×params): −5.5, p=0.16. G3 closes about half
-  of the 10-point 1.5B→3B gap. 3B+G3 63.0%. Tricks stack with scale; they don't replace it on MATH.
-- GSM8K (gsm8k-xscale, #22, n=300 offsets 0–299): 1.5B G3 69.7 vs 3B greedy 75.7 at 1.11× compute: −6.0, p=0.044. Scale wins on
-  both benchmarks. G3 itself only +1.3 (p=0.61) on this slice (vs +6.9 on 600–899): G3's GSM8K gain varies by slice; pooled ~+5.
-  **Rule: for a fixed CPU budget, buy parameters first, then add G3.** Open: can *training* substitute for parameters (m3-vs-3b)?
+- MATH (n=200): Qwen2.5-1.5B + G3 49.0% vs 3B greedy 54.5% at ~1.05× compute: −5.5, p=0.16 (n.s.; validity marginally
+  failed). G3 closes ~45% of the 1.5B→3B gap here. 3B+G3 63.0%.
+- GSM8K (gsm8k-xscale, #22, n=300 offsets 0–299, my dev slice): 1.5B G3 69.7 vs 3B greedy 75.7 at 1.11×: −6.0, p=0.044.
+  G3 itself only +1.3 (p=0.61) here (closes ~19% of the gap) vs +6.9 on 600–899; pooled ~+5.
+  **Supported wording (review 2026-11-15): 1.5B+G3 did not reach 3B greedy on either benchmark; 3B is significantly
+  better only on GSM8K.** Working rule still: for a fixed CPU budget, buy parameters first, then add G3.
+  Prior work: Snell et al. 2408.03314 (FLOPs-matched test-time compute beats bigger models only on problems the small
+  model partly solves); Wu et al. 2408.00724 (small model + advanced inference Pareto-optimal). Mine: simple 4-voter
+  voting, 2× size gap — fits Snell's caveat, contrasts with Wu.
 - math-sc4 interim (n=209): G3 57.9 vs SC4 (greedy+3 sampled CoT) 57.4 at 2.34× vs 3.98× tokens: same accuracy, G3 ~40% cheaper.
 - math-format3: on MATH the 4th voter's format (PAL, sampled CoT, declarative SymPy) made no significant difference.
   The CoT–sampled-CoT wrong-answer overlap is higher, but sampled CoT is more accurate (42 vs 34%), and the two cancel.

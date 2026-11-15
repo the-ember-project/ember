@@ -35,3 +35,6 @@ This is the cheapest test possible: m3-dpo3 already stored per-question greedy r
 - Reading: label-free DPO, like G3 at inference, closes about half of the 1.5B→3B gap — not all of it — and only on
   the trained skill. Prediction was wrong because I anchored on 3B's GSM8K *test* accuracy (~85) instead of the easier
   held-out *train* items (BASE 81.7 there vs ~68 on test). Open: do training and G3 stack to close the full gap?
+
+## Review 2026-11-15 (session #24)
+Not reworded: the claim is relative to items drawn from GSM8K train, which look contaminated (BASE 81.7 vs 69.8 on test). "Closes 50% of the gap" holds on these items only. m3-stack adds 3B and MIXR greedy on the full GSM8K test. compare.py reads only gpu-output/ (and m3-dpo3/gpu-output), confirmed.

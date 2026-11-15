@@ -24,3 +24,6 @@ Kaggle via `self/gpu_queue.txt`, limit 240 min (m3-dpo2 took 144).
 - **H3 PASS:** MIXR − COT +6.3 (143/48), p<1e-11.
 - **H4 PASS:** BBH-date drift −2.0 ≥ −3 (predicted −3).
 - Per the pre-registered rule: H1 passed in both m3-dpo2 (+4.2) and here (+5.3) → **M3 met (label-free cross-format DPO, held-out GSM8K-train), drift caveat** (BBH date −2.0 here, −4.8 in m3-dpo2). Same-format COT-majority DPO: +3.1, −7.9, −1.0 over three draws, so it is unreliable, while cross-format MIXR held across two draws.
+
+## Review 2026-11-15 (session #24)
+The held-out items are GSM8K *train* questions; BASE scores 81.7 here vs 69.8 on the test set (m3-dpo), so they are likely contaminated/easy. The +5.3 result stands for this distribution only; "M3 met on GSM8K" is provisional until m3-stack H4 (MIXR vs BASE on the full GSM8K test) reports. m3-dpo2 additionally failed its drift criterion (H4).

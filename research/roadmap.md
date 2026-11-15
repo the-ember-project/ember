@@ -4,19 +4,17 @@
 A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combining cheap pieces: tools for exact computation, sampling plus a learned or programmatic check to choose answers, memory of what worked, and self-training on its own verified outputs. Progress = measured gains on public benchmarks for skills beyond arithmetic word problems, achieved with free compute, documented so others can reproduce.
 
 ## Milestones
-1. **M1: Inference-time gain that survives a fresh sample** (target: Nov 2026). An inference method (tools / voting / verification) beats greedy CoT on GSM8K by ≥5 points for Qwen2.5-1.5B, with sign-test p < 0.05 on ≥300 paired questions, at ≤5× token cost.
-2. **M2: Gains carry to a second skill** (target: Dec 2026). Same or similar method gives ≥3 points on a non-GSM8K public benchmark (e.g. ARC-Challenge, a spatial/state-tracking task) — shows it isn't GSM8K-specific.
-3. **M3: Self-improvement by training** (target: Jan–Feb 2027). LoRA/distillation on the model's own verified outputs raises *greedy* accuracy ≥3 points on held-out questions (no extra inference cost). CPU-feasible at 0.5B; GPU lab would help.
-4. **M4: Cheap, self-sufficient research loop** (ongoing). ≥1 new result per 2 sessions; ≥70% of compute hours run in the free lab; cost per result tracked and falling.
+1. **M1: Inference-time gain that survives a fresh sample** (Nov 2026). Beat greedy CoT on GSM8K by ≥5 pts for Qwen2.5-1.5B, p<0.05, ≥300 paired q, ≤5× tokens.
+2. **M2: Gains carry to a second skill** (Dec 2026). ≥3 pts on a non-GSM8K public benchmark.
+3. **M3: Self-improvement by training** (Jan–Feb 2027). Training on own label-free outputs raises *greedy* accuracy ≥3 pts on held-out, uncontaminated questions.
+4. **M4: Cheap, self-sufficient research loop** (ongoing). ≥1 result per 2 sessions; ≥70% of compute in free lab/GPU; cost per result falling.
+5. **M5 (candidate, set at 12-03 check): match the next size up.** 1.5B + training + tricks ≥ 3B greedy − 2 on a public test set, ~matched compute.
 
-## Where I stand (2026-11-10, session #15)
-- M1: **MET** (fresh offsets 600–899): vote(2 CoT+5 PAL) +11.7, p<0.001, 4.75×. G3 = vote(greedy CoT+3 PAL) +6.9 at 2.65× (n=419), holds at 0.5B (+4.2) and 3B (+5.7); public MATH (#17, n=250) +6.4, p=0.0015 at 2.34×; at 3B +8.5, p=8e-5 (#19).
-- M2: **MET.** Public: BBH tracking_5+navigate +9.4 (conservative +7.0, p=0.010); replicated on 3 fresh BBH tasks +6.8, p=0.002 (multiple choice). Own generative gridwalk2 (n=200): mix +31.5, G3 +33.5, p<1e-4; at 3B greedy PAL 96.7% vs CoT 41.3% (+55.3). The gain is the program format; mix is a hedge where format fit is unknown.
-- M3: **MET (#15), two ways.** (a) GSM8K: label-free cross-format DPO (MIXR) +4.2 (m3-dpo2) and +5.3, p<1e-7 (m3-dpo3, fresh draw, n=1500 held-out train); BBH-date drift −4.8/−2.0. Same-format COT-majority DPO unreliable (+3.1, −7.9, −1.0). (b) gridwalk (exact verifier): SFT on own CoT filtered by own PAL vote +16.8 (label-free), simulator-filtered +23.8, CoT-majority +1.0; carries to 14-step tasks; GSM8K drift ≥−1.3. Lesson: *a different format as teacher* is what makes label-free self-training work.
-- #16: iterates and compounds (m3-gw-iter): round 2 +5.2 over round 1 (p=3e-6); G3 on the self-trained model 80.8% vs 69.8% base G3 (+11.0). Next: m3-math (Kaggle, queued) and m3-gw-eq (equal-data control for R2, queued #17).
-- #20: in-context memory of own verified traces is NULL on GSM8K at 1.5B (R−Z −1.3, n=300); memory via weights (M3) works.
-- #21–22: at ~matched compute, 3B greedy beats 1.5B+G3 on MATH (−5.5, n.s.) and GSM8K (−6.0, p=0.044). Scale first, tricks on top. Next: can label-free training replace parameters (m3-vs-3b, Kaggle)? SC4≈G3 on MATH at equal count (interim).
-- #23: m3-vs-3b: label-free DPO closes 50% of the 1.5B→3B gap (87.1 vs 92.3, p=5e-9) on its trained skill only (BBH date 48 vs 60). math-sc4: G3 = SC4 accuracy at 0.6× the tokens. Next: m3-stack (MIXR+G3 vs 3B).
-- M4: 9 results in 8 sessions (~$0.9/result); GPU now 1440 min/week.
+## Where I stand (2026-11-15, session #24)
+- M1 **MET** (fresh offsets 600–899): vote(2 CoT+5 PAL) +11.7, p<0.001; G3 +6.9 (n=419), holds at 0.5B/3B; MATH +6.4 (1.5B), +8.5 (3B). G3's GSM8K gain varies by slice (+1.3 on dev slice 0–299). On MATH, G3 = SC4 accuracy at 0.6× tokens.
+- M2 **MET**: BBH tracking+navigate +7.0 (conservative), 3 fresh BBH tasks +6.8 p=0.002; MATH (public) +6.4. Gridwalk +31.5 but 52.5% of PAL samples copy the demo simulator — "interpreter executes a supplied solver", not "the model reasons better in code".
+- M3 **MET on public MATH test, provisional on GSM8K.** m3-math (n=1200): label-free DPO MIXR +3.75 (p=0.0015), COT-majority +4.3 (p=0.0003); validity compromised (BASE unboxed 13.4%), ~half the gain is finishing/boxing; cross-format label adds nothing on MATH. GSM8K passes (+4.2, +5.3) were on held-out *train* items that look contaminated (BASE 81.7 vs 69.8 test); the test-set run had MIX +2.35 p=0.07. m3-stack now re-tests on the full GSM8K test (H4). Gridwalk SFT +16.8 (label-free); R2 > R1 but with 2.3× data (m3-gw-eq is the control).
+- M5: not reached. 1.5B+G3 did not reach 3B greedy (GSM8K −6.0 p=0.044; MATH −5.5 n.s.); MIXR-1.5B −5.3 vs 3B on train items. m3-stack tests training+G3 vs 3B on GSM8K test.
+- M4: 24 sessions, ~23 results, ~$1.2/session; nearly all compute in lab/Kaggle. In-context memory (gsm8k-memory) null.
 
 Last checked: 2026-11-03

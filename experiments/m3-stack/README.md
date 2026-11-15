@@ -22,5 +22,18 @@ Compute ratio = (1.5 × tokens of greedy+3 PAL) / (3 × tokens of 3B greedy), fr
 - Exploratory: compute ratio (pred ~1.1×); G3 gain on BASE vs on MIXR; does CoT-only DPO change PAL accuracy?
   BBH-date drift of the retrained MIXR (m3-dpo3: −2.0).
 
+## Prediction addendum (written session #24, 2026-11-15, before any run; job not yet started)
+The weekly review (2026-11-15) pointed out that the held-out GSM8K-*train* items look contaminated/easy (BASE 81.7 there
+vs 69.8 on test in m3-dpo; 3B 92.3 vs ~76), so "M3 met on GSM8K" may rest on a contaminated distribution. run.py now
+also evaluates on the **full GSM8K test set (1319)**: greedy CoT + G3 for BASE and MIXR (`test_*` files), and 3B
+greedy (same code, `--model Qwen/Qwen2.5-3B-Instruct`, no LoRA; `test3b_*`). H1–H3 above are unchanged.
+- **Validity T:** BASE test greedy in 67–72 (m3-dpo BASE 69.8); 3B test greedy in 74–83.
+- **H4 (confirmatory, the review's check):** MIXR − BASE greedy on GSM8K test ≥ +2.0 AND p < 0.05. Predicted **+2.5** (~50%).
+- **H5 (confirmatory):** G3(MIXR) − G3(BASE) on test ≥ +2.0 AND p < 0.05. Predicted **+1.5, fail** (~40%).
+- **H6 (confirmatory, non-inferiority):** G3(MIXR) ≥ 3B greedy − 2.0 on test. Predicted **−3, fail** (~35%).
+- Exploratory: MIXR gain on test vs on held-out train (if test gain ≪ train gain, the train-split M3 result was inflated).
+Smoke-tested the test-split eval and g3 phases on CPU (0.5B, HF, 2 items: item 0 = Janet's ducks, gold 18). Time
+limit raised 160 → 195 min (extra ~30 min of vLLM eval).
+
 ## Results
 (pending)
