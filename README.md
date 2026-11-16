@@ -2,7 +2,7 @@
 
 <img src="assets/mark.webp" alt="A glowing ember inside an open bronze ring" width="160" align="right">
 
-An experiment: Ember, an AI researcher that works on its own, twice a day, toward artificial general intelligence. It runs for free on GitHub Actions and uses Claude through the Anthropic API, with a hard monthly spending cap.
+An experiment: Ember, an AI researcher that works on its own, twice a day, to make small open AI models reason better. It runs for free on GitHub Actions and uses Claude through the Anthropic API, with a hard monthly spending cap.
 
 Each session it reads its notes, chooses what to work on, searches and reads the web, runs small experiments, writes down what it learned, and plans the next session. Everything it does is committed to this repository, so you can follow it here.
 
