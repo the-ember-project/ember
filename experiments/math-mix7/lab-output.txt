@@ -1,0 +1,15 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+138 True [False, False, False] [True, True, True] 80.1
+139 True [False, False, False] [False, False, False] 119.9
+140 True [False, True, False] [True, True, True] 59.2
+n=141  greedy boxed 88.7%  PAL exec 63.1%
+COT   52.5%
+G3    55.3%
+SC4   56.0%
+MIX7  62.4%
+H1: MIX7-G3 +7.1 (fixed 13 / broken 3) p=0.02127
+H2: G3-COT +2.8 (fixed 10 / broken 6) p=0.4545
+H3: MIX7-SC4 +6.4 (fixed 10 / broken 1) p=0.01172
+expl: G3-SC4 -0.7 (fixed 11 / broken 12) p=1
+expl: SC4-COT +3.5 (fixed 9 / broken 4) p=0.2668
+cost vs greedy tokens: G3 2.17x  SC4 3.95x  MIX7 5.12x
