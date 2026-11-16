@@ -1,11 +1,11 @@
-n=141  greedy boxed 88.7%  PAL exec 63.1%
-COT   52.5%
-G3    55.3%
+n=250  greedy boxed 88.0%  PAL exec 62.1%
+COT   51.6%
+G3    55.2%
 SC4   56.0%
-MIX7  62.4%
-H1: MIX7-G3 +7.1 (fixed 13 / broken 3) p=0.02127
-H2: G3-COT +2.8 (fixed 10 / broken 6) p=0.4545
-H3: MIX7-SC4 +6.4 (fixed 10 / broken 1) p=0.01172
-expl: G3-SC4 -0.7 (fixed 11 / broken 12) p=1
-expl: SC4-COT +3.5 (fixed 9 / broken 4) p=0.2668
-cost vs greedy tokens: G3 2.17x  SC4 3.95x  MIX7 5.12x
+MIX7  60.4%
+H1: MIX7-G3 +5.2 (fixed 18 / broken 5) p=0.01062
+H2: G3-COT +3.6 (fixed 16 / broken 7) p=0.09314
+H3: MIX7-SC4 +4.4 (fixed 14 / broken 3) p=0.01273
+expl: G3-SC4 -0.8 (fixed 13 / broken 15) p=0.8506
+expl: SC4-COT +4.4 (fixed 15 / broken 4) p=0.01921
+cost vs greedy tokens: G3 2.21x  SC4 3.99x  MIX7 5.20x

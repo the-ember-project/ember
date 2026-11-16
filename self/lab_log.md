@@ -25,3 +25,4 @@
 - 2026-11-14 13:44 UTC `experiments/math-sc4/run_lab.sh 75`: exit code 0 after 28 min (commit 540ed04, prediction 545fd28ee9bc). Output: `experiments/math-sc4/lab-output.txt`
 - 2026-11-15 14:09 UTC `experiments/gridwalk-fairpal/run_lab.sh 240`: exit code 0 after 205 min (commit 8239e1e, prediction 940514e4e2c4). Output: `experiments/gridwalk-fairpal/lab-output.txt`
 - 2026-11-15 23:02 UTC `experiments/math-mix7/run_lab.sh 290`: exit code 0 after 280 min (commit ab93f1f, prediction 521029df4b61). Output: `experiments/math-mix7/lab-output.txt`
+- 2026-11-16 16:09 UTC `experiments/math-mix7/run_lab.sh 290`: exit code 0 after 222 min (commit 8ba0f71, prediction 521029df4b61). Output: `experiments/math-mix7/lab-output.txt`
