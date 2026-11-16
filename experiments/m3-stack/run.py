@@ -286,7 +286,7 @@ def phase_eval(a):
         outs, ntok = g(prompts, 1, 0.0, lora_id=j + 1)
         preds = [extract(o[0]) for o in outs]
         res[arm] = [same(p, gg) for p, gg in zip(preds, golds)]
-        bouts, _ = g(bprompts, 1, 0.0, lora_id=j + 1)
+        bouts = g(bprompts, 1, 0.0, lora_id=j + 1)[0] if bprompts else []  # #26: skip empty BBH list (test split)
         bpred = [parse_bbh(o[0]) for o in bouts]
         bres[arm] = [p == t for p, t in zip(bpred, bb["target"])]
         with open(os.path.join(a.out, f"{a.tag}eval_{arm}.jsonl"), "w") as f:

@@ -13,10 +13,10 @@
 - In-context memory of own verified traces: null (GSM8K 1.5B).
 
 ## Next steps (in order)
-1. **GPU queue:** m3-stack `run.py 195` (only job; ~11-17 when quota frees) → `python experiments/m3-stack/compare.py`; validity first (MIXR 84.6–89.6 train, BASE test 67–72, 3B test 74–83). H4 settles M3-on-GSM8K.
-2. If H4 passes: M3 GSM8K confirmed on test; go for M5 with MIXR round 2 + G3 on test. If it fails: M3 on GSM8K is train-distribution only; shift self-training work to MATH (where COT-majority also works) and fix the unboxed-rate (raise max tokens / length-aware eval).
-3. CPU lab: math-mix7 (fresh MATH 2450–2699: MIX7 vs G3/SC4, G3 replication) — `run_lab.sh 290`, ~2 runs; then `python experiments/math-mix7/analyze.py`.
-4. GPU after m3-stack: fix the MATH unboxed-rate confound in M3 (eval with max tokens 2048, or score only boxed items) before more MATH self-training claims.
+1. **GPU queue:** m3-stack `run.py 195` (head; runs when quota frees ~11-17/18) → `python experiments/m3-stack/compare.py`; validity first (MIXR 84.6–89.6 train, BASE test 67–72, 3B test 74–83). H4 settles M3-on-GSM8K.
+2. **GPU queue 2nd:** m3-math-stack `run.py 250` (#26): COT-majority DPO on a fresh MATH-train draw, eval at 2048 tokens on fresh MATH-test 1200–2199 (n=1000), + G3 + 3B greedy. Fixes m3-math's unboxed confound and one-draw problem; tests M5 on MATH. → `python experiments/m3-math-stack/compare.py`.
+3. CPU lab: math-mix7 re-queued (141/250 done; interim MIX7−G3 +7.1 p=0.02 — not a result until n=250) → `python experiments/math-mix7/analyze.py`.
+4. If both M3 re-tests pass: M5 attempt = trained model + MIX7-style vote vs 3B. If H1 of m3-math-stack fails: MATH DPO gain was mostly finishing/boxing; say so in M3.
 5. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
 
 ## Open questions

@@ -37,3 +37,5 @@ limit raised 160 → 195 min (extra ~30 min of vLLM eval).
 
 ## Results
 (pending)
+
+- Session #26 bug fix (no design change): eval phase now skips generation when the BBH list is empty (test-split and 3B steps use n_bbh=0); vLLM may reject an empty prompt list, which would have pushed those steps onto the slow HF fallback.
