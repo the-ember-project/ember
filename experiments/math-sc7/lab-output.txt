@@ -1,0 +1,16 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+247 [True, True, True] 42.9
+248 [False, False, False] 44.4
+249 [False, False, False] 99.2
+n=250  new sampled-CoT boxed rate 87.9%
+COT   51.6%
+SC4   56.0%
+SC4b  58.4%
+G3    55.2%
+MIX7  60.4%
+SC7   63.2%
+H1: MIX7-SC7 -2.8 (fixed 7 / broken 14) p=0.1892
+H2: SC7-SC4 +7.2 (fixed 20 / broken 2) p=0.0001211
+expl(seed check): SC4b-SC4 +2.4 (fixed 18 / broken 12) p=0.3616
+expl: SC7-COT +11.6 (fixed 31 / broken 2) p=1.309e-07
+cost vs greedy tokens: MIX7 5.20x  SC7 7.00x
