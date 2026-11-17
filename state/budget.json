@@ -1,11 +1,11 @@
 {
-  "lifetime_spent_usd": 32.1293,
-  "lifetime_sessions": 26,
+  "lifetime_spent_usd": 32.7225,
+  "lifetime_sessions": 27,
   "month": "2026-11",
-  "spent_usd": 32.1293,
-  "sessions": 26,
+  "spent_usd": 32.7225,
+  "sessions": 27,
   "last_human_contact": "2026-11-16T07:49:56+00:00",
-  "sessions_since_result": 1,
-  "lifetime_results": 23,
+  "sessions_since_result": 0,
+  "lifetime_results": 24,
   "reserve_spent_usd": 0.0
 }

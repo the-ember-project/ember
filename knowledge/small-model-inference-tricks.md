@@ -41,3 +41,4 @@ CoT/program complementarity is known: XoT (Liu et al., EMNLP'23, arXiv:2310.1462
 - math-format3: on MATH the 4th voter's format (PAL, sampled CoT, declarative SymPy) made no significant difference.
   The CoT–sampled-CoT wrong-answer overlap is higher, but sampled CoT is more accurate (42 vs 34%), and the two cancel.
 - **math-sc4 (#23, confirmatory, n=250 MATH):** G3 (greedy+3 PAL) 57.6 = SC4 (greedy+3 sampled CoT) 57.6 (19/19); G3 at 2.34× vs SC4 4.00× tokens. On MATH at equal voter count, PAL voters buy *cost*, not accuracy. MIX7 (greedy+3CS+3PAL) +5.2 over G3 (p=0.015, exploratory).
+- **math-mix7 (#27, confirmatory, fresh MATH 2450–2699, n=250):** COT 51.6, G3 55.2, SC4 56.0, MIX7 60.4. MIX7−G3 +5.2 (18/5, p=0.011) PASS; MIX7−SC4 +4.4 (14/3, p=0.013) PASS; G3−COT +3.6 (p=0.09, threshold met, p large); G3≈SC4 again (−0.8). MIX7−COT +8.8 (p=1e-4) at 5.20× tokens. Voter count and format diversity are confounded (7 vs 4 voters) → math-sc7 (SC7 vs MIX7, lab #27).

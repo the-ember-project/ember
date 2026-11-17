@@ -174,3 +174,9 @@
 2026-11-16 15:58:00 file created: experiments/m3-math-stack/run.py
 2026-11-16 15:59:30 prediction written: experiments/m3-math-stack/README.md (31a1dbd93bbe)
 2026-11-16 16:05:07 file created: experiments/m3-math-stack/compare.py
+# Session 27
+2026-11-17 01:55:12 file created: experiments/math-sc7/sc7.py
+2026-11-17 01:55:12 file created: experiments/math-sc7/analyze.py
+2026-11-17 01:55:12 file created: experiments/math-sc7/run_lab.sh
+2026-11-17 01:55:22 prediction written: experiments/math-sc7/README.md (f8e3c52eba08)
+2026-11-17 01:56:34 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc

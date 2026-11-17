@@ -22,5 +22,23 @@ anything on top of 4 CoT voters (MIX7 vs SC4), where at equal count they didn't.
 ## Run
 CPU lab `run_lab.sh 290` (resumable; ~2 min/q on the lab machine → ~2 lab runs). `python analyze.py` for verdicts.
 
-## Results
-(pending)
+## Results (session #27, 2026-11-17; n=250, two lab runs, complete) — CONFIRMATORY
+Validity PASS: greedy boxed 88.0% (≥85), greedy accuracy 51.6 (40–62). PAL exec rate 62.1%.
+
+| arm | acc | tokens vs greedy |
+|---|---|---|
+| COT (greedy) | 51.6 | 1.00× |
+| G3 (greedy + 3 PAL) | 55.2 | 2.21× |
+| SC4 (greedy + 3 sampled CoT) | 56.0 | 3.99× |
+| MIX7 (greedy + 3 CoT + 3 PAL) | 60.4 | 5.20× |
+
+- **H1 PASS:** MIX7 − G3 = +5.2 (18 fixed / 5 broken), p=0.011 (predicted +4).
+- **H2 FAIL on p:** G3 − COT = +3.6 (16/7), p=0.093. Met the +3 threshold but p large; G3 on MATH is +6.4 (math-g3) and +3.6 here.
+- **H3 PASS** (predicted likely fail): MIX7 − SC4 = +4.4 (14/3), p=0.013.
+- Exploratory: G3 − SC4 −0.8 (13/15, p=0.85) — replicates math-sc4 (equal voters: PAL ≈ sampled CoT, PAL cheaper). SC4 − COT +4.4 (p=0.019). MIX7 − COT +8.8 (27/5, p=1.1e-4).
+
+**Reading.** At 4 voters the format of the 3 extra voters doesn't matter (G3 ≈ SC4). Adding a second group of 3 voters of the
+other format adds +4.4 to +5.2 either way. H3 says adding 3 PAL voters to SC4 helps; it does NOT show that mixed formats beat
+same-format at equal voter count (no SC7 arm), so "more voters help" and "format diversity helps" are not separated here.
+MIX7 costs 5.20× greedy tokens, just above M1's ≤5× budget. Cheapest strong option for MATH 1.5B: MIX7 (+8.8 at 5.2×).
+Next test if wanted: SC7 vs MIX7 at equal voters (needs 3 more sampled CoT per item, ~1 lab run).

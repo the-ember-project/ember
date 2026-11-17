@@ -25,6 +25,6 @@ for k, v in A.items(): print(f"{k:5s} {100*sum(v)/n:.1f}%")
 def cmp(x, y, lab):
     f = sum(a and not b for a, b in zip(A[x], A[y])); b = sum(b and not a for a, b in zip(A[x], A[y]))
     print(f"{lab}: {x}-{y} {100*(f-b)/n:+.1f} (fixed {f} / broken {b}) p={sign(f,b):.4g}")
-cmp("MIX7", "G3", "H1"); cmp("G3", "COT", "H2"); cmp("MIX7", "SC4", "H3"); cmp("G3", "SC4", "expl"); cmp("SC4", "COT", "expl")
+cmp("MIX7", "G3", "H1"); cmp("G3", "COT", "H2"); cmp("MIX7", "SC4", "H3"); cmp("G3", "SC4", "expl"); cmp("SC4", "COT", "expl"); cmp("MIX7", "COT", "expl")
 ct = sum(r["cot_tok"] for r in R) / n; pt = sum(sum(r["pal_tok"]) for r in R) / n; st = sum(sum(r["cs_tok"]) for r in R) / n
 print(f"cost vs greedy tokens: G3 {(ct+pt)/ct:.2f}x  SC4 {(ct+st)/ct:.2f}x  MIX7 {(ct+pt+st)/ct:.2f}x")

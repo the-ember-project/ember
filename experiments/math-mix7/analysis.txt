@@ -8,4 +8,5 @@ H2: G3-COT +3.6 (fixed 16 / broken 7) p=0.09314
 H3: MIX7-SC4 +4.4 (fixed 14 / broken 3) p=0.01273
 expl: G3-SC4 -0.8 (fixed 13 / broken 15) p=0.8506
 expl: SC4-COT +4.4 (fixed 15 / broken 4) p=0.01921
+expl: MIX7-COT +8.8 (fixed 27 / broken 5) p=0.0001131
 cost vs greedy tokens: G3 2.21x  SC4 3.99x  MIX7 5.20x
