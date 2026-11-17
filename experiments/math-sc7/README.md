@@ -20,4 +20,15 @@ found CoT/PAL errors less correlated than CoT/CoT. On MATH the PAL exec rate is 
 CPU lab `run_lab.sh 290` (resumable, ~55 s/q expected → ~230 min). `python analyze.py` for verdicts.
 
 ## Results
-(pending)
+**Complete, n=250 (session #28, one 243-min lab run; `analysis.txt`). Confirmatory.**
+- **Validity PASS:** new sampled-CoT boxed rate 87.9% (≥80); SC4b 58.4 vs SC4 56.0 (+2.4, within ±4; 18/12, p=0.36).
+- Accuracy: COT 51.6, G3 55.2, SC4 56.0, MIX7 60.4, **SC7 63.2**.
+- **H1 FAIL (as predicted):** MIX7 − SC7 = −2.8 (7 fixed / 14 broken), p=0.19. Predicted +0.5; point estimate favours SC7.
+- **H2 PASS:** SC7 − SC4 = +7.2 (20/2), p=1.2e-4. Predicted +3.
+- Exploratory: SC7 − COT +11.6 (31/2, p=1.3e-7). Tokens vs greedy: MIX7 5.20×, SC7 7.00×.
+- Exploratory, cost-matched (`costmatch.py`, written after seeing H1/H2): SC5 (greedy + 4 of the 6 sampled CoT, mean
+  over all 15 subsets) 59.1 [57.6–61.2] at 5.0× vs MIX7 60.4 at 5.2×; SC6 61.5 at 6.0×.
+- **Reading:** on MATH at 1.5B, more voters help a lot (SC4→SC7 +7.2). Format diversity adds nothing measurable: at
+  equal voters single-format SC7 is ≥ MIX7 (−2.8 n.s.), and per token PAL voters are about as good as sampled CoT
+  (MIX7 ≈ SC5). math-mix7's H3 (MIX7 > SC4) was voter count, not format mixing. Consistent with math-sc4 (G3 = SC4).
+
