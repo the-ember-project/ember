@@ -1,16 +1,19 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-s 205 64.3
-s 206 171.8
-s 207 170.2
-partial: greedy 250, sampled 208 (verdicts need 250/250)
-n=250  3B greedy boxed 91.6%
+s 247 56.3
+s 248 74.4
+s 249 123.9
+n=250  3B greedy boxed 91.6%  3B sampled boxed 90.6%
 COT1.5    51.6%
 SC7_1.5   63.2%
 MIX7_1.5  60.4%
 G3_1.5    55.2%
 COT3      68.0%
+SC3_3     68.4%
 H1 (non-inf, need >= -2): SC7_1.5-COT3 -4.8 (fixed 14 / broken 26) p=0.08069
+H2 (need >= +3, p<.05): SC3_3-SC7_1.5 +5.2 (fixed 24 / broken 11) p=0.04096
+H3 (non-inf, need >= -2): SC7_1.5-SC3_3 -5.2 (fixed 11 / broken 24) p=0.04096
+expl: SC3_3-COT3 +0.4 (fixed 4 / broken 3) p=1
 expl: MIX7_1.5-COT3 -7.6 (fixed 12 / broken 31) p=0.005402
 expl: G3_1.5-COT3 -12.8 (fixed 14 / broken 46) p=4.224e-05
 expl: COT3-COT1.5 +16.4 (fixed 50 / broken 9) p=5.265e-08
-compute (tokens x params) SC7_1.5 / COT3 = 3.38
+compute (tokens x params) SC7_1.5 / COT3 = 3.38;  SC7_1.5 / SC3_3 = 1.10
