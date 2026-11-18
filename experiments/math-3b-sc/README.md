@@ -27,3 +27,10 @@ CPU lab `run_lab.sh 290`, resumable; ~47 s per 3B generation on the lab → phas
 
 ## Results
 (pending)
+
+## Results so far (session #29, after lab run 1: greedy 250/250, sampled 27/250)
+- **Validity (greedy):** 3B greedy boxed 91.6% (≥85 PASS), accuracy 68.0 (52–70 PASS).
+- **H1 FAIL (confirmatory):** 1.5B SC7 63.2 − 3B greedy 68.0 = **−4.8** (14 fixed / 26 broken), p=0.08, at 3.4× the
+  compute (tokens × params). Predicted +2. Even 7 voters at 1.5B do not reach 3B greedy on MATH.
+- Exploratory: MIX7 − 3B = −7.6 (p=0.005); G3 − 3B = −12.8; 3B − 1.5B greedy = +16.4 (50/9).
+- H2/H3 wait for sampled 250/250 (re-queued `run_lab.sh 290`).

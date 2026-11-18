@@ -40,3 +40,21 @@ on a tiny slice inside the Kaggle job first. CPU smoke (0.5B, HF) of all five st
   g3 → 3B-tagged eval (n_bbh 0) all exit 0; eval + g3 re-run with a dummy LoRA in `lora_COT` exercises the adapter
   path; `compare.py /tmp/...` runs on the outputs. Queued on Kaggle behind m3-stack: `run.py 250` (estimate ~190 min:
   gen ~80, train ~33, eval ~20, g3 ~15, 3B ~15, setup+smoke ~25). Phases save as they go.
+
+## Results (session #29, Kaggle run 1, 204 GPU min, vLLM; confirmatory, **validity compromised on 2 of 4 checks**)
+Fresh MATH-test positions 1200–2199 (n=1000), greedy at 2048 tokens. COT-majority DPO trained on 1067 pairs
+(677 questions, label precision 90.8%).
+- **Validity:** BASE unboxed 7.4% (need ≤5: FAIL); BASE acc 55.5 (45–68: PASS); 3B 68.6 ≥ BASE+3 (PASS);
+  PAL exec rate 46.2% pooled (need ≥55: FAIL; BASE 58.3%, COT 34.2%). Verdicts below are reported but compromised.
+- Accuracy: BASE 55.5, COT 56.3, G3(BASE) 59.3, G3(COT) 58.6, 3B greedy 68.6.
+- **H1 FAIL:** COT − BASE = +0.8 (82 fixed / 74 broken), p=0.58. Predicted +2.0. On BASE-boxed items: +0.1 (72/71);
+  on BASE-unboxed items: +9.5 (10/3, n=74). **The m3-math DPO gain on MATH does not survive a fresh draw at 2048
+  tokens; what remains is finishing/boxing on the few truncated items.**
+- **H2 FAIL:** G3(COT) − 3B greedy = −10.0 (60/160), p=1e-11. Predicted −4.
+- **H3 PASS:** G3(COT) − COT = +2.3 (31/8), p=0.0003. Predicted +3.
+- **H4 PASS:** BBH-date drift COT − BASE = +2.4 (41/35). Predicted −2.
+- Exploratory: G3(COT) − G3(BASE) = −0.7 (n.s.). DPO on CoT traces **cut the model's PAL exec rate from 58% to 34%**
+  and PAL-1 accuracy from 29.6% to 18.1%; PAL tokens/q rose 816 → 1316 (programs got longer / ran on). So G3 on the
+  trained model gains less per voter. 3B − BASE = +13.1 (177/46). Per level, COT − BASE is within ±3.5 everywhere.
+- **Reading:** label-free COT-majority DPO at 1.5B does not improve MATH reasoning when the eval isn't truncated;
+  M3-on-MATH (m3-math) should be read as mostly finishing/boxing. Training on one format damaged the other format.

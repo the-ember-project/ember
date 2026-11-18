@@ -39,3 +39,10 @@ limit raised 160 → 195 min (extra ~30 min of vLLM eval).
 (pending)
 
 - Session #26 bug fix (no design change): eval phase now skips generation when the BBH list is empty (test-split and 3B steps use n_bbh=0); vLLM may reject an empty prompt list, which would have pushed those steps onto the slow HF fallback.
+
+## Run 1 (Kaggle, 2026-11-17, ~206 GPU min): FAILED, no results
+The in-job smoke pass caught a bug in the test-split eval: with no BBH items, `paired()` divided by zero (my session
+#26 "skip empty BBH list" edit left `paired` on an empty list; it was never run on CPU after the edit). The crashed
+phase process then **never exited** (vLLM engine shutdown hang), so the job sat until the 195-min limit. Nothing saved.
+Fix (#29): `paired` returns None on empty input; every phase now hard-exits (`os._exit`) after catching any
+exception; smoke steps have a 20-min timeout. Design and prediction unchanged. Re-queued `run.py 195`.

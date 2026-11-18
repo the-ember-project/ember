@@ -258,6 +258,7 @@ def phase_train(a):
     json.dump(log, open(os.path.join(a.out, "train_log.json"), "w"), indent=1)
 
 def paired(rx, ry):
+    if not rx: return None  # #29: empty BBH list on the test split crashed run 1 (ZeroDivisionError)
     f = sum(p and not q for p, q in zip(rx, ry)); b = sum(q and not p for p, q in zip(rx, ry))
     return dict(diff=round(100 * (sum(rx) - sum(ry)) / len(rx), 2), fixed=f, broken=b, p=round(sign_p(f, b), 4))
 
@@ -361,7 +362,13 @@ def main():
     ap.add_argument("--work", default="/tmp/m3stack"); ap.add_argument("--out", default=HERE)
     a = ap.parse_args(); os.makedirs(a.work, exist_ok=True); os.makedirs(a.out, exist_ok=True)
     if a.phase != "all":
-        {"gen": phase_gen, "train": phase_train, "eval": phase_eval, "g3": phase_g3}[a.phase](a); return
+        # #29: run 1's crashed phase never exited (vLLM shutdown hang) and burned 190 GPU min; hard-exit either way.
+        rc = 0
+        try:
+            {"gen": phase_gen, "train": phase_train, "eval": phase_eval, "g3": phase_g3}[a.phase](a)
+        except BaseException:
+            import traceback; traceback.print_exc(); rc = 1
+        import gc; gc.collect(); sys.stdout.flush(); sys.stderr.flush(); os._exit(rc)
     if a.backend == "auto":
         a.backend = "hf"
         try:
@@ -392,7 +399,10 @@ def main():
     for ph, ex in steps:
         t0 = time.time()
         sm = smoke if "--work" not in ex else [x for x in smoke if x not in ("--work", "/tmp/m3smoke")]
-        r = subprocess.run(base + ["--phase", ph, "--backend", a.backend, "--n_train", "16"] + sm + ex)
+        try:
+            r = subprocess.run(base + ["--phase", ph, "--backend", a.backend, "--n_train", "16"] + sm + ex, timeout=1200)
+        except subprocess.TimeoutExpired:
+            print(f"SMOKE {ph} {ex} timed out; stopping"); sys.exit(1)
         print(f"SMOKE {ph} {ex} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
         if r.returncode != 0 and (a.backend == "hf" or ph == "train"):
             print("smoke failed; stopping before the full run"); sys.exit(r.returncode)

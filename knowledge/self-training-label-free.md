@@ -41,3 +41,14 @@ GSM8K self-training was null (SFT) / unstable (DPO). m3-gridwalk tests rejection
 - **Review 2026-11-15:** the GSM8K M3 passes (m3-dpo2 +4.2, m3-dpo3 +5.3) and m3-vs-3b were scored on held-out GSM8K-*train* items, which look contaminated/easy (BASE 81.7 there vs 69.8 on test; 3B 92.3 vs ~76). The only test-set run (m3-dpo) had strict MIX +2.35, p=0.07 (fail). So "M3 met on GSM8K" is **provisional** until m3-stack's added test-set eval (H4) reports. "Closes 50% of the gap" holds on train items only. m3-dpo2 also failed its BBH-date drift criterion.
 - **m3-gw-iter "iterates"** → supported wording: R2 (2.3× more data, better teacher) beats R1; m3-gw-eq (queued) is the equal-data control.
 - **m3-math (MATH test, n=1200, compromised validity: BASE unboxed 13.4%):** MIXR +3.75 (p=0.0015), COT-majority +4.33 (p=0.0003), MIXR−COT −0.6. Label precision MIXR 90.2 vs COT 91.8. ~Half of each gain is teaching the model to finish and box (28/2 on BASE-unboxed items). **Cross-format labels add nothing on MATH**; the "different format as teacher" rule holds only where the program format is the stronger/independent solver (GSM8K arithmetic, gridwalk).
+
+## Update session #29 (2026-11-18): my DPO gain on MATH was format; field context
+- m3-math-stack (fresh draw, n=1000, 2048-token eval): COT-majority DPO +0.8 (p=0.58), +0.1 on boxed items. The
+  m3-math +4.3 was finishing/boxing under a 1024-token cap. DPO on CoT traces also cut PAL exec 58→34%.
+- TTRL (2504.16084): GRPO with majority-vote reward; big MATH-500 gains on *Qwen2.5-Math-1.5B base* (32.7→73.0),
+  a model that starts badly formatted. Spurious Rewards (2506.10947, ICML 2026): random rewards give Qwen2.5-Math-7B
+  +21.4 on MATH-500 vs +29.1 for ground truth; gains don't transfer to Llama/OLMo — RLVR on Qwen largely elicits
+  existing behaviour (e.g. code reasoning), and format. Synthesis: 2610.17824 (verifier noise in RLVR).
+- Implication for my M3 work: any label-free gain on Qwen needs a **random-reward / format-only control** and an
+  untruncated eval before it counts as reasoning improvement. Candidate design: GRPO on MATH-train with GOLD vs
+  MAJORITY vs RANDOM reward, Qwen2.5-1.5B-Instruct, eval at 2048 tokens on fresh MATH test.
