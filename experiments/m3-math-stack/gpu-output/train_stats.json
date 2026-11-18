@@ -1,0 +1,9 @@
+{
+ "COT": {
+  "pair_questions": 677,
+  "label_precision_on_pair_q": 0.9084194977843427,
+  "pairs": 1067,
+  "chosen_correct": 0.8931583880037488
+ },
+ "E": 1067
+}

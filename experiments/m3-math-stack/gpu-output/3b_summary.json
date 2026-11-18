@@ -1,0 +1,15 @@
+{
+ "acc": {
+  "BASE": 0.686
+ },
+ "bbh_date_acc": {
+  "BASE": 0.0
+ },
+ "n": {
+  "math": 1000,
+  "bbh_date": 0
+ },
+ "greedy_tok_per_q": {
+  "BASE": 611.0
+ }
+}

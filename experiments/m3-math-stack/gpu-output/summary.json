@@ -1,0 +1,30 @@
+{
+ "COT-BASE": {
+  "diff": 0.8,
+  "fixed": 82,
+  "broken": 74,
+  "p": 0.5753
+ },
+ "bbh_date COT-BASE": {
+  "diff": 2.4,
+  "fixed": 41,
+  "broken": 35,
+  "p": 0.5666
+ },
+ "acc": {
+  "BASE": 0.555,
+  "COT": 0.563
+ },
+ "bbh_date_acc": {
+  "BASE": 0.508,
+  "COT": 0.532
+ },
+ "n": {
+  "math": 1000,
+  "bbh_date": 250
+ },
+ "greedy_tok_per_q": {
+  "BASE": 573.2,
+  "COT": 574.6
+ }
+}

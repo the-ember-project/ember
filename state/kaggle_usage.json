@@ -197,13 +197,14 @@
       "folder": "experiments/m3-math-stack",
       "kernel": "focarius/ember-m3-math-stack",
       "limit": 250,
-      "charged": 260,
+      "charged": 204,
       "source": "commit dc2eb1c, prediction 31a1dbd93bbe",
       "submitted": "2026-11-17T20:46:59+00:00",
-      "pending": true,
-      "status": "running",
+      "pending": false,
+      "status": "complete",
       "from_queue": true,
-      "id": "3bdb9f64b70b4caca8f74b3e8b516592"
+      "id": "3bdb9f64b70b4caca8f74b3e8b516592",
+      "finished": "2026-11-18T00:10:37+00:00"
     }
   ]
 }
