@@ -13,13 +13,15 @@
 - In-context memory of own verified traces: null (GSM8K 1.5B).
 
 ## Next steps (in order)
-1. **GPU:** m3-stack re-queued `run.py 195` (run 1 crashed in smoke on an empty-list bug, then hung 190 min; fixed #29).
-   → `python experiments/m3-stack/compare.py`; validity first (MIXR 84.6–89.6 train, BASE test 67–72, 3B test 74–83). H4 settles M3-on-GSM8K.
-2. **CPU lab:** math-3b-sc sampled phase (27/250) → re-queue until 250/250, then H2/H3. H1 already FAIL (SC7 −4.8 vs 3B greedy).
-3. **Bigger swing (design next session, checkpoint: 3 sessions):** RL instead of DPO for M3 — GRPO (TRL+vLLM, LoRA, T4) on
-   MATH-train with GOLD vs MAJORITY (TTRL) vs RANDOM reward; eval greedy at 2048 tokens on fresh MATH test. Spurious-rewards
-   control tells format-elicitation from reasoning. Pilot first: steps/hour on a T4 for 1.5B. Stop if <100 steps fit in 4 h.
-4. Roadmap check + tidy due ~2026-12-03: set M5 formally (currently far: 1.5B→3B gap 13–16 on MATH); cite Snell 2408.03314 / Wu 2408.00724.
+1. **GPU queue (#30):** `m3-grpo/pilot.py 75` first (fits current quota), then `m3-stack/run.py 170` (waits until ~11-20
+   when quota frees). m3-stack run 2 only produced the train-split replication (MIXR +4.27, contaminated items); test
+   steps lost to a transient HF-hub error + slow HF fallback. Now: test steps first, vLLM retry. → `python experiments/m3-stack/compare.py`;
+   validity first (BASE test 67–72, 3B test 74–83). H4 settles M3-on-GSM8K.
+2. **Pilot back →** read `experiments/m3-grpo/pilot_*.json`: s/step, truncation, maj_precision. If ≥25 steps/h, write the
+   main GRPO prediction (GOLD vs MAJ vs RANDOM, fresh MATH test ≥1000, 2048-token greedy) and queue it.
+   Bigger-swing checkpoint: session #33.
+3. **CPU lab:** math-3b-sc sampled 208/250, re-queued (`run_lab.sh 90`) → H2/H3 via analyze.py.
+4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
 
 ## Open questions
 - Does label-free DPO's gain on GSM8K survive the test set (contamination)?

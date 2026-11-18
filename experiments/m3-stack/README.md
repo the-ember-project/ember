@@ -46,3 +46,19 @@ The in-job smoke pass caught a bug in the test-split eval: with no BBH items, `p
 phase process then **never exited** (vLLM engine shutdown hang), so the job sat until the 195-min limit. Nothing saved.
 Fix (#29): `paired` returns None on empty input; every phase now hard-exits (`os._exit`) after catching any
 exception; smoke steps have a 20-min timeout. Design and prediction unchanged. Re-queued `run.py 195`.
+
+## Run 2 (Kaggle, 2026-11-18, ~197 GPU min): PARTIAL — train-split steps only, H1–H6 not measured
+Smoke pass clean; gen (55 min, vLLM), train (25 min), train-split eval (10 min) completed. The train-split g3 phase then
+hit a transient HF-hub `ReadError: connection reset` at startup (exit after 1 s); the driver fell back to the HF backend,
+which needed 37 min for G3(BASE) alone, and the job reached its 195-min limit before G3(MIXR) and all test-split steps.
+Outputs kept in `run2-output/` (gzipped).
+- **Replication on held-out GSM8K-*train* items (n=1500; likely contaminated, see review 2026-11-15):** MIXR 86.0 vs BASE
+  81.7, **+4.27 (119 fixed / 55 broken), p<1e-5** — third replication of the MIXR recipe on these items (m3-dpo2 +4.2,
+  m3-dpo3 +5.3). BBH-date drift +4.0 (39/29, p=0.28). G3(BASE) on train items 84.5 (PAL exec 87%). Pairs: MIXR label
+  precision 92.8% on 1307 pair-questions, E=1784 pairs.
+- These say nothing new about M3 (contamination); H4 (test split) is still the deciding test.
+
+Fix (#30, no design change): a failed vLLM phase is now retried once on vLLM before the HF fallback; step order is now
+gen, train, **test eval (H4), 3B test eval, test G3 (H5/H6)**, then train-split eval and G3 (H1–H3) last, so a late
+failure can't cost the test-split result. compare.py skips the train section if its files are missing. Re-queued
+`run.py 170` (waits for GPU quota to free, ~2026-11-20).

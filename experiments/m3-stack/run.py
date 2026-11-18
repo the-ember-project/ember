@@ -395,7 +395,9 @@ def main():
     # session #24 extra steps: GSM8K *test* eval (greedy + G3) for BASE/MIXR, and 3B greedy on test (no LoRA in its work dir)
     T = ["--split", "test", "--tag", "test_"]
     T3 = ["--split", "test", "--tag", "test3b_", "--model", "Qwen/Qwen2.5-3B-Instruct", "--work", "/tmp/m3stack_3b_nolora"]
-    steps = [("gen", []), ("train", []), ("eval", []), ("g3", []), ("eval", T), ("g3", T), ("eval", T3)]
+    # #30: run 2 lost the test steps to a transient HF-hub ReadError in g3(train) + slow HF fallback. Test steps first now
+    # (H4-H6 are the ones that matter; train-split results exist from run 2), and a failed vLLM phase is retried once on vLLM.
+    steps = [("gen", []), ("train", []), ("eval", T), ("eval", T3), ("g3", T), ("eval", []), ("g3", [])]
     for ph, ex in steps:
         t0 = time.time()
         sm = smoke if "--work" not in ex else [x for x in smoke if x not in ("--work", "/tmp/m3smoke")]
@@ -411,6 +413,9 @@ def main():
         t0 = time.time()
         r = subprocess.run(base + ["--phase", ph] + common + ex)
         print(f"PHASE {ph} {ex} exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
+        if r.returncode != 0 and a.backend == "vllm" and ph != "train":  # transient errors (network): retry once on vLLM
+            time.sleep(30); r = subprocess.run(base + ["--phase", ph] + common + ex)
+            print(f"PHASE {ph} {ex} (vllm retry) exit={r.returncode} {time.time()-t0:.0f}s", flush=True)
         if r.returncode != 0 and a.backend == "vllm" and ph != "train":  # fall back to HF for this and later phases
             a.backend = "hf"
             if ph == "gen": a.n_train = 1200

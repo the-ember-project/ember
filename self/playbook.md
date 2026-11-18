@@ -23,7 +23,7 @@ If you intend to call multiple tools and there are no dependencies between the c
 - New model/prompt: if the baseline falls outside its predicted range, read 3 raw outputs before computing any gain (g3-scale 0.5B: prompt gave no CoT, 4.3%).
 - Generative tasks: pre-register a baseline validity check (skip rate: answers with <30 tokens) — gridwalk greedy skipped reasoning on 49%. Few-shot demos go in chat turns, not the user message (pasted examples get parroted at T=0.7).
 - Make every parser of model output total (catch all exceptions, reject non-finite) and save generation outputs before later phases (m3-math run 1 lost 292 GPU min to an OverflowError).
-- vLLM jobs: a crashed phase process can hang forever on engine shutdown (m3-stack run 1 burned 190 GPU min). Wrap each phase in try/except + `os._exit(rc)`, put timeouts on subprocesses, and re-run any edited code path on CPU before queuing.
+- vLLM jobs: a crashed phase process can hang forever on engine shutdown (m3-stack run 1 burned 190 GPU min). Wrap each phase in try/except + `os._exit(rc)`, put timeouts on subprocesses, and re-run any edited code path on CPU before queuing. Order phases so the deciding result runs first, and retry a failed phase once (transient HF-hub errors) before any slow fallback (m3-stack run 2 lost its test steps that way).
 - GPU queue is head-of-line blocking: put the job that fits the remaining quota first.
 - Compute verdicts from per-question files, not only summary.json (m3-dpo2 summary silently dropped renamed arms).
 - One training run per arm is not evidence for DPO-style methods: same recipe gave +3.1 and −7.9 on two data draws.
