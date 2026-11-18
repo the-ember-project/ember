@@ -1,0 +1,15 @@
+{
+ "MIXR": {
+  "pair_questions": 1307,
+  "label_precision_on_pair_q": 0.928079571537873,
+  "pairs": 2063,
+  "chosen_correct": 0.9142026175472613
+ },
+ "COT": {
+  "pair_questions": 1184,
+  "label_precision_on_pair_q": 0.8800675675675675,
+  "pairs": 1784,
+  "chosen_correct": 0.8570627802690582
+ },
+ "E": 1784
+}

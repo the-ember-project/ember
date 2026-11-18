@@ -205,6 +205,20 @@
       "from_queue": true,
       "id": "3bdb9f64b70b4caca8f74b3e8b516592",
       "finished": "2026-11-18T00:10:37+00:00"
+    },
+    {
+      "line": "experiments/m3-stack/run.py 195",
+      "folder": "experiments/m3-stack",
+      "kernel": "focarius/ember-m3-stack",
+      "limit": 195,
+      "charged": 197,
+      "source": "commit f7a0b11, prediction 674e2433f6a9",
+      "submitted": "2026-11-18T01:03:49+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "6f057cead4d641c3bfbe30b7e7fe9fc1",
+      "finished": "2026-11-18T04:20:01+00:00"
     }
   ]
 }
