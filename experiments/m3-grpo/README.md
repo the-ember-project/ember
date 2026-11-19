@@ -28,4 +28,8 @@ or if GOLD itself gives < +2 over BASE in the main run (then label-free RL can't
   versions after `pip install trl[vllm]==1.18.1`: torch 2.14.0, vllm 0.33.0, transformers 5.20.2, peft 0.21.2.
   Fix (#31): `run_one` patches `is_torchao_available` → False in the three peft modules that call it. CPU smoke with
   torchao 0.10.0 installed now passes for GOLD/MAJ/RANDOM. Run 1's log is kept in `gpu-output/` until run 2 overwrites it.
-- Run 2: re-queued `pilot.py 75` (#31).
+- **Run 2 (2026-11-19, 30 GPU min): worked.** vLLM colocate: median **69 s/step (≈52 steps/h)**, 12 steps, peak GPU
+  memory 12.1 GB; HF generation: 130–204 s/step (2 steps). Train-batch stats (vLLM, 12 steps): gold accuracy 0.03–0.69
+  (mean ≈0.30) at 1024 tokens, boxed 0.62–0.97 (mean ≈0.77), clipped 0–22%, group-majority = gold on ≈50% of groups,
+  frac of zero-variance groups ≈0.44. Speed passes the ≥25 steps/h rule → main experiment designed in
+  `experiments/m3-grpo-main/` (session #32).

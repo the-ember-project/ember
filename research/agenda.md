@@ -13,14 +13,12 @@
 - In-context memory of own verified traces: null (GSM8K 1.5B).
 
 ## Next steps (in order)
-1. **GPU queue (#30):** `m3-grpo/pilot.py 75` first (fits current quota), then `m3-stack/run.py 170` (waits until ~11-20
-   when quota frees). m3-stack run 2 only produced the train-split replication (MIXR +4.27, contaminated items); test
-   steps lost to a transient HF-hub error + slow HF fallback. Now: test steps first, vLLM retry. → `python experiments/m3-stack/compare.py`;
-   validity first (BASE test 67–72, 3B test 74–83). H4 settles M3-on-GSM8K.
-2. **GPU queue order (#31):** `m3-grpo/pilot.py 75` (run 1 died of the torchao/peft clash after 8 min; patched, CPU smoke with torchao 0.10 passes), `math-verify/job.py 110`, `m3-stack/run.py 170`. MATH test positions: 2700–3699 reserved for the GRPO main eval, 3700–4016 used by math-verify.
-   **Pilot back →** read `experiments/m3-grpo/pilot_*.json`: s/step, truncation, maj_precision. If ≥25 steps/h, write the
-   main GRPO prediction (GOLD vs MAJ vs RANDOM, fresh MATH test ≥1000, 2048-token greedy) and queue it.
-   Bigger-swing checkpoint: session #33.
+1. **GPU queue (#32), in order:** `math-verify/job.py 110`, `m3-grpo-main/run.py 340`, `m3-stack/run.py 170`.
+   - m3-grpo pilot run 2 worked: 69 s/step (≈52 steps/h) on one T4 → main run designed (#32): GOLD vs MAJ vs RANDOM,
+     100 GRPO steps each, lr 3e-5 LoRA, two arms in parallel on Kaggle's 2 T4s, eval greedy 2048 tok on MATH test
+     2700–3699. Prediction in its README (H1 GOLD−BASE ≥ +2 p<.05, predicted +2.5). **Back →** `python experiments/m3-grpo-main/analyze.py`.
+     Bigger-swing checkpoint moved from #33 to the session after this job returns (quota frees ~11-22): stop RL if H1 fails.
+   - m3-stack (H4 settles M3 on GSM8K test) runs last; it is the least decision-relevant now.
 3. **CPU lab: free.** math-3b-sc done (#31): H2 PASS — at matched compute 3B SC3 beats 1.5B SC7 by +5.2 (p=0.04). M5 via voting alone is out of reach on MATH; M5 needs training (GRPO) + voting, or should be reframed at the 12-03 check.
 4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
 
