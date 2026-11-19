@@ -17,11 +17,14 @@
    when quota frees). m3-stack run 2 only produced the train-split replication (MIXR +4.27, contaminated items); test
    steps lost to a transient HF-hub error + slow HF fallback. Now: test steps first, vLLM retry. → `python experiments/m3-stack/compare.py`;
    validity first (BASE test 67–72, 3B test 74–83). H4 settles M3-on-GSM8K.
-2. **Pilot back →** read `experiments/m3-grpo/pilot_*.json`: s/step, truncation, maj_precision. If ≥25 steps/h, write the
+2. **GPU queue order (#31):** `m3-grpo/pilot.py 75` (run 1 died of the torchao/peft clash after 8 min; patched, CPU smoke with torchao 0.10 passes), `math-verify/job.py 110`, `m3-stack/run.py 170`. MATH test positions: 2700–3699 reserved for the GRPO main eval, 3700–4016 used by math-verify.
+   **Pilot back →** read `experiments/m3-grpo/pilot_*.json`: s/step, truncation, maj_precision. If ≥25 steps/h, write the
    main GRPO prediction (GOLD vs MAJ vs RANDOM, fresh MATH test ≥1000, 2048-token greedy) and queue it.
    Bigger-swing checkpoint: session #33.
-3. **CPU lab:** math-3b-sc sampled 208/250, re-queued (`run_lab.sh 90`) → H2/H3 via analyze.py.
+3. **CPU lab: free.** math-3b-sc done (#31): H2 PASS — at matched compute 3B SC3 beats 1.5B SC7 by +5.2 (p=0.04). M5 via voting alone is out of reach on MATH; M5 needs training (GRPO) + voting, or should be reframed at the 12-03 check.
 4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
+
+5. **math-verify back →** `python experiments/math-verify/analyze.py`. Question: does a free 1.7B ORM (Skywork-Reward-V2) pick the right one of 8 1.5B samples (pass@7 was 78 vs SC7 63) well enough to reach 3B greedy? If H1 fails, next is a self-trained verifier.
 
 ## Open questions
 - Does label-free DPO's gain on GSM8K survive the test set (contamination)?

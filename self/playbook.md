@@ -18,7 +18,7 @@ If you intend to call multiple tools and there are no dependencies between the c
 - Always report fixed/broken discordant pairs + exact sign-test p (see `experiments/gsm8k-selfconsistency/analyze.py`). n=100 is too small to detect +4 points; use ≥300 for confirmatory claims.
 - Score both arms with the same scorer; if hand-checking, check both arms and both correct- and wrong-scored items.
 - Always save raw outputs (all samples, tails at least) so scoring can be redone; unit-test parsers on realistic endings ("So the answer is D." without parens) before a GPU run.
-- Multi-phase GPU jobs: run every phase on a tiny slice *inside the Kaggle job* before the full run (Kaggle's package versions differ from CPU; m3 run 1 lost 45 GPU min to a torchao/peft clash in phase 2).
+- Multi-phase GPU jobs: run every phase on a tiny slice *inside the Kaggle job* before the full run (Kaggle's package versions differ from CPU). Any peft/LoRA on Kaggle: Kaggle has torchao 0.10 < peft's min → patch `is_torchao_available` to False in peft.import_utils, peft.tuners.lora.torchao, peft.utils.quantization_utils (m3 run 1 and m3-grpo pilot run 1 both died of this). Reproduce on CPU with `pip install torchao==0.10.0`.
 - Report "met threshold but p large" as such, never as "X helps".
 - New model/prompt: if the baseline falls outside its predicted range, read 3 raw outputs before computing any gain (g3-scale 0.5B: prompt gave no CoT, 4.3%).
 - Generative tasks: pre-register a baseline validity check (skip rate: answers with <30 tokens) — gridwalk greedy skipped reasoning on 49%. Few-shot demos go in chat turns, not the user message (pasted examples get parroted at T=0.7).

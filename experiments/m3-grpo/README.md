@@ -23,4 +23,9 @@ Stop the RL line if the pilot shows < 25 optimizer steps/hour (i.e. < 100 steps 
 or if GOLD itself gives < +2 over BASE in the main run (then label-free RL can't be expected to beat it).
 
 ## Pilot results
-(pending — Kaggle `pilot.py 75`, queued #30)
+- **Run 1 (2026-11-18, 8 GPU min): FAILED before any step.** Both configs died building the LoRA model: Kaggle's torchao
+  0.10.0 is below peft 0.21.2's minimum (0.16) and peft raises instead of ignoring it (same clash as m3 run 1). Installed
+  versions after `pip install trl[vllm]==1.18.1`: torch 2.14.0, vllm 0.33.0, transformers 5.20.2, peft 0.21.2.
+  Fix (#31): `run_one` patches `is_torchao_available` → False in the three peft modules that call it. CPU smoke with
+  torchao 0.10.0 installed now passes for GOLD/MAJ/RANDOM. Run 1's log is kept in `gpu-output/` until run 2 overwrites it.
+- Run 2: re-queued `pilot.py 75` (#31).

@@ -25,8 +25,19 @@ already partly solves the problem; Wu 2408.00724: small models + inference metho
 CPU lab `run_lab.sh 290`, resumable; ~47 s per 3B generation on the lab → phase 1 ~200 min, phase 2 ~400 min
 (≈3 lab runs). `python analyze.py` prints verdicts (partial results print without H2/H3).
 
-## Results
-(pending)
+## Results (session #31, complete: greedy 250/250, sampled 250/250; confirmatory)
+- **Validity PASS:** 3B greedy boxed 91.6% (≥85), accuracy 68.0 (52–70); 3B sampled boxed 90.6%.
+- Accuracy: 1.5B COT 51.6, G3 55.2, MIX7 60.4, SC7 63.2; 3B COT 68.0, **3B SC3 68.4**.
+- **H1 FAIL:** 1.5B SC7 − 3B greedy = −4.8 (14/26), p=0.08, at 3.38× compute. Predicted +2.
+- **H2 PASS:** 3B SC3 − 1.5B SC7 = **+5.2** (24 fixed / 11 broken), p=0.041, at matched compute (SC7/SC3 = 1.10×).
+  Predicted +1 (FAIL).
+- **H3 FAIL:** 1.5B SC7 − 3B SC3 = −5.2, below the −2 margin. Predicted −1 PASS.
+- Exploratory: 3B SC3 − 3B greedy = +0.4 (4/3): two extra samples at 3B barely change the vote (with 3 voters the
+  greedy answer wins most ties), so at 3B the matched-compute advantage is essentially *greedy 3B* beating 7-voter 1.5B.
+  3B − 1.5B greedy = +16.4 (50/9).
+- **Reading:** on MATH at this pair of sizes, scale beats simple voting at matched compute (one test, p=0.04, n=250).
+  The 1.5B→3B gap (16 pts) is ~3× what 7-voter SC recovers (11.6). Consistent with Snell 2408.03314 (test-time compute
+  only substitutes for scale on problems the small model partly solves). M5 via voting alone looks out of reach on MATH.
 
 ## Results so far (session #29, after lab run 1: greedy 250/250, sampled 27/250)
 - **Validity (greedy):** 3B greedy boxed 91.6% (≥85 PASS), accuracy 68.0 (52–70 PASS).

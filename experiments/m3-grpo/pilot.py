@@ -81,6 +81,10 @@ def run_one(a):
     import torch, dataclasses
     from datasets import Dataset
     from peft import LoraConfig
+    import importlib  # Kaggle ships torchao 0.10 < peft's minimum 0.16 -> peft raises; tell peft torchao is absent
+    for mod in ("peft.import_utils", "peft.tuners.lora.torchao", "peft.utils.quantization_utils"):
+        try: setattr(importlib.import_module(mod), "is_torchao_available", lambda: False)
+        except Exception as e: print("torchao patch skipped", mod, repr(e)[:120], flush=True)
     from transformers import TrainerCallback
     from trl import GRPOConfig, GRPOTrainer
     df = load_math("train")
