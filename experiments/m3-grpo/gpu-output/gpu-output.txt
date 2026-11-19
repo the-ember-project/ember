@@ -2,7 +2,7 @@ Tesla T4, 15360 MiB
 Tesla T4, 15360 MiB
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
 ydata-profiling 4.18.4 requires numba<0.63,>=0.60, but you have numba 0.65.0 which is incompatible.
-numba-cuda 0.28.2 requires cuda-core<1.0.0,>=0.5.1, but you have cuda-core 1.3.0 which is incompatible.
+numba-cuda 0.28.2 requires cuda-core<1.0.0,>=0.5.1, but you have cuda-core 1.3.1 which is incompatible.
 cuml-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
 cudf-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
 gradio 6.30.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.
@@ -13,116 +13,63 @@ torch                                    2.14.0
 transformers                             5.20.2
 trl                                      1.18.1
 vllm                                     0.33.0
-W1118 16:01:40.120000 40 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
-W1118 16:01:40.121000 40 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
-W1118 16:01:40.121000 40 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+W1119 00:41:50.872000 40 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1119 00:41:50.873000 40 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1119 00:41:50.874000 40 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<05:17,  1.06it/s]Loading weights:  26%|██▌       | 87/338 [00:01<00:02, 108.90it/s]Loading weights:  37%|███▋      | 124/338 [00:01<00:01, 112.94it/s]Loading weights:  44%|████▍     | 150/338 [00:01<00:01, 125.86it/s]Loading weights:  51%|█████     | 173/338 [00:01<00:01, 134.61it/s]Loading weights:  58%|█████▊    | 196/338 [00:01<00:00, 147.05it/s]Loading weights:  65%|██████▍   | 219/338 [00:01<00:00, 148.93it/s]Loading weights:  70%|███████   | 238/338 [00:02<00:00, 157.20it/s]Loading weights:  76%|███████▌  | 257/338 [00:02<00:00, 143.31it/s]Loading weights:  83%|████████▎ | 279/338 [00:02<00:00, 150.15it/s]Loading weights:  90%|████████▉ | 303/338 [00:02<00:00, 154.09it/s]Loading weights:  97%|█████████▋| 327/338 [00:02<00:00, 154.23it/s]Loading weights: 100%|██████████| 338/338 [00:02<00:00, 127.82it/s]
-Traceback (most recent call last):
-  File "/kaggle/working/pilot.py", line 128, in main
-    try: run_one(a)
-         ~~~~~~~^^^
-  File "/kaggle/working/pilot.py", line 105, in run_one
-    tr = GRPOTrainer(model=a.model, reward_funcs=[make_reward(a.reward)], args=cfg, train_dataset=ds,
-                     peft_config=LoraConfig(r=16, lora_alpha=32, lora_dropout=0.0, task_type="CAUSAL_LM",
-                                            target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]),
-                     callbacks=[T()])
-  File "/usr/local/lib/python3.13/dist-packages/trl/trainer/grpo_trainer.py", line 525, in __init__
-    model = get_peft_model(model, peft_config, **get_peft_model_kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/mapping_func.py", line 198, in get_peft_model
-    return MODEL_TYPE_TO_PEFT_MODEL_MAPPING[peft_config.task_type](
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        model,
-        ^^^^^^
-    ...<3 lines>...
-        low_cpu_mem_usage=low_cpu_mem_usage,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/peft/peft_model.py", line 2082, in __init__
-    super().__init__(model, peft_config, adapter_name, **kwargs)
-    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/peft_model.py", line 177, in __init__
-    self.base_model = cls(model, {adapter_name: peft_config}, adapter_name)
-                      ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/tuners_utils.py", line 344, in __init__
-    self.inject_adapter(self.model, adapter_name, low_cpu_mem_usage=low_cpu_mem_usage, state_dict=state_dict)
-    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/tuners_utils.py", line 978, in inject_adapter
-    self._create_and_replace(
-    ~~~~~~~~~~~~~~~~~~~~~~~~^
-        peft_config, adapter_name, target, target_name, parent, current_key=key
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/model.py", line 389, in _create_and_replace
-    new_module = self._create_new_module(lora_config, adapter_name, target, device_map=device_map, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/model.py", line 552, in _create_new_module
-    new_module = dispatcher(target, adapter_name, config=lora_config, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/torchao.py", line 160, in dispatch_torchao
-    if not is_torchao_available():
-           ~~~~~~~~~~~~~~~~~~~~^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/import_utils.py", line 162, in is_torchao_available
-    raise ImportError(
-    ...<2 lines>...
-    )
-ImportError: Found an incompatible version of torchao. Found version 0.10.0, but only versions above 0.16.0 are supported
-CONFIG vllm exit=1 69s
-W1118 16:02:31.233000 153 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
-W1118 16:02:31.234000 153 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
-W1118 16:02:31.234000 153 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<04:12,  1.34it/s]Loading weights:  19%|█▉        | 65/338 [00:00<00:02, 99.86it/s]Loading weights:  28%|██▊       | 96/338 [00:01<00:01, 124.38it/s]Loading weights:  36%|███▌      | 122/338 [00:01<00:01, 138.24it/s]Loading weights:  43%|████▎     | 145/338 [00:01<00:01, 143.77it/s]Loading weights:  49%|████▉     | 166/338 [00:01<00:01, 146.59it/s]Loading weights:  55%|█████▍    | 185/338 [00:01<00:01, 139.65it/s]Loading weights:  61%|██████    | 207/338 [00:01<00:00, 148.35it/s]Loading weights:  68%|██████▊   | 231/338 [00:01<00:00, 150.64it/s]Loading weights:  75%|███████▌  | 255/338 [00:02<00:00, 158.55it/s]Loading weights:  83%|████████▎ | 279/338 [00:02<00:00, 162.20it/s]Loading weights:  90%|████████▉ | 303/338 [00:02<00:00, 165.47it/s]Loading weights:  96%|█████████▌| 325/338 [00:02<00:00, 175.86it/s]Loading weights: 100%|██████████| 338/338 [00:02<00:00, 135.80it/s]
+Fetching 9 files:   0%|          | 0/9 [00:00<?, ?it/s]Fetching 9 files:  89%|████████▉ | 8/9 [00:00<00:00, 65.25it/s]Fetching 9 files: 100%|██████████| 9/9 [00:00<00:00, 71.25it/s]
+(MainProcess pid=40) ERROR 11-19 00:42:58 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:02<00:00,  2.09s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:02<00:00,  2.10s/it]
+
+[rank0]:W1119 00:43:19.413000 40 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
+Capturing CUDA graphs (PIECEWISE):   0%|          | 0/11 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   9%|▉         | 1/11 [00:01<00:12,  1.21s/it]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 3/11 [00:01<00:02,  2.82it/s]Capturing CUDA graphs (PIECEWISE):  45%|████▌     | 5/11 [00:02<00:02,  2.20it/s]Capturing CUDA graphs (PIECEWISE):  55%|█████▍    | 6/11 [00:03<00:03,  1.65it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 8/11 [00:03<00:01,  2.73it/s]Capturing CUDA graphs (PIECEWISE):  91%|█████████ | 10/11 [00:03<00:00,  4.06it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 11/11 [00:04<00:00,  2.36it/s]
+Capturing CUDA graphs (FULL):   0%|          | 0/2 [00:00<?, ?it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00, 22.06it/s]
+Capturing CUDA graphs (PIECEWISE):   0%|          | 0/11 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):  18%|█▊        | 2/11 [00:00<00:00, 17.22it/s]Capturing CUDA graphs (PIECEWISE):  36%|███▋      | 4/11 [00:00<00:00, 17.66it/s]Capturing CUDA graphs (PIECEWISE):  55%|█████▍    | 6/11 [00:00<00:00, 17.16it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 8/11 [00:00<00:00, 16.99it/s]Capturing CUDA graphs (PIECEWISE):  91%|█████████ | 10/11 [00:00<00:00, 17.03it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 11/11 [00:00<00:00, 16.97it/s]
+Capturing CUDA graphs (FULL):   0%|          | 0/7 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):  29%|██▊       | 2/7 [00:00<00:00, 19.77it/s]Capturing CUDA graphs (FULL):  71%|███████▏  | 5/7 [00:00<00:00, 20.92it/s]Capturing CUDA graphs (FULL): 100%|██████████| 7/7 [00:00<00:00, 20.87it/s]
+  0%|          | 0/12 [00:00<?, ?it/s]step 1 70.0s
+  8%|▊         | 1/12 [01:10<12:50, 70.02s/it]                                                8%|▊         | 1/12 [01:10<12:50, 70.02s/it]{'loss': '0.02116', 'grad_norm': '0.06218', 'learning_rate': '1e-05', 'num_tokens': '2.612e+04', 'completions/mean_length': '672.6', 'completions/min_length': '145', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.1875', 'completions/mean_terminated_length': '591.5', 'completions/min_terminated_length': '145', 'completions/max_terminated_length': '967', 'rewards/r_GOLD/mean': '0.2812', 'rewards/r_GOLD/std': '0.4568', 'reward': '0.2812', 'reward_std': '0.4568', 'frac_reward_zero_std': '0.25', 'sampling/sampling_logp_difference/mean': '0.001224', 'sampling/sampling_logp_difference/max': '0.07261', 'sampling/importance_sampling_ratio/min': '0.8253', 'sampling/importance_sampling_ratio/mean': '1.011', 'sampling/importance_sampling_ratio/max': '1.167', 'entropy': '0.4676', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '66.99', 'epoch': '0.01'}
+step 2 48.7s
+ 17%|█▋        | 2/12 [01:58<09:35, 57.50s/it]                                               17%|█▋        | 2/12 [01:58<09:35, 57.50s/it]{'loss': '-0.006463', 'grad_norm': '0.09599', 'learning_rate': '9.167e-06', 'num_tokens': '4.218e+04', 'completions/mean_length': '419.7', 'completions/min_length': '146', 'completions/max_length': '788', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '419.7', 'completions/min_terminated_length': '146', 'completions/max_terminated_length': '788', 'rewards/r_GOLD/mean': '0.4375', 'rewards/r_GOLD/std': '0.504', 'reward': '0.4375', 'reward_std': '0.504', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0008448', 'sampling/sampling_logp_difference/max': '0.04402', 'sampling/importance_sampling_ratio/min': '0.8401', 'sampling/importance_sampling_ratio/mean': '1.02', 'sampling/importance_sampling_ratio/max': '1.101', 'entropy': '0.2562', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '46.6', 'epoch': '0.02'}
+step 3 68.5s
+ 25%|██▌       | 3/12 [03:07<09:22, 62.53s/it]                                               25%|██▌       | 3/12 [03:07<09:22, 62.53s/it]{'loss': '0.04044', 'grad_norm': '0.04528', 'learning_rate': '8.333e-06', 'num_tokens': '6.565e+04', 'completions/mean_length': '589.4', 'completions/min_length': '107', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.09375', 'completions/mean_terminated_length': '544.5', 'completions/min_terminated_length': '107', 'completions/max_terminated_length': '904', 'rewards/r_GOLD/mean': '0.2188', 'rewards/r_GOLD/std': '0.42', 'reward': '0.2188', 'reward_std': '0.42', 'frac_reward_zero_std': '0.5', 'sampling/sampling_logp_difference/mean': '0.001094', 'sampling/sampling_logp_difference/max': '0.04387', 'sampling/importance_sampling_ratio/min': '0.7661', 'sampling/importance_sampling_ratio/mean': '0.9839', 'sampling/importance_sampling_ratio/max': '1.12', 'entropy': '0.374', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '65.71', 'epoch': '0.03'}
+step 4 75.1s
+ 33%|███▎      | 4/12 [04:22<08:59, 67.47s/it]                                               33%|███▎      | 4/12 [04:22<08:59, 67.47s/it]{'loss': '0.03347', 'grad_norm': '0.02665', 'learning_rate': '7.5e-06', 'num_tokens': '9.322e+04', 'completions/mean_length': '701.1', 'completions/min_length': '286', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.1875', 'completions/mean_terminated_length': '626.5', 'completions/min_terminated_length': '286', 'completions/max_terminated_length': '1005', 'rewards/r_GOLD/mean': '0.09375', 'rewards/r_GOLD/std': '0.2961', 'reward': '0.09375', 'reward_std': '0.2961', 'frac_reward_zero_std': '0.75', 'sampling/sampling_logp_difference/mean': '0.001125', 'sampling/sampling_logp_difference/max': '0.07038', 'sampling/importance_sampling_ratio/min': '0.8151', 'sampling/importance_sampling_ratio/mean': '1.026', 'sampling/importance_sampling_ratio/max': '1.222', 'entropy': '0.4095', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '72.16', 'epoch': '0.04'}
+step 5 52.3s
+ 42%|████▏     | 5/12 [05:14<07:14, 62.02s/it]                                               42%|████▏     | 5/12 [05:14<07:14, 62.02s/it]{'loss': '0.04642', 'grad_norm': '0.07343', 'learning_rate': '6.667e-06', 'num_tokens': '1.12e+05', 'completions/mean_length': '495.4', 'completions/min_length': '160', 'completions/max_length': '774', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '495.4', 'completions/min_terminated_length': '160', 'completions/max_terminated_length': '774', 'rewards/r_GOLD/mean': '0.5', 'rewards/r_GOLD/std': '0.508', 'reward': '0.5', 'reward_std': '0.508', 'frac_reward_zero_std': '0.25', 'sampling/sampling_logp_difference/mean': '0.00111', 'sampling/sampling_logp_difference/max': '0.03118', 'sampling/importance_sampling_ratio/min': '0.8041', 'sampling/importance_sampling_ratio/mean': '1.001', 'sampling/importance_sampling_ratio/max': '1.155', 'entropy': '0.4432', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '50.22', 'epoch': '0.05'}
+step 6 70.3s
+ 50%|█████     | 6/12 [06:25<06:29, 64.85s/it]                                               50%|█████     | 6/12 [06:25<06:29, 64.85s/it]{'loss': '0.02565', 'grad_norm': '0.0386', 'learning_rate': '5.833e-06', 'num_tokens': '1.379e+05', 'completions/mean_length': '719.8', 'completions/min_length': '261', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.125', 'completions/mean_terminated_length': '676.4', 'completions/min_terminated_length': '261', 'completions/max_terminated_length': '909', 'rewards/r_GOLD/mean': '0.0625', 'rewards/r_GOLD/std': '0.2459', 'reward': '0.0625', 'reward_std': '0.2459', 'frac_reward_zero_std': '0.5', 'sampling/sampling_logp_difference/mean': '0.001345', 'sampling/sampling_logp_difference/max': '0.04254', 'sampling/importance_sampling_ratio/min': '0.7674', 'sampling/importance_sampling_ratio/mean': '0.9864', 'sampling/importance_sampling_ratio/max': '1.174', 'entropy': '0.5777', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '67.68', 'epoch': '0.06'}
+step 7 78.1s
+ 58%|█████▊    | 7/12 [07:43<05:45, 69.18s/it]                                               58%|█████▊    | 7/12 [07:43<05:45, 69.18s/it]{'loss': '0.003371', 'grad_norm': '0.02023', 'learning_rate': '5e-06', 'num_tokens': '1.65e+05', 'completions/mean_length': '664', 'completions/min_length': '234', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.09375', 'completions/mean_terminated_length': '626.8', 'completions/min_terminated_length': '234', 'completions/max_terminated_length': '1009', 'rewards/r_GOLD/mean': '0.03125', 'rewards/r_GOLD/std': '0.1768', 'reward': '0.03125', 'reward_std': '0.1768', 'frac_reward_zero_std': '0.75', 'sampling/sampling_logp_difference/mean': '0.0008764', 'sampling/sampling_logp_difference/max': '0.05392', 'sampling/importance_sampling_ratio/min': '0.8875', 'sampling/importance_sampling_ratio/mean': '1.018', 'sampling/importance_sampling_ratio/max': '1.202', 'entropy': '0.2205', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '74.99', 'epoch': '0.07'}
+step 8 64.3s
+ 67%|██████▋   | 8/12 [08:47<04:30, 67.64s/it]                                               67%|██████▋   | 8/12 [08:47<04:30, 67.64s/it]{'loss': '-0.01605', 'grad_norm': '0.06581', 'learning_rate': '4.167e-06', 'num_tokens': '1.831e+05', 'completions/mean_length': '484.4', 'completions/min_length': '187', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.03125', 'completions/mean_terminated_length': '467', 'completions/min_terminated_length': '187', 'completions/max_terminated_length': '984', 'rewards/r_GOLD/mean': '0.4688', 'rewards/r_GOLD/std': '0.507', 'reward': '0.4688', 'reward_std': '0.507', 'frac_reward_zero_std': '0.25', 'sampling/sampling_logp_difference/mean': '0.001177', 'sampling/sampling_logp_difference/max': '0.04598', 'sampling/importance_sampling_ratio/min': '0.8497', 'sampling/importance_sampling_ratio/mean': '1', 'sampling/importance_sampling_ratio/max': '1.126', 'entropy': '0.4543', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '61.64', 'epoch': '0.08'}
+step 9 64.8s
+ 75%|███████▌  | 9/12 [09:52<03:20, 66.74s/it]                                               75%|███████▌  | 9/12 [09:52<03:20, 66.74s/it]{'loss': '-0.05024', 'grad_norm': '0.04351', 'learning_rate': '3.333e-06', 'num_tokens': '2.015e+05', 'completions/mean_length': '485.3', 'completions/min_length': '94', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.1875', 'completions/mean_terminated_length': '361', 'completions/min_terminated_length': '94', 'completions/max_terminated_length': '696', 'rewards/r_GOLD/mean': '0.6875', 'rewards/r_GOLD/std': '0.4709', 'reward': '0.6875', 'reward_std': '0.4709', 'frac_reward_zero_std': '0.75', 'sampling/sampling_logp_difference/mean': '0.0008302', 'sampling/sampling_logp_difference/max': '0.05732', 'sampling/importance_sampling_ratio/min': '0.8676', 'sampling/importance_sampling_ratio/mean': '0.9875', 'sampling/importance_sampling_ratio/max': '1.144', 'entropy': '0.22', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '62.09', 'epoch': '0.09'}
+step 10 69.6s
+ 83%|████████▎ | 10/12 [11:01<02:15, 67.62s/it]                                                83%|████████▎ | 10/12 [11:01<02:15, 67.62s/it]{'loss': '-0.02808', 'grad_norm': '0.0296', 'learning_rate': '2.5e-06', 'num_tokens': '2.247e+05', 'completions/mean_length': '613.9', 'completions/min_length': '5', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.2188', 'completions/mean_terminated_length': '499.1', 'completions/min_terminated_length': '5', 'completions/max_terminated_length': '967', 'rewards/r_GOLD/mean': '0.125', 'rewards/r_GOLD/std': '0.336', 'reward': '0.125', 'reward_std': '0.336', 'frac_reward_zero_std': '0.75', 'sampling/sampling_logp_difference/mean': '0.001141', 'sampling/sampling_logp_difference/max': '0.04829', 'sampling/importance_sampling_ratio/min': '0.7855', 'sampling/importance_sampling_ratio/mean': '0.9797', 'sampling/importance_sampling_ratio/max': '1.165', 'entropy': '0.4215', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '66.88', 'epoch': '0.1'}
+step 11 68.3s
+ 92%|█████████▏| 11/12 [12:10<01:07, 67.83s/it]                                                92%|█████████▏| 11/12 [12:10<01:07, 67.83s/it]{'loss': '-0.04465', 'grad_norm': '0.04783', 'learning_rate': '1.667e-06', 'num_tokens': '2.443e+05', 'completions/mean_length': '482.2', 'completions/min_length': '56', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.0625', 'completions/mean_terminated_length': '446.1', 'completions/min_terminated_length': '56', 'completions/max_terminated_length': '987', 'rewards/r_GOLD/mean': '0.2812', 'rewards/r_GOLD/std': '0.4568', 'reward': '0.2812', 'reward_std': '0.4568', 'frac_reward_zero_std': '0.5', 'sampling/sampling_logp_difference/mean': '0.00107', 'sampling/sampling_logp_difference/max': '0.04629', 'sampling/importance_sampling_ratio/min': '0.8389', 'sampling/importance_sampling_ratio/mean': '0.9987', 'sampling/importance_sampling_ratio/max': '1.107', 'entropy': '0.3468', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '65.57', 'epoch': '0.11'}
+step 12 69.0s
+100%|██████████| 12/12 [13:19<00:00, 68.20s/it]                                               100%|██████████| 12/12 [13:19<00:00, 68.20s/it]                                               100%|██████████| 12/12 [13:19<00:00, 68.20s/it]100%|██████████| 12/12 [13:19<00:00, 66.60s/it]
+{'loss': '0.03036', 'grad_norm': '0.07384', 'learning_rate': '8.333e-07', 'num_tokens': '2.669e+05', 'completions/mean_length': '615.7', 'completions/min_length': '120', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.09375', 'completions/mean_terminated_length': '573.4', 'completions/min_terminated_length': '120', 'completions/max_terminated_length': '995', 'rewards/r_GOLD/mean': '0.4688', 'rewards/r_GOLD/std': '0.507', 'reward': '0.4688', 'reward_std': '0.507', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0007821', 'sampling/sampling_logp_difference/max': '0.03768', 'sampling/importance_sampling_ratio/min': '0.8614', 'sampling/importance_sampling_ratio/mean': '1.012', 'sampling/importance_sampling_ratio/max': '1.126', 'entropy': '0.2093', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '66.3', 'epoch': '0.12'}
+{'train_runtime': '799.2', 'train_samples_per_second': '0.48', 'train_steps_per_second': '0.015', 'train_loss': '0.004616', 'epoch': '0.12'}
+RESULT vllm median s/step 69.0406723022461
+CONFIG vllm exit=0 956s
+W1119 00:57:29.036000 344 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1119 00:57:29.037000 344 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1119 00:57:29.037000 344 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<04:37,  1.21it/s]Loading weights:  22%|██▏       | 75/338 [00:00<00:02, 109.25it/s]Loading weights:  34%|███▍      | 116/338 [00:01<00:01, 136.04it/s]Loading weights:  44%|████▍     | 148/338 [00:01<00:01, 135.81it/s]Loading weights:  51%|█████     | 173/338 [00:01<00:01, 138.69it/s]Loading weights:  58%|█████▊    | 195/338 [00:01<00:00, 146.67it/s]Loading weights:  64%|██████▎   | 215/338 [00:01<00:00, 154.83it/s]Loading weights:  70%|██████▉   | 235/338 [00:01<00:00, 152.15it/s]Loading weights:  75%|███████▌  | 255/338 [00:02<00:00, 162.47it/s]Loading weights:  81%|████████  | 274/338 [00:02<00:00, 151.69it/s]Loading weights:  86%|████████▌ | 291/338 [00:02<00:00, 138.47it/s]Loading weights:  93%|█████████▎| 315/338 [00:02<00:00, 150.57it/s]Loading weights: 100%|██████████| 338/338 [00:02<00:00, 134.08it/s]
-Traceback (most recent call last):
-  File "/kaggle/working/pilot.py", line 128, in main
-    try: run_one(a)
-         ~~~~~~~^^^
-  File "/kaggle/working/pilot.py", line 105, in run_one
-    tr = GRPOTrainer(model=a.model, reward_funcs=[make_reward(a.reward)], args=cfg, train_dataset=ds,
-                     peft_config=LoraConfig(r=16, lora_alpha=32, lora_dropout=0.0, task_type="CAUSAL_LM",
-                                            target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]),
-                     callbacks=[T()])
-  File "/usr/local/lib/python3.13/dist-packages/trl/trainer/grpo_trainer.py", line 525, in __init__
-    model = get_peft_model(model, peft_config, **get_peft_model_kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/mapping_func.py", line 198, in get_peft_model
-    return MODEL_TYPE_TO_PEFT_MODEL_MAPPING[peft_config.task_type](
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        model,
-        ^^^^^^
-    ...<3 lines>...
-        low_cpu_mem_usage=low_cpu_mem_usage,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/peft/peft_model.py", line 2082, in __init__
-    super().__init__(model, peft_config, adapter_name, **kwargs)
-    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/peft_model.py", line 177, in __init__
-    self.base_model = cls(model, {adapter_name: peft_config}, adapter_name)
-                      ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/tuners_utils.py", line 344, in __init__
-    self.inject_adapter(self.model, adapter_name, low_cpu_mem_usage=low_cpu_mem_usage, state_dict=state_dict)
-    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/tuners_utils.py", line 978, in inject_adapter
-    self._create_and_replace(
-    ~~~~~~~~~~~~~~~~~~~~~~~~^
-        peft_config, adapter_name, target, target_name, parent, current_key=key
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/model.py", line 389, in _create_and_replace
-    new_module = self._create_new_module(lora_config, adapter_name, target, device_map=device_map, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/model.py", line 552, in _create_new_module
-    new_module = dispatcher(target, adapter_name, config=lora_config, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/torchao.py", line 160, in dispatch_torchao
-    if not is_torchao_available():
-           ~~~~~~~~~~~~~~~~~~~~^^
-  File "/usr/local/lib/python3.13/dist-packages/peft/import_utils.py", line 162, in is_torchao_available
-    raise ImportError(
-    ...<2 lines>...
-    )
-ImportError: Found an incompatible version of torchao. Found version 0.10.0, but only versions above 0.16.0 are supported
-CONFIG hf exit=1 24s
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<03:42,  1.51it/s]Loading weights:  19%|█▊        | 63/338 [00:00<00:02, 110.85it/s]Loading weights:  29%|██▉       | 99/338 [00:00<00:01, 140.50it/s]Loading weights:  38%|███▊      | 128/338 [00:01<00:01, 147.17it/s]Loading weights:  45%|████▍     | 152/338 [00:01<00:01, 150.63it/s]Loading weights:  51%|█████▏    | 174/338 [00:01<00:01, 151.03it/s]Loading weights:  57%|█████▋    | 194/338 [00:01<00:00, 154.39it/s]Loading weights:  63%|██████▎   | 213/338 [00:01<00:00, 154.72it/s]Loading weights:  68%|██████▊   | 231/338 [00:01<00:00, 146.97it/s]Loading weights:  76%|███████▌  | 256/338 [00:01<00:00, 153.43it/s]Loading weights:  83%|████████▎ | 279/338 [00:02<00:00, 169.11it/s]Loading weights:  90%|████████▉ | 303/338 [00:02<00:00, 161.06it/s]Loading weights:  97%|█████████▋| 327/338 [00:02<00:00, 162.69it/s]Loading weights: 100%|██████████| 338/338 [00:02<00:00, 143.38it/s]
+  0%|          | 0/2 [00:00<?, ?it/s]step 1 203.9s
+ 50%|█████     | 1/2 [03:23<03:23, 203.88s/it]                                               50%|█████     | 1/2 [03:23<03:23, 203.88s/it]{'loss': '0.02241', 'grad_norm': '0.05359', 'learning_rate': '1e-05', 'num_tokens': '2.387e+04', 'completions/mean_length': '602.3', 'completions/min_length': '168', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.0625', 'completions/mean_terminated_length': '574.2', 'completions/min_terminated_length': '168', 'completions/max_terminated_length': '1011', 'rewards/r_GOLD/mean': '0.375', 'rewards/r_GOLD/std': '0.4919', 'reward': '0.375', 'reward_std': '0.4919', 'frac_reward_zero_std': '0.5', 'entropy': '0.5623', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '200.8', 'epoch': '0.01'}
+step 2 129.0s
+100%|██████████| 2/2 [05:32<00:00, 159.85s/it]                                              100%|██████████| 2/2 [05:32<00:00, 159.85s/it]                                              100%|██████████| 2/2 [05:32<00:00, 159.85s/it]100%|██████████| 2/2 [05:32<00:00, 166.45s/it]
+{'loss': '0.03937', 'grad_norm': '0.07848', 'learning_rate': '5e-06', 'num_tokens': '3.974e+04', 'completions/mean_length': '413.9', 'completions/min_length': '94', 'completions/max_length': '814', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '413.9', 'completions/min_terminated_length': '94', 'completions/max_terminated_length': '814', 'rewards/r_GOLD/mean': '0.3125', 'rewards/r_GOLD/std': '0.4709', 'reward': '0.3125', 'reward_std': '0.4709', 'frac_reward_zero_std': '0', 'entropy': '0.2524', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '126.8', 'epoch': '0.02'}
+{'train_runtime': '332.9', 'train_samples_per_second': '0.192', 'train_steps_per_second': '0.006', 'train_loss': '0.03089', 'epoch': '0.02'}
+RESULT hf median s/step 203.86981415748596
+CONFIG hf exit=0 355s
 DONE
 
-[exit code 0 after 6 min]
+[exit code 0 after 28 min]

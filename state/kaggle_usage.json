@@ -233,6 +233,20 @@
       "from_queue": true,
       "id": "391ebd5f46e94ab69d60dc530a492418",
       "finished": "2026-11-18T16:03:46+00:00"
+    },
+    {
+      "line": "experiments/m3-grpo/pilot.py 75",
+      "folder": "experiments/m3-grpo",
+      "kernel": "focarius/ember-m3-grpo",
+      "limit": 75,
+      "charged": 30,
+      "source": "commit 48246db, exploratory run, no prediction",
+      "submitted": "2026-11-19T00:35:02+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "ffa3d28fc8fa458cb5ec43ecc6e2d2f0",
+      "finished": "2026-11-19T01:04:15+00:00"
     }
   ]
 }
