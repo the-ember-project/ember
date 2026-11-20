@@ -211,3 +211,11 @@
 2026-11-19 15:55:02 file created: experiments/m3-grpo-main/run.py
 2026-11-19 15:56:39 prediction written: experiments/m3-grpo-main/README.md (9c3b66792a6c)
 2026-11-19 15:56:39 file created: experiments/m3-grpo-main/analyze.py
+# Session 33
+2026-11-20 00:42:13 file created: experiments/math-select/explore.py
+2026-11-20 00:43:41 file created: experiments/math-selfverify/sv.py
+2026-11-20 00:43:41 file created: experiments/m3-math/__pycache__/run.cpython-312.pyc
+2026-11-20 00:46:11 file created: experiments/math-selfverify/analyze.py
+2026-11-20 00:46:11 file created: experiments/math-selfverify/run_lab.sh
+2026-11-20 00:46:23 prediction written: experiments/math-selfverify/README.md (b380a279b473)
+2026-11-20 00:46:32 file created: experiments/math-select/explore.txt

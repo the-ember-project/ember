@@ -45,3 +45,9 @@ CoT/program complementarity is known: XoT (Liu et al., EMNLP'23, arXiv:2310.1462
 - **math-sc7 (#28, confirmatory, same 250 items):** SC7 (greedy+6 sampled CoT) 63.2 vs MIX7 60.4: MIX7−SC7 −2.8 (7/14, p=0.19) H1 FAIL as predicted; SC7−SC4 +7.2 (20/2, p=1e-4). Cost-matched (exploratory): SC5 59.1 at 5.0× ≈ MIX7 60.4 at 5.2×. **On MATH, voter count matters; format mixing doesn't** — PAL voters are about as good per token as sampled CoT and worse per voter (they abstain ~38%). Next: math-3b-sc (1.5B SC7 vs 3B greedy / 3B SC3 at matched compute).
 - **math-3b-sc (#31, confirmatory, same 250 items):** 3B greedy 68.0, 3B SC3 68.4 vs 1.5B SC7 63.2. H1 FAIL (SC7 −4.8 vs 3B greedy at 3.4× compute, p=0.08); H2 PASS (3B SC3 +5.2 over SC7 at matched compute, 24/11, p=0.041). Scale beats voting on MATH at 1.5B→3B; 3 voters add ~nothing at 3B (+0.4). Fits Snell 2408.03314.
 - **Verifiers for selection (#31, prior work):** Liu et al. 2502.06703 'Can 1B LLM surpass 405B?': small policies + PRM-guided TTS beat much larger models on MATH-500, but with 7B–72B PRMs (Skywork-PRM-1.5B also tested) and the verifier's compute not charged. On math-mix7/sc7 items 1.5B pass@7 = 78.0 vs SC7 63.2 vs 3B greedy 68.0: selection is the gap. Tested in math-verify with a 1.7B ORM, compute counted.
+
+## Answer selection on MATH at 1.5B (session #33, exploratory, math-select)
+pass@7 78.0 vs SC7 63.2 on n=250. Of the 37 recoverable misses, 30 have a single correct sample. Length heuristics
+(1/tokens weighting, shortest boxed) lose to SC7: short answers are worse at this scale. Ties cover only 12 items
+(≤ +4.8 from perfect tie-breaking). A verifier must overrule wrong pluralities. Tests: math-selfverify (self-P(True), CPU),
+math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle).
