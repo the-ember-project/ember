@@ -51,3 +51,9 @@ pass@7 78.0 vs SC7 63.2 on n=250. Of the 37 recoverable misses, 30 have a single
 (1/tokens weighting, shortest boxed) lose to SC7: short answers are worse at this scale. Ties cover only 12 items
 (≤ +4.8 from perfect tie-breaking). A verifier must overrule wrong pluralities. Tests: math-selfverify (self-P(True), CPU),
 math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle).
+- **math-selfverify (#34, confirmatory, n=250):** the 1.5B's own P(Yes) on 300-char tails: pooled AUROC 0.730 (H1 PASS)
+  but within-question only 0.677; it mostly tracks question difficulty (question-level AUROC 0.786; vote agreement 0.847).
+  Selection gains nothing: SVW −0.8, tie-break −0.4, BoN −7.6. On rescue items the best correct sample is ranked first
+  5/37 (~chance). Self-judging can't overrule wrong pluralities at 1.5B.
+- **Next selectors:** math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle) and math-conf (DeepConf 2508.15260 / self-
+  certainty 2502.18581 token confidence on the same samples, CPU lab; prediction written #34: DCF − SC8 +0.5, FAIL).

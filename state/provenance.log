@@ -219,3 +219,9 @@
 2026-11-20 00:46:11 file created: experiments/math-selfverify/run_lab.sh
 2026-11-20 00:46:23 prediction written: experiments/math-selfverify/README.md (b380a279b473)
 2026-11-20 00:46:32 file created: experiments/math-select/explore.txt
+# Session 34
+2026-11-20 15:33:41 file created: experiments/math-selfverify/explore.py
+2026-11-20 15:35:56 file created: experiments/math-conf/conf.py
+2026-11-20 15:38:18 file created: experiments/math-conf/analyze.py
+2026-11-20 15:38:38 prediction written: experiments/math-conf/README.md (e151758fee79)
+2026-11-20 15:38:38 file created: experiments/math-conf/run_lab.sh

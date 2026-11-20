@@ -25,3 +25,17 @@ self-verification with full solutions could do. If math-verify's full texts come
 - Exploratory: BoN vs SC7 (predicted ≈ −8), within-question AUROC, mean P(Yes).
 - Validity: Yes+No probability mass ≥ 0.9 on ≥ 95% of samples; all 250 items scored.
 - Reading: H1 fail → self-P(True) from a 1.5B is no verifier; next is a dedicated ORM (math-verify) or a trained verifier.
+
+## Results (lab run 2026-11-20, 114 min; confirmatory for H1–H3)
+Validity PASS: all 250 items scored; min Yes+No mass 0.993. Mean P(Yes) 0.892 (strong yes bias, as in the smoke test).
+
+| Hypothesis | Predicted | Measured | Verdict |
+|---|---|---|---|
+| H1 pooled AUROC ≥ 0.60 | 0.58 FAIL | **0.730** (853 pos / 897 neg) | **PASS** |
+| H2 SVW − SC7 ≥ +2, p<.05 | +0.0 FAIL | **−0.8** (4 fixed / 6 broken, p=0.75) | FAIL |
+| H3 SVtie − SC7 ≥ 0 | +0.4 PASS | **−0.4** (4/5, p=1) | FAIL |
+
+Exploratory: BoN (top self-score) 55.6, −7.6 vs SC7 (5/24, p=5e-4); pass@7 78.0. Within-question AUROC 0.677 (139 mixed questions).
+
+**Reading.** The 1.5B's P(Yes) carries real signal (H1 passed, against my prediction), but most of it is *question difficulty*, not which sample is right: post-hoc (`explore.py`, exploratory), the mean self-score predicts whether SC7 is right with AUROC 0.786, while within a question it separates right from wrong samples at only 0.677. On the 37 items that SC7 misses although a correct sample exists, the best correct sample is ranked first by self-score on 5/37 — about chance (30 of them have a lone correct sample, chance ≈ 1/7). So the self-judge cannot overrule wrong pluralities, and selection gains nothing. As a question-level confidence signal, vote agreement is better (AUROC 0.847); adding the self-score as a tie-break nudges it to 0.867 (exploratory, tuned-free but post-hoc).
+Caveat: the judge saw only the stored 300-character tails. A full-text rerun on math-verify's outputs is the planned follow-up (direct comparison with the Skywork ORM on the same samples).

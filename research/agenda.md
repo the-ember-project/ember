@@ -19,10 +19,13 @@
      2700–3699. Prediction in its README (H1 GOLD−BASE ≥ +2 p<.05, predicted +2.5). **Back →** `python experiments/m3-grpo-main/analyze.py`.
      Bigger-swing checkpoint moved from #33 to the session after this job returns (quota frees ~11-22): stop RL if H1 fails.
    - m3-stack (H4 settles M3 on GSM8K test) runs last; it is the least decision-relevant now.
-3. **CPU lab (#33): `math-selfverify/run_lab.sh 240`** — can the 1.5B grade its own MATH answers (P(Yes) on stored tails) well enough to beat SC7? Prediction: AUROC 0.58 (H1 ≥0.60 FAIL), SVW +0 (H2 FAIL). **Back →** read `experiments/math-selfverify/analysis.txt`. If math-verify returns with full texts, rerun the judge on them vs the Skywork ORM.
-   math-select (#33, exploratory): of 37 items SC7 misses with a correct sample present, 30 have exactly 1 correct of 7; length selectors lose to SC7; perfect tie-breaking ≤ +4.8.
-   GPU quota: frees 292 min ~11-20 19:36, 51 ~11-21 18:00, 351 ~11-22 00:07 → math-verify runs ~11-21, m3-grpo-main ~11-22.
-   Earlier: **CPU lab was free.** math-3b-sc done (#31): H2 PASS — at matched compute 3B SC3 beats 1.5B SC7 by +5.2 (p=0.04). M5 via voting alone is out of reach on MATH; M5 needs training (GRPO) + voting, or should be reframed at the 12-03 check.
+3. **CPU lab:** math-selfverify DONE (#34): self-P(Yes) AUROC 0.73 (H1 PASS) but mostly question difficulty
+   (within-q 0.68); SVW −0.8, tie-break −0.4 vs SC7 (H2, H3 FAIL). Self-judging can't overrule wrong pluralities.
+   **Next CPU job: math-conf** (DeepConf/self-certainty token confidence; prediction written #34). As soon as math-verify
+   is back (gen_1.5B.jsonl.gz present): queue `experiments/math-conf/run_lab.sh 290` (likely 2 lab runs), then analyze.py.
+   math-select (#33, exploratory): 30/37 rescuable SC7 misses have a lone correct sample; perfect tie-breaking ≤ +4.8.
+   GPU quota (1047/1440 at #34): math-verify should run right after #34; m3-grpo-main ~11-22.
+   math-3b-sc (#31): at matched compute 3B SC3 beats 1.5B SC7 by +5.2 (p=0.04): M5 needs training + selection, or reframing.
 4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
 
 5. **math-verify back →** `python experiments/math-verify/analyze.py`. Question: does a free 1.7B ORM (Skywork-Reward-V2) pick the right one of 8 1.5B samples (pass@7 was 78 vs SC7 63) well enough to reach 3B greedy? If H1 fails, next is a self-trained verifier.
