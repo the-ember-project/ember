@@ -247,6 +247,20 @@
       "from_queue": true,
       "id": "ffa3d28fc8fa458cb5ec43ecc6e2d2f0",
       "finished": "2026-11-19T01:04:15+00:00"
+    },
+    {
+      "line": "experiments/math-verify/job.py 110",
+      "folder": "experiments/math-verify",
+      "kernel": "focarius/ember-math-verify",
+      "limit": 110,
+      "charged": 77,
+      "source": "commit 01f2155, prediction 1344aff4c709",
+      "submitted": "2026-11-20T15:40:07+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "a58aa91417934421bef21b58e53ec7d7",
+      "finished": "2026-11-20T16:56:07+00:00"
     }
   ]
 }
