@@ -1,0 +1,7 @@
+n=250  mean P(Yes) 0.892  min Yes+No mass 0.993
+H1 pooled AUROC (logit sv, sample correct) = 0.730  (pos 853, neg 897); within-question mean AUROC = 0.677 over 139 mixed questions
+SC7     63.2  vs SC7  +0.0 (fixed 0 / broken 0) p=1
+SVW     62.4  vs SC7  -0.8 (fixed 4 / broken 6) p=0.7539
+SVtie   62.8  vs SC7  -0.4 (fixed 4 / broken 5) p=1
+BoN     55.6  vs SC7  -7.6 (fixed 5 / broken 24) p=0.0005461
+pass@7  78.0  vs SC7 +14.8 (fixed 37 / broken 0) p=1.455e-11
