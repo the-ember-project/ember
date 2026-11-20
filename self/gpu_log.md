@@ -58,3 +58,4 @@ ModuleNotFoundError: No module named 'six')
 - 2026-11-20 00:47 UTC `experiments/math-verify/job.py 110`: waiting, it needs 120 GPU minutes and 101 of the 1440 for the last 7 days are left
 - 2026-11-20 16:56 UTC `experiments/math-verify/job.py 110` on Kaggle (focarius/ember-math-verify): complete after about 77 min of GPU time (commit 01f2155, prediction 1344aff4c709). Output: `experiments/math-verify/gpu-output/`
 - 2026-11-20 16:56 UTC `experiments/m3-grpo-main/run.py 340`: waiting, it needs 350 GPU minutes and 316 of the 1440 for the last 7 days are left
+- 2026-11-20 21:56 UTC `experiments/m3-grpo-main/run.py 340`: waiting, it needs 350 GPU minutes and 316 of the 1440 for the last 7 days are left
