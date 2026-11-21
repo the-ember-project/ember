@@ -1,0 +1,6 @@
+items 317, mixed 235, scored 235; samples finite 1880/1880 (100.0%, need >=95); length-aligned 99.9% (need >=90)
+Traceback (most recent call last):
+  File "/home/runner/work/ember/ember/experiments/math-conf/analyze.py", line 34, in <module>
+    if RM is not None: acc["WSC8_rm17"][i] = ok(wvote(ans, [sig(x) for x in RM[str(i)]]), g)
+                                                                            ~~^^^^^^^^
+KeyError: '1441'
