@@ -20,7 +20,7 @@ def auroc(pos, neg):
     return sum((p > q) + 0.5 * (p == q) for p in pos for q in neg) / (len(pos) * len(neg))
 def sig(x): return 1 / (1 + math.exp(-x))
 G = {r["idx"]: r for r in (json.loads(l) for l in gzip.open(os.path.join(D, "gen_1.5B.jsonl.gz"), "rt"))}
-RMp = os.path.join(D, "rm_1.5B_rm17.json"); RM = json.load(open(RMp)) if os.path.exists(RMp) else None
+RMp = os.path.join(D, "rm_1.5B_rm17.json"); RM = json.load(open(RMp))["scores"] if os.path.exists(RMp) else None
 C = {r["idx"]: r for r in (json.loads(l) for l in open(CF) if l.strip())}
 mixed = [i for i, r in G.items() if len({key(x) for x in r["ans"]} - {None}) >= 2]
 nf = sum(len(C[i]["feats"]) for i in mixed if i in C); ok_f = sum(f is not None for i in mixed if i in C for f in C[i]["feats"])

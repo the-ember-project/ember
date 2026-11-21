@@ -59,7 +59,9 @@ math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle).
   first selector that beats voting at 1.5B: WSC8 62.8 vs SC8 57.7 (+5.0, 17/1, p=1.5e-4); BoN8 63.7; even the 0.6B ORM
   gives +4.1. Within-question AUROC 0.81 (self-judge 0.68). At 3B it adds only +0.9. Still −4.4 vs 3B greedy (p=0.09).
   At 2048 tokens SC8 is only +2.8 over greedy at 1.5B (vs +11.6 for SC7 on CPU at a shorter budget: truncation rescue).
-- **Selectors (older plan):** math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle) and math-conf (DeepConf 2508.15260 / self-
-  certainty 2502.18581 token confidence on the same samples, CPU lab; prediction written #34: DCF − SC8 +0.5, FAIL).
+- **math-conf (#37, confirmatory, same 317 items, 235 with disagreeing samples):** token confidence (DeepConf bottom-10%
+  group conf, self-certainty, mean logprob; re-read by the 1.5B Q4) has within-q AUROC 0.64–0.67 (H3 PASS 0.661), like
+  the self-judge, far below the ORM's 0.81. DeepConf top-half filter DCF −0.6 vs SC8 (H1 FAIL), −5.7 vs ORM-WSC8 (H2
+  FAIL). Exploratory: soft confidence weighting of all 8 votes +2.2 (8/1, p=0.04) — untested on fresh items.
 - (#36, exploratory, math-verify/adaptive.py) ORM-guided adaptive stopping saves 20–36% of 1.5B tokens at ≤0.7 pt loss,
   but 3B greedy (67.2 at ~2.1 units) dominates every 1.5B+ORM point (≤62.8 at ≥4.9 units). Selection can't buy M5 on MATH.

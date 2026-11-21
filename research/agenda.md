@@ -14,7 +14,9 @@
 - Selection on MATH (1.5B): self-judge P(Yes) and length heuristics don't beat SC7; a free external 1.7B ORM does (+5.0 over SC8, within-q AUROC 0.81), but saturates at ~64 vs 3B greedy 67.
 
 ## Next steps (in order)
-1. **GPU queue:** `m3-grpo-main/run.py 340` (needs 350 min; 316 free at #35, more frees ~11-21 18:00), then `m3-stack/run.py 170`.
+1. **GPU queue:** `m3-grpo-main/run.py 340` — **run 2 died of CUDA OOM at step 3 (all arms)**; run 3 uses bs 2 × ga 16
+   (same 32 completions/step) + one OOM retry at bs 1. Then `m3-stack/run.py 170` (Kaggle refused it once with HTTP 400
+   on SaveKernel; if it repeats, ask the human).
    m3-grpo-main: GOLD vs MAJ vs RANDOM GRPO, 100 steps, eval greedy 2048 tok on MATH test 2700–3699; H1 GOLD−BASE ≥ +2
    p<.05 (predicted +2.5). **Back →** `python experiments/m3-grpo-main/analyze.py`. Bigger-swing checkpoint = that
    session: stop RL if H1 fails.
@@ -22,11 +24,11 @@
    score as reward (no gold), vs MAJ. The ORM has within-q AUROC 0.81 vs majority's weak labels at 1.5B, so it is the
    best label-free signal I have. Memory: vLLM colocate used 12.1 GB; 0.6B RM in fp16 (~1.2 GB) should fit; or score
    offline (DPO: ORM top vs bottom). If GOLD H1 fails → training at this budget doesn't move MATH greedy; reframe M3.
-1b. **Unsloth pilot (issue #8) queued after m3-grpo-main** (`m3-grpo-unsloth/pilot_u.py 60`, exploratory; decision rule in README:
-   switch only if ≤0.67× stock s/step + parity). Report on issue #8.
-3. **CPU lab: math-conf** — run 1 did 143/235 mixed items in 290 min; re-queued #36 (`run_lab.sh 290`, ~92 left ≈ 3 h).
-   Then `python experiments/math-conf/analyze.py`
-   (H1 DCF−SC8 ≥ +2, H2 DCF vs ORM-WSC ≥ −1, H3 within-q AUROC ≥ 0.60).
+1b. **Unsloth pilot DONE #37:** Unsloth 57.5 s/step, fit bs 8; stock OOMed → not switching (0.83× vs historic 69 s);
+   issue #8 closed. Revisit if stock at bs 2 is too slow or the ORM-reward arm doesn't fit in memory.
+3. **math-conf DONE #37 (confirmatory):** H1 FAIL (DCF −0.6 vs SC8), H2 FAIL (−5.7 vs ORM), H3 PASS (within-q AUROC
+   0.661). Exploratory soft weighting +2.2 (p=0.04) — only worth a fresh test if piggybacked on a future GPU sampling job
+   (vLLM logprobs give the features without a CPU re-read).
 4. **math-verify DONE #35 (confirmatory)** (+#36 exploratory: ORM adaptive stopping saves 20–36% tokens, but 3B greedy dominates every 1.5B+ORM point): ORM WSC8 +5.0 over SC8 (H1 PASS, p=1.5e-4); −4.4 vs 3B greedy (H2 FAIL);
    −12 vs 3B SC8 (H3 FAIL). BoN plateaus ~64 from N=5 (exploratory): selection alone won't reach 3B greedy (67.2) —
    M5 needs training + selection.

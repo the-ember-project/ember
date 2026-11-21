@@ -211,7 +211,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", default="driver"); ap.add_argument("--arm", default="GOLD"); ap.add_argument("--arms", default="BASE")
     ap.add_argument("--model", default="Qwen/Qwen2.5-1.5B-Instruct"); ap.add_argument("--vllm", type=int, default=1)
-    ap.add_argument("--steps", type=int, default=100); ap.add_argument("--bs", type=int, default=8); ap.add_argument("--ga", type=int, default=4)
+    ap.add_argument("--steps", type=int, default=100); ap.add_argument("--bs", type=int, default=2); ap.add_argument("--ga", type=int, default=16)  # run 2: bs 8 OOMed (logits of 8x1024 tokens)
     ap.add_argument("--ng", type=int, default=8); ap.add_argument("--max_new", type=int, default=1024); ap.add_argument("--lr", type=float, default=3e-5)
     ap.add_argument("--seed", type=int, default=7); ap.add_argument("--max_train_min", type=float, default=150)
     ap.add_argument("--n_test", type=int, default=1000); ap.add_argument("--test_off", type=int, default=2700)
@@ -236,7 +236,7 @@ def main():
     ngpu = int(subprocess.run("nvidia-smi -L | wc -l", shell=True, capture_output=True, text=True).stdout.strip() or 1)
     L = lambda n: f"/tmp/log_{n}.txt"
     # ---- in-job smoke: 1 GRPO step per arm (two in parallel if 2 GPUs), then a 4-item eval of BASE + both adapters
-    sm = ["--tag", "smoke_", "--steps", "1", "--ga", "1", "--out", "/tmp/m3grpo_smoke"]
+    sm = ["--tag", "smoke_", "--steps", "1", "--ga", "4", "--out", "/tmp/m3grpo_smoke"]  # bs2*ga4 = 8 = one prompt group
     par = ngpu >= 2
     rcs = wait_all([launch(["--mode", "train", "--arm", "GOLD"] + sm, 0, 1200, "/tmp/sm_g.log"),
                     launch(["--mode", "train", "--arm", "MAJ"] + sm, 1 if par else 0, 1200, "/tmp/sm_m.log")] if par else
@@ -249,14 +249,22 @@ def main():
     if rcs[0] != 0: os.system("tail -60 /tmp/sm_e.log"); print("SMOKE EVAL FAILED; stopping"); sys.exit(1)
     print(f"SMOKE OK parallel={par}", flush=True)
     T, E = 170 * 60, 75 * 60
+    def oom(arm): return "OutOfMemoryError" in open(L(f"train_{arm}")).read()
+    def retry(arms_gpus, rcs):  # run 2 lesson: on CUDA OOM, rerun that arm once with bs 1 x ga 32 (same 32 completions/step)
+        bad = [(arm, g) for (arm, g), rc in zip(arms_gpus, rcs) if rc != 0 and oom(arm)]
+        if bad:
+            print("OOM retry with bs=1:", bad, flush=True)
+            wait_all([launch(["--mode", "train", "--arm", arm, "--bs", "1", "--ga", "32"], g, T, L(f"train_{arm}")) for arm, g in bad])
     if par:
-        wait_all([launch(["--mode", "train", "--arm", "GOLD"], 0, T, L("train_GOLD")), launch(["--mode", "train", "--arm", "MAJ"], 1, T, L("train_MAJ"))])
-        wait_all([launch(["--mode", "train", "--arm", "RANDOM"], 0, T, L("train_RANDOM")),
-                  launch(["--mode", "eval", "--arms", "BASE,GOLD,MAJ"], 1, E, L("eval_1"))])
+        ag = [("GOLD", 0), ("MAJ", 1)]
+        retry(ag, wait_all([launch(["--mode", "train", "--arm", arm], g, T, L(f"train_{arm}")) for arm, g in ag]))
+        rr = wait_all([launch(["--mode", "train", "--arm", "RANDOM"], 0, T, L("train_RANDOM")),
+                       launch(["--mode", "eval", "--arms", "BASE,GOLD,MAJ"], 1, E, L("eval_1"))])
+        retry([("RANDOM", 0)], rr[:1])
         wait_all([launch(["--mode", "eval", "--arms", "RANDOM"], 0, E, L("eval_2"))])
     else:  # deciding arm first
         for arm, ev in (("GOLD", "BASE,GOLD"), ("MAJ", "MAJ"), ("RANDOM", "RANDOM")):
-            wait_all([launch(["--mode", "train", "--arm", arm], 0, T, L(f"train_{arm}"))])
+            retry([(arm, 0)], wait_all([launch(["--mode", "train", "--arm", arm], 0, T, L(f"train_{arm}"))]))
             wait_all([launch(["--mode", "eval", "--arms", ev], 0, E, L(f"eval_{arm}"))])
     for n in os.listdir("/tmp"):  # keep small filtered logs; gzip big per-item files
         if n.startswith("log_"): os.system(f"grep -vE 'it/s]|s/it]|Loading weights' /tmp/{n} | tail -400 > {a.out}/{n}")

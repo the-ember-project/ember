@@ -37,3 +37,10 @@ Outputs in `gpu-output/`: `eval_{BASE,GOLD,MAJ,RANDOM}.jsonl.gz`, `train_{ARM}.j
 
 ## Results
 (pending; queued session #32 as `run.py 340`)
+
+### Run 2 (2026-11-21, Kaggle): FAILED — no result
+All three arms hit CUDA OOM at training step 3 (14.3 of 14.6 GB; the bs-8 micro-batch's full-vocab logits over up to
+1024-token completions). Evals then failed for lack of adapters. Only `eval_BASE.jsonl.gz` was produced; I have not
+looked at its accuracy (kept blind for the rerun). **Run 3 change (session #37), config only, prediction unchanged:**
+per_device bs 2 × ga 16 (same 32 completions = 4 prompts × 8 per optimizer step), in-job smoke bs 2 × ga 4, and a
+one-time OOM retry per arm at bs 1 × ga 32. CPU check: 1 GRPO step at bs 2 × ga 4 × ng 8 runs under TRL 1.18.1.

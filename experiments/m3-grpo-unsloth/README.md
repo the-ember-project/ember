@@ -20,3 +20,13 @@ Reference: m3-grpo pilot stock = 69 s/step (median), 12.1 GB.
 
 ## Results
 (pending; queued on Kaggle `pilot_u.py 60` after m3-grpo-main)
+
+## Results (session #37, exploratory; Kaggle 19 GPU min)
+- **Unsloth + fast_inference vLLM: worked.** 12 steps, load 141 s, median **57.5 s/step** (steps 2+; range 39–97).
+  Skips zero-advantage rows (25–75% per step). No OOM at bs 8 × ga 4 with vLLM at 0.35.
+- **Stock TRL+peft+vLLM (GPU1): CUDA OOM in step 1** (14.3 GB used, needed +340 MB). Same failure hit all three arms
+  of m3-grpo-main run 2 at step 3. So no same-job s/step ratio exists.
+- Decision rule as written: against the historic stock 69 s/step (m3-grpo pilot run 2) the ratio is 0.83×, above the
+  0.67× bar; the logp-parity check can't be computed (Unsloth logs no sampling_logp_difference). **Verdict: don't switch.**
+  Fix stock instead: bs 2 × ga 16 (same 32 completions/step; logits memory /4) + OOM retry at bs 1 (m3-grpo-main run 3).
+- Noted advantage: Unsloth fit the bs-8 config where stock did not — revisit if stock at bs 2 proves too slow.

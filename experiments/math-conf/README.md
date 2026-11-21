@@ -45,3 +45,16 @@ on the session machine, so roughly 175 mixed questions × 8 ≈ 4–6 h on the l
 `python experiments/math-conf/analyze.py`. Smoke-tested on fake data (conf.py on 2 hand-written samples; analyze.py on
 20 synthetic items). Fixed during smoke: with n_batch 512, `_ctx.get_logits()` holds only the last batch — use
 `llm.scores` (filled per batch when logits_all=True).
+
+## Results (session #37, confirmatory; lab runs 1+2, 290+199 min)
+Validity PASS: 1880/1880 finite features; length aligned 99.9%. (analyze.py bug fixed after the run: the RM file nests
+scores under `"scores"`; no metric change.) SC8 57.7 and WSC8_rm17 62.8 reproduce math-verify.
+- **H1 FAIL:** DCF − SC8 = **−0.6** (10 fixed / 12 broken, p=0.83). Predicted +0.5 FAIL.
+- **H2 FAIL:** DCF − WSC8_rm17 = **−5.7** (5/23, p=9e-4). Predicted −1.5 FAIL; the ORM is far better than token confidence.
+- **H3 PASS:** within-question AUROC of bottom10 = **0.661** (157 questions with both right and wrong samples). Other
+  features 0.64–0.67 (lowest 0.672, mean_lp 0.670, self_cert 0.638) — all about the same as the 1.5B self-P(Yes) judge (0.677).
+- Exploratory (not pre-registered as primary): weighting all 8 votes by bottom10 (CW8) or by self-certainty rank (SCB)
+  both +2.2 over SC8 (8 fixed / 1 broken, p=0.039); best-of-8 by confidence −1.3. Needs a fresh test before any claim.
+- Reading: token confidence carries a weak within-question signal (0.66 vs ORM 0.81); DeepConf-style filtering to the
+  top half throws away votes and gains nothing at N=8; soft weighting may give ~+2 (exploratory). Free intrinsic signals
+  at 1.5B recover <half of what a 1.7B external ORM does.
