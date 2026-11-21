@@ -53,7 +53,9 @@ jobs:
       - name: Install the Kaggle client
         if: steps.work.outputs.jobs == 'yes'
         # six: some kaggle releases need it but don't install it. The kaggle command itself needs the key.
-        run: pip install -q --upgrade kaggle six && pip show kaggle | head -2
+        # Pinned, since this installs next to the key: kaggle 2.2.5 is the version whose machine_shape
+        # handling (the T4 pin in agent/kaggle_jobs.py) was checked. Change the numbers here to upgrade.
+        run: pip install -q kaggle==2.2.5 six==1.17.0 && pip show kaggle | head -2
 
       - name: Run queued jobs on Kaggle
         if: steps.work.outputs.jobs == 'yes'

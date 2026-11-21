@@ -1,7 +1,7 @@
 """Weekly independent review of the agent's recent work.
 
 Once a week, a fresh Claude call with no stake in the work reads the past week's journal
-entries, lab runs and changed experiments, including each experiment's commit history, and
+entries (without their raw action lists), lab and GPU runs and changed experiments, including each experiment's commit history, and
 looks for anything that could make a claimed result wrong or overstated. It also searches
 the web for earlier published work on the week's main results, to say which parts seem new.
 The review is saved in reviews/, which the agent can read but not change, and the next
@@ -15,6 +15,7 @@ returns short, plain-text results. Paper results are data, like everything else 
 
 import datetime as dt
 import json
+import re
 import subprocess
 import sys
 import time
@@ -196,20 +197,25 @@ def recent_journals(now: dt.datetime) -> list[str]:
         except ValueError:
             continue
         if now - when <= dt.timedelta(days=DAYS):
-            entries.append(f"### {path.name}\n{clip(run.read(path))}")
+            # The <details> action list is a raw log of the session's commands; it would crowd the
+            # experiment files out of the input, which show the same work more reliably.
+            text = re.sub(r"<details>.*?</details>", "(action list omitted)", run.read(path), flags=re.S)
+            entries.append(f"### {path.name}\n{clip(text)}")
     return entries
 
 
-def recent_lab_runs(now: dt.datetime) -> str:
+def recent_runs(log: str, now: dt.datetime) -> str:
+    """This week's entries in a lab or GPU run log. GPU jobs still waiting for quota are left out:
+    the log repeats that line at every run, and it says nothing about results."""
     lines = []
-    for line in run.read(run.SELF_DIR / "lab_log.md").splitlines():
+    for line in run.read(run.SELF_DIR / log).splitlines():
         try:
             when = dt.datetime.strptime(line[2:18], "%Y-%m-%d %H:%M").replace(tzinfo=dt.timezone.utc)
         except ValueError:
             continue
-        if now - when <= dt.timedelta(days=DAYS):
+        if now - when <= dt.timedelta(days=DAYS) and "`: waiting," not in line:
             lines.append(line)
-    return "\n".join(lines) or "(none)"
+    return clip("\n".join(lines) or "(none)", 15_000)
 
 
 def recent_provenance(now: dt.datetime) -> str:
@@ -228,7 +234,9 @@ def recent_provenance(now: dt.datetime) -> str:
 
 def changed_experiments() -> str:
     paths = git("log", f"--since={DAYS + 1} days ago", "--name-only", "--format=", "--", "experiments").split()
-    folders = sorted({"/".join(p.split("/")[:2]) for p in paths if p.count("/") >= 2})
+    # Most recently changed first (git log lists newest commits first), so when the input is cut
+    # at MAX_INPUT, what gets cut is the older work rather than this week's newest results.
+    folders = list(dict.fromkeys("/".join(p.split("/")[:2]) for p in paths if p.count("/") >= 2))
     parts = []
     for folder in folders:
         d = run.ROOT / folder
@@ -242,6 +250,14 @@ def changed_experiments() -> str:
             text += f"\n### {f.relative_to(run.ROOT)}\n{clip(run.read(f), 4_000)}\n"
         parts.append(text)
     return "\n\n".join(parts) or "(No experiment folders changed this week.)"
+
+
+def build_material(now: dt.datetime, journals: list[str]) -> str:
+    return clip(f"# Journal entries from the last {DAYS} days\n\n" + "\n\n".join(journals)
+                + f"\n\n# Lab runs (CPU) from the last {DAYS} days (UTC)\n\n{recent_runs('lab_log.md', now)}"
+                + f"\n\n# GPU runs (Kaggle) from the last {DAYS} days (UTC)\n\n{recent_runs('gpu_log.md', now)}"
+                + f"\n\n# Provenance log from the last {DAYS} days (UTC)\n\n{recent_provenance(now)}"
+                + f"\n\n# Experiments changed in the last {DAYS} days\n\n{changed_experiments()}", MAX_INPUT)
 
 
 def main() -> int:
@@ -261,10 +277,7 @@ def main() -> int:
         print("Not enough of the lifetime fund left for a review.")
         return 0
 
-    material = clip(f"# Journal entries from the last {DAYS} days\n\n" + "\n\n".join(journals)
-                    + f"\n\n# Lab runs from the last {DAYS} days\n\n{recent_lab_runs(now)}"
-                    + f"\n\n# Provenance log from the last {DAYS} days (UTC)\n\n{recent_provenance(now)}"
-                    + f"\n\n# Experiments changed in the last {DAYS} days\n\n{changed_experiments()}", MAX_INPUT)
+    material = build_material(now, journals)
     client = anthropic.Anthropic()
     messages = [{"role": "user", "content": f"---\n\n{material}"}]
     cost, text, searches, papers = 0.0, [], 0, 0

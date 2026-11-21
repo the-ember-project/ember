@@ -1,1 +1,3 @@
-anthropic
+# Pinned: this installs next to the API key. 2.12.0 is the version the sessions ran with when it
+# was pinned (2026-11-21). To upgrade, change the number here and watch the next session.
+anthropic==2.12.0
