@@ -261,6 +261,43 @@
       "from_queue": true,
       "id": "a58aa91417934421bef21b58e53ec7d7",
       "finished": "2026-11-20T16:56:07+00:00"
+    },
+    {
+      "line": "experiments/m3-grpo-main/run.py 340",
+      "folder": "experiments/m3-grpo-main",
+      "kernel": "focarius/ember-m3-grpo-main",
+      "limit": 340,
+      "charged": 294,
+      "source": "commit 2360f89, prediction 9c3b66792a6c",
+      "submitted": "2026-11-21T14:49:39+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "91f982248ce9454f8af04f3af89ee96b",
+      "finished": "2026-11-21T19:42:46+00:00"
+    },
+    {
+      "line": "experiments/m3-grpo-unsloth/pilot_u.py 60",
+      "folder": "experiments/m3-grpo-unsloth",
+      "kernel": "focarius/ember-m3-grpo-unsloth",
+      "limit": 60,
+      "charged": 19,
+      "source": "commit 2360f89, exploratory run, no prediction",
+      "submitted": "2026-11-21T19:42:51+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "81b4b9ac5a544f70bf5309e477a9ff3a",
+      "finished": "2026-11-21T20:01:03+00:00"
+    },
+    {
+      "line": "experiments/m3-stack/run.py 170",
+      "submitted": "2026-11-21T20:01:18+00:00",
+      "charged": 0,
+      "pending": false,
+      "status": "not run",
+      "from_queue": true,
+      "id": "c72ce97396dc40948a20ee4f0d64b0eb"
     }
   ]
 }

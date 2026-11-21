@@ -1,0 +1,67 @@
+Tesla T4, 15360 MiB
+Tesla T4, 15360 MiB
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+grpcio-tools 1.85.1 requires protobuf<8.0.0,>=7.35.1, but you have protobuf 6.33.6 which is incompatible.
+ydata-profiling 4.18.4 requires numba<0.63,>=0.60, but you have numba 0.65.0 which is incompatible.
+cuml-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
+cudf-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
+gradio 6.30.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.
+google-adk 2.7.1 requires opentelemetry-api<=1.42.1,>=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.
+google-adk 2.7.1 requires opentelemetry-sdk<=1.42.1,>=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.
+INSTALL 126s
+GPU 0: Tesla T4 (UUID: GPU-ef51236e-7ac2-3448-d369-f72e92599b5e)
+GPU 1: Tesla T4 (UUID: GPU-68017e68-d4e0-7339-7490-5fdfff2972f8)
+peft                                     0.21.2
+torch                                    2.11.0+cu130
+torchao                                  0.18.0
+transformers                             5.17.0
+trl                                      1.15.0
+unsloth                                  2026.11.9
+unsloth_zoo                              2026.11.8
+vllm                                     0.26.0
+=== /kaggle/working/log_unsloth.txt exit=0 914s
+Unsloth: vLLM loading unsloth/Qwen2.5-1.5B-Instruct with actual GPU utilization = 34.64%
+Unsloth: Your GPU has CUDA compute capability 7.5 with VRAM = 14.56 GB.
+Unsloth: Using conservativeness = 1.0. Chunked prefill tokens = 2048. Num Sequences = 8.
+Unsloth: vLLM's KV Cache can use up to 1.98 GB. Swap space is left to vLLM.
+Unsloth: Compiling kernels: 0it [00:00, ?it/s]Unsloth: Compiling kernels: 0it [00:00, ?it/s]
+Unsloth: Compiling kernels:   0%|          | 0/5 [00:00<?, ?it/s]Unsloth: Compiling kernels:   0%|          | 0/5 [00:00<?, ?it/s, triton_red_fused_fused_add_rms_norm_0]Unsloth: Compiling kernels:  20%|██        | 1/5 [00:00<00:02,  1.61it/s, triton_red_fused_fused_add_rms_norm_0]Unsloth: Compiling kernels:  20%|██        | 1/5 [00:00<00:02,  1.61it/s, triton_poi_fused_mul_silu_slice_1]    Unsloth: Compiling kernels:  40%|████      | 2/5 [00:00<00:01,  1.61it/s, triton_red_fused_fused_add_rms_norm_2]Unsloth: Compiling kernels:  60%|██████    | 3/5 [00:01<00:00,  3.30it/s, triton_red_fused_fused_add_rms_norm_2]Unsloth: Compiling kernels:  60%|██████    | 3/5 [00:01<00:00,  3.30it/s, triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_3]Unsloth: Compiling kernels:  80%|████████  | 4/5 [00:01<00:00,  3.30it/s, triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_4]Unsloth: Compiling kernels: 100%|██████████| 5/5 [00:01<00:00,  4.54it/s, triton_poi_fused_add_cat_index_select_mul_split_split_with_sizes_sub_unsqueeze_view_4]
+Unsloth: Compiling kernels:   0%|          | 0/3 [00:00<?, ?it/s]Unsloth: Compiling kernels:   0%|          | 0/3 [00:00<?, ?it/s, triton_red_fused_fused_add_rms_norm_0]Unsloth: Compiling kernels:  33%|███▎      | 1/3 [00:00<00:00, 515.71it/s, triton_poi_fused_mul_silu_slice_1]Unsloth: Compiling kernels:  67%|██████▋   | 2/3 [00:00<00:00, 582.26it/s, triton_red_fused_fused_add_rms_norm_2]Unsloth: Compiling kernels: 100%|██████████| 3/3 [00:00<00:00, 14.64it/s, triton_red_fused_fused_add_rms_norm_2] Unsloth: Compiling kernels: 100%|██████████| 3/3 [00:00<00:00, 14.62it/s, triton_red_fused_fused_add_rms_norm_2]
+Unsloth: Just some info: will skip parsing ['norm1', 'post_attention_layernorm', 'input_layernorm', 'post_feedforward_layernorm', 'pre_feedforward_layernorm', 'norm', 'norm2', 'pre_feedforward_layernorm_2', 'attention_norm', 'ffn_norm', 'post_layernorm', 'post_per_layer_input_norm', 'q_norm', 'post_feedforward_layernorm_2', 'k_norm', 'k_layernorm', 'post_feedforward_layernorm_1', 'operator_norm', 'layer_norm2', 'q_layernorm', 'layer_norm1']
+Unsloth 2026.11.9 patched 28 layers with 28 QKV layers, 28 O layers and 28 MLP layers.
+==((====))==  Unsloth - 2x faster free finetuning | Num GPUs used = 1
+Unsloth: Just some info: will skip parsing ['norm1', 'post_attention_layernorm', 'input_layernorm', 'post_feedforward_layernorm', 'pre_feedforward_layernorm', 'norm', 'norm2', 'pre_feedforward_layernorm_2', 'attention_norm', 'cross_attn_post_attention_layernorm', 'ffn_norm', 'cross_attn_input_layernorm', 'post_layernorm', 'post_per_layer_input_norm', 'q_norm', 'post_feedforward_layernorm_2', 'k_norm', 'k_layernorm', 'post_feedforward_layernorm_1', 'operator_norm', 'layer_norm2', 'q_layernorm', 'layer_norm1']
+Unsloth: compiling each transformer block as one region (Qwen2DecoderLayer).
+Unsloth: Merged-weight rollouts on (all, automatic): folding the adapter into 196 shared weights; exact fold / unfold, no pristine copy (only non-round-tripping elements are kept, in pinned host memory).
+Unsloth: exact merged rollout restores 622 of 1,310,195,712 weights (0.00%) from a 0.6 MB host store.
+Unsloth: Will smartly offload gradients to save VRAM!
+Unsloth: packed / padding-free rows run each transformer block uncompiled; only unpacked batches use the compiled blocks.
+Unsloth: Double buffering enabled (parallel H2D + compute) for backward pass.
+step 1 96.6s
+step 2 39.5s
+Unsloth: exact merged rollout restores 109,992 of 1,310,195,712 weights (0.01%) from a 1.2 MB host store.
+step 3 57.5s
+Unsloth: exact merged rollout restores 280,583 of 1,310,195,712 weights (0.02%) from a 2.2 MB host store.
+step 4 61.8s
+Unsloth: exact merged rollout restores 404,611 of 1,310,195,712 weights (0.03%) from a 2.9 MB host store.
+step 5 40.6s
+Unsloth: exact merged rollout restores 488,467 of 1,310,195,712 weights (0.04%) from a 3.4 MB host store.
+step 6 68.5s
+Unsloth: exact merged rollout restores 555,664 of 1,310,195,712 weights (0.04%) from a 3.8 MB host store.
+step 7 68.2s
+Unsloth: exact merged rollout restores 603,386 of 1,310,195,712 weights (0.05%) from a 4.1 MB host store.
+step 8 46.6s
+Unsloth: exact merged rollout restores 637,491 of 1,310,195,712 weights (0.05%) from a 4.3 MB host store.
+step 9 47.5s
+Unsloth: exact merged rollout restores 662,165 of 1,310,195,712 weights (0.05%) from a 4.4 MB host store.
+step 10 60.3s
+Unsloth: exact merged rollout restores 678,727 of 1,310,195,712 weights (0.05%) from a 4.5 MB host store.
+step 11 45.8s
+Unsloth: exact merged rollout restores 688,331 of 1,310,195,712 weights (0.05%) from a 4.5 MB host store.
+step 12 75.0s
+RESULT unsloth median s/step (steps 2+) 57.52373743057251
+=== /kaggle/working/log_stock.txt exit=1 915s
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 340.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 266.81 MiB is free. Including non-PyTorch memory, this process has 14.30 GiB memory in use. Of the allocated memory 13.46 GiB is allocated by PyTorch, with 36.88 MiB allocated in private pools (e.g., CUDA Graphs), and 627.86 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+DONE
+
+[exit code 0 after 17 min]
