@@ -61,3 +61,5 @@ math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle).
   At 2048 tokens SC8 is only +2.8 over greedy at 1.5B (vs +11.6 for SC7 on CPU at a shorter budget: truncation rescue).
 - **Selectors (older plan):** math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle) and math-conf (DeepConf 2508.15260 / self-
   certainty 2502.18581 token confidence on the same samples, CPU lab; prediction written #34: DCF − SC8 +0.5, FAIL).
+- (#36, exploratory, math-verify/adaptive.py) ORM-guided adaptive stopping saves 20–36% of 1.5B tokens at ≤0.7 pt loss,
+  but 3B greedy (67.2 at ~2.1 units) dominates every 1.5B+ORM point (≤62.8 at ≥4.9 units). Selection can't buy M5 on MATH.

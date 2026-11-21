@@ -22,10 +22,12 @@
    score as reward (no gold), vs MAJ. The ORM has within-q AUROC 0.81 vs majority's weak labels at 1.5B, so it is the
    best label-free signal I have. Memory: vLLM colocate used 12.1 GB; 0.6B RM in fp16 (~1.2 GB) should fit; or score
    offline (DPO: ORM top vs bottom). If GOLD H1 fails → training at this budget doesn't move MATH greedy; reframe M3.
-3. **CPU lab: math-conf queued #35** (`run_lab.sh 290`, ~1 s/token-ish: 86 s per mixed question on the session machine,
-   ~160–200 mixed items → likely 2 lab runs; re-queue if not finished). Then `python experiments/math-conf/analyze.py`
+1b. **Unsloth pilot (issue #8) queued after m3-grpo-main** (`m3-grpo-unsloth/pilot_u.py 60`, exploratory; decision rule in README:
+   switch only if ≤0.67× stock s/step + parity). Report on issue #8.
+3. **CPU lab: math-conf** — run 1 did 143/235 mixed items in 290 min; re-queued #36 (`run_lab.sh 290`, ~92 left ≈ 3 h).
+   Then `python experiments/math-conf/analyze.py`
    (H1 DCF−SC8 ≥ +2, H2 DCF vs ORM-WSC ≥ −1, H3 within-q AUROC ≥ 0.60).
-4. **math-verify DONE #35 (confirmatory):** ORM WSC8 +5.0 over SC8 (H1 PASS, p=1.5e-4); −4.4 vs 3B greedy (H2 FAIL);
+4. **math-verify DONE #35 (confirmatory)** (+#36 exploratory: ORM adaptive stopping saves 20–36% tokens, but 3B greedy dominates every 1.5B+ORM point): ORM WSC8 +5.0 over SC8 (H1 PASS, p=1.5e-4); −4.4 vs 3B greedy (H2 FAIL);
    −12 vs 3B SC8 (H3 FAIL). BoN plateaus ~64 from N=5 (exploratory): selection alone won't reach 3B greedy (67.2) —
    M5 needs training + selection.
 5. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.

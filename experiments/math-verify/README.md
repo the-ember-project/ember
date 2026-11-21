@@ -75,3 +75,10 @@ ORM AUROC on 1.5B samples 0.904 (≥0.60); non-finite scores 0.
 - **Reading:** an off-the-shelf 1.7B (even 0.6B) reward model is the first selector that beats voting for the
   1.5B on MATH, by +5 points. It does not reach 3B greedy (−4.4 at ~8× generation + RM compute), and it does
   not help the 3B much. The remaining M5 gap is now ~4 points instead of ~12.
+
+## Exploratory (session #36): ORM-guided adaptive stopping (`adaptive.py`, output `adaptive.txt`)
+Sample sequentially (greedy first), stop once the leading answer's sigmoid(ORM)-weighted vote beats the runner-up by M.
+On the same n=317: M=2 keeps the full WSC8 accuracy (62.8) at 6.0 vs 7.6 sample-units of generated tokens (−20%);
+M=1 gives 62.1 at 4.9 units (−36%). 3B greedy gets 67.2 at 2.1 units (3B tokens counted 2×; ORM scoring cost not
+counted, which favours the 1.5B). So on MATH, 3B greedy dominates every 1.5B+ORM operating point: more accuracy at
+less than half the compute. Swept thresholds on the evaluation items — exploratory only.
