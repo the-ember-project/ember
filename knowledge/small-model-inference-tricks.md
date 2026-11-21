@@ -55,5 +55,9 @@ math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle).
   but within-question only 0.677; it mostly tracks question difficulty (question-level AUROC 0.786; vote agreement 0.847).
   Selection gains nothing: SVW −0.8, tie-break −0.4, BoN −7.6. On rescue items the best correct sample is ranked first
   5/37 (~chance). Self-judging can't overrule wrong pluralities at 1.5B.
-- **Next selectors:** math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle) and math-conf (DeepConf 2508.15260 / self-
+- **math-verify (#35, confirmatory, n=317 fresh, 2048 tok):** an external free ORM (Skywork-Reward-V2-Qwen3 1.7B) is the
+  first selector that beats voting at 1.5B: WSC8 62.8 vs SC8 57.7 (+5.0, 17/1, p=1.5e-4); BoN8 63.7; even the 0.6B ORM
+  gives +4.1. Within-question AUROC 0.81 (self-judge 0.68). At 3B it adds only +0.9. Still −4.4 vs 3B greedy (p=0.09).
+  At 2048 tokens SC8 is only +2.8 over greedy at 1.5B (vs +11.6 for SC7 on CPU at a shorter budget: truncation rescue).
+- **Selectors (older plan):** math-verify (Skywork-Reward-V2 1.7B ORM, Kaggle) and math-conf (DeepConf 2508.15260 / self-
   certainty 2502.18581 token confidence on the same samples, CPU lab; prediction written #34: DCF − SC8 +0.5, FAIL).

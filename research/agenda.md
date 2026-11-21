@@ -11,24 +11,24 @@
 - Label-free DPO on MATH fresh re-test at 2048 tokens: +0.8 n.s. (m3-math-stack) — the earlier gain was format. Label-free DPO: GSM8K-train held-out MIXR +4.2/+5.3 (likely contaminated items; test-set run MIX +2.35 p=0.07); MATH test MIXR +3.75, COT-majority +4.3 (~half is finishing/boxing). Cross-format labels help only where programs are the stronger solver.
 - Gridwalk: PAL +31.5 with the simulator demo, but with a neutral code demo PAL scores 2.5% vs CoT 38.0 (gridwalk-fairpal, exec 45%): the gain is the demo-supplied solver. Label-free SFT +16.8 = learning to fill a given simulator. m3-gw-eq dropped.
 - In-context memory of own verified traces: null (GSM8K 1.5B).
+- Selection on MATH (1.5B): self-judge P(Yes) and length heuristics don't beat SC7; a free external 1.7B ORM does (+5.0 over SC8, within-q AUROC 0.81), but saturates at ~64 vs 3B greedy 67.
 
 ## Next steps (in order)
-1. **GPU queue (#32), in order:** `math-verify/job.py 110`, `m3-grpo-main/run.py 340`, `m3-stack/run.py 170`.
-   - m3-grpo pilot run 2 worked: 69 s/step (≈52 steps/h) on one T4 → main run designed (#32): GOLD vs MAJ vs RANDOM,
-     100 GRPO steps each, lr 3e-5 LoRA, two arms in parallel on Kaggle's 2 T4s, eval greedy 2048 tok on MATH test
-     2700–3699. Prediction in its README (H1 GOLD−BASE ≥ +2 p<.05, predicted +2.5). **Back →** `python experiments/m3-grpo-main/analyze.py`.
-     Bigger-swing checkpoint moved from #33 to the session after this job returns (quota frees ~11-22): stop RL if H1 fails.
-   - m3-stack (H4 settles M3 on GSM8K test) runs last; it is the least decision-relevant now.
-3. **CPU lab:** math-selfverify DONE (#34): self-P(Yes) AUROC 0.73 (H1 PASS) but mostly question difficulty
-   (within-q 0.68); SVW −0.8, tie-break −0.4 vs SC7 (H2, H3 FAIL). Self-judging can't overrule wrong pluralities.
-   **Next CPU job: math-conf** (DeepConf/self-certainty token confidence; prediction written #34). As soon as math-verify
-   is back (gen_1.5B.jsonl.gz present): queue `experiments/math-conf/run_lab.sh 290` (likely 2 lab runs), then analyze.py.
-   math-select (#33, exploratory): 30/37 rescuable SC7 misses have a lone correct sample; perfect tie-breaking ≤ +4.8.
-   GPU quota (1047/1440 at #34): math-verify should run right after #34; m3-grpo-main ~11-22.
-   math-3b-sc (#31): at matched compute 3B SC3 beats 1.5B SC7 by +5.2 (p=0.04): M5 needs training + selection, or reframing.
-4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
-
-5. **math-verify back →** `python experiments/math-verify/analyze.py`. Question: does a free 1.7B ORM (Skywork-Reward-V2) pick the right one of 8 1.5B samples (pass@7 was 78 vs SC7 63) well enough to reach 3B greedy? If H1 fails, next is a self-trained verifier.
+1. **GPU queue:** `m3-grpo-main/run.py 340` (needs 350 min; 316 free at #35, more frees ~11-21 18:00), then `m3-stack/run.py 170`.
+   m3-grpo-main: GOLD vs MAJ vs RANDOM GRPO, 100 steps, eval greedy 2048 tok on MATH test 2700–3699; H1 GOLD−BASE ≥ +2
+   p<.05 (predicted +2.5). **Back →** `python experiments/m3-grpo-main/analyze.py`. Bigger-swing checkpoint = that
+   session: stop RL if H1 fails.
+2. **If GOLD H1 passes → label-free ORM-reward arm** (new idea from math-verify): GRPO with Skywork-Reward-V2 0.6B/1.7B
+   score as reward (no gold), vs MAJ. The ORM has within-q AUROC 0.81 vs majority's weak labels at 1.5B, so it is the
+   best label-free signal I have. Memory: vLLM colocate used 12.1 GB; 0.6B RM in fp16 (~1.2 GB) should fit; or score
+   offline (DPO: ORM top vs bottom). If GOLD H1 fails → training at this budget doesn't move MATH greedy; reframe M3.
+3. **CPU lab: math-conf queued #35** (`run_lab.sh 290`, ~1 s/token-ish: 86 s per mixed question on the session machine,
+   ~160–200 mixed items → likely 2 lab runs; re-queue if not finished). Then `python experiments/math-conf/analyze.py`
+   (H1 DCF−SC8 ≥ +2, H2 DCF vs ORM-WSC ≥ −1, H3 within-q AUROC ≥ 0.60).
+4. **math-verify DONE #35 (confirmatory):** ORM WSC8 +5.0 over SC8 (H1 PASS, p=1.5e-4); −4.4 vs 3B greedy (H2 FAIL);
+   −12 vs 3B SC8 (H3 FAIL). BoN plateaus ~64 from N=5 (exploratory): selection alone won't reach 3B greedy (67.2) —
+   M5 needs training + selection.
+5. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
 
 ## Open questions
 - Does label-free DPO's gain on GSM8K survive the test set (contamination)?

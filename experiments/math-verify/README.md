@@ -43,5 +43,35 @@ the compute, close the 1.5B→3B gap? Verifier: Skywork-Reward-V2-Qwen3-1.7B (ge
 (full texts), `rm_{size}_{rm}.json` (scores). `python analyze.py` prints verdicts from the per-item files.
 CPU smoke: `python job.py --smoke_cpu`.
 
-## Results
-(pending)
+## Results (session #35; Kaggle run 2026-11-20, 77 GPU min) — CONFIRMATORY
+n=317 fresh MATH test items (positions 3700–4016), 2048-token generations, greedy + 7 samples at T=0.7 per model.
+**Validity: all passed.** Greedy 1.5B 54.9 (range 50–65), greedy 3B 67.2 (61–76); unboxed 7.6% / 1.9% (≤8%);
+ORM AUROC on 1.5B samples 0.904 (≥0.60); non-finite scores 0.
+
+| method | 1.5B | 3B |
+|---|---|---|
+| greedy | 54.9 | 67.2 |
+| SC8 | 57.7 | 74.8 |
+| WSC8 (Skywork-Reward-V2 1.7B, sigmoid-weighted vote) | **62.8** | 75.7 |
+| BoN8 (1.7B ORM) | 63.7 | 74.1 |
+| WSC8 / BoN8 with the 0.6B ORM | 61.8 / 63.7 | – |
+| pass@8 | 75.4 | 87.4 |
+
+- **H1 PASS:** WSC8 − SC8 (1.5B) = **+5.0** (17 fixed / 1 broken, p=1.5e-4). Predicted +2.0, borderline.
+- **H2 FAIL:** WSC8(1.5B) − greedy 3B = **−4.4** (22/36, p=0.087); threshold −2. Predicted −3.
+- **H3 FAIL:** WSC8(1.5B) − SC8(3B) = **−12.0** (6/44, p=3e-8). Predicted −6.
+- Exploratory: BoN8 − SC8 +6.0 (p=0.004); the 0.6B ORM gives WSC8 +4.1 (p=0.004); at 3B the ORM adds only +0.9
+  (n.s.); SC8 − greedy is only +2.8 at 1.5B (p=0.08) but +7.6 at 3B. Note that SC gains here (2048 tokens, vLLM) are
+  much smaller than the +11.6 of math-sc7 (CPU, shorter budget): part of the earlier SC gain was truncation rescue.
+- `explore.py` (exploratory): **within-question AUROC 0.809** at 1.5B (0.782 at 3B), against 0.677 for the 1.5B
+  self-judge (math-selfverify, tails only, different items). Of 56 SC8 misses with a correct sample, WSC8 rescues 17;
+  of 33 with a lone correct sample, BoN picks it in 15. So a small external ORM *can* overrule wrong pluralities,
+  which the self-judge could not.
+- **N-curve (explore.py, exploratory; first k samples, greedy first):** 1.5B BoN-k 54.9/58.7/60.3/62.5/64.4/63.4/
+  64.4/63.7 for k=1..8 — the 1.7B ORM's best-of-N plateaus at ~64 from k=5 while pass@k keeps rising (75.4 at 8);
+  WSC-k rises slowly to 62.8. 3B: WSC-2 already 71.3. At roughly matched compute (3B k=2 ≈ 1.5B k=4–5) the 3B wins by
+  ~8 points. Extrapolating, 1.5B + this ORM at N=16 would land ~64–65, below 3B greedy 67.2: **inference-time
+  selection alone is unlikely to meet M5 on MATH; the ORM, not N, is the limit.** (Not tested; no N=16 job queued.)
+- **Reading:** an off-the-shelf 1.7B (even 0.6B) reward model is the first selector that beats voting for the
+  1.5B on MATH, by +5 points. It does not reach 3B greedy (−4.4 at ~8× generation + RM compute), and it does
+  not help the 3B much. The remaining M5 gap is now ~4 points instead of ~12.
