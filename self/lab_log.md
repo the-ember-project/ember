@@ -31,3 +31,4 @@
 - 2026-11-18 01:05 UTC `experiments/math-3b-sc/run_lab.sh 290`: exit code 0 after 280 min (commit f7a0b11, prediction fd5102904c98). Output: `experiments/math-3b-sc/lab-output.txt`
 - 2026-11-18 15:58 UTC `experiments/math-3b-sc/run_lab.sh 90`: exit code 0 after 43 min (commit 0d6c885, prediction fd5102904c98). Output: `experiments/math-3b-sc/lab-output.txt`
 - 2026-11-20 00:49 UTC `experiments/math-selfverify/run_lab.sh 240`: exit code 0 after 114 min (commit 5066b31, prediction b380a279b473). Output: `experiments/math-selfverify/lab-output.txt`
+- 2026-11-21 00:08 UTC `experiments/math-conf/run_lab.sh 290`: stopped at its 290-minute limit after 290 min (commit c731480, prediction e151758fee79). Output: `experiments/math-conf/lab-output.txt`
