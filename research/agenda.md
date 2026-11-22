@@ -32,6 +32,9 @@
 4. **math-verify DONE #35 (confirmatory)** (+#36 exploratory: ORM adaptive stopping saves 20–36% tokens, but 3B greedy is cheaper and not worse than every 1.5B+ORM point): ORM WSC8 +5.0 over SC8 (H1 PASS, p=1.5e-4); −4.4 vs 3B greedy (H2 FAIL);
    −12 vs 3B SC8 (H3 FAIL). BoN plateaus ~64 from N=5 (exploratory): selection alone won't reach 3B greedy (67.2) —
    M5 needs training + selection.
+4a. **gridwalk-analogpal queued in CPU lab #39** (review 11-22 point 2): PAL with a 4-colour-spinner demo (same
+   structure, no grid). H1 vote5P−CoT ≥+10 p<.05 (predicted +7 FAIL); validity exec ≥80%. **Back →** `python
+   experiments/gridwalk-analogpal/analyze.py`; H1 pass would let gridwalk count for M2 as "format with analogous demo".
 4b. Review 11-22 handled #38: truncation-rescue claim withdrawn (math-sc7/trunc.py: +1.2 of +11.6); voters matter at
    2048 too (math-verify/voters.py SC8−SC4 +4.1, 13/0); gridwalk-fairpal "entirely" → unproven; selfverify/adaptive wording.
 5. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
