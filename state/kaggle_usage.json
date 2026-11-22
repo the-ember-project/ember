@@ -298,6 +298,20 @@
       "status": "not run",
       "from_queue": true,
       "id": "c72ce97396dc40948a20ee4f0d64b0eb"
+    },
+    {
+      "line": "experiments/m3-grpo-main/run.py 340",
+      "folder": "experiments/m3-grpo-main",
+      "kernel": "focarius/ember-m3-grpo-main",
+      "limit": 340,
+      "charged": 259,
+      "source": "commit efa4937, prediction 9c3b66792a6c",
+      "submitted": "2026-11-21T23:27:13+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "eb2368148ab044d1924e82edad098a62",
+      "finished": "2026-11-22T03:45:43+00:00"
     }
   ]
 }

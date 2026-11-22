@@ -1,106 +1,109 @@
-W1121 19:25:53.782000 869 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
-W1121 19:25:53.782000 869 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
-W1121 19:25:53.783000 869 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+W1121 23:39:32.459000 874 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1121 23:39:32.460000 874 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1121 23:39:32.460000 874 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-(MainProcess pid=869) ERROR 11-21 19:26:17 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(MainProcess pid=874) ERROR 11-21 23:39:55 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
 
-[rank0]:W1121 19:26:42.931000 869 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
-[MAJ] step 2 48.6s
-[rank0]:[W1121 19:29:42.867896898 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 2097152 bytes (free: 2949120, total: 15636037632).
-[rank0]:[W1121 19:29:44.898638228 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 343932928 bytes (free: 128778240, total: 15636037632).
-[rank0]:[W1121 19:29:44.987225706 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 343932928 bytes (free: 330104832, total: 15636037632).
-Traceback (most recent call last):
-  File "/kaggle/working/run.py", line 223, in main
-    try: (do_train if a.mode == "train" else do_eval)(a)
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
-  File "/kaggle/working/run.py", line 133, in do_train
-    tr.train()
-    ~~~~~~~~^^
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 1559, in train
-    return inner_training_loop(
-        args=args,
-    ...<2 lines>...
-        ignore_keys_for_eval=ignore_keys_for_eval,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 1643, in _inner_training_loop
-    self._run_epoch(
-    ~~~~~~~~~~~~~~~^
-        model=model,
-        ^^^^^^^^^^^^
-    ...<9 lines>...
-        steps_trained_in_current_epoch=steps_trained_in_current_epoch,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 1889, in _run_epoch
-    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-  File "/usr/local/lib/python3.13/dist-packages/trl/trainer/grpo_trainer.py", line 1632, in training_step
-    output = super().training_step(model, inputs, num_items_in_batch)
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 2098, in training_step
-    self.accelerator.backward(loss, **kwargs)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/accelerate/accelerator.py", line 2857, in backward
-    self.scaler.scale(loss).backward(**kwargs)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/_tensor.py", line 623, in backward
-    torch.autograd.backward(
-    ~~~~~~~~~~~~~~~~~~~~~~~^
-        self, gradient, retain_graph, create_graph, inputs=inputs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/torch/autograd/__init__.py", line 395, in backward
-    _engine_run_backward(
-    ~~~~~~~~~~~~~~~~~~~~^
-        tensors,
-        ^^^^^^^^
-    ...<5 lines>...
-        accumulate_grad=True,
-        ^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
-    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        t_outputs, *args, **kwargs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )  # Calls into the C++ engine to run the backward pass
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/torch/utils/checkpoint.py", line 1369, in unpack_hook
-    _run_fn_with_dynamo_disabled(frame.recompute_fn, *args)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/_compile.py", line 54, in inner
-    return disable_fn(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/eval_frame.py", line 1548, in _fn
-    return fn(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/torch/utils/checkpoint.py", line 1336, in _run_fn_with_dynamo_disabled
-    return fn(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/torch/utils/checkpoint.py", line 1962, in recompute_fn
-    fn(*args, **kwargs)
-    ~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen2/modeling_qwen2.py", line 288, in forward
-    hidden_states = self.mlp(hidden_states)
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen2/modeling_qwen2.py", line 46, in forward
-    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/layer.py", line 1100, in forward
-    x = self._cast_input_dtype(x, lora_A.weight.dtype)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/tuners_utils.py", line 2235, in _cast_input_dtype
-    return x.to(dtype=dtype)
-           ~~~~^^^^^^^^^^^^^
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 314.81 MiB is free. Including non-PyTorch memory, this process has 14.25 GiB memory in use. Of the allocated memory 13.38 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 652.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-{'loss': '0.03202', 'grad_norm': '0.09395', 'learning_rate': '3e-05', 'num_tokens': '3.258e+04', 'completions/mean_length': '473.9', 'completions/min_length': '240', 'completions/max_length': '758', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '473.9', 'completions/min_terminated_length': '240', 'completions/max_terminated_length': '758', 'rewards/r_MAJ/mean': '0.6562', 'rewards/r_MAJ/std': '0.4826', 'reward': '0.6562', 'reward_std': '0.4826', 'frac_reward_zero_std': '0.25', 'sampling/sampling_logp_difference/mean': '0.001049', 'sampling/sampling_logp_difference/max': '0.0449', 'sampling/importance_sampling_ratio/min': '0.9217', 'sampling/importance_sampling_ratio/mean': '1.019', 'sampling/importance_sampling_ratio/max': '1.142', 'entropy': '0.3224', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '46.61', 'epoch': '0.01961'}
+[rank0]:W1121 23:40:20.194000 874 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
+[MAJ] step 2 50.5s
+[MAJ] step 3 70.6s
+[MAJ] step 4 85.9s
+[MAJ] step 5 70.2s
+[MAJ] step 6 74.0s
+[MAJ] step 7 67.3s
+[MAJ] step 8 78.5s
+[MAJ] step 9 76.1s
+[MAJ] step 10 49.2s
+[MAJ] step 11 74.9s
+[MAJ] step 12 62.0s
+[MAJ] step 13 69.0s
+[MAJ] step 14 82.6s
+[MAJ] step 15 72.3s
+[MAJ] step 16 69.2s
+[MAJ] step 17 66.8s
+[MAJ] step 18 65.5s
+[MAJ] step 19 62.6s
+[MAJ] step 20 67.9s
+[MAJ] step 21 69.2s
+[MAJ] step 22 60.3s
+[MAJ] step 23 82.1s
+[MAJ] step 24 65.9s
+[MAJ] step 25 79.6s
+[MAJ] step 26 39.3s
+[MAJ] step 27 64.6s
+[MAJ] step 28 63.5s
+[MAJ] step 29 70.6s
+[MAJ] step 30 58.7s
+[MAJ] step 31 73.2s
+[MAJ] step 32 68.1s
+[MAJ] step 33 54.1s
+[MAJ] step 34 64.6s
+[MAJ] step 35 75.3s
+[MAJ] step 36 68.8s
+[MAJ] step 37 72.4s
+[MAJ] step 38 49.8s
+[MAJ] step 39 66.1s
+[MAJ] step 40 64.5s
+[MAJ] step 41 72.2s
+[MAJ] step 42 77.6s
+[MAJ] step 43 67.0s
+[MAJ] step 44 70.2s
+[MAJ] step 45 65.8s
+[MAJ] step 46 77.4s
+[MAJ] step 47 65.5s
+[MAJ] step 48 67.9s
+[MAJ] step 49 66.2s
+[MAJ] step 50 82.6s
+[MAJ] step 51 67.2s
+[MAJ] step 52 46.7s
+[MAJ] step 53 69.8s
+[MAJ] step 54 68.2s
+[MAJ] step 55 60.6s
+[MAJ] step 56 66.2s
+[MAJ] step 57 74.1s
+[MAJ] step 58 66.4s
+[MAJ] step 59 64.4s
+[MAJ] step 60 64.9s
+[MAJ] step 61 65.7s
+[MAJ] step 62 65.8s
+[MAJ] step 63 60.7s
+[MAJ] step 64 56.5s
+[MAJ] step 65 62.7s
+[MAJ] step 66 75.3s
+[MAJ] step 67 72.1s
+[MAJ] step 68 69.7s
+[MAJ] step 69 45.8s
+[MAJ] step 70 73.7s
+[MAJ] step 71 69.0s
+[MAJ] step 72 66.4s
+[MAJ] step 73 47.1s
+[MAJ] step 74 64.1s
+[MAJ] step 75 66.6s
+[MAJ] step 76 63.4s
+[MAJ] step 77 68.7s
+[MAJ] step 78 66.1s
+[MAJ] step 79 67.0s
+[MAJ] step 80 64.8s
+[MAJ] step 81 64.5s
+[MAJ] step 82 71.8s
+[MAJ] step 83 65.9s
+[MAJ] step 84 65.7s
+[MAJ] step 85 65.1s
+[MAJ] step 86 61.3s
+[MAJ] step 87 57.8s
+[MAJ] step 88 67.6s
+[MAJ] step 89 65.7s
+[MAJ] step 90 62.0s
+[MAJ] step 91 72.4s
+[MAJ] step 92 51.7s
+[MAJ] step 93 76.7s
+[MAJ] step 94 70.3s
+[MAJ] step 95 71.9s
+[MAJ] step 96 67.0s
+[MAJ] step 97 68.7s
+[MAJ] step 98 66.3s
+[MAJ] step 99 76.1s
+[MAJ] step 100 79.1s
+{'loss': '0.02941', 'grad_norm': '0.08329', 'learning_rate': '3e-05', 'num_tokens': '2.083e+06', 'completions/mean_length': '668.1', 'completions/min_length': '215', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.25', 'completions/mean_terminated_length': '549.5', 'completions/min_terminated_length': '215', 'completions/max_terminated_length': '980', 'rewards/r_MAJ/mean': '0.2812', 'rewards/r_MAJ/std': '0.4568', 'reward': '0.2812', 'reward_std': '0.4568', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001023', 'sampling/sampling_logp_difference/max': '0.05892', 'sampling/importance_sampling_ratio/min': '0.7501', 'sampling/importance_sampling_ratio/mean': '0.9872', 'sampling/importance_sampling_ratio/max': '1.146', 'entropy': '0.2744', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '75.93', 'epoch': '0.9804'}
+{'train_runtime': '6670', 'train_samples_per_second': '0.48', 'train_steps_per_second': '0.015', 'train_loss': '0.03051', 'epoch': '0.9804'}
+TRAINED MAJ steps=100

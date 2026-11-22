@@ -1,104 +1,108 @@
-W1121 19:30:05.217000 1265 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
-W1121 19:30:05.217000 1265 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
-W1121 19:30:05.218000 1265 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+W1122 01:34:05.531000 1271 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1122 01:34:05.532000 1271 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1122 01:34:05.532000 1271 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-(MainProcess pid=1265) ERROR 11-21 19:30:29 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(MainProcess pid=1271) ERROR 11-22 01:34:29 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
 
-[RANDOM] step 2 64.0s
-[rank0]:[W1121 19:33:28.800751119 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 343932928 bytes (free: 321716224, total: 15636037632).
-[rank0]:[W1121 19:33:28.800966522 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 343932928 bytes (free: 321716224, total: 15636037632).
-Traceback (most recent call last):
-  File "/kaggle/working/run.py", line 223, in main
-    try: (do_train if a.mode == "train" else do_eval)(a)
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
-  File "/kaggle/working/run.py", line 133, in do_train
-    tr.train()
-    ~~~~~~~~^^
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 1559, in train
-    return inner_training_loop(
-        args=args,
-    ...<2 lines>...
-        ignore_keys_for_eval=ignore_keys_for_eval,
-    )
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 1643, in _inner_training_loop
-    self._run_epoch(
-    ~~~~~~~~~~~~~~~^
-        model=model,
-        ^^^^^^^^^^^^
-    ...<9 lines>...
-        steps_trained_in_current_epoch=steps_trained_in_current_epoch,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 1889, in _run_epoch
-    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-  File "/usr/local/lib/python3.13/dist-packages/trl/trainer/grpo_trainer.py", line 1632, in training_step
-    output = super().training_step(model, inputs, num_items_in_batch)
-  File "/usr/local/lib/python3.13/dist-packages/transformers/trainer.py", line 2098, in training_step
-    self.accelerator.backward(loss, **kwargs)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/accelerate/accelerator.py", line 2857, in backward
-    self.scaler.scale(loss).backward(**kwargs)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/_tensor.py", line 623, in backward
-    torch.autograd.backward(
-    ~~~~~~~~~~~~~~~~~~~~~~~^
-        self, gradient, retain_graph, create_graph, inputs=inputs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/torch/autograd/__init__.py", line 395, in backward
-    _engine_run_backward(
-    ~~~~~~~~~~~~~~~~~~~~^
-        tensors,
-        ^^^^^^^^
-    ...<5 lines>...
-        accumulate_grad=True,
-        ^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
-    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        t_outputs, *args, **kwargs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )  # Calls into the C++ engine to run the backward pass
-    ^
-  File "/usr/local/lib/python3.13/dist-packages/torch/utils/checkpoint.py", line 1369, in unpack_hook
-    _run_fn_with_dynamo_disabled(frame.recompute_fn, *args)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/_compile.py", line 54, in inner
-    return disable_fn(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/eval_frame.py", line 1548, in _fn
-    return fn(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/torch/utils/checkpoint.py", line 1336, in _run_fn_with_dynamo_disabled
-    return fn(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/torch/utils/checkpoint.py", line 1962, in recompute_fn
-    fn(*args, **kwargs)
-    ~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen2/modeling_qwen2.py", line 288, in forward
-    hidden_states = self.mlp(hidden_states)
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen2/modeling_qwen2.py", line 46, in forward
-    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/lora/layer.py", line 1100, in forward
-    x = self._cast_input_dtype(x, lora_A.weight.dtype)
-  File "/usr/local/lib/python3.13/dist-packages/peft/tuners/tuners_utils.py", line 2235, in _cast_input_dtype
-    return x.to(dtype=dtype)
-           ~~~~^^^^^^^^^^^^^
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 306.81 MiB is free. Including non-PyTorch memory, this process has 14.26 GiB memory in use. Of the allocated memory 13.53 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 506.72 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-{'loss': '-0.02982', 'grad_norm': '0.07991', 'learning_rate': '3e-05', 'num_tokens': '3.236e+04', 'completions/mean_length': '466.9', 'completions/min_length': '286', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.03125', 'completions/mean_terminated_length': '448.9', 'completions/min_terminated_length': '286', 'completions/max_terminated_length': '703', 'rewards/r_RANDOM/mean': '0.4688', 'rewards/r_RANDOM/std': '0.507', 'reward': '0.4688', 'reward_std': '0.507', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001041', 'sampling/sampling_logp_difference/max': '0.03111', 'sampling/importance_sampling_ratio/min': '0.8854', 'sampling/importance_sampling_ratio/mean': '0.9974', 'sampling/importance_sampling_ratio/max': '1.148', 'entropy': '0.383', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '61.15', 'epoch': '0.01961'}
+[RANDOM] step 2 64.2s
+[RANDOM] step 3 71.3s
+[RANDOM] step 4 87.2s
+[RANDOM] step 5 70.9s
+[RANDOM] step 6 73.0s
+[RANDOM] step 7 68.7s
+[RANDOM] step 8 83.3s
+[RANDOM] step 9 75.8s
+[RANDOM] step 10 58.3s
+[RANDOM] step 11 75.7s
+[RANDOM] step 12 54.5s
+[RANDOM] step 13 69.9s
+[RANDOM] step 14 81.6s
+[RANDOM] step 15 74.5s
+[RANDOM] step 16 71.1s
+[RANDOM] step 17 67.5s
+[RANDOM] step 18 66.4s
+[RANDOM] step 19 65.5s
+[RANDOM] step 20 69.6s
+[RANDOM] step 21 70.5s
+[RANDOM] step 22 64.4s
+[RANDOM] step 23 84.2s
+[RANDOM] step 24 67.9s
+[RANDOM] step 25 83.2s
+[RANDOM] step 26 42.5s
+[RANDOM] step 27 65.1s
+[RANDOM] step 28 64.3s
+[RANDOM] step 29 71.7s
+[RANDOM] step 30 67.8s
+[RANDOM] step 31 73.8s
+[RANDOM] step 32 68.3s
+[RANDOM] step 33 66.6s
+[RANDOM] step 34 66.9s
+[RANDOM] step 35 77.3s
+[RANDOM] step 36 71.8s
+[RANDOM] step 37 73.3s
+[RANDOM] step 38 64.3s
+[RANDOM] step 39 68.7s
+[RANDOM] step 40 66.4s
+[RANDOM] step 41 72.9s
+[RANDOM] step 42 79.1s
+[RANDOM] step 43 69.4s
+[RANDOM] step 44 72.0s
+[RANDOM] step 45 68.6s
+[RANDOM] step 46 77.7s
+[RANDOM] step 47 67.4s
+[RANDOM] step 48 71.8s
+[RANDOM] step 49 66.5s
+[RANDOM] step 50 85.8s
+[RANDOM] step 51 69.8s
+[RANDOM] step 52 51.0s
+[RANDOM] step 53 70.5s
+[RANDOM] step 54 72.8s
+[RANDOM] step 55 45.9s
+[RANDOM] step 56 68.7s
+[RANDOM] step 57 77.4s
+[RANDOM] step 58 69.4s
+[RANDOM] step 59 65.6s
+[RANDOM] step 60 66.2s
+[RANDOM] step 61 68.3s
+[RANDOM] step 62 69.3s
+[RANDOM] step 63 66.6s
+[RANDOM] step 64 66.7s
+[RANDOM] step 65 63.0s
+[RANDOM] step 66 76.6s
+[RANDOM] step 67 73.2s
+[RANDOM] step 68 72.5s
+[RANDOM] step 69 50.9s
+[RANDOM] step 70 75.0s
+[RANDOM] step 71 71.5s
+[RANDOM] step 72 63.9s
+[RANDOM] step 73 61.4s
+[RANDOM] step 74 67.2s
+[RANDOM] step 75 68.8s
+[RANDOM] step 76 67.0s
+[RANDOM] step 77 70.6s
+[RANDOM] step 78 64.4s
+[RANDOM] step 79 71.6s
+[RANDOM] step 80 67.1s
+[RANDOM] step 81 66.5s
+[RANDOM] step 82 74.4s
+[RANDOM] step 83 67.1s
+[RANDOM] step 84 69.6s
+[RANDOM] step 85 66.1s
+[RANDOM] step 86 77.6s
+[RANDOM] step 87 67.8s
+[RANDOM] step 88 70.9s
+[RANDOM] step 89 67.2s
+[RANDOM] step 90 62.5s
+[RANDOM] step 91 75.4s
+[RANDOM] step 92 68.2s
+[RANDOM] step 93 79.6s
+[RANDOM] step 94 59.0s
+[RANDOM] step 95 72.2s
+[RANDOM] step 96 70.4s
+[RANDOM] step 97 72.3s
+[RANDOM] step 98 71.3s
+[RANDOM] step 99 78.4s
+[RANDOM] step 100 81.7s
+{'loss': '-0.02119', 'grad_norm': '0.06716', 'learning_rate': '3e-05', 'num_tokens': '2.215e+06', 'completions/mean_length': '740.5', 'completions/min_length': '247', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.375', 'completions/mean_terminated_length': '570.4', 'completions/min_terminated_length': '247', 'completions/max_terminated_length': '893', 'rewards/r_RANDOM/mean': '0.5938', 'rewards/r_RANDOM/std': '0.499', 'reward': '0.5938', 'reward_std': '0.499', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001093', 'sampling/sampling_logp_difference/max': '0.04303', 'sampling/importance_sampling_ratio/min': '0.7628', 'sampling/importance_sampling_ratio/mean': '0.965', 'sampling/importance_sampling_ratio/max': '1.072', 'entropy': '0.3336', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '78.55', 'epoch': '0.9804'}
+{'train_runtime': '6938', 'train_samples_per_second': '0.461', 'train_steps_per_second': '0.014', 'train_loss': '-0.0005165', 'epoch': '0.9804'}
+TRAINED RANDOM steps=100

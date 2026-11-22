@@ -8,72 +8,57 @@ cudf-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which
 gradio 6.30.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.
 google-adk 2.7.1 requires opentelemetry-api<=1.42.1,>=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.
 google-adk 2.7.1 requires opentelemetry-sdk<=1.42.1,>=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.
-GPU 0: Tesla T4 (UUID: GPU-707df094-233f-6f52-1495-43c246e02a9c)
-GPU 1: Tesla T4 (UUID: GPU-040ecf0a-d6f1-3977-9949-da96c2d56f13)
+GPU 0: Tesla T4 (UUID: GPU-e9133fc6-fdcc-4c24-e2e9-979398012385)
+GPU 1: Tesla T4 (UUID: GPU-926d2529-08ce-d3ed-33c3-858e173b776e)
 peft                                     0.21.2
 torch                                    2.14.0
 transformers                             5.20.2
 trl                                      1.18.1
 vllm                                     0.33.0
 TRAINED GOLD steps=1
-{'loss': '0.008387', 'grad_norm': '0.1472', 'learning_rate': '3e-05', 'num_tokens': '4522', 'completions/mean_length': '476.2', 'completions/min_length': '290', 'completions/max_length': '671', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '476.2', 'completions/min_terminated_length': '290', 'completions/max_terminated_length': '671', 'rewards/r_GOLD/mean': '0.625', 'rewards/r_GOLD/std': '0.5175', 'reward': '0.625', 'reward_std': '0.5175', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0005905', 'sampling/sampling_logp_difference/max': '0.03017', 'sampling/importance_sampling_ratio/min': '0.8851', 'sampling/importance_sampling_ratio/mean': '1.016', 'sampling/importance_sampling_ratio/max': '1.086', 'entropy': '0.1564', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '18.95', 'epoch': '0.08333'}
-{'train_runtime': '19.6', 'train_samples_per_second': '0.408', 'train_steps_per_second': '0.051', 'train_loss': '0.008387', 'epoch': '0.08333'}
+{'loss': '0.03026', 'grad_norm': '0.1512', 'learning_rate': '3e-05', 'num_tokens': '4522', 'completions/mean_length': '476.2', 'completions/min_length': '290', 'completions/max_length': '671', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '476.2', 'completions/min_terminated_length': '290', 'completions/max_terminated_length': '671', 'rewards/r_GOLD/mean': '0.625', 'rewards/r_GOLD/std': '0.5175', 'reward': '0.625', 'reward_std': '0.5175', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0005731', 'sampling/sampling_logp_difference/max': '0.02921', 'sampling/importance_sampling_ratio/min': '0.9186', 'sampling/importance_sampling_ratio/mean': '1.023', 'sampling/importance_sampling_ratio/max': '1.147', 'entropy': '0.1547', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '19.32', 'epoch': '0.08333'}
+{'train_runtime': '19.98', 'train_samples_per_second': '0.4', 'train_steps_per_second': '0.05', 'train_loss': '0.03026', 'epoch': '0.08333'}
 TRAINED GOLD steps=1
-PROC --mode train --arm GOLD exit=0 201s
+PROC --mode train --arm GOLD exit=0 195s
 TRAINED MAJ steps=1
-{'loss': '0.008387', 'grad_norm': '0.1472', 'learning_rate': '3e-05', 'num_tokens': '4522', 'completions/mean_length': '476.2', 'completions/min_length': '290', 'completions/max_length': '671', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '476.2', 'completions/min_terminated_length': '290', 'completions/max_terminated_length': '671', 'rewards/r_MAJ/mean': '0.625', 'rewards/r_MAJ/std': '0.5175', 'reward': '0.625', 'reward_std': '0.5175', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0005905', 'sampling/sampling_logp_difference/max': '0.03017', 'sampling/importance_sampling_ratio/min': '0.8851', 'sampling/importance_sampling_ratio/mean': '1.016', 'sampling/importance_sampling_ratio/max': '1.086', 'entropy': '0.1564', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '19.04', 'epoch': '0.08333'}
-{'train_runtime': '19.69', 'train_samples_per_second': '0.406', 'train_steps_per_second': '0.051', 'train_loss': '0.008387', 'epoch': '0.08333'}
+{'loss': '0.03026', 'grad_norm': '0.1512', 'learning_rate': '3e-05', 'num_tokens': '4522', 'completions/mean_length': '476.2', 'completions/min_length': '290', 'completions/max_length': '671', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '476.2', 'completions/min_terminated_length': '290', 'completions/max_terminated_length': '671', 'rewards/r_MAJ/mean': '0.625', 'rewards/r_MAJ/std': '0.5175', 'reward': '0.625', 'reward_std': '0.5175', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0005731', 'sampling/sampling_logp_difference/max': '0.02921', 'sampling/importance_sampling_ratio/min': '0.9186', 'sampling/importance_sampling_ratio/mean': '1.023', 'sampling/importance_sampling_ratio/max': '1.147', 'entropy': '0.1547', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '19.29', 'epoch': '0.08333'}
+{'train_runtime': '19.97', 'train_samples_per_second': '0.401', 'train_steps_per_second': '0.05', 'train_loss': '0.03026', 'epoch': '0.08333'}
 TRAINED MAJ steps=1
-PROC --mode train --arm MAJ exit=0 201s
-EVAL BASEsmoke_: math=0.5000 boxed=1.000 24s
-EVAL GOLDsmoke_: math=0.5000 boxed=1.000 49s
-(EngineCore pid=679) INFO 11-21 19:25:37 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
-(EngineCore pid=679) INFO 11-21 19:25:37 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
-(EngineCore pid=679) INFO 11-21 19:25:37 [core.py:1573] [shutdown] EngineCore: exiting busy loop
-PROC --mode eval --arms BASE,GOLD exit=0 265s
+PROC --mode train --arm MAJ exit=0 195s
+EVAL BASEsmoke_: math=0.5000 boxed=1.000 22s
+EVAL GOLDsmoke_: math=0.5000 boxed=1.000 50s
+(EngineCore pid=684) INFO 11-21 23:39:17 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=684) INFO 11-21 23:39:17 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=684) INFO 11-21 23:39:17 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE,GOLD exit=0 257s
 SMOKE OK parallel=True
-Traceback (most recent call last):
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 314.81 MiB is free. Including non-PyTorch memory, this process has 14.25 GiB memory in use. Of the allocated memory 13.38 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 652.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 314.81 MiB is free. Including non-PyTorch memory, this process has 14.25 GiB memory in use. Of the allocated memory 13.38 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 652.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-  2%|▏         | 2/100 [02:24<1:57:51, 72.16s/it]
-{'loss': '0.004113', 'grad_norm': '0.05083', 'learning_rate': '3e-05', 'num_tokens': '3.223e+04', 'completions/mean_length': '463', 'completions/min_length': '240', 'completions/max_length': '758', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '463', 'completions/min_terminated_length': '240', 'completions/max_terminated_length': '758', 'rewards/r_GOLD/mean': '0.6562', 'rewards/r_GOLD/std': '0.4826', 'reward': '0.6562', 'reward_std': '0.4826', 'frac_reward_zero_std': '0.75', 'sampling/sampling_logp_difference/mean': '0.000977', 'sampling/sampling_logp_difference/max': '0.03109', 'sampling/importance_sampling_ratio/min': '0.8759', 'sampling/importance_sampling_ratio/mean': '1', 'sampling/importance_sampling_ratio/max': '1.218', 'entropy': '0.3015', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '47.87', 'epoch': '0.01961'}
-PROC --mode train --arm GOLD exit=1 252s
-Traceback (most recent call last):
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 314.81 MiB is free. Including non-PyTorch memory, this process has 14.25 GiB memory in use. Of the allocated memory 13.38 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 652.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 314.81 MiB is free. Including non-PyTorch memory, this process has 14.25 GiB memory in use. Of the allocated memory 13.38 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 652.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-  2%|▏         | 2/100 [02:18<1:53:16, 69.35s/it]
-{'loss': '0.03202', 'grad_norm': '0.09395', 'learning_rate': '3e-05', 'num_tokens': '3.258e+04', 'completions/mean_length': '473.9', 'completions/min_length': '240', 'completions/max_length': '758', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '473.9', 'completions/min_terminated_length': '240', 'completions/max_terminated_length': '758', 'rewards/r_MAJ/mean': '0.6562', 'rewards/r_MAJ/std': '0.4826', 'reward': '0.6562', 'reward_std': '0.4826', 'frac_reward_zero_std': '0.25', 'sampling/sampling_logp_difference/mean': '0.001049', 'sampling/sampling_logp_difference/max': '0.0449', 'sampling/importance_sampling_ratio/min': '0.9217', 'sampling/importance_sampling_ratio/mean': '1.019', 'sampling/importance_sampling_ratio/max': '1.142', 'entropy': '0.3224', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '46.61', 'epoch': '0.01961'}
-PROC --mode train --arm MAJ exit=1 252s
-Traceback (most recent call last):
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 306.81 MiB is free. Including non-PyTorch memory, this process has 14.26 GiB memory in use. Of the allocated memory 13.53 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 506.72 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 328.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 306.81 MiB is free. Including non-PyTorch memory, this process has 14.26 GiB memory in use. Of the allocated memory 13.53 GiB is allocated by PyTorch, with 22.00 MiB allocated in private pools (e.g., CUDA Graphs), and 506.72 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
-  2%|▏         | 2/100 [02:31<2:03:36, 75.68s/it]
-{'loss': '-0.02982', 'grad_norm': '0.07991', 'learning_rate': '3e-05', 'num_tokens': '3.236e+04', 'completions/mean_length': '466.9', 'completions/min_length': '286', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.03125', 'completions/mean_terminated_length': '448.9', 'completions/min_terminated_length': '286', 'completions/max_terminated_length': '703', 'rewards/r_RANDOM/mean': '0.4688', 'rewards/r_RANDOM/std': '0.507', 'reward': '0.4688', 'reward_std': '0.507', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001041', 'sampling/sampling_logp_difference/max': '0.03111', 'sampling/importance_sampling_ratio/min': '0.8854', 'sampling/importance_sampling_ratio/mean': '0.9974', 'sampling/importance_sampling_ratio/max': '1.148', 'entropy': '0.383', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '61.15', 'epoch': '0.01961'}
-PROC --mode train --arm RANDOM exit=1 218s
-(EngineCore pid=1345) ERROR 11-21 19:40:29 [core.py:1586] Traceback (most recent call last):
-(EngineCore pid=1345) ERROR 11-21 19:40:29 [core.py:1586] FileNotFoundError: [Errno 2] No such file or directory: '/tmp/m3grpo/lora_GOLD/adapter_config.json'
-(EngineCore pid=1345) ERROR 11-21 19:40:29 [core.py:1586] Traceback (most recent call last):
-(EngineCore pid=1345) ERROR 11-21 19:40:29 [core.py:1586]     raise LoRAAdapterNotFoundError(
-(EngineCore pid=1345) ERROR 11-21 19:40:29 [core.py:1586] vllm.exceptions.LoRAAdapterNotFoundError: Loading lora a2 failed: No adapter found for /tmp/m3grpo/lora_GOLD
-Traceback (most recent call last):
-    raise EngineDeadError()
-vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
-vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
-Rendering prompts:   2%|▏         | 23/1000 [00:00<00:01, 854.21it/s]
-(MainProcess pid=1266) INFO 11-21 19:40:29 [utils.py:628] [shutdown] Process manager: send sigterm to process EngineCore
-PROC --mode eval --arms BASE,GOLD,MAJ exit=1 638s
-(EngineCore pid=1712) ERROR 11-21 19:41:55 [core.py:1586] Traceback (most recent call last):
-(EngineCore pid=1712) ERROR 11-21 19:41:55 [core.py:1586] FileNotFoundError: [Errno 2] No such file or directory: '/tmp/m3grpo/lora_RANDOM/adapter_config.json'
-(EngineCore pid=1712) ERROR 11-21 19:41:55 [core.py:1586] Traceback (most recent call last):
-(EngineCore pid=1712) ERROR 11-21 19:41:55 [core.py:1586]     raise LoRAAdapterNotFoundError(
-(EngineCore pid=1712) ERROR 11-21 19:41:55 [core.py:1586] vllm.exceptions.LoRAAdapterNotFoundError: Loading lora a1 failed: No adapter found for /tmp/m3grpo/lora_RANDOM
-Traceback (most recent call last):
-    raise EngineDeadError()
-vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
-vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
-Rendering prompts:   2%|▏         | 19/1000 [00:00<00:01, 680.23it/s]
-(MainProcess pid=1673) INFO 11-21 19:41:55 [utils.py:628] [shutdown] Process manager: send sigterm to process EngineCore
-PROC --mode eval --arms RANDOM exit=1 85s
+TRAINED GOLD steps=100
+{'loss': '0', 'grad_norm': '0', 'learning_rate': '3e-05', 'num_tokens': '2.137e+06', 'completions/mean_length': '726.7', 'completions/min_length': '164', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.4062', 'completions/mean_terminated_length': '523.3', 'completions/min_terminated_length': '164', 'completions/max_terminated_length': '893', 'rewards/r_GOLD/mean': '0', 'rewards/r_GOLD/std': '0', 'reward': '0', 'reward_std': '0', 'frac_reward_zero_std': '1', 'sampling/sampling_logp_difference/mean': '0.0008807', 'sampling/sampling_logp_difference/max': '0.07647', 'sampling/importance_sampling_ratio/min': '0.8425', 'sampling/importance_sampling_ratio/mean': '0.9967', 'sampling/importance_sampling_ratio/max': '1.212', 'entropy': '0.2316', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '77.42', 'epoch': '0.9804'}
+{'train_runtime': '6771', 'train_samples_per_second': '0.473', 'train_steps_per_second': '0.015', 'train_loss': '0.0249', 'epoch': '0.9804'}
+TRAINED GOLD steps=100
+PROC --mode train --arm GOLD exit=0 6873s
+TRAINED MAJ steps=100
+{'loss': '0.02941', 'grad_norm': '0.08329', 'learning_rate': '3e-05', 'num_tokens': '2.083e+06', 'completions/mean_length': '668.1', 'completions/min_length': '215', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.25', 'completions/mean_terminated_length': '549.5', 'completions/min_terminated_length': '215', 'completions/max_terminated_length': '980', 'rewards/r_MAJ/mean': '0.2812', 'rewards/r_MAJ/std': '0.4568', 'reward': '0.2812', 'reward_std': '0.4568', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001023', 'sampling/sampling_logp_difference/max': '0.05892', 'sampling/importance_sampling_ratio/min': '0.7501', 'sampling/importance_sampling_ratio/mean': '0.9872', 'sampling/importance_sampling_ratio/max': '1.146', 'entropy': '0.2744', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '75.93', 'epoch': '0.9804'}
+{'train_runtime': '6670', 'train_samples_per_second': '0.48', 'train_steps_per_second': '0.015', 'train_loss': '0.03051', 'epoch': '0.9804'}
+TRAINED MAJ steps=100
+PROC --mode train --arm MAJ exit=0 6873s
+TRAINED RANDOM steps=100
+{'loss': '-0.02119', 'grad_norm': '0.06716', 'learning_rate': '3e-05', 'num_tokens': '2.215e+06', 'completions/mean_length': '740.5', 'completions/min_length': '247', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.375', 'completions/mean_terminated_length': '570.4', 'completions/min_terminated_length': '247', 'completions/max_terminated_length': '893', 'rewards/r_RANDOM/mean': '0.5938', 'rewards/r_RANDOM/std': '0.499', 'reward': '0.5938', 'reward_std': '0.499', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001093', 'sampling/sampling_logp_difference/max': '0.04303', 'sampling/importance_sampling_ratio/min': '0.7628', 'sampling/importance_sampling_ratio/mean': '0.965', 'sampling/importance_sampling_ratio/max': '1.072', 'entropy': '0.3336', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '78.55', 'epoch': '0.9804'}
+{'train_runtime': '6938', 'train_samples_per_second': '0.461', 'train_steps_per_second': '0.014', 'train_loss': '-0.0005165', 'epoch': '0.9804'}
+TRAINED RANDOM steps=100
+PROC --mode train --arm RANDOM exit=0 7000s
+EVAL BASE: math=0.5560 boxed=0.923 452s
+EVAL GOLD: math=0.5720 boxed=0.955 705s
+EVAL MAJ: math=0.5940 boxed=0.957 676s
+(EngineCore pid=1352) INFO 11-22 02:07:04 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1352) INFO 11-22 02:07:04 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1352) INFO 11-22 02:07:04 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE,GOLD,MAJ exit=0 7000s
+EVAL RANDOM: math=0.5660 boxed=0.946 802s
+(EngineCore pid=1693) INFO 11-22 03:45:15 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1693) INFO 11-22 03:45:15 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1693) INFO 11-22 03:45:15 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms RANDOM exit=0 884s
 DONE
 
-[exit code 0 after 29 min]
+[exit code 0 after 258 min]
