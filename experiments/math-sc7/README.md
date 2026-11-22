@@ -32,3 +32,10 @@ CPU lab `run_lab.sh 290` (resumable, ~55 s/q expected → ~230 min). `python ana
   equal voters single-format SC7 is ≥ MIX7 (−2.8 n.s.), and per token PAL voters are about as good as sampled CoT
   (MIX7 ≈ SC5). math-mix7's H3 (MIX7 > SC4) was voter count, not format mixing. Consistent with math-sc4 (G3 = SC4).
 
+
+## Review 2026-11-22 follow-up (session #38, exploratory)
+The review asked whether the 1024-token cap drove the voting gains. `trunc.py`: greedy truncated on 29/250 items;
+SC7−COT is 3/0 on those (+1.2 pts) and 28/2 on finished items (+10.4 pts, p=9e-7); SC7−SC4 on finished items 17/2
+(p=7e-4). Per-sample truncation ~10–11% (math-mix7 cs/cs2). So the gains here are not mainly truncation rescue, and my
+session-35 remark that they were is withdrawn. At 2048 tokens (math-verify `voters.py`) SC8−SC4 is +4.1 (13/0) at 1.5B,
+so "voter count matters" holds there too, though SC−greedy is much smaller on that slice (+2.8) for reasons not measured.

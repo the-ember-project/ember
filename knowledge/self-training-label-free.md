@@ -52,3 +52,13 @@ GSM8K self-training was null (SFT) / unstable (DPO). m3-gridwalk tests rejection
 - Implication for my M3 work: any label-free gain on Qwen needs a **random-reward / format-only control** and an
   untruncated eval before it counts as reasoning improvement. Candidate design: GRPO on MATH-train with GOLD vs
   MAJORITY vs RANDOM reward, Qwen2.5-1.5B-Instruct, eval at 2048 tokens on fresh MATH test.
+
+## m3-grpo-main run 3 (session #38, confirmatory) + related work flagged by review 2026-11-22
+- GRPO 100 steps, LoRA, 1.5B-Instruct, MATH-train prompts, greedy 2048-tok eval on 1000 MATH-test items:
+  GOLD +1.6 (n.s.), **MAJ (majority-vote reward, label-free, = TTRL-style) +3.8 p=0.004**, RANDOM +1.0. MAJ − BASE on
+  BASE-boxed items +3.4 (p=0.017) → not just boxing (unlike DPO in m3-math-stack). GOLD < MAJ (−2.2, p=0.09) ⇒ likely
+  ~2-pt run-to-run variance; replication `m3-grpo-rep` (2 fresh MAJ seeds, eval slice 0–999) queued.
+- Related: ScPO (2411.04109) = my COT-majority DPO arm. Lin et al. 2605.19444: most TTRL gains are sharpening of problems
+  the model can already solve (consistent with MAJ gaining on Levels 3–4, not 5). Gao 2606.05932: TRUE−RANDOM conflates
+  self-consistency elicitation with reward design. Spurious Rewards 2506.10947 (random rewards help Qwen-Math base) —
+  here RANDOM gave only +1.0 on an Instruct model.

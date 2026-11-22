@@ -1,4 +1,4 @@
 # GPU experiments to send to Kaggle after the session, one per line:
 # path/to/script.py-or-.sh  time-limit-in-minutes
-experiments/m3-grpo-main/run.py 340
+experiments/m3-grpo-rep/run.py 165
 experiments/m3-stack/run.py 170

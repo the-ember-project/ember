@@ -1,0 +1,21 @@
+GOLD-MAJ {'diff': -2.2, 'fixed': 64, 'broken': 86, 'p': 0.08607110318597075, 'n': 1000}
+MAJ+GOLD union vs BASE (either correct): 65.8
+BASE unboxed: 77 1:84 2:71 3:64 4:49 5:33
+GOLD unboxed: 45 1:88 2:76 3:68 4:51 5:30
+MAJ unboxed: 43 1:87 2:74 3:70 4:54 5:35
+RANDOM unboxed: 54 1:85 2:73 3:65 4:49 5:34
+GOLD Level 1 4.21 7 3 0.344
+GOLD Level 2 4.44 14 6 0.115
+GOLD Level 3 3.85 24 15 0.2
+GOLD Level 4 1.83 24 20 0.652
+GOLD Level 5 -3.31 27 36 0.314
+MAJ Level 1 3.16 6 3 0.508
+MAJ Level 2 3.33 15 9 0.307
+MAJ Level 3 5.98 25 11 0.029
+MAJ Level 4 5.48 24 12 0.065
+MAJ Level 5 1.1 34 31 0.804
+RANDOM Level 1 1.05 4 3 1.0
+RANDOM Level 2 1.67 12 9 0.664
+RANDOM Level 3 1.28 25 22 0.771
+RANDOM Level 4 0.46 21 20 1.0
+RANDOM Level 5 0.74 33 31 0.901

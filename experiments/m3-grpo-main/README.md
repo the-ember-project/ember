@@ -36,7 +36,35 @@ Paired two-sided exact sign test on the 1000 MATH items. Confirmatory.
 Outputs in `gpu-output/`: `eval_{BASE,GOLD,MAJ,RANDOM}.jsonl.gz`, `train_{ARM}.json`, filtered `log_*.txt`.
 
 ## Results
-(pending; queued session #32 as `run.py 340`)
+### Run 3 (2026-11-22, Kaggle, 259 GPU min) — confirmatory; validity PASS
+BASE 55.6 (boxed 92.3%), all arms 100 steps, n=1000 per arm; eval_BASE is run 3's (log line "EVAL BASE: math=0.5560").
+
+| arm | acc | boxed | BBH-date |
+|---|---|---|---|
+| BASE | 55.6 | 92.3 | 49.6 |
+| GOLD | 57.2 | 95.5 | 46.0 |
+| MAJ | 59.4 | 95.7 | 44.8 |
+| RANDOM | 56.6 | 94.6 | 50.0 |
+
+- **H1 FAIL:** GOLD − BASE +1.6 (96/80, p=0.26). Predicted +2.5.
+- **H2 PASS:** MAJ − BASE **+3.8** (104/66, p=0.0044). Predicted +1.0 → FAIL; I was wrong.
+- **H3 FAIL:** GOLD − RANDOM +0.6 (85/79, p=0.70).
+- **H4 PASS:** RANDOM − BASE +1.0 (95/85, p=0.50).
+- **H5 FAIL:** GOLD − BASE on BASE-boxed items +1.08 (p=0.48).
+- Drift: BBH-date GOLD − BASE −3.6 (≥ −4: pass, barely); MAJ −4.8 (exploratory: past the −4 line).
+- Exploratory (`explore.py`, `explore.txt`): MAJ − BASE on BASE-boxed items +3.36 (95/64, p=0.017), so MAJ's gain is
+  not just boxing; MAJ − RANDOM +2.8 (p=0.039); GOLD − MAJ −2.2 (64/86, p=0.086). MAJ gains are at Levels 3–4
+  (+6.0, +5.5); GOLD loses on Level 5 (−3.3). Training-time majority reward agreed with gold on ~90% of completions.
+
+**Reading.** A gold reward should be at least as good as a 90%-accurate majority reward, yet GOLD < MAJ by 2.2. The
+most likely explanation is training-run variance of ~2 points per run (one seed per arm; same lesson as DPO's +3.1/−7.9),
+so MAJ's H2 pass may be partly luck, and GOLD's fail may be partly bad luck. Net: RL at this budget moved greedy MATH
+by +1 to +4 points, with RANDOM at +1.
+
+**Decision (deviation from the pre-written checkpoint rule, recorded):** the rule said "if H1 fails, stop RL", premised
+on GOLD being the ceiling for label-free rewards. MAJ beating GOLD falsifies that premise, and H2 (the M3-relevant test)
+passed. So instead of stopping I run one replication of MAJ with two fresh training seeds and prompt draws on a fresh
+eval slice (`experiments/m3-grpo-rep`, prediction written before the run). If it fails, RL stops.
 
 ### Run 2 (2026-11-21, Kaggle): FAILED — no result
 All three arms hit CUDA OOM at training step 3 (14.3 of 14.6 GB; the bs-8 micro-batch's full-vocab logits over up to

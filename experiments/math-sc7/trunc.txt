@@ -1,0 +1,4 @@
+greedy truncated (>=1024 tok) on 29/250 items
+SC7-COT on greedy truncated items: fixed 3 / broken 0 -> +1.2 pts of the total (p=0.25)
+SC7-COT on greedy finished items: fixed 28 / broken 2 -> +10.4 pts of the total (p=8.68e-07)
+SC7-SC4 on greedy finished items: fixed 17 / broken 2 (p=0.000729)

@@ -231,3 +231,17 @@
 2026-11-21 14:46:11 file created: experiments/m3-grpo-unsloth/pilot_u.py
 2026-11-21 14:47:57 file created: experiments/math-verify/adaptive.py
 2026-11-21 14:48:06 file created: experiments/math-verify/adaptive.txt
+# Session 38
+2026-11-22 14:42:01 file created: experiments/m3-grpo-main/explore.py
+2026-11-22 14:42:01 file created: experiments/m3-grpo-main/explore.txt
+2026-11-22 14:42:01 file created: experiments/m3-grpo-main/__pycache__/analyze.cpython-312.pyc
+2026-11-22 14:42:11 file created: experiments/m3-grpo-main/__pycache__/run.cpython-312.pyc
+2026-11-22 14:43:06 file created: experiments/m3-grpo-rep/run.py
+2026-11-22 14:43:06 file created: experiments/m3-grpo-rep/analyze.py
+2026-11-22 14:43:55 prediction written: experiments/m3-grpo-rep/README.md (edf3fbff4d1a)
+2026-11-22 14:43:55 file created: experiments/m3-grpo-rep/rep_analyze.py
+2026-11-22 14:44:10 file created: experiments/math-verify/voters.txt
+2026-11-22 14:44:10 file created: experiments/math-verify/voters.py
+2026-11-22 14:44:32 file created: experiments/math-sc7/trunc.py
+2026-11-22 14:44:32 file created: experiments/math-sc7/trunc.txt
+2026-11-22 14:45:38 file created: experiments/m3-grpo-rep/__pycache__/analyze.cpython-312.pyc

@@ -62,7 +62,7 @@ ORM AUROC on 1.5B samples 0.904 (≥0.60); non-finite scores 0.
 - **H3 FAIL:** WSC8(1.5B) − SC8(3B) = **−12.0** (6/44, p=3e-8). Predicted −6.
 - Exploratory: BoN8 − SC8 +6.0 (p=0.004); the 0.6B ORM gives WSC8 +4.1 (p=0.004); at 3B the ORM adds only +0.9
   (n.s.); SC8 − greedy is only +2.8 at 1.5B (p=0.08) but +7.6 at 3B. Note that SC gains here (2048 tokens, vLLM) are
-  much smaller than the +11.6 of math-sc7 (CPU, shorter budget): part of the earlier SC gain was truncation rescue.
+  much smaller than the +11.6 of math-sc7 (CPU, shorter budget): ~~part of the earlier SC gain was truncation rescue~~ — **wrong (review 11-22; corrected #38):** in math-sc7 only +1.2 of SC7's +11.6 sat on greedy-truncated items (`math-sc7/trunc.txt`). Exploratory `voters.py` (stored samples, 2048 tok): 1.5B SC1/SC4/SC8 54.9/53.6/57.7, SC8−SC4 +4.1 (13/0, p=2e-4), SC8−SC1 +2.8 (p=0.08); 3B 67.2/72.2/74.8, SC8−SC1 +7.6 (p=4e-5). Per-sample truncation 2.4% (1.5B) vs ~10–11% in math-mix7/sc7 at 1024. So voter count matters at 2048 too; why SC−greedy is smaller here than in math-sc7 is unexplained (different slice, fp16 vs Q4).
 - `explore.py` (exploratory): **within-question AUROC 0.809** at 1.5B (0.782 at 3B), against 0.677 for the 1.5B
   self-judge (math-selfverify, tails only, different items). Of 56 SC8 misses with a correct sample, WSC8 rescues 17;
   of 33 with a lone correct sample, BoN picks it in 15. So a small external ORM *can* overrule wrong pluralities,
@@ -80,5 +80,5 @@ ORM AUROC on 1.5B samples 0.904 (≥0.60); non-finite scores 0.
 Sample sequentially (greedy first), stop once the leading answer's sigmoid(ORM)-weighted vote beats the runner-up by M.
 On the same n=317: M=2 keeps the full WSC8 accuracy (62.8) at 6.0 vs 7.6 sample-units of generated tokens (−20%);
 M=1 gives 62.1 at 4.9 units (−36%). 3B greedy gets 67.2 at 2.1 units (3B tokens counted 2×; ORM scoring cost not
-counted, which favours the 1.5B). So on MATH, 3B greedy dominates every 1.5B+ORM operating point: more accuracy at
+counted, which favours the 1.5B). So on MATH, 3B greedy is cheaper than, and not worse than, every 1.5B+ORM operating point (review 11-22: the accuracy gap to WSC8 was −4.4, p=0.087, not significant): more accuracy at
 less than half the compute. Swept thresholds on the evaluation items — exploratory only.

@@ -58,3 +58,6 @@ scores under `"scores"`; no metric change.) SC8 57.7 and WSC8_rm17 62.8 reproduc
 - Reading: token confidence carries a weak within-question signal (0.66 vs ORM 0.81); DeepConf-style filtering to the
   top half throws away votes and gains nothing at N=8; soft weighting may give ~+2 (exploratory). Free intrinsic signals
   at 1.5B recover <half of what a 1.7B external ORM does.
+
+Note (review 2026-11-22): every verdict above was computed after the post-run `analyze.py` fix (KeyError on the
+nested "scores" key, crashed before printing any verdict); the reproduced SC8 57.7 / WSC8 62.8 match math-verify.

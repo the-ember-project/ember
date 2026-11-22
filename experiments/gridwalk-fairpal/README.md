@@ -37,3 +37,10 @@ CPU lab: `run_lab.sh 240` (resumable chunks of 25; ~1000 PAL samples). Smoke-tes
   read as "the model can fill an action list into a supplied simulator", not "programs help it reason". Caveat:
   one neutral demo only; a demo that shows *list transcription* of a different domain might land in between.
 
+
+## Wording correction (review 2026-11-22, session #38)
+This run failed its own validity check (45% of programs executed vs ≥80% required), and only one neutral demo was
+tried. What it shows: *with this neutral demo* PAL does far worse than CoT (2.5 vs 38.0). It does not show that the
+gridwalk PAL gain came "entirely" from the demo's solver — a demo that teaches the program format without the simulator
+might still help. The gridwalk result stays out of M2 as unproven, not as disproven. Settling it needs a second neutral
+demo that passes validity (low priority).

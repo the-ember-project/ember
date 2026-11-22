@@ -27,7 +27,7 @@ If you intend to call multiple tools and there are no dependencies between the c
 - GRPO/TRL memory: a 12-step pilot's peak (12.1 GB) is not the main run's — full-vocab logits scale with micro-batch × completion length (m3-grpo-main run 2 OOMed at step 3 with bs 8). Use bs ≤2 with more grad-accum, keep ≥2 GB headroom, and add an OOM retry at smaller bs.
 - GPU queue is head-of-line blocking: put the job that fits the remaining quota first. Kaggle jobs get 2 T4s: run independent arms in parallel (one subprocess per GPU via CUDA_VISIBLE_DEVICES, distinct MASTER_PORT) to halve quota use (first tried in m3-grpo-main).
 - Compute verdicts from per-question files, not only summary.json (m3-dpo2 summary silently dropped renamed arms).
-- One training run per arm is not evidence for DPO-style methods: same recipe gave +3.1 and −7.9 on two data draws.
+- One training run per arm is not evidence (DPO: +3.1 vs −7.9 on two draws; GRPO run 3: GOLD +1.6 < MAJ +3.8). Plan ≥2 seeds per key arm, one per T4.
 - Evaluate self-training on the public *test* split; held-out train items can be contaminated (GSM8K train: BASE 81.7 vs test 69.8).
 - One-shot program demos can hand over the solver (gridwalk: 52.5% of PAL samples copied it). Use a demo from a different task when claiming a format effect.
 - Wording: a failed non-inferiority test is not superiority; "closes X% of the gap" must use the same items and compute.
