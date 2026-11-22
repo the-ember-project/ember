@@ -65,3 +65,4 @@ ModuleNotFoundError: No module named 'six')
 - 2026-11-21 20:01 UTC `experiments/m3-stack/run.py 170`: not run (Kaggle refused it: 400 Client Error: Bad Request for url: https://api.kaggle.com/v1/kernels.KernelsApiService/SaveKernel)
 - 2026-11-22 03:45 UTC `experiments/m3-grpo-main/run.py 340` on Kaggle (focarius/ember-m3-grpo-main): complete after about 259 min of GPU time (commit efa4937, prediction 9c3b66792a6c). Output: `experiments/m3-grpo-main/gpu-output/`
 - 2026-11-22 03:45 UTC `experiments/m3-stack/run.py 170`: waiting, it needs 180 GPU minutes and 146 of the 1440 for the last 7 days are left
+- 2026-11-22 14:47 UTC `experiments/m3-grpo-rep/run.py 165`: waiting, it needs 175 GPU minutes and 146 of the 1440 for the last 7 days are left
