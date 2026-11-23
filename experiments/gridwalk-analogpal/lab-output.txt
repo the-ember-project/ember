@@ -1,0 +1,22 @@
+SUMMARY mode=pal n=25 acc(first)=0.080 tok/s=23.2 s/q=56.7
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.000 tok/s=23.3 s/q=52.4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.040 tok/s=22.8 s/q=59.3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.040 tok/s=23.5 s/q=56.9
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.000 tok/s=23.1 s/q=56.2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.040 tok/s=23.1 s/q=53.7
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.040 tok/s=23.4 s/q=55.0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+SUMMARY mode=pal n=25 acc(first)=0.000 tok/s=23.1 s/q=54.6
+n 200 {'cot_greedy': 38.0, 'vote5P_analog': 4.5, 'vote5P_orig': 73.0, 'pal1_analog': 3.0, 'pal1_orig': 61.5}
+analog per-sample acc 2.0, exec rate 51.0, mean tokens 258
+analog samples using a direction list/modulo-4 simulator: 26.6%
+H1 (pass if >= +10, p<.05): vote5P_analog - cot_greedy -33.5 (fixed 3 / broken 70) p=1.37e-17
+H2 (pass if >= +5, p<.05): vote5P_orig - vote5P_analog +68.5 (fixed 139 / broken 2) p=7.18e-39
+expl: pal1_analog - cot_greedy -35.0 (fixed 2 / broken 72) p=2.94e-19
+DONE
