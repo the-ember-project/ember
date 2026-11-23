@@ -55,7 +55,18 @@ GIVE_UP_HOURS = 13                                                     # after t
 # lands on an older card that current PyTorch builds don't support (e.g. the retired Pascal P100).
 ACCELERATOR = "NvidiaTeslaT4"
 MAX_FILE, MAX_BUNDLE = 500_000, 2_000_000
-SKIP = {"gpu-output", "__pycache__", ".git"}
+# The packed job (the folder's files, compressed and base64-encoded into one script) must stay
+# under this. Kaggle publishes no limit. It refused a 1.3 MB m3-stack job on 2026-11-21 with a bare
+# "400 Bad Request"; the biggest job it had accepted was 16 KB. So the real limit is somewhere in
+# between, and this cap is a guess that at least turns the known failure into a clear message.
+MAX_PACKED = 1_000_000
+# Not sent: old results. Folders whose names end in "-output" (gpu-output/ and the copies the agent
+# keeps of earlier runs, e.g. run2-output/) hold what jobs wrote, which a new job doesn't need.
+SKIP = {"__pycache__", ".git"}
+
+
+def skipped_dir(name: str) -> bool:
+    return name in SKIP or name.endswith("-output")
 DONE = ("complete", "error", "cancel")
 
 WRAPPER = r'''# Ember GPU job, made by agent/kaggle_jobs.py: unpacks the experiment folder, runs it with a time limit.
@@ -132,7 +143,7 @@ def bundle(folder: Path) -> str:
     buf, total = io.BytesIO(), 0
     with tarfile.open(fileobj=buf, mode="w:gz") as t:
         for dirpath, dirnames, filenames in os.walk(folder, followlinks=False):
-            dirnames[:] = sorted(d for d in dirnames if d not in SKIP and not (Path(dirpath) / d).is_symlink())
+            dirnames[:] = sorted(d for d in dirnames if not skipped_dir(d) and not (Path(dirpath) / d).is_symlink())
             for name in sorted(filenames):
                 p = Path(dirpath) / name
                 if p.is_symlink() or not p.is_file() or name == "lab-output.txt":
@@ -147,7 +158,13 @@ def bundle(folder: Path) -> str:
                     raise ValueError(f"its folder's files add up to over {MAX_BUNDLE // 1_000_000} MB; "
                                      "download big data inside the job instead")
                 t.add(p, arcname=str(p.relative_to(folder)), recursive=False)
-    return base64.b64encode(buf.getvalue()).decode()
+    packed = base64.b64encode(buf.getvalue()).decode()
+    if len(packed) > MAX_PACKED:
+        raise ValueError(f"its folder's files pack to {len(packed) / 1e6:.1f} MB, over the "
+                         f"{MAX_PACKED / 1e6:.0f} MB this workflow sends (Kaggle refused a 1.3 MB job; "
+                         "already-compressed files such as .gz barely shrink); move large files into a "
+                         "folder ending in -output, or download them inside the job")
+    return packed
 
 
 def slug_for(folder: Path) -> str:
