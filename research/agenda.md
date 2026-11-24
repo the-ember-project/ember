@@ -27,6 +27,11 @@
    WSC8(ORM1) ≥ 3B greedy −2 (pred −4 FAIL); O5 training adds to selection ≥+1.5. Runs regardless of rep outcome.
    **Back →** `python experiments/m3-grpo-orm/orm_analyze.py`. Quota: 11-17/18 jobs leave the window 11-24 20:46 →
    11-25 04:20, so rep then stack should run in the next ~2 sessions; orm needs 260 free.
+1a. **gsm8k-orm queued in CPU lab #42 (`run_lab.sh 290`, needs a 2nd run — re-queue if no `analysis.txt`):** 1.5B greedy+7
+   CoT samples weighted by Skywork-RM-1.7B (CPU) vs 3B greedy on GSM8K test 900–1109 (n=210). H1 WSC8−SC8 ≥+2 p<.05
+   (pred +4); H2 WSC8 ≥ 3B greedy −2 (pred +1 PASS); H3 ≥+3 p<.05 (pred FAIL). M5 accuracy-match on a 2nd benchmark.
+   **Back →** `cd experiments/gsm8k-orm && python analyze.py`.
+   GPU note #42: window had 352 min free at session start → rep (175) should run now; stack (180) then waits ~1 day.
 1b. **Unsloth pilot DONE #37:** Unsloth 57.5 s/step, fit bs 8; stock OOMed → not switching (0.83× vs historic 69 s);
    issue #8 closed. Revisit if stock at bs 2 is too slow or the ORM-reward arm doesn't fit in memory.
 3. **math-conf DONE #37 (confirmatory):** H1 FAIL (DCF −0.6 vs SC8), H2 FAIL (−5.7 vs ORM), H3 PASS (within-q AUROC
