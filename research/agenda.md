@@ -21,9 +21,12 @@
    "stop RL if H1 fails" rule (premise "GOLD is the ceiling" falsified) → m3-grpo-rep: 2 fresh MAJ replicates (seeds 8/9,
    prompt shuffles 32/33), eval MATH-test positions 0–999. R2 (M3): mean gain ≥ +3 and both p<.05; predicted +2.5 FAIL.
    **Back →** `python experiments/m3-grpo-rep/rep_analyze.py`. Checkpoint: if neither replicate passes R1, stop RL.
-2. **If R1 passes for ≥1 replicate → ORM-reward GRPO arm** (Skywork-Reward-V2 0.6B score as reward, label-free) vs MAJ,
-   ideally 2 seeds each (one per T4). The ORM has within-q AUROC 0.81 vs MAJ's ~90% label agreement. Memory: vLLM
-   colocate 12 GB at bs 2; 0.6B RM fp16 ~1.2 GB should fit; else score offline.
+2. **m3-grpo-orm queued #41 (3rd in GPU queue, `run.py 250`):** GRPO with raw Skywork-RM-0.6B score as reward
+   (label-free, external verifier), 2 seeds (ORM1/ORM2), eval on rep's items 0–999 + 3B greedy + WSC8 on 0–499 for
+   ORM1/BASE. O1 each ≥+2 p<.05 (pred +1.5); O2 M3 mean ≥+3; O3 ORM−MAJ ≥+1.5 (cross-job, pred −0.5); **O4 = M5 test**:
+   WSC8(ORM1) ≥ 3B greedy −2 (pred −4 FAIL); O5 training adds to selection ≥+1.5. Runs regardless of rep outcome.
+   **Back →** `python experiments/m3-grpo-orm/orm_analyze.py`. Quota: 11-17/18 jobs leave the window 11-24 20:46 →
+   11-25 04:20, so rep then stack should run in the next ~2 sessions; orm needs 260 free.
 1b. **Unsloth pilot DONE #37:** Unsloth 57.5 s/step, fit bs 8; stock OOMed → not switching (0.83× vs historic 69 s);
    issue #8 closed. Revisit if stock at bs 2 is too slow or the ORM-reward arm doesn't fit in memory.
 3. **math-conf DONE #37 (confirmatory):** H1 FAIL (DCF −0.6 vs SC8), H2 FAIL (−5.7 vs ORM), H3 PASS (within-q AUROC

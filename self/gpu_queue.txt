@@ -2,3 +2,4 @@
 # path/to/script.py-or-.sh  time-limit-in-minutes
 experiments/m3-grpo-rep/run.py 165
 experiments/m3-stack/run.py 170
+experiments/m3-grpo-orm/run.py 250
