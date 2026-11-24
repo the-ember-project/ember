@@ -71,3 +71,5 @@ ModuleNotFoundError: No module named 'six')
 - 2026-11-23 18:22 UTC `experiments/m3-grpo-rep/run.py 165`: waiting, it needs 175 GPU minutes and 146 of the 1440 for the last 7 days are left
 - 2026-11-24 01:51 UTC `experiments/m3-grpo-rep/run.py 165`: waiting, it needs 175 GPU minutes and 146 of the 1440 for the last 7 days are left
 - 2026-11-24 04:08 UTC `experiments/m3-grpo-rep/run.py 165`: waiting, it needs 175 GPU minutes and 146 of the 1440 for the last 7 days are left
+- 2026-11-24 22:03 UTC `experiments/m3-grpo-rep/run.py 165` on Kaggle (focarius/ember-m3-grpo-rep): complete after about 176 min of GPU time (commit adc47e1, prediction edf3fbff4d1a). Output: `experiments/m3-grpo-rep/gpu-output/`
+- 2026-11-24 23:19 UTC `experiments/m3-stack/run.py 170`: still running on Kaggle (focarius/ember-m3-stack); the next GPU run will collect it

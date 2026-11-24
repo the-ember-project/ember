@@ -1,0 +1,58 @@
+Tesla T4, 15360 MiB
+Tesla T4, 15360 MiB
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+ydata-profiling 4.18.4 requires numba<0.63,>=0.60, but you have numba 0.65.0 which is incompatible.
+numba-cuda 0.28.2 requires cuda-core<1.0.0,>=0.5.1, but you have cuda-core 1.3.1 which is incompatible.
+cuml-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
+cudf-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
+gradio 6.30.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.
+google-adk 2.7.1 requires opentelemetry-api<=1.42.1,>=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.
+google-adk 2.7.1 requires opentelemetry-sdk<=1.42.1,>=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.
+GPU 0: Tesla T4 (UUID: GPU-e194c54c-c24e-d1a9-d983-44347f7973ce)
+GPU 1: Tesla T4 (UUID: GPU-90481681-33f4-4aa4-0028-c17a5518e8f1)
+peft                                     0.21.2
+torch                                    2.14.0
+transformers                             5.20.2
+trl                                      1.18.1
+vllm                                     0.33.0
+TRAINED MAJ2 steps=1
+{'loss': '-0.1123', 'grad_norm': '0.1268', 'learning_rate': '3e-05', 'num_tokens': '6003', 'completions/mean_length': '603.4', 'completions/min_length': '405', 'completions/max_length': '982', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '603.4', 'completions/min_terminated_length': '405', 'completions/max_terminated_length': '982', 'rewards/r_MAJ/mean': '0.25', 'rewards/r_MAJ/std': '0.4629', 'reward': '0.25', 'reward_std': '0.4629', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0009494', 'sampling/sampling_logp_difference/max': '0.04209', 'sampling/importance_sampling_ratio/min': '0.8573', 'sampling/importance_sampling_ratio/mean': '0.9921', 'sampling/importance_sampling_ratio/max': '1.14', 'entropy': '0.3714', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '27.52', 'epoch': '0.08333'}
+{'train_runtime': '28.38', 'train_samples_per_second': '0.282', 'train_steps_per_second': '0.035', 'train_loss': '-0.1123', 'epoch': '0.08333'}
+TRAINED MAJ2 steps=1
+PROC --mode train --arm MAJ2 exit=0 206s
+TRAINED MAJ3 steps=1
+{'loss': '0.2678', 'grad_norm': '0.1116', 'learning_rate': '3e-05', 'num_tokens': '7069', 'completions/mean_length': '791.6', 'completions/min_length': '443', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.5', 'completions/mean_terminated_length': '559.2', 'completions/min_terminated_length': '443', 'completions/max_terminated_length': '767', 'rewards/r_MAJ/mean': '0.5', 'rewards/r_MAJ/std': '0.5345', 'reward': '0.5', 'reward_std': '0.5345', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0005559', 'sampling/sampling_logp_difference/max': '0.04394', 'sampling/importance_sampling_ratio/min': '0.9039', 'sampling/importance_sampling_ratio/mean': '1.007', 'sampling/importance_sampling_ratio/max': '1.129', 'entropy': '0.1454', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '27.6', 'epoch': '0.08333'}
+{'train_runtime': '28.41', 'train_samples_per_second': '0.282', 'train_steps_per_second': '0.035', 'train_loss': '0.2678', 'epoch': '0.08333'}
+TRAINED MAJ3 steps=1
+PROC --mode train --arm MAJ3 exit=0 206s
+EVAL BASEsmoke_: math=0.2500 boxed=1.000 20s
+EVAL MAJ2smoke_: math=0.2500 boxed=1.000 46s
+(EngineCore pid=684) INFO 11-24 19:48:53 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=684) INFO 11-24 19:48:53 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=684) INFO 11-24 19:48:53 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE,MAJ2 exit=0 257s
+SMOKE OK parallel=True
+TRAINED MAJ2 steps=100
+{'loss': '-0.01677', 'grad_norm': '0.07418', 'learning_rate': '3e-05', 'num_tokens': '2.11e+06', 'completions/mean_length': '465.4', 'completions/min_length': '229', 'completions/max_length': '948', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '465.4', 'completions/min_terminated_length': '229', 'completions/max_terminated_length': '948', 'rewards/r_MAJ/mean': '0.7812', 'rewards/r_MAJ/std': '0.42', 'reward': '0.7812', 'reward_std': '0.42', 'frac_reward_zero_std': '0.25', 'sampling/sampling_logp_difference/mean': '0.0009345', 'sampling/sampling_logp_difference/max': '0.05221', 'sampling/importance_sampling_ratio/min': '0.8341', 'sampling/importance_sampling_ratio/mean': '0.9971', 'sampling/importance_sampling_ratio/max': '1.111', 'entropy': '0.2397', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '60.74', 'epoch': '0.9804'}
+{'train_runtime': '6636', 'train_samples_per_second': '0.482', 'train_steps_per_second': '0.015', 'train_loss': '0.03502', 'epoch': '0.9804'}
+TRAINED MAJ2 steps=100
+PROC --mode train --arm MAJ2 exit=0 6739s
+TRAINED MAJ3 steps=100
+{'loss': '0.04524', 'grad_norm': '0.08583', 'learning_rate': '3e-05', 'num_tokens': '2.075e+06', 'completions/mean_length': '410.3', 'completions/min_length': '154', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.03125', 'completions/mean_terminated_length': '390.5', 'completions/min_terminated_length': '154', 'completions/max_terminated_length': '962', 'rewards/r_MAJ/mean': '0.7188', 'rewards/r_MAJ/std': '0.4568', 'reward': '0.7188', 'reward_std': '0.4568', 'frac_reward_zero_std': '0.5', 'sampling/sampling_logp_difference/mean': '0.0009992', 'sampling/sampling_logp_difference/max': '0.06122', 'sampling/importance_sampling_ratio/min': '0.8353', 'sampling/importance_sampling_ratio/mean': '0.9751', 'sampling/importance_sampling_ratio/max': '1.096', 'entropy': '0.19', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '59.32', 'epoch': '0.9804'}
+{'train_runtime': '6396', 'train_samples_per_second': '0.5', 'train_steps_per_second': '0.016', 'train_loss': '0.03662', 'epoch': '0.9804'}
+TRAINED MAJ3 steps=100
+PROC --mode train --arm MAJ3 exit=0 6739s
+EVAL BASE: math=0.5630 boxed=0.931 442s
+EVAL MAJ2: math=0.5930 boxed=0.953 668s
+(EngineCore pid=1345) INFO 11-24 22:02:31 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1345) INFO 11-24 22:02:31 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1345) INFO 11-24 22:02:31 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE,MAJ2 exit=0 1279s
+EVAL MAJ3: math=0.5740 boxed=0.965 649s
+(EngineCore pid=1352) INFO 11-24 21:53:38 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1352) INFO 11-24 21:53:38 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1352) INFO 11-24 21:53:38 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms MAJ3 exit=0 1279s
+DONE
+
+[exit code 0 after 146 min]
