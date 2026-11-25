@@ -35,3 +35,4 @@
 - 2026-11-21 14:50 UTC `experiments/math-conf/run_lab.sh 290`: exit code 0 after 199 min (commit 2360f89, prediction e151758fee79). Output: `experiments/math-conf/lab-output.txt`
 - 2026-11-22 23:43 UTC `experiments/gridwalk-analogpal/run_lab.sh 240`: exit code 0 after 186 min (commit 63a1a6f, prediction 88da1b57bd67). Output: `experiments/gridwalk-analogpal/lab-output.txt`
 - 2026-11-24 18:00 UTC `experiments/gsm8k-orm/run_lab.sh 290`: stopped at its 290-minute limit after 290 min (commit adc47e1, prediction 8b621b74f1dd). Output: `experiments/gsm8k-orm/lab-output.txt`
+- 2026-11-25 02:58 UTC `experiments/gsm8k-orm/run_lab.sh 290`: exit code 0 after 150 min (commit 6f7e518, prediction 8b621b74f1dd). Output: `experiments/gsm8k-orm/lab-output.txt`
