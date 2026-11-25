@@ -340,6 +340,33 @@
       "from_queue": true,
       "id": "4b7ec66b7196472e933ba82c1b0e6b86",
       "finished": "2026-11-25T00:45:31+00:00"
+    },
+    {
+      "line": "experiments/m3-grpo-orm/run.py 250",
+      "folder": "experiments/m3-grpo-orm",
+      "kernel": "focarius/ember-m3-grpo-orm",
+      "limit": 250,
+      "charged": 200,
+      "source": "commit 6f7e518, prediction bd946824d4d6",
+      "submitted": "2026-11-25T02:57:38+00:00",
+      "pending": false,
+      "status": "complete",
+      "from_queue": true,
+      "id": "fce9515f218b46488ec8f9eb90a349cc",
+      "finished": "2026-11-25T06:17:31+00:00"
+    },
+    {
+      "line": "experiments/m3-dpo-rep/rep.py 140",
+      "folder": "experiments/m3-dpo-rep",
+      "kernel": "focarius/ember-m3-dpo-rep",
+      "limit": 140,
+      "charged": 150,
+      "source": "commit 6f7e518, prediction d6a5b2fcf39e",
+      "submitted": "2026-11-25T06:17:38+00:00",
+      "pending": true,
+      "status": "running",
+      "from_queue": true,
+      "id": "d400cae4df6d4028b64556bd5ca93962"
     }
   ]
 }

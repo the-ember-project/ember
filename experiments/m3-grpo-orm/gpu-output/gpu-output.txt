@@ -1,0 +1,118 @@
+Tesla T4, 15360 MiB
+Tesla T4, 15360 MiB
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+ydata-profiling 4.18.4 requires numba<0.63,>=0.60, but you have numba 0.65.0 which is incompatible.
+numba-cuda 0.28.2 requires cuda-core<1.0.0,>=0.5.1, but you have cuda-core 1.3.1 which is incompatible.
+cuml-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
+cudf-cu13 26.6.0 requires numba<0.65.0,>=0.60.0, but you have numba 0.65.0 which is incompatible.
+gradio 6.30.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.
+google-adk 2.7.1 requires opentelemetry-api<=1.42.1,>=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.
+google-adk 2.7.1 requires opentelemetry-sdk<=1.42.1,>=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.
+GPU 0: Tesla T4 (UUID: GPU-cdf97248-8e49-cab9-2c3c-fb0c4d774222)
+GPU 1: Tesla T4 (UUID: GPU-eccae235-2f16-9812-3865-baf57a48300d)
+peft                                     0.21.2
+torch                                    2.14.0
+transformers                             5.20.2
+trl                                      1.18.1
+vllm                                     0.33.0
+TRAINED ORM1 steps=1
+{'loss': '0.07565', 'grad_norm': '0.1487', 'learning_rate': '3e-05', 'num_tokens': '5467', 'completions/mean_length': '577.4', 'completions/min_length': '316', 'completions/max_length': '1024', 'completions/clipped_ratio': '0.125', 'completions/mean_terminated_length': '513.6', 'completions/min_terminated_length': '316', 'completions/max_terminated_length': '841', 'rewards/r_ORM/mean': '-1.482', 'rewards/r_ORM/std': '3.279', 'reward': '-1.482', 'reward_std': '3.279', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.001108', 'sampling/sampling_logp_difference/max': '0.0293', 'sampling/importance_sampling_ratio/min': '0.901', 'sampling/importance_sampling_ratio/mean': '1.019', 'sampling/importance_sampling_ratio/max': '1.224', 'entropy': '0.5526', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '31.29', 'epoch': '0.08333'}
+{'train_runtime': '32.11', 'train_samples_per_second': '0.249', 'train_steps_per_second': '0.031', 'train_loss': '0.07565', 'epoch': '0.08333'}
+TRAINED ORM1 steps=1
+PROC --mode train --arm ORM1 exit=0 200s
+TRAINED ORM2 steps=1
+{'loss': '-0.04069', 'grad_norm': '0.1882', 'learning_rate': '3e-05', 'num_tokens': '3252', 'completions/mean_length': '285.5', 'completions/min_length': '218', 'completions/max_length': '351', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '285.5', 'completions/min_terminated_length': '218', 'completions/max_terminated_length': '351', 'rewards/r_ORM/mean': '9.764', 'rewards/r_ORM/std': '1.708', 'reward': '9.764', 'reward_std': '1.708', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0007258', 'sampling/sampling_logp_difference/max': '0.02945', 'sampling/importance_sampling_ratio/min': '0.9686', 'sampling/importance_sampling_ratio/mean': '1.018', 'sampling/importance_sampling_ratio/max': '1.119', 'entropy': '0.218', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '24.47', 'epoch': '0.08333'}
+{'train_runtime': '24.94', 'train_samples_per_second': '0.321', 'train_steps_per_second': '0.04', 'train_loss': '-0.04069', 'epoch': '0.08333'}
+TRAINED ORM2 steps=1
+PROC --mode train --arm ORM2 exit=0 200s
+EVAL BASEsmoke_: math=0.0000 boxed=0.000 5s
+EVAL ORM1smoke_: math=0.0000 boxed=0.000 10s
+(EngineCore pid=710) INFO 11-25 03:18:02 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=710) INFO 11-25 03:18:02 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=710) INFO 11-25 03:18:02 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE,ORM1 exit=0 198s
+EVAL BASEsmoke_: math=0.0000 boxed=0.000 5s
+EVAL ORM1smoke_: math=0.0000 boxed=0.000 10s
+EVAL 3Bsmoke_: math=0.0000 boxed=0.000 9s
+(EngineCore pid=943) INFO 11-25 03:20:38 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=943) INFO 11-25 03:20:38 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=943) INFO 11-25 03:20:38 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE exit=0 156s
+EVAL BASEsmoke_: math=0.0000 boxed=0.000 5s
+EVAL ORM1smoke_: math=0.0000 boxed=0.000 10s
+EVAL 3Bsmoke_: math=0.0000 boxed=0.000 9s
+SAMPLED ORM1smoke_: 2 items x 3 in 12s
+(EngineCore pid=1187) INFO 11-25 03:23:21 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1187) INFO 11-25 03:23:21 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1187) INFO 11-25 03:23:21 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode sample --arm ORM1 exit=0 163s
+EVAL BASEsmoke_: math=0.0000 boxed=0.000 5s
+EVAL ORM1smoke_: math=0.0000 boxed=0.000 10s
+EVAL 3Bsmoke_: math=0.0000 boxed=0.000 9s
+SAMPLED ORM1smoke_: 2 items x 3 in 12s
+RM ORM1smoke_: 6 scored in 12s, non-finite fp16 0
+(EngineCore pid=1187) INFO 11-25 03:23:21 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:00<01:58,  2.61it/s]Loading weights:  83%|████████▎ | 259/311 [00:00<00:00, 702.96it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 565.88it/s]
+RM ORM1smoke_: 6 scored in 12s, non-finite fp16 0
+PROC --mode rm --arm ORM1 exit=0 12s
+SMOKE OK parallel=True
+TRAINED ORM1 steps=100
+{'loss': '0.1728', 'grad_norm': '0.1072', 'learning_rate': '3e-05', 'num_tokens': '2.069e+06', 'completions/mean_length': '485.8', 'completions/min_length': '175', 'completions/max_length': '991', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '485.8', 'completions/min_terminated_length': '175', 'completions/max_terminated_length': '991', 'rewards/r_ORM/mean': '5.6', 'rewards/r_ORM/std': '2.939', 'reward': '5.6', 'reward_std': '2.939', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0007969', 'sampling/sampling_logp_difference/max': '0.06211', 'sampling/importance_sampling_ratio/min': '0.9048', 'sampling/importance_sampling_ratio/mean': '1.012', 'sampling/importance_sampling_ratio/max': '1.153', 'entropy': '0.1371', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '61.66', 'epoch': '0.9804'}
+{'train_runtime': '6685', 'train_samples_per_second': '0.479', 'train_steps_per_second': '0.015', 'train_loss': '0.05234', 'epoch': '0.9804'}
+TRAINED ORM1 steps=100
+PROC --mode train --arm ORM1 exit=0 6788s
+TRAINED ORM2 steps=100
+{'loss': '0.09368', 'grad_norm': '0.1014', 'learning_rate': '3e-05', 'num_tokens': '2.084e+06', 'completions/mean_length': '451.3', 'completions/min_length': '296', 'completions/max_length': '806', 'completions/clipped_ratio': '0', 'completions/mean_terminated_length': '451.3', 'completions/min_terminated_length': '296', 'completions/max_terminated_length': '806', 'rewards/r_ORM/mean': '7.641', 'rewards/r_ORM/std': '3.436', 'reward': '7.641', 'reward_std': '3.436', 'frac_reward_zero_std': '0', 'sampling/sampling_logp_difference/mean': '0.0005569', 'sampling/sampling_logp_difference/max': '0.05935', 'sampling/importance_sampling_ratio/min': '0.8777', 'sampling/importance_sampling_ratio/mean': '1.015', 'sampling/importance_sampling_ratio/max': '1.176', 'entropy': '0.07778', 'clip_ratio/low_mean': '0', 'clip_ratio/high_mean': '0', 'clip_ratio/region_mean': '0', 'clip_ratio/low_min': '0', 'clip_ratio/high_max': '0', 'step_time': '53.59', 'epoch': '0.9804'}
+{'train_runtime': '7052', 'train_samples_per_second': '0.454', 'train_steps_per_second': '0.014', 'train_loss': '0.04737', 'epoch': '0.9804'}
+TRAINED ORM2 steps=100
+PROC --mode train --arm ORM2 exit=0 7155s
+EVAL ORM2: math=0.5850 boxed=0.977 655s
+(EngineCore pid=1899) INFO 11-25 05:37:02 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1899) INFO 11-25 05:37:02 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1899) INFO 11-25 05:37:02 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms ORM2 exit=0 853s
+EVAL BASE: math=0.5630 boxed=0.931 422s
+EVAL ORM1: math=0.5780 boxed=0.983 578s
+(EngineCore pid=1898) INFO 11-25 05:42:48 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1898) INFO 11-25 05:42:48 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1898) INFO 11-25 05:42:48 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE,ORM1 exit=0 1200s
+EVAL ORM2: math=0.5850 boxed=0.977 655s
+EVAL 3B: math=0.6930 boxed=0.975 561s
+(EngineCore pid=2302) INFO 11-25 05:48:22 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=2302) INFO 11-25 05:48:22 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=2302) INFO 11-25 05:48:22 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode eval --arms BASE exit=0 680s
+EVAL ORM2: math=0.5850 boxed=0.977 655s
+EVAL 3B: math=0.6930 boxed=0.975 561s
+SAMPLED BASE: 500 items x 8 in 1230s
+(EngineCore pid=2658) INFO 11-25 06:10:35 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=2658) INFO 11-25 06:10:35 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=2658) INFO 11-25 06:10:35 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode sample --arm BASE exit=0 1333s
+EVAL BASE: math=0.5630 boxed=0.931 422s
+EVAL ORM1: math=0.5780 boxed=0.983 578s
+SAMPLED ORM1: 500 items x 8 in 1601s
+(EngineCore pid=2505) INFO 11-25 06:10:54 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=2505) INFO 11-25 06:10:54 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=2505) INFO 11-25 06:10:54 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+PROC --mode sample --arm ORM1 exit=0 1685s
+EVAL BASE: math=0.5630 boxed=0.931 422s
+EVAL ORM1: math=0.5780 boxed=0.983 578s
+SAMPLED ORM1: 500 items x 8 in 1601s
+RM ORM1: 4000 scored in 309s, non-finite fp16 0
+(EngineCore pid=2505) INFO 11-25 06:10:54 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:00<02:04,  2.48it/s]Loading weights:  82%|████████▏ | 256/311 [00:00<00:00, 645.87it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 522.33it/s]
+RM ORM1: 4000 scored in 309s, non-finite fp16 0
+PROC --mode rm --arm ORM1 exit=0 310s
+EVAL ORM2: math=0.5850 boxed=0.977 655s
+EVAL 3B: math=0.6930 boxed=0.975 561s
+SAMPLED BASE: 500 items x 8 in 1230s
+RM BASE: 4000 scored in 357s, non-finite fp16 0
+(EngineCore pid=2658) INFO 11-25 06:10:35 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:00<01:45,  2.93it/s]Loading weights:  68%|██████▊   | 212/311 [00:00<00:00, 623.37it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 534.19it/s]
+RM BASE: 4000 scored in 357s, non-finite fp16 0
+PROC --mode rm --arm BASE exit=0 357s
+DONE
+
+[exit code 0 after 199 min]
