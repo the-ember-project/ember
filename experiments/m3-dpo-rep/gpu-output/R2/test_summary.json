@@ -1,0 +1,25 @@
+{
+ "MIXR-BASE": {
+  "diff": 2.88,
+  "fixed": 138,
+  "broken": 100,
+  "p": 0.0163
+ },
+ "bbh_date MIXR-BASE": null,
+ "acc": {
+  "BASE": 0.6967,
+  "MIXR": 0.7255
+ },
+ "bbh_date_acc": {
+  "BASE": 0.0,
+  "MIXR": 0.0
+ },
+ "n": {
+  "gsm8k": 1319,
+  "bbh_date": 0
+ },
+ "greedy_tok_per_q": {
+  "BASE": 225.5,
+  "MIXR": 228.0
+ }
+}

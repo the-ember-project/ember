@@ -360,13 +360,14 @@
       "folder": "experiments/m3-dpo-rep",
       "kernel": "focarius/ember-m3-dpo-rep",
       "limit": 140,
-      "charged": 150,
+      "charged": 151,
       "source": "commit 6f7e518, prediction d6a5b2fcf39e",
       "submitted": "2026-11-25T06:17:38+00:00",
-      "pending": true,
-      "status": "running",
+      "pending": false,
+      "status": "complete",
       "from_queue": true,
-      "id": "d400cae4df6d4028b64556bd5ca93962"
+      "id": "d400cae4df6d4028b64556bd5ca93962",
+      "finished": "2026-11-25T17:27:45+00:00"
     }
   ]
 }
