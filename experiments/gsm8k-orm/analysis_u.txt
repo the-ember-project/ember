@@ -1,0 +1,19 @@
+n paired = 210
+greedy_1.5B   69.0  (n=210)
+greedy_3B     79.5  (n=210)
+SC8_1.5B      73.8  (n=210)
+WSC8_1.5B     74.8  (n=210)
+BoN8_1.5B     77.1  (n=210)
+oracle8       91.0  (n=210)
+G3_1.5B       73.3  (n=210)
+validity: 3B greedy 79.5 (need 70-88); sample answer extracted 100.0% (need >=95); RM non-finite 0 (need 0)
+decode tokens: 1.5B x8 390621, 3B greedy 60171; compute ratio (tokens x params, decode only) 3.25x (+ RM 1.7B prefill of 8 solutions)
+H1_u (>= +2, p<.05): WSC8_1.5B - SC8_1.5B = +1.0 (3/1, p=0.625) FAIL
+H2_u (non-inf >= -2, point est.): WSC8_1.5B - greedy_3B = -4.8 (11/21, p=0.11) FAIL
+H3 (>= +3, p<.05): WSC8_1.5B - greedy_3B = -4.8 (11/21, p=0.11) FAIL
+expl: SC8_1.5B - greedy_1.5B = +4.8 (14/4, p=0.0309)
+expl: WSC8_1.5B - greedy_1.5B = +5.7 (17/5, p=0.0169)
+expl: BoN8_1.5B - SC8_1.5B = +3.3 (15/8, p=0.21)
+expl: greedy_3B - greedy_1.5B = +10.5 (31/9, p=0.00068)
+expl: SC8_1.5B - greedy_3B = -5.7 (11/23, p=0.0576)
+expl: G3_1.5B - greedy_3B = -6.2 (14/27, p=0.0596)
