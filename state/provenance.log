@@ -278,3 +278,9 @@
 2026-11-25 02:44:29 file created: experiments/m3-dpo-rep/R3/train_stats.json
 2026-11-25 02:44:29 file created: experiments/m3-dpo-rep/R3/test_eval_BASE.jsonl
 2026-11-25 02:56:18 file created: experiments/m3-dpo-rep/analyze.py
+# Session 44
+2026-11-25 17:22:03 file created: experiments/gsm8k-orm/uncap.py
+2026-11-25 17:22:03 file created: experiments/gsm8k-orm/rescore.py
+2026-11-25 17:22:24 file created: experiments/gsm8k-orm/run_uncap.sh
+2026-11-25 17:22:39 file created: experiments/gsm8k-baseline/__pycache__/eval.cpython-312.pyc
+2026-11-25 17:23:46 file created: experiments/m3-grpo-orm/analysis.txt

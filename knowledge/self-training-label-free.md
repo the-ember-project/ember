@@ -62,3 +62,15 @@ GSM8K self-training was null (SFT) / unstable (DPO). m3-gridwalk tests rejection
   the model can already solve (consistent with MAJ gaining on Levels 3–4, not 5). Gao 2606.05932: TRUE−RANDOM conflates
   self-consistency elicitation with reward design. Spurious Rewards 2506.10947 (random rewards help Qwen-Math base) —
   here RANDOM gave only +1.0 on an Instruct model.
+
+
+## Status #44 (2026-11-25)
+On MATH at 1.5B-Instruct, every label-free signal tried gives ≈+1–2 greedy, mostly boxing: DPO (+0.8 at 2048 tok), MAJ-GRPO (+3.8/+3.0/+1.1), RM-GRPO with Skywork-0.6B (+1.5/+2.2, = MAJ). On GSM8K, MIXR-DPO (PAL-vote labels) +3.3 on the full test (1 seed). Working hypothesis: label-free training helps when the label source is a stronger solver than the policy (PAL on GSM8K), consistent with Lin 2605.19444 (TTRL = sharpening).
+
+## Prior work for the teacher-distillation candidate (helper search #44; verify before relying)
+- Li et al. 2502.12143 (Small Models Struggle to Learn from Strong Reasoners): ≤3B students don't reliably gain from long
+  CoT / large-teacher distillation; learn better from small teachers; propose Mix Distillation. No 1.5B numbers retrieved.
+- U-OPSD 2608.06296: label-free on-policy self-distillation via majority-vote pseudo-solutions (Qwen3-4B; 86.7% pseudo-label precision on a 64-prompt probe).
+- 2609.35259 (on- vs off-policy distillation dynamics): has Qwen2.5-1.5B-Instruct student / 7B-Instruct teacher runs — read for numbers.
+- AdvDistill 2507.00054: 7B→1.5B, claims 2× over base; numbers unverified.
+- GPU window (#44): ~220 min free by 11-27 17:00, ~515 by 11-28 20:00.

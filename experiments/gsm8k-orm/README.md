@@ -27,4 +27,39 @@ Uses the free CPU lab while GPU quota is the bottleneck.
   answer is checkable; H2 FAIL on both → selection alone does not reach the next size up at 1.5B.
 
 ## Run
-`run_lab.sh` (resumable; ~3B greedy 1 h, 1.5B ×7 ~3.5 h, RM ~4 s per solution on the session CPU ≈ 1.9 h). Queued session #42 (`run_lab.sh 290`); needs a second run — re-queue.
+`run_lab.sh` (resumable; ~3B greedy 1 h, 1.5B ×7 ~3.5 h, RM ~4 s per solution on the session CPU ≈ 1.9 h). Queued session #42 (`run_lab.sh 290`); finished in a second lab run (#43).
+
+## Results (confirmatory, analysed session #44; `analysis.txt`)
+Validity met: 3B greedy 74.8 (70–88), 100% of samples give an answer, 0 non-finite RM scores, n=210.
+
+| arm | acc |
+|---|---|
+| 1.5B greedy | 68.1 |
+| 1.5B SC8 | 73.3 |
+| 1.5B WSC8 (1.7B RM) | 74.3 |
+| 1.5B BoN8 | 77.1 |
+| oracle@8 | 90.5 |
+| 1.5B G3 (stored PAL) | 72.4 |
+| 3B greedy | 74.8 |
+
+- **H1 FAIL:** WSC8 − SC8 = +1.0 (3/1, p=0.63). Predicted +4. On GSM8K the RM barely changes the plurality.
+- **H2 PASS (point estimate, as pre-registered):** WSC8 − 3B greedy = −0.5 (17/18, p=1). Predicted +1.
+- **H3 FAIL:** same −0.5.
+- Exploratory: SC8 − greedy +5.2 (p=0.019); 3B − 1.5B greedy +6.7 (p=0.049); SC8 − 3B −1.4 (n.s.); BoN8 − SC8 +3.8 (p=0.13).
+  Compute: 1.5B×8 decode = 3.27× the 3B greedy decode (tokens × params), plus RM prefill.
+
+**Caveat found at analysis (could change H2):** both arms ran with the pre-registered 400-token cap, but it bites
+unequally: 3B greedy hit the cap on 23/210 items (19 of them wrong) vs 12/210 for 1.5B greedy (11 wrong). 3B's 74.8 is
+far below its usual GSM8K score (85.2 on the full test in m3-stack, fp16, 2048 tokens), so H2's PASS may come from
+truncating the more verbose 3B model. The H2 verdict stands as measured but is **not evidence for M5** until the
+cap-fixed re-check below.
+
+## Cap-fix re-check (prediction written session #44, before any re-generation)
+Every output (3B greedy, 1.5B greedy, 1.5B samples) whose length is ≥395 tokens is *continued* from its truncated text
+with the same model and temperature (greedy: T=0; samples: T=0.7, fresh seed) up to 1024 total tokens — equivalent to
+having run with a 1024 cap. Changed 1.5B solutions are re-scored by the RM; others keep their scores. `uncap.py`,
+`rescore.py`, `analyze.py --suffix _u`.
+- Validity: continuation reproduces a held-back greedy tail on a smoke item; ≤2% of outputs still hit 1024.
+- **H2u:** WSC8 − 3B greedy ≥ −2 (point estimate). Predicted **−3 → FAIL** (3B rises ~+5 to ~80, WSC8 ~+1).
+- **H1u:** WSC8 − SC8 ≥ +2 and p<.05. Predicted +1 → FAIL.
+- Reading: H2u FAIL → on GSM8K too, selection over 1.5B samples does not reach 3B greedy once 3B is not truncated.

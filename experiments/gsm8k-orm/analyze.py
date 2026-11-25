@@ -19,8 +19,10 @@ def sign_p(f, b):
     return 1.0 if n == 0 else min(1.0, 2 * sum(comb(n, i) for i in range(min(f, b) + 1)) / 2 ** n)
 
 L = lambda p: {r["idx"]: r for r in map(json.loads, open(p))}
-G = L("../gsm8k-g3confirm/cot_greedy_off900.jsonl"); S = L("cot_k7.jsonl"); B = L("cot3b_greedy.jsonl")
-R = L("rm17_scores.jsonl"); P = L("../gsm8k-g3confirm/pal_k4_off900.jsonl")
+import sys
+U = sys.argv[sys.argv.index("--suffix") + 1] if "--suffix" in sys.argv else ""  # "_u" = cap-fixed re-check
+G = L("greedy15_u.jsonl" if U else "../gsm8k-g3confirm/cot_greedy_off900.jsonl"); S = L(f"cot_k7{U}.jsonl")
+B = L(f"cot3b_greedy{U}.jsonl"); R = L(f"rm17_scores{U}.jsonl"); P = L("../gsm8k-g3confirm/pal_k4_off900.jsonl")
 items = [i for i in S if i in G and i in B and i in R]
 print(f"n paired = {len(items)}")
 acc = defaultdict(dict); toks = defaultdict(int)
@@ -49,8 +51,8 @@ def cmp(x, y, lab, thr=None, need_p=False):
     f = sum(acc[x][i] and not acc[y][i] for i in its); b = sum(acc[y][i] and not acc[x][i] for i in its)
     p = sign_p(f, b); v = "" if thr is None else (" PASS" if d >= thr and (p < 0.05 or not need_p) else " FAIL")
     print(f"{lab}: {x} - {y} = {d:+.1f} ({f}/{b}, p={p:.3g}){v}")
-cmp("WSC8_1.5B", "SC8_1.5B", "H1 (>= +2, p<.05)", 2, True)
-cmp("WSC8_1.5B", "greedy_3B", "H2 (non-inf >= -2, point est.)", -2)
+cmp("WSC8_1.5B", "SC8_1.5B", f"H1{U} (>= +2, p<.05)", 2, True)
+cmp("WSC8_1.5B", "greedy_3B", f"H2{U} (non-inf >= -2, point est.)", -2)
 cmp("WSC8_1.5B", "greedy_3B", "H3 (>= +3, p<.05)", 3, True)
 for x, y in [("SC8_1.5B", "greedy_1.5B"), ("WSC8_1.5B", "greedy_1.5B"), ("BoN8_1.5B", "SC8_1.5B"),
              ("greedy_3B", "greedy_1.5B"), ("SC8_1.5B", "greedy_3B"), ("G3_1.5B", "greedy_3B")]:

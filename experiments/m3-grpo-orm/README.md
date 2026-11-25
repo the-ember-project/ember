@@ -45,3 +45,23 @@ Confirmatory. Paired two-sided exact sign tests. Written before any run of this 
   m3-stack (est. ~205 GPU min: smoke 17, train ~120 in parallel, two eval chains ~62). Runs regardless of the
   m3-grpo-rep outcome: O1/O2 test a different reward and O4 is the M5 test. Memory risk: peak 12.6 GB at bs 2 with vLLM
   0.35 in m3-grpo-main; here vLLM 0.30 + 0.6B RM (~1.2 GB); OOM → one retry at bs 1, vLLM 0.27.
+
+## Results (confirmatory, analysed session #44; full output `analysis.txt`)
+Validity met: BASE greedy 56.3 (93.1% boxed), ORM1/ORM2 100 steps each, 3B greedy 69.3, 0 non-finite RM scores, 1000/500 items.
+- **O1 FAIL (both):** ORM1 − BASE +1.5 (100/85, p=0.30); ORM2 − BASE +2.2 (99/77, p=0.11). Predicted +1.5.
+  On BASE-boxed items: +0.3 / +1.2 (exploratory) — as with MAJ, most of the small gain is boxing.
+- **O2 FAIL:** mean +1.85.
+- **O3 FAIL:** ORM − MAJ mean −0.2 (ORM1−MAJ2 −1.5 p=0.29; ORM2−MAJ3 +1.1 p=0.44). Predicted −0.5. The external-RM
+  reward is no better than the label-free majority reward.
+- **O4 (M5) FAIL:** WSC8(ORM1) 64.8 vs 3B greedy 69.4 on 0–499: −4.6 (28/51, p=0.013). Predicted −4.
+  (Exploratory: WSC8(BASE) 65.6, i.e. −3.8 vs 3B without any training.)
+- **O5 FAIL:** WSC8(ORM1) − WSC8(BASE) −0.8 (30/34, p=0.71). Predicted +1.0. Training on the RM's reward did not make
+  the policy's samples better for RM selection.
+- Descriptive: training-batch gold accuracy 0.39→0.53 (ORM1) and 0.49→0.61 (ORM2) first vs last 10% of steps, RM AUROC
+  on rollouts 0.81–0.95, no length blow-up — no sign of reward hacking, but also little transfer to held-out greedy.
+- Exploratory: 0.6B-RM WSC8(BASE) − SC8(BASE) +1.6 (11/3, p=0.057); the 1.7B RM gave +5.0 in math-verify (different items).
+- 3B greedy − 1.5B greedy +13.0 on 1000 items (p=6e-19).
+
+**Reading:** at 1.5B on MATH, 100 GRPO steps with either label-free reward (majority or a free 0.6B RM) give ≈+1.5–2
+greedy, mostly boxing; neither stacks with RM selection; the 1.5B→3B gap (13 pts) is not closed by training + selection
+(−4.6, significant). M5 on MATH: not reached with these tools.

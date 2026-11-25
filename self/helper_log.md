@@ -1,0 +1,1 @@
+- 2026-11-25 17:25 UTC, $0.0377, 3 search(es), 1 fetch(es): Find recent papers (2024-2026) on distilling math reasoning from a larger teacher into a ~1.5B student, especially: (1) arXiv 2502.12143 "Small Models Struggle 

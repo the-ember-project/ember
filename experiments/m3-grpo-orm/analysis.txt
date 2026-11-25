@@ -1,0 +1,48 @@
+n items 1000 arms ['3B', 'BASE', 'MAJ2', 'MAJ3', 'ORM1', 'ORM2']
+3B: acc 69.3  boxed 97.5  mean chars 1479
+BASE: acc 56.3  boxed 93.1  mean chars 1425  BBH-date 49.2
+MAJ2: acc 59.3  boxed 95.3  mean chars 1439  BBH-date 46.4
+MAJ3: acc 57.4  boxed 96.5  mean chars 1470  BBH-date 50.4
+ORM1: acc 57.8  boxed 98.3  mean chars 1308  BBH-date 46.4
+ORM2: acc 58.5  boxed 97.7  mean chars 1447  BBH-date 48.0
+Validity: BASE 50-62, boxed>=88; 3B 60-75; >=90 steps
+  ORM1: steps 100  mem 13.14 GB  reward batches 100
+    gold_acc: first10% 0.388  last10% 0.528
+    boxed: first10% 0.844  last10% 0.922
+    rm_mean: first10% 3.766  last10% 5.685
+    mean_chars: first10% 1484.000  last10% 1281.116
+    rm_auroc: first10% 0.812  last10% 0.837
+    rm non-finite total 0
+  ORM2: steps 100  mem 13.36 GB  reward batches 100
+    gold_acc: first10% 0.494  last10% 0.613
+    boxed: first10% 0.850  last10% 0.906
+    rm_mean: first10% 5.312  last10% 5.716
+    mean_chars: first10% 1313.547  last10% 1470.572
+    rm_auroc: first10% 0.879  last10% 0.947
+    rm non-finite total 0
+O1 / O2 (greedy, 1000 items):
+  ORM1 - BASE: +1.5 (100/85, p=0.303, n=1000)
+  O1 ORM1: FAIL
+  ORM1 - BASE on BASE-boxed (expl): +0.3 (87/84, p=0.879, n=931)
+  ORM2 - BASE: +2.2 (99/77, p=0.113, n=1000)
+  O1 ORM2: FAIL
+  ORM2 - BASE on BASE-boxed (expl): +1.2 (87/76, p=0.434, n=931)
+  O2 mean +1.85: FAIL
+O3 (ORM vs MAJ reward, cross-job, same items):
+  ORM1 - MAJ2: -1.5 (79/94, p=0.287, n=1000)
+  ORM2 - MAJ3: +1.1 (89/78, p=0.439, n=1000)
+  O3 mean -0.20: FAIL
+  3B greedy - BASE greedy (expl): +13.0 (177/47, p=6.21e-19, n=1000)
+ORM1 RM non-finite fp16 0 final 0
+BASE RM non-finite fp16 0 final 0
+  BASE: 65.6  (n=500)
+  BASE_SC8: 64.0  (n=500)
+  BASE_greedy: 56.2  (n=500)
+  ORM1: 64.8  (n=500)
+  ORM1_SC8: 63.6  (n=500)
+  ORM1_greedy: 56.0  (n=500)
+  O4 WSC8(ORM1) - 3B greedy: -4.6 (28/51, p=0.0128, n=500)
+  O4 (M5): FAIL
+  O5 WSC8(ORM1) - WSC8(BASE): -0.8 (30/34, p=0.708, n=500)
+  O5: FAIL
+  WSC8(BASE) - SC8(BASE) (expl): +1.6 (11/3, p=0.0574, n=500)
