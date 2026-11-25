@@ -1,0 +1,14 @@
+{
+ "BASE": {
+  "g3_acc": 0.8633,
+  "pal_tok_per_q": 398.5,
+  "pal_exec_rate": 0.9024,
+  "pal1_acc": 0.6727
+ },
+ "MIXR": {
+  "g3_acc": 0.88,
+  "pal_tok_per_q": 413.9,
+  "pal_exec_rate": 0.9104,
+  "pal1_acc": 0.7013
+ }
+}

@@ -332,13 +332,14 @@
       "folder": "experiments/m3-stack",
       "kernel": "focarius/ember-m3-stack",
       "limit": 170,
-      "charged": 180,
+      "charged": 163,
       "source": "commit adc47e1, prediction 674e2433f6a9",
       "submitted": "2026-11-24T22:03:11+00:00",
-      "pending": true,
-      "status": "running",
+      "pending": false,
+      "status": "complete",
       "from_queue": true,
-      "id": "4b7ec66b7196472e933ba82c1b0e6b86"
+      "id": "4b7ec66b7196472e933ba82c1b0e6b86",
+      "finished": "2026-11-25T00:45:31+00:00"
     }
   ]
 }

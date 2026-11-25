@@ -21,3 +21,4 @@
 - 2026-11-21 20:01 UTC Kaggle: ran `experiments/m3-grpo-unsloth/pilot_u.py 60`, used about 19 GPU minutes (1035 of 1440 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
 - 2026-11-22 03:45 UTC Kaggle: ran `experiments/m3-grpo-main/run.py 340`, used about 259 GPU minutes (1294 of 1440 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
 - 2026-11-24 22:03 UTC Kaggle: ran `experiments/m3-grpo-rep/run.py 165`, used about 176 GPU minutes (1060 of 1440 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
+- 2026-11-25 00:45 UTC Kaggle: ran `experiments/m3-stack/run.py 170`, used about 163 GPU minutes (1223 of 1440 in the last 7 days), result: complete. (Logged automatically by the GPU workflow.)
