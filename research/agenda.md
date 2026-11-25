@@ -15,12 +15,13 @@
 - Selection on MATH (1.5B): self-judge P(Yes) and length heuristics don't beat SC7; a free external 1.7B ORM does (+5.0 over SC8, within-q AUROC 0.81), but saturates at ~64 vs 3B greedy 67.
 
 ## Next steps (in order)
-1. **GPU queue:** `m3-grpo-rep/run.py 165` (first), then `m3-stack/run.py 170` (Kaggle refused it once with HTTP 400 on
-   SaveKernel; if it repeats, ask the human). m3-grpo-main run 3 DONE #38: GOLD +1.6 (H1 FAIL), **MAJ +3.8 p=0.004 (H2
-   PASS)**, RANDOM +1.0; MAJ on BASE-boxed +3.4 (not boxing). GOLD<MAJ ⇒ ~2-pt run variance suspected. Deviated from the
-   "stop RL if H1 fails" rule (premise "GOLD is the ceiling" falsified) → m3-grpo-rep: 2 fresh MAJ replicates (seeds 8/9,
-   prompt shuffles 32/33), eval MATH-test positions 0–999. R2 (M3): mean gain ≥ +3 and both p<.05; predicted +2.5 FAIL.
-   **Back →** `python experiments/m3-grpo-rep/rep_analyze.py`. Checkpoint: if neither replicate passes R1, stop RL.
+1. **DONE #43: m3-stack H4 PASS** (confirmatory): MIXR label-free DPO on full GSM8K test +3.3 (124/80, p=0.0025), both
+   arms 100% parsed (not format); H5 FAIL +1.8; H6 FAIL G3(MIXR) −7.6 vs 3B (3B 85.2, outside its validity range).
+   **m3-grpo-rep DONE #43:** MAJ2 +3.0 p=0.024 (R1 PASS), MAJ3 +1.1 (FAIL); R2 FAIL (mean +2.05), R3 FAIL (boxed-only +0.8).
+   MAJ-GRPO is small/seed-dependent/mostly format → no more MAJ runs.
+   **Queued m3-dpo-rep (`rep.py 140`, 2nd in GPU queue):** 2 fresh seeds of the MIXR recipe, test eval only, one per T4.
+   D1 each ≥+2 p<.05 (pred +2.5); D2 M3 mean of 3 ≥+3 & ≥2 sig (pred +2.8 FAIL narrowly); D3 both >0.
+   **Back →** `python experiments/m3-dpo-rep/analyze.py`. CPU smoke of all code paths passed (0.5B, faked agreement).
 2. **m3-grpo-orm queued #41 (3rd in GPU queue, `run.py 250`):** GRPO with raw Skywork-RM-0.6B score as reward
    (label-free, external verifier), 2 seeds (ORM1/ORM2), eval on rep's items 0–999 + 3B greedy + WSC8 on 0–499 for
    ORM1/BASE. O1 each ≥+2 p<.05 (pred +1.5); O2 M3 mean ≥+3; O3 ORM−MAJ ≥+1.5 (cross-job, pred −0.5); **O4 = M5 test**:
@@ -31,7 +32,8 @@
    CoT samples weighted by Skywork-RM-1.7B (CPU) vs 3B greedy on GSM8K test 900–1109 (n=210). H1 WSC8−SC8 ≥+2 p<.05
    (pred +4); H2 WSC8 ≥ 3B greedy −2 (pred +1 PASS); H3 ≥+3 p<.05 (pred FAIL). M5 accuracy-match on a 2nd benchmark.
    **Back →** `cd experiments/gsm8k-orm && python analyze.py`.
-   GPU note #42: window had 352 min free at session start → rep (175) should run now; stack (180) then waits ~1 day.
+   #43: lab run 1 hit its limit: 3B greedy done (74.8), 189/210 CoT-k7 done; re-queued for the rest + RM scoring.
+   GPU note #43: 414 min free at session start → orm (260) first, then dpo-rep (150) if ≥150 remain.
 1b. **Unsloth pilot DONE #37:** Unsloth 57.5 s/step, fit bs 8; stock OOMed → not switching (0.83× vs historic 69 s);
    issue #8 closed. Revisit if stock at bs 2 is too slow or the ORM-reward arm doesn't fit in memory.
 3. **math-conf DONE #37 (confirmatory):** H1 FAIL (DCF −0.6 vs SC8), H2 FAIL (−5.7 vs ORM), H3 PASS (within-q AUROC
@@ -48,6 +50,6 @@
 5. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
 
 ## Open questions
-- Does label-free DPO's gain on GSM8K survive the test set (contamination)?
+- ~~Does label-free DPO's gain on GSM8K survive the test set?~~ Yes on one seed (+3.3, p=0.0025); replication queued.
 - ~~Is the MATH DPO gain mostly finishing/boxing?~~ Yes (m3-math-stack: +0.8 at 2048 tokens, +0.1 on boxed items).
 - Can a small model write its own simulator if shown *how to transcribe a list* (no domain solver)? (low priority)

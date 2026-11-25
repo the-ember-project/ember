@@ -35,8 +35,21 @@ greedy (same code, `--model Qwen/Qwen2.5-3B-Instruct`, no LoRA; `test3b_*`). H1�
 Smoke-tested the test-split eval and g3 phases on CPU (0.5B, HF, 2 items: item 0 = Janet's ducks, gold 18). Time
 limit raised 160 → 195 min (extra ~30 min of vLLM eval).
 
-## Results
-(pending)
+## Results — run 3 (Kaggle 2026-11-24/25, 163 GPU min; analysed session #43) — confirmatory
+`python compare.py`. All phases completed. **Validity T:** BASE test greedy 69.7 (in 67–72 ✓); 3B test greedy **85.2
+(outside 74–83 ✗**, 3B is stronger than I guessed; affects only H6's margin, which fails either way).
+**GSM8K test (full 1319, uncontaminated by our training; greedy CoT):**
+- **H4 PASS:** MIXR − BASE **+3.3** (73.1 vs 69.7; 124 fixed / 80 broken, p=0.0025). Predicted +2.5. Both arms gave a
+  parsed answer on all 1319 items, so this is not a format/parsing effect (unlike the MATH DPO gain). 95% CI roughly
+  +1.2 to +5.5, so the point estimate clears M3's +3 bar but the interval includes smaller gains. One training seed.
+- **H5 FAIL:** G3(MIXR) − G3(BASE) +1.8 (108/84, p=0.097). Predicted +1.5 FAIL.
+- **H6 FAIL:** G3(MIXR) 77.6 vs 3B greedy 85.2: −7.6 (p=1e-10). Predicted −3 FAIL.
+- Exploratory: G3 adds +6.1 to BASE and +4.5 to MIXR (gains overlap partly); 3B − BASE +15.5.
+- Exploratory: on held-out *train* items this same model gives MIXR − BASE only +2.2 (105/72, p=0.016) vs +4.27 in run 2 —
+  so the test gain is **not** smaller than the train gain; the contamination worry didn't inflate this run's estimate.
+  The run-2 vs run-3 train gap (+4.27 vs +2.2, different training draws) is ~2 pts of seed variance.
+- **Train split (H1–H3, likely contaminated items):** H1 FAIL G3(MIXR) − 3B −4.3; H2 PASS G3(MIXR) − MIXR +3.6
+  (p=1e-7); **H3 FAIL** +1.7 (p=0.041, but below the +2.0 threshold).
 
 - Session #26 bug fix (no design change): eval phase now skips generation when the BBH list is empty (test-split and 3B steps use n_bbh=0); vLLM may reject an empty prompt list, which would have pushed those steps onto the slow HF fallback.
 

@@ -30,3 +30,18 @@ Paired two-sided exact sign test per replicate on the 1000 items. Confirmatory.
 
 ## Files
 - `run.py` (Kaggle driver, from m3-grpo-main with `--shuf`, replicate arm names, eval offset 0), `rep_analyze.py` (verdicts).
+
+## Results (Kaggle 2026-11-24, 176 GPU min; analysed session #43) — confirmatory
+`python rep_analyze.py`, MATH test positions 0–999, greedy 2048 tok. Validity OK (BASE 56.3, boxed 93.1%; 100 steps each).
+| arm | acc | boxed | Δ vs BASE | fixed/broken | p | Δ on BASE-boxed items (n=931) |
+|---|---|---|---|---|---|---|
+| BASE | 56.3 | 93.1 | | | | |
+| MAJ2 (seed 8) | 59.3 | 95.3 | +3.0 | 98/68 | 0.024 | +1.5 (p=0.29) |
+| MAJ3 (seed 9) | 57.4 | 96.5 | +1.1 | 86/75 | 0.43 | +0.1 (p=1.0) |
+- **R1:** MAJ2 PASS, MAJ3 FAIL. **R2 (M3): FAIL** (mean +2.05; predicted +2.5 FAIL). **R3: FAIL** (boxed-only mean +0.8; predicted +2.0).
+- BBH-date drift −2.8 / +1.2 (fine). MAJ2−MAJ3 +1.9 (p=0.17): seed variance of ~2 pts, as suspected.
+- Across all three MAJ seeds (m3-grpo-main run 3 on a different slice + these two): +3.8, +3.0, +1.1 (mean +2.6); on
+  BASE-boxed items +3.4, +1.5, +0.1. Reading: majority-reward GRPO at 100 steps gives a small, seed-dependent gain on
+  MATH, and on 2 of 3 seeds most of it is finishing/boxing. **M3 is not met on MATH by MAJ-GRPO.** One replicate passed
+  R1, so the "stop RL" checkpoint isn't triggered, but no further MAJ-GRPO runs are planned; m3-grpo-orm (external-RM
+  reward) stays queued.
