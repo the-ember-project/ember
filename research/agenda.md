@@ -27,11 +27,12 @@
    +1.2, PASS ~55%); I2 both p<.05 (pred FAIL); I3 R2−BASE ≥+5 (pred +4.5 FAIL); I4 R1 replication at 2000 q.
    Needs ~230 GPU min (window frees ~220 by 11-27 17:00, ~515 by 11-28 20:00). **Back →** `python experiments/m3-dpo-iter/analyze.py`.
    If I1 PASS: data-matched control (1 round on 4000 q) to separate iteration from data, then round 3.
-2. **Done #45:** m3-dpo-rep D1/D2/D3 PASS (M3 met, mean +3.8 over 3 seeds); gsm8k-orm cap-fix H2u FAIL (−4.8), H1u FAIL.
-3. **M5 route (after 1):** the 1.5B→3B gap (GSM8K test greedy: 3B 85.2 vs MIXR-1.5B ~73.5) is capability, not format/selection.
-   Candidate: label-free teacher distillation (3B/7B samples, teacher majority, no gold) into 1.5B; or MIXR-DPO with
-   a 3B-vote label source (tests "stronger label source" hypothesis; note MIXR label precision on pair-q is already 0.93,
-   so label accuracy may not be the bottleneck — a GOLD-label arm would measure the ceiling). Check 2502.12143 first.
+2. **Done #45:** m3-dpo-rep (M3 met, mean +3.8, 3 seeds); gsm8k-orm cap-fix H2u FAIL (−4.8). GSM8K test greedy: 3B 85.2 vs MIXR-1.5B ~73.5.
+3. **m3-dpo-label queued on Kaggle (`lab.py 220`, #46), behind m3-dpo-iter:** same 3000 train q; arms MIXR (4th seed),
+   GOLD (label ceiling), T3D (chosen = 3B-teacher CoT agreeing with 3B vote, rejected = 1.5B's own; no gold; 2 seeds).
+   L1 GOLD−MIXR ≥+2 & p<.05 (pred +1.0/+1.5, FAIL); L2 mean T3D−MIXR ≥+2 both >0 (pred +1.0, FAIL); L3 T3D−BASE ≥+3
+   each p<.05 (pred PASS); L4 best T3D ≥ 3B greedy −2 = 83.2 (pred FAIL). **Back →** `python experiments/m3-dpo-label/analyze.py`.
+   Reading: content not labels → scale distillation (more q, mix with MIXR); labels → 3B-vote labels on own samples.
 4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724. (11-22 review items
    already handled: math-verify/voters.py #38, gridwalk-analogpal 2nd demo.)
 

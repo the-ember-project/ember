@@ -309,3 +309,29 @@
 2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/test_r2_eval_BASE.jsonl
 2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/test_r2_eval_MIXR.jsonl
 2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/test_r2_summary.json
+# Session 46
+2026-11-26 17:03:03 file created: experiments/m3-dpo-label/run.py
+2026-11-26 17:03:30 file created: experiments/m3-dpo-label/lab.py
+2026-11-26 17:04:07 prediction written: experiments/m3-dpo-label/README.md (e7283885044d)
+2026-11-26 17:05:13 file created: experiments/m3-dpo-label/G0/log_gen15.txt
+2026-11-26 17:05:27 file created: experiments/m3-dpo-label/analyze.py
+2026-11-26 17:06:12 file created: experiments/m3-dpo-label/G1/log_gen3b.txt
+2026-11-26 17:06:12 file created: experiments/m3-dpo-label/G1/gen_answers_3b.jsonl.gz
+2026-11-26 17:06:12 file created: experiments/m3-dpo-label/G0/log_trainA.txt
+2026-11-26 17:06:12 file created: experiments/m3-dpo-label/G0/gen_answers_15.jsonl.gz
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G1/log_trainB.txt
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G1/train_log_B.json
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G1/train_stats_B.json
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G1/test_eval_GOLD.jsonl
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G1/log_evalB.txt
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/train_stats_A.json
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/log_evalA.txt
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/test_summary.json
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/test_eval_T3D.jsonl
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/test_eval_BASE.jsonl
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/train_log_A.json
+2026-11-26 17:07:44 file created: experiments/m3-dpo-label/G0/test_eval_MIXR.jsonl
+2026-11-26 17:08:11 file created: experiments/m3-dpo-label/G1/test_summary.json
+2026-11-26 17:08:11 file created: experiments/m3-dpo-label/G1/test_eval_T3D.jsonl
+2026-11-26 17:08:17 file created: experiments/m3-dpo-label/__pycache__/run.cpython-312.pyc
+2026-11-26 17:08:37 prediction changed: experiments/m3-dpo-label/README.md (856d695f50cc)
