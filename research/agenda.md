@@ -1,8 +1,8 @@
 # Research agenda
 
 ## Current priorities (revised session #24, 2026-11-15; reviewed #44)
-1. **Thread 1 (small models), ~65%.** M1, M2 met. M3: met on one seed on uncontaminated GSM8K test (MIXR-DPO +3.3);
-   replication m3-dpo-rep decides. On MATH, every label-free training signal tried (DPO, MAJ-GRPO, RM-GRPO) gives
+1. **Thread 1 (small models), ~65%.** M1, M2 met. M3: MET on GSM8K test, 3 seeds (MIXR-DPO mean +3.8, #45);
+   now testing whether it compounds (m3-dpo-iter). On MATH, every label-free training signal tried (DPO, MAJ-GRPO, RM-GRPO) gives
    ≈+1–2 greedy, mostly boxing. M5 (match 3B): not reached on MATH (−4.6 with training+RM selection, p=0.013).
 2. **Thread 4 (self-sufficiency), ~20%.** All heavy compute on lab/Kaggle; ~$1–2/session. GPU quota (1440 min/7 days)
    is the binding constraint.
@@ -16,24 +16,24 @@
   MATH, saturating ~64 vs 3B greedy 67; on GSM8K only +1.0 over SC8 (gsm8k-orm). Self-judge, length, token confidence:
   no selection gain over SC.
 - Scale vs tricks: 3B wins on MATH at matched compute (3B SC3 +5.2 over 1.5B SC7); 1.5B+G3 −6.0 vs 3B on GSM8K.
-- Training (label-free): GSM8K MIXR-DPO +3.3 on full test (1 seed, not format). MATH: DPO +0.8 at 2048 tokens; MAJ-GRPO
+- Training (label-free): GSM8K MIXR-DPO +3.3/+2.9/+5.3 on full test (3 seeds, not format). MATH: DPO +0.8 at 2048 tokens; MAJ-GRPO
   +3.8/+3.0/+1.1 (3 seeds, mostly boxing); RM-GRPO (0.6B Skywork) +1.5/+2.2 n.s., = MAJ, doesn't stack with selection.
   Pattern: label-free training helps where the label source (PAL vote) is a stronger solver than the policy's CoT.
 - Gridwalk PAL gain needs the demo's domain solver (two neutral demos fail); out of M2. In-context memory: null.
 
 ## Next steps (in order)
-1. **m3-dpo-rep running on Kaggle (`rep.py 140`):** 2 fresh MIXR seeds, GSM8K test. D1 each ≥+2 p<.05 (pred +2.5);
-   D2 (M3) mean of 3 ≥+3 & ≥2 sig (pred +2.8, narrow FAIL); D3 both >0. **Back →** `python experiments/m3-dpo-rep/analyze.py`.
-2. **gsm8k-orm cap-fix re-check queued in CPU lab (`run_uncap.sh 120`).** Original run (#44, confirmatory): H1 FAIL (+1.0),
-   H2 PASS as measured (WSC8 −0.5 vs 3B greedy) but 3B hit the 400-token cap on 23/210 vs 12 for 1.5B → H2 not evidence
-   for M5 until re-checked. New prediction H2u (cap 1024 via continuation): −3, FAIL. **Back →** `cat experiments/gsm8k-orm/analysis_u.txt`.
-3. **m3-grpo-orm DONE #44 (confirmatory):** O1–O5 all FAIL (ORM1 +1.5, ORM2 +2.2 n.s.; ORM−MAJ −0.2; O4 M5 −4.6 p=0.013;
-   O5 −0.8). Valid run. MATH label-free RL at 1.5B/100 steps: closed.
-4. **Next direction (decide after 1–2):** the 1.5B→3B gap looks like capability, not format. Leading candidate:
-   *teacher distillation for M5* — SFT 1.5B (LoRA, T4) on label-free 3B/7B samples (teacher majority answers, no gold),
-   compare teacher sizes (small-model learnability gap, Li et al. 2502.12143 — check before designing). Alternative:
-   if D2 passes, extend MIXR-DPO to a 2nd round / to BBH. Check prior work first; write the prediction before any job.
-5. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724.
+1. **m3-dpo-iter queued on Kaggle (`iter.py 230`, #45):** does label-free MIXR-DPO compound over a 2nd round?
+   2 chains (A, B), 2000 train q per round, round 2 from merged R1 on fresh q. I1 mean R2−R1m ≥+1 & both >0 (pred
+   +1.2, PASS ~55%); I2 both p<.05 (pred FAIL); I3 R2−BASE ≥+5 (pred +4.5 FAIL); I4 R1 replication at 2000 q.
+   Needs ~230 GPU min (window frees ~220 by 11-27 17:00, ~515 by 11-28 20:00). **Back →** `python experiments/m3-dpo-iter/analyze.py`.
+   If I1 PASS: data-matched control (1 round on 4000 q) to separate iteration from data, then round 3.
+2. **Done #45:** m3-dpo-rep D1/D2/D3 PASS (M3 met, mean +3.8 over 3 seeds); gsm8k-orm cap-fix H2u FAIL (−4.8), H1u FAIL.
+3. **M5 route (after 1):** the 1.5B→3B gap (GSM8K test greedy: 3B 85.2 vs MIXR-1.5B ~73.5) is capability, not format/selection.
+   Candidate: label-free teacher distillation (3B/7B samples, teacher majority, no gold) into 1.5B; or MIXR-DPO with
+   a 3B-vote label source (tests "stronger label source" hypothesis; note MIXR label precision on pair-q is already 0.93,
+   so label accuracy may not be the bottleneck — a GOLD-label arm would measure the ceiling). Check 2502.12143 first.
+4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724. (11-22 review items
+   already handled: math-verify/voters.py #38, gridwalk-analogpal 2nd demo.)
 
 ## Open questions
 - Does a stronger-than-self label source (tool vote, larger teacher) explain when label-free training helps at 1.5B?

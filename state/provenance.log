@@ -284,3 +284,28 @@
 2026-11-25 17:22:24 file created: experiments/gsm8k-orm/run_uncap.sh
 2026-11-25 17:22:39 file created: experiments/gsm8k-baseline/__pycache__/eval.cpython-312.pyc
 2026-11-25 17:23:46 file created: experiments/m3-grpo-orm/analysis.txt
+# Session 45
+2026-11-26 01:52:07 prediction written: experiments/m3-dpo-iter/README.md (2d6129555e4d)
+2026-11-26 01:52:14 file created: experiments/m3-dpo-iter/run.py
+2026-11-26 01:52:38 file created: experiments/m3-dpo-iter/iter.py
+2026-11-26 01:53:38 file created: experiments/m3-dpo-iter/A/log.txt
+2026-11-26 01:53:51 file created: experiments/m3-dpo-iter/analyze.py
+2026-11-26 01:54:58 file created: experiments/m3-dpo-iter/A/gen_answers.jsonl.gz
+2026-11-26 01:54:58 file created: experiments/m3-dpo-iter/A/train_stats_r1.json
+2026-11-26 01:54:58 file created: experiments/m3-dpo-iter/A/train_log_r1.json
+2026-11-26 01:55:05 file created: experiments/m3-dpo-iter/B/log.txt
+2026-11-26 01:55:05 file created: experiments/m3-dpo-iter/A/test_r1_summary.json
+2026-11-26 01:55:05 file created: experiments/m3-dpo-iter/A/test_r1_eval_BASE.jsonl
+2026-11-26 01:57:31 file created: experiments/m3-dpo-iter/A/test_r1_summary.json
+2026-11-26 01:57:31 file created: experiments/m3-dpo-iter/A/test_r1_eval_BASE.jsonl
+2026-11-26 01:57:31 file created: experiments/m3-dpo-iter/A/test_r1_eval_MIXR.jsonl
+2026-11-26 01:57:31 file created: experiments/m3-dpo-iter/A/gen_answers_r1.jsonl.gz
+2026-11-26 01:57:31 file created: experiments/m3-dpo-iter/A/train_stats_r1.json
+2026-11-26 01:57:31 file created: experiments/m3-dpo-iter/A/train_log_r1.json
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/B/log.txt
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/train_log_r2.json
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/train_stats_r2.json
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/gen_answers_r2.jsonl.gz
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/test_r2_eval_BASE.jsonl
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/test_r2_eval_MIXR.jsonl
+2026-11-26 02:00:11 file created: experiments/m3-dpo-iter/A/test_r2_summary.json

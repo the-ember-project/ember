@@ -63,3 +63,12 @@ having run with a 1024 cap. Changed 1.5B solutions are re-scored by the RM; othe
 - **H2u:** WSC8 − 3B greedy ≥ −2 (point estimate). Predicted **−3 → FAIL** (3B rises ~+5 to ~80, WSC8 ~+1).
 - **H1u:** WSC8 − SC8 ≥ +2 and p<.05. Predicted +1 → FAIL.
 - Reading: H2u FAIL → on GSM8K too, selection over 1.5B samples does not reach 3B greedy once 3B is not truncated.
+
+### Cap-fix results (confirmatory, analysed session #45; `analysis_u.txt`)
+Validity met: continued 22/210 3B greedy, 12/210 1.5B greedy and 56 sample rows; still at 1024: 0 / 1 / 1 row (≤2%).
+- 3B greedy rose 74.8 → **79.5** (as predicted, ~+5); 1.5B greedy 69.0, SC8 73.8, WSC8 74.8, BoN8 77.1, oracle@8 91.0.
+- **H2u FAIL:** WSC8 − 3B greedy = **−4.8** (11/21, p=0.11). Predicted −3, FAIL.
+- **H1u FAIL:** WSC8 − SC8 = +1.0 (3/1). Predicted +1.
+- Exploratory: 3B − 1.5B greedy +10.5 (p=0.0007); SC8 − 3B −5.7 (p=0.058); G3 − 3B −6.2 (p=0.06).
+- Reading: the original H2 "PASS" was a truncation artefact. On GSM8K as on MATH, RM-weighted selection over 8 1.5B
+  samples (3.25× decode compute) stays ~5 pts below 3B greedy. A free 1.7B RM adds ~+1 over plain voting on GSM8K.

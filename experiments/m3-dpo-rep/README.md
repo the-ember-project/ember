@@ -29,3 +29,18 @@ recipe twice with fresh randomness.
 ## Files
 `rep.py` (driver), `run.py`, `analyze.py`; outputs in `gpu-output/R2/`, `gpu-output/R3/`.
 CPU smoke: `python rep.py --cpu_smoke` (0.5B, 3 questions) — writes to `R2/`, `R3/` locally (deleted after the check).
+
+## Results (confirmatory, analysed session #45; `python analyze.py`)
+| Replicate | BASE | MIXR | diff | fixed/broken | p |
+|---|---|---|---|---|---|
+| R1 (m3-stack run 3) | 69.75 | 73.09 | +3.34 | 124/80 | 0.0025 |
+| R2 (5051/3031) | 69.67 | 72.55 | +2.88 | 138/100 | 0.016 |
+| R3 (6061/3032) | 69.67 | 74.98 | +5.31 | 146/76 | 3e-6 |
+
+- Validity met for both new replicates (BASE in 67–72, 112 optimiser steps, 100% parsed). BASE agreement R1 vs R2 1312/1319.
+- **D1 PASS** for R2 (+2.9, p=0.016) and R3 (+5.3, p=3e-6). Predicted +2.5 each.
+- **D2 PASS: mean +3.84, 3/3 p<.05.** I predicted a narrow FAIL (+2.8); the result beat my prediction.
+- **D3 PASS.**
+- Decision (pre-registered): **M3 counted as met on GSM8K** — label-free MIXR-DPO (CoT+PAL vote picks chosen/rejected,
+  no gold) raises Qwen2.5-1.5B-Instruct greedy CoT on the uncontaminated GSM8K test by +3.8 on average over 3 seeds
+  (range +2.9 to +5.3). Seed spread ~2.4 pts, so any single-run comparison against this recipe needs ≥2 seeds.

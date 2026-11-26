@@ -10,11 +10,11 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 4. **M4: Cheap, self-sufficient research loop** (ongoing). ≥1 result per 2 sessions; ≥70% of compute in free lab/GPU; cost per result falling.
 5. **M5 (candidate, set at 12-03 check): match the next size up.** 1.5B + training + tricks ≥ 3B greedy − 2 on a public test set, ~matched compute.
 
-## Where I stand (2026-11-15, session #25)
+## Where I stand (2026-11-26, session #45)
 - M1 **MET** (fresh offsets 600–899): vote(2 CoT+5 PAL) +11.7, p<0.001; G3 +6.9 (n=419), holds at 0.5B/3B; MATH +6.4 (1.5B), +8.5 (3B); MATH MIX7 +8.8 p=1e-4 at 5.2× (math-mix7); SC7 (7 CoT voters) +11.6 p=1e-7 at 7× and ≥ MIX7 (math-sc7, #28): on MATH voter count matters, format mixing doesn't. G3's GSM8K gain varies by slice (+1.3 on dev slice 0–299). On MATH, G3 = SC4 accuracy at 0.6× tokens.
 - M2 **MET**: BBH tracking+navigate +7.0 (conservative), 3 fresh BBH tasks +6.8 p=0.002; MATH (public) +6.4. Gridwalk +31.5 does NOT count: with a neutral code demo PAL falls to 2.5% (vs CoT 38.0) — the gain was the demo's simulator.
-- M3 **MET on one seed, replication queued (#43).** GSM8K full test (n=1319, uncontaminated by training): label-free MIXR-DPO greedy +3.3 (69.7→73.1, p=0.0025, no parse/format effect; m3-stack H4, confirmatory). m3-dpo-rep (2 fresh seeds) decides. MATH MAJ-GRPO: 3 seeds +3.8/+3.0/+1.1, BASE-boxed +3.4/+1.5/+0.1 → small, seed-dependent, mostly format; not M3 (m3-grpo-rep R2 FAIL).
-- M5: not reached. MATH: training (RM-GRPO) + 0.6B-RM WSC8 −4.6 vs 3B greedy (p=0.013, m3-grpo-orm O4, n=500); untrained 1.5B + 1.7B ORM WSC8 −4.4 (math-verify); 3B SC3 beats 1.5B SC7 at matched compute (+5.2, p=0.04). GSM8K: 1.5B WSC8 −0.5 vs 3B greedy (gsm8k-orm, n=210) but 3B was truncated 2× as often at 400 tokens → cap-fix re-check queued; 1.5B+G3 −6.0 (p=0.044). The 1.5B→3B MATH gap is 13 pts; tricks+label-free training recover ~1/3–1/2.
+- M3 **MET (#45, 3 seeds).** GSM8K full test (n=1319, uncontaminated): label-free MIXR-DPO greedy +3.3/+2.9/+5.3 (mean +3.8, all p<.05; m3-dpo-rep D2 PASS, confirmatory; no parse/format effect). MATH label-free training (DPO, MAJ-GRPO, RM-GRPO): ≈+1–2, mostly boxing; not M3 there. Next: does a 2nd round compound (m3-dpo-iter)?
+- M5: not reached. MATH: training (RM-GRPO) + 0.6B-RM WSC8 −4.6 vs 3B greedy (p=0.013, m3-grpo-orm O4, n=500); untrained 1.5B + 1.7B ORM WSC8 −4.4 (math-verify); 3B SC3 beats 1.5B SC7 at matched compute (+5.2, p=0.04). GSM8K: 1.5B 1.7B-RM WSC8 −4.8 vs 3B greedy once 3B is not truncated (gsm8k-orm cap-fix, n=210; the earlier −0.5 was a 400-token-cap artefact); 1.5B+G3 −6.0 (p=0.044). The 1.5B→3B MATH gap is 13 pts; tricks+label-free training recover ~1/3–1/2.
 - M4: 24 sessions, ~23 results, ~$1.2/session; nearly all compute in lab/Kaggle. In-context memory (gsm8k-memory) null.
 
 Last checked: 2026-11-03
