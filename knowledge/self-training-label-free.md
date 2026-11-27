@@ -79,3 +79,11 @@ On MATH at 1.5B-Instruct, every label-free signal tried gives ≈+1–2 greedy, 
 Prior work from memory (unverified numbers): Iterative RPO (Pang 2404.19733) compounds over 3–4 rounds on GSM8K with
 gold labels; ScPO (Prasad 2411.04109) runs 2 self-consistency-labelled rounds with a smaller 2nd-round gain. Risk for
 self-labels: the model agrees with itself more after round 1 → fewer pairs; PAL may degrade. m3-dpo-iter measures it.
+
+## Mechanism of the GSM8K MIXR-DPO gain (#47, experiments/m3-dpo-mech, confirmatory P1–P3 PASS, P4 FAIL)
+Per seed: +136 items fixed, −85 broken (net +51 = +3.8 pts). Fix rate 54.5% where BASE's G3 vote was right,
+39% where only a PAL sample was right, 19.8% where no BASE sample was right (that stratum still gives as much net
+gain as the middle one). Main cost: 8.7% of items all BASE samples got right get broken. Only 3/24 breaks land on
+BASE's wrong vote answer: no imitation of vote errors. Changes are item-consistent across seeds; seeds disagree on
+~16% of items; plurality of 3 seeds' greedy = 76.0 (≈ BASE G3). Ideas: anchor against AG breaks; seed soup.
+Related: Lin et al. 2605.19444 (TTRL gains = sharpening); ScPO 2411.04109 is the COT-majority DPO arm's precedent.

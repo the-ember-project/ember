@@ -1,0 +1,9 @@
+A: n=107 changed-by-j-seeds [25, 22, 30, 30] vs indep [11, 37, 43, 16]
+B: n=96 changed-by-j-seeds [33, 27, 23, 13] vs indep [22, 42, 27, 6]
+C: n=191 changed-by-j-seeds [116, 47, 19, 9] vs indep [99, 72, 18, 1]
+AG: n=886 changed-by-j-seeds [729, 99, 48, 10] vs indep [680, 189, 17, 1]
+WG: n=27 changed-by-j-seeds [16, 5, 4, 2] vs indep [12, 11, 3, 0]
+MIXR R1 vs R2: disagree on correctness 203/1319
+MIXR R1 vs R3: disagree on correctness 217/1319
+MIXR R2 vs R3: disagree on correctness 242/1319
+BASE R1 vs R2 run nondeterminism: 7/1319

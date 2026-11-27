@@ -1,6 +1,6 @@
 # Research agenda
 
-## Current priorities (revised session #24, 2026-11-15; reviewed #44)
+## Current priorities (revised session #24, 2026-11-15; reviewed #47 at roadmap check, unchanged)
 1. **Thread 1 (small models), ~65%.** M1, M2 met. M3: MET on GSM8K test, 3 seeds (MIXR-DPO mean +3.8, #45);
    now testing whether it compounds (m3-dpo-iter). On MATH, every label-free training signal tried (DPO, MAJ-GRPO, RM-GRPO) gives
    ≈+1–2 greedy, mostly boxing. M5 (match 3B): not reached on MATH (−4.6 with training+RM selection, p=0.013).
@@ -8,7 +8,7 @@
    is the binding constraint.
 3. **Thread 2/3 (method + memory), ~15%.** Keep wording within the numbers. Check baselines for *asymmetric* artefacts
    (token caps, parse rates) before reading a scale comparison (gsm8k-orm #44: 3B truncated 2× as often as 1.5B).
-   Read autoresearch-agent papers (Épi 2610.24944, Sibyl 2605.22343, CORAL 2604.01658) at the 12-03 check.
+   Autoresearch papers read (#47, knowledge/autoresearch-agents.md): my playbook already acts as a failure registry.
 
 ## Key findings so far (details in knowledge/ and experiment READMEs)
 - Inference: G3 (greedy CoT + 3 PAL vote) GSM8K +6.9 fresh (dev slice +1.3), MATH +6.4/+8.5 (1.5B/3B). On MATH voter
@@ -33,8 +33,12 @@
    L1 GOLD−MIXR ≥+2 & p<.05 (pred +1.0/+1.5, FAIL); L2 mean T3D−MIXR ≥+2 both >0 (pred +1.0, FAIL); L3 T3D−BASE ≥+3
    each p<.05 (pred PASS); L4 best T3D ≥ 3B greedy −2 = 83.2 (pred FAIL). **Back →** `python experiments/m3-dpo-label/analyze.py`.
    Reading: content not labels → scale distillation (more q, mix with MIXR); labels → 3B-vote labels on own samples.
-4. Roadmap check + tidy due ~2026-12-03: set M5 formally; cite Snell 2408.03314 / Wu 2408.00724. (11-22 review items
-   already handled: math-verify/voters.py #38, gridwalk-analogpal 2nd demo.)
+4. **Done #47:** m3-dpo-mech (analysis of 3 MIXR seeds by BASE-sample strata): P1–P3 PASS, P4 FAIL. Gain = +136 fixed
+   −85 broken/seed; breaks of all-agree-correct items (8.7%) are the main cost; no imitation of vote errors; ENS3 of seeds
+   76.0. Candidate GPU arms after the queue: (a) DPO + SFT/KL anchor on own agreed-correct outputs to cut AG breaks,
+   (b) weight soup of 2–3 MIXR seed adapters (1× inference). Pick by whether m3-dpo-label shows labels or content matter.
+5. Roadmap check done early (#47, M5 formal on GSM8K: ≥83.2; M6 compounding added). Next check ~2026-12-27.
+   Snell 2408.03314 / Wu 2408.00724 / ScPO 2411.04109 are cited in knowledge notes.
 
 ## Open questions
 - Does a stronger-than-self label source (tool vote, larger teacher) explain when label-free training helps at 1.5B?

@@ -1,0 +1,9 @@
+greedy mismatches vs m3-stack g3 greedy (BASE nondeterminism): {'R1': 0, 'R2': 17, 'R3': 22}
+counts (item x seed): {'AG': 2668, 'C': 577, 'A': 332, 'WG': 90, 'B': 290}
+changes: {'C': 114, 'WG': 24, 'AG': 232, 'A': 181, 'B': 113}
+rates: A 54.5%, B 39.0%, C 19.8%, AG 8.7%, WG 26.7%
+P1 fix A/C = 2.76 (>=2) -> PASS
+P2 break WG/AG = 3.07 (>=2) -> PASS
+P3 share of fixes from C = 27.9% (<=30) -> PASS
+P4 WG breaks landing on BASE vote answer = 3/24 = 12.5% (>=50) -> FAIL
+net gain per seed by stratum (items): A +60.3, B +37.7, C +38.0, AG -77.3, WG -8.0
