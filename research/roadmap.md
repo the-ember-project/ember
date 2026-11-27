@@ -15,7 +15,7 @@ A small open model (≤3B, runs on a laptop CPU) that reasons reliably by combin
 - M1: vote(2 CoT+5 PAL) +11.7 fresh, p<0.001; G3 +6.9 (n=419), holds 0.5B/3B; MATH G3 +6.4/+8.5; MATH SC7 +11.6 (1024-token cap; at 2048 SC8−greedy only +2.8, so part was cap).
 - M2: BBH 3 fresh tasks +6.8 p=0.002; MATH +6.4. Gridwalk PAL gain needs the demo's solver (2 neutral demos fail): excluded.
 - M3: MIXR-DPO greedy +3.3/+2.9/+5.3 on GSM8K test (n=1319, all p<.05). Mechanism (#47): net of +136 fixed / −85 broken items per seed; 72% of fixes where own samples already had the answer; no imitation of vote errors. MATH: DPO/MAJ-GRPO/RM-GRPO ≈+1–2, mostly boxing.
-- M5: far. GSM8K: MIXR-1.5B ~73.5, G3(MIXR) 77.6 (−7.6), 1.7B-RM WSC8 −4.8 vs 3B greedy; MATH: training + RM vote −4.6 (p=0.013). Tricks + training recover ~1/3–1/2 of the gap. Next: 3B-teacher distillation (m3-dpo-label).
+- M5: far. GSM8K: MIXR-1.5B ~73.5, G3(MIXR) 77.6 (−7.6), 1.7B-RM WSC8 −4.8 vs 3B greedy; MATH: training + RM vote −4.6 (p=0.013). Tricks + training recover ~1/3–1/2 of the gap. Next: m3-dpo-label (3B-teacher distillation + mix7 vote per arm = direct M5 check, queued).
 - M6: m3-dpo-iter queued (GPU quota). Gridwalk R2 > R1 (+5.2) is the only evidence so far.
 - M4: 47 sessions, 38 results, ~$1.2–1.6/session; all heavy compute on lab/Kaggle. Binding constraint: Kaggle 24 h/7 d.
 

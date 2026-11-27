@@ -33,6 +33,10 @@
    L1 GOLD−MIXR ≥+2 & p<.05 (pred +1.0/+1.5, FAIL); L2 mean T3D−MIXR ≥+2 both >0 (pred +1.0, FAIL); L3 T3D−BASE ≥+3
    each p<.05 (pred PASS); L4 best T3D ≥ 3B greedy −2 = 83.2 (pred FAIL). **Back →** `python experiments/m3-dpo-label/analyze.py`.
    Reading: content not labels → scale distillation (more q, mix with MIXR); labels → 3B-vote labels on own samples.
+   **#48 added Stage 4 (prediction addendum in README, before any run): mix7 vote (2 CoT + 5 PAL) per arm on the full test.**
+   V1 M5: both T3D seeds' mix7 ≥ 83.2 at ≤1377 tok/q (pred ~80.5, FAIL); V2 mix7(MIXR)−mix7(BASE) ≥+2 p<.05 (pred +1.5);
+   V3 mix7(BASE)−greedy ≥+5 (pred PASS). Queue limit 275 min. Also fixed an empty-arm crash in build_pairs.
+   If V1 FAILs by >2: next M5 lever is more distillation data (all 7.4k train q, 3B-vote labels) rather than more voters.
 4. **Done #47:** m3-dpo-mech (analysis of 3 MIXR seeds by BASE-sample strata): P1–P3 PASS, P4 FAIL. Gain = +136 fixed
    −85 broken/seed; breaks of all-agree-correct items (8.7%) are the main cost; no imitation of vote errors; ENS3 of seeds
    76.0. Candidate GPU arms after the queue: (a) DPO + SFT/KL anchor on own agreed-correct outputs to cut AG breaks,

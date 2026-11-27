@@ -2,6 +2,7 @@
 Stage 1 (parallel): GPU0 = 1.5B gen (greedy+7 CoT, greedy+4 PAL); GPU1 = 3B teacher gen (greedy+4 CoT, greedy+1 PAL).
 Stage 2 (parallel): GPU0 trains MIXR, T3D (train seed 4051); GPU1 trains GOLD, T3D (train seed 4052). Equal pair count E.
 Stage 3 (parallel): GPU0 evals BASE, MIXR, T3D -> G0/; GPU1 evals GOLD, T3D -> G1/ (greedy CoT, full GSM8K test).
+Stage 4 (#48): same split, mix7 vote (2 CoT + 5 PAL, T=0.7) per arm -> test_mix_<arm>.jsonl.gz (M5 check).
 The whole pipeline first runs on a tiny slice (smoke). `--cpu_smoke`: logic check on CPU with 0.5B/0.5B, sequential."""
 import os, subprocess, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -30,6 +31,10 @@ def stages(tiny, cpu, backend):
         [("evalA", ["--phase", "eval", "--model", small, "--seed", "9093", "--work", t0, "--out", o0, "--arms", "MIXR,T3D",
                     "--with_base", "1"] + T + c),
          ("evalB", ["--phase", "eval", "--model", small, "--seed", "9094", "--work", t1, "--out", o1, "--arms", "GOLD,T3D"] + T + c)],
+        # session #48: M5 stage -- mix7 vote per arm on the full test (BASE on GPU0)
+        [("mixA", ["--phase", "mix", "--model", small, "--seed", "9095", "--work", t0, "--out", o0, "--arms", "T3D,MIXR",
+                   "--with_base", "1"] + T + c),
+         ("mixB", ["--phase", "mix", "--model", small, "--seed", "9096", "--work", t1, "--out", o1, "--arms", "T3D,GOLD"] + T + c)],
     ]
 
 def run_step(name, args, gpu, tiny, ngpu):

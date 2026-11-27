@@ -186,7 +186,7 @@ def build_pairs(rows, cap, seed=2029, teacher=None):
         stats[arm] = dict(pair_questions=nq, label_precision_on_pair_q=correct / max(1, nq), pairs=len(sets[arm]),
                           chosen_correct=sum(same(extract(c), gm) for (i, c, j) in sets[arm] for gm in [gold_map[i]]) / max(1, len(sets[arm])))
     E = min([cap] + [len(v) for v in sets.values() if v])  # m3-dpo-label: an empty arm (e.g. no teacher) is skipped, not E=0
-    for arm in ARMS: sets[arm] = rng.sample(sets[arm], E)
+    for arm in ARMS: sets[arm] = rng.sample(sets[arm], E) if sets[arm] else []  # #48: empty arm crashed sample()
     stats["E"] = E
     return sets, stats
 
@@ -363,6 +363,42 @@ def phase_g3(a):
             del g; g = Gen(a, lora_paths=True)
     json.dump(summ, open(os.path.join(a.out, f"{a.tag}g3_summary.json"), "w"), indent=1)
 
+def phase_mix(a):  # session #48: M5 stage -- mix7 vote (2 CoT T=.7 + 5 PAL T=.7; gsm8k-mixvote2 P1) per arm on test
+    df, idx = eval_items(a)
+    golds = [gold_of(df.answer[i]) for i in idx]
+    arms = [x for x in a.arms.split(",") if os.path.exists(os.path.join(a.work, f"lora_{x}"))] + (["BASE"] if a.with_base else [])
+    g = Gen(a, lora_paths=True)  # deciding arm (T3D) first, BASE last
+    cp = [g.chat(SYS_COT, df.question[i]) for i in idx]; pp = [g.chat(SYS_PAL, df.question[i]) for i in idx]
+    summ = {}
+    for j, arm in enumerate(arms):
+        t0 = time.time()
+        try:
+            greedy = {}
+            for line in open(os.path.join(a.out, f"{a.tag}eval_{arm}.jsonl")):
+                r = json.loads(line)
+                if "idx" in r: greedy[r["idx"]] = r["pred"]
+            g.set_lora(None if arm == "BASE" else os.path.join(a.work, f"lora_{arm}"))
+            couts, ctok = g(cp, 2, 0.7, lora_id=j + 1)
+            pouts, ptok = g(pp, 5, 0.7, lora_id=j + 1)
+            ptexts = [t for o in pouts for t in o]
+            with ThreadPoolExecutor(8) as ex: pans = list(ex.map(run_code, ptexts))
+            ok, okg3 = [], []
+            with gzip.open(os.path.join(a.out, f"{a.tag}mix_{arm}.jsonl.gz"), "wt") as f:
+                for k, (i, gd) in enumerate(zip(idx, golds)):
+                    cots = [extract(t) for t in couts[k]]; pals = pans[5 * k:5 * k + 5]
+                    v = vote(cots + pals); ok.append(same(v, gd)); okg3.append(same(vote([greedy.get(i)] + pals[:3]), gd))
+                    f.write(json.dumps(dict(idx=i, gold=gd, greedy=greedy.get(i), cot=cots, pal=pals, mix7=v, correct=ok[-1],
+                                            cot_tails=[t[-200:] for t in couts[k]], pal_tails=[t[-120:] for t in pouts[k]])) + "\n")
+            summ[arm] = dict(mix7_acc=round(sum(ok) / len(idx), 4), g3_acc=round(sum(okg3) / len(idx), 4),
+                             mix7_tok_per_q=round((ctok + ptok) / len(idx), 1), cot_tok_per_q=round(ctok / len(idx), 1),
+                             pal_tok_per_q=round(ptok / len(idx), 1), pal_exec_rate=round(sum(x is not None for x in pans) / max(1, len(pans)), 4))
+            print(f"mix {arm}: {json.dumps(summ[arm])} {time.time()-t0:.0f}s", flush=True)
+        except Exception:
+            import traceback; traceback.print_exc()
+        json.dump(summ, open(os.path.join(a.out, f"{a.tag}mix_summary.json"), "w"), indent=1)
+        if a.backend == "hf" and arm != "BASE":
+            del g; g = Gen(a, lora_paths=True)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--phase", default="all"); ap.add_argument("--backend", default="auto")
@@ -384,7 +420,7 @@ def main():
         # #29: run 1's crashed phase never exited (vLLM shutdown hang) and burned 190 GPU min; hard-exit either way.
         rc = 0
         try:
-            {"gen": phase_gen, "train": phase_train, "eval": phase_eval, "g3": phase_g3}[a.phase](a)
+            {"gen": phase_gen, "train": phase_train, "eval": phase_eval, "g3": phase_g3, "mix": phase_mix}[a.phase](a)
         except BaseException:
             import traceback; traceback.print_exc(); rc = 1
         import gc; gc.collect(); sys.stdout.flush(); sys.stderr.flush(); os._exit(rc)

@@ -56,3 +56,40 @@ if "3B" in M and any(k in M for k in ("T3Da", "T3Db")):
     best = max(acc(M[k]) for k in ("T3Da", "T3Db") if k in M)
     V(f"L4 best T3D {best:.2f} vs 3B greedy {acc(M['3B']):.2f} - 2", best >= acc(M["3B"]) - 2)
 if "BASE" in M: print(f"validity: BASE in 67-72: {67 <= acc(M['BASE']) <= 72}")
+
+# ---- Stage 4 (session #48): mix7 vote per arm, V1-V3 ----
+import gzip
+def loadz(fn):
+    if not os.path.exists(fn): return None
+    return {r["idx"]: r for r in (json.loads(l) for l in gzip.open(fn, "rt"))}
+X = {"BASE": loadz(os.path.join(root, "G0", "test_mix_BASE.jsonl.gz")), "MIXR": loadz(os.path.join(root, "G0", "test_mix_MIXR.jsonl.gz")),
+     "T3Da": loadz(os.path.join(root, "G0", "test_mix_T3D.jsonl.gz")), "GOLD": loadz(os.path.join(root, "G1", "test_mix_GOLD.jsonl.gz")),
+     "T3Db": loadz(os.path.join(root, "G1", "test_mix_T3D.jsonl.gz"))}
+X = {k: v for k, v in X.items() if v}
+TOK = {}
+for d, arms in (("G0", {"BASE": "BASE", "MIXR": "MIXR", "T3D": "T3Da"}), ("G1", {"GOLD": "GOLD", "T3D": "T3Db"})):
+    p = os.path.join(root, d, "test_mix_summary.json")
+    if os.path.exists(p):
+        for k, v in json.load(open(p)).items():
+            if k in arms: TOK[arms[k]] = v
+CAP = 5 * 275.4
+if X:
+    print("mix7 (2 CoT + 5 PAL, T=0.7):")
+    for k, m in X.items():
+        pe = sum(x is not None for r in m.values() for x in r["pal"]) / (5 * len(m))
+        print(f"  {k:5s} mix7 {acc(m):.2f} n={len(m)} pal_exec {100*pe:.1f}% tok/q {TOK.get(k, {}).get('mix7_tok_per_q')} "
+              f"g3(expl) {TOK.get(k, {}).get('g3_acc')}")
+    def cmpx(A, x, B, y):
+        ks = sorted(set(A) & set(B))
+        f = sum(A[k]["correct"] and not B[k]["correct"] for k in ks); b = sum(B[k]["correct"] and not A[k]["correct"] for k in ks)
+        d = 100 * (f - b) / len(ks); p = sign_p(f, b); print(f"  {x} - {y}: {d:+.2f} ({f}/{b}) p={p:.4g}"); return d, p
+    t = [k for k in ("T3Da", "T3Db") if k in X]
+    if len(t) == 2:
+        ok = all(acc(X[k]) >= 83.2 and (TOK.get(k, {}).get("mix7_tok_per_q") or 1e9) <= CAP for k in t)
+        V(f"V1 T3D mix7 {[round(acc(X[k]), 2) for k in t]} (both >= 83.2, tok <= {CAP:.0f})", ok)
+    if "MIXR" in X and "BASE" in X:
+        d, p = cmpx(X["MIXR"], "mix7 MIXR", X["BASE"], "mix7 BASE"); V("V2 (>= +2, p<.05)", d >= 2 and p < .05)
+    if "BASE" in X and "BASE" in M:
+        d, p = cmpx(X["BASE"], "mix7 BASE", M["BASE"], "greedy BASE"); V("V3 (>= +5, p<.05)", d >= 5 and p < .05)
+    for k in X:
+        if k != "BASE" and k in M: cmpx(X[k], f"mix7 {k}", M[k], f"greedy {k}")

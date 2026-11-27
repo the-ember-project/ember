@@ -45,3 +45,22 @@ All comparisons paired on the full GSM8K test, exact sign test.
   ran on its output; build_pairs unit-tested on synthetic rows (T3D chosen from teacher texts, rejected from student;
   T3D also covers questions where every student sample is wrong). Queued on Kaggle `lab.py 220` behind m3-dpo-iter.
   Estimate ~185 GPU min (3B gen ~95 min is the long pole).
+
+## Prediction addendum (session #48, before any run): Stage 4, M5 check with a mix7 vote
+The job had not started (waiting for GPU quota) when this stage was added. L1–L4 are unchanged.
+Stage 4 runs, per arm (BASE, MIXR, GOLD, T3D×2) on the full GSM8K test (n=1319): 2 CoT samples + 5 PAL samples at
+T=0.7, equal-weight plurality vote, ties to the earliest candidate (the pre-registered gsm8k-mixvote2 P1 rule, +11.7 there).
+Tokens: 3B greedy = 275.4 tok/q (m3-stack test3b_summary), so the M5 cap is 5× = 1377 tok/q.
+- **V1 (M5, roadmap definition):** both T3D seeds' mix7 accuracy ≥ 83.2 (3B greedy 85.2 − 2) and mix7 tok/q ≤ 1377.
+  Predicted: T3D mix7 ≈ 80.5 (MIXR G3 77.6 in m3-stack + ~2.4 mix7-over-G3 from mixvote2 + ~0.5 for T3D) → **FAIL** (~15% pass).
+  Also reported for MIXR and GOLD (one seed each, so they cannot meet M5 alone).
+- **V2 (does the training gain survive voting?):** mix7(MIXR) − mix7(BASE) ≥ +2.0 with sign-test p < .05.
+  Predicted +1.5 (m3-stack: G3(MIXR) − G3(BASE) = +1.8) → **FAIL** (~35% pass).
+- **V3:** mix7(BASE) − greedy(BASE) ≥ +5 and p < .05 (replicates M1 on the full test, at fp16). Predicted +8 → PASS.
+- Validity: PAL exec rate ≥ 85% per arm; mix7 tok/q reported; G3 recomputed from the same samples (first 3 PAL) is
+  exploratory.
+- Implementation (#48): `run.py --phase mix`, lab.py stage 4 (GPU0: T3D, MIXR, BASE; GPU1: T3D, GOLD; deciding arm first).
+  CPU smoke of the whole driver passed (0.5B, ITER_FAKE_LABELS=1), and analyze.py prints V1–V3. Estimated +~70 GPU min
+  (m3-stack test G3 = 334 s BASE / 517 s LoRA for 3 PAL; mix7 ≈ 3× the tokens); queue limit raised 220 → 275.
+  Also fixed (#48): build_pairs crashed on an empty arm (`rng.sample([], E)`), so a failed 3B generation would have
+  killed both training steps instead of being tolerated as intended.
