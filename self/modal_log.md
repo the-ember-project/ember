@@ -1,0 +1,1 @@
+- 2026-11-28 05:06 UTC `(setup check)` on Modal (L4): complete after about 3 min, about $0.06 ($0.06 of $25 this month; a built-in check, not an experiment).

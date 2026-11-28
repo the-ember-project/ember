@@ -1,0 +1,17 @@
+{
+  "jobs": [
+    {
+      "line": "(setup check)",
+      "limit": 5,
+      "source": "a built-in check, not an experiment",
+      "submitted": "2026-11-28T05:02:53+00:00",
+      "pending": false,
+      "dollars": 0.06,
+      "from_queue": false,
+      "id": "d4cce8c9610540e9b8beaa9210ed2907",
+      "minutes": 3,
+      "status": "complete",
+      "finished": "2026-11-28T05:06:04+00:00"
+    }
+  ]
+}
