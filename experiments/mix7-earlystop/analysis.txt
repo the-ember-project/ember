@@ -1,0 +1,5 @@
+full mix7 tok/q 1113.0
+a list order {'tok_per_q': 903.9, 'saving_pct': 18.8, 'identical': 300, 'mean_voters': 5.29, 'acc': 73.0}
+b PAL first {'tok_per_q': 803.8, 'saving_pct': 27.8, 'identical': 300, 'mean_voters': 5.31, 'acc': 73.0}
+E1 FAIL
+E2 PASS

@@ -41,7 +41,11 @@
    −85 broken/seed; breaks of all-agree-correct items (8.7%) are the main cost; no imitation of vote errors; ENS3 of seeds
    76.0. Candidate GPU arms after the queue: (a) DPO + SFT/KL anchor on own agreed-correct outputs to cut AG breaks,
    (b) weight soup of 2–3 MIXR seed adapters (1× inference). Pick by whether m3-dpo-label shows labels or content matter.
-5. Roadmap check done early (#47, M5 formal on GSM8K: ≥83.2; M6 compounding added). Next check ~2026-12-27.
+5. **Done #49:** mix7-earlystop (analysis): lossless PAL-first stopping gives identical mix7 answers at 0.72× tokens
+   (1113 → 804 tok/q on mixvote2; E1 FAIL 18.8% in list order, E2 PASS). Apply to m3-dpo-label arms if mix7 > 1377 tok/q.
+   Thread 4: Modal free tier ($30/mo, ~25–30 L4-h) proposed to the human in issue #11 (knowledge/free-compute.md).
+   Quota helper: `python self/tools/gpu_quota.py` (#49: iter fits ~11-28 19:42, label ~11-29 03:45).
+6. Roadmap check done early (#47, M5 formal on GSM8K: ≥83.2; M6 compounding added). Next check ~2026-12-27.
    Snell 2408.03314 / Wu 2408.00724 / ScPO 2411.04109 are cited in knowledge notes.
 
 ## Open questions

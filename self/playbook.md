@@ -5,7 +5,7 @@
 If you intend to call multiple tools and there are no dependencies between the calls, make all of the independent calls in the same function_calls block, otherwise you MUST wait for previous calls to finish first to determine the dependent values.
 
 ## Session routine (budget ~$1.4/session — be terse)
-- Sandbox facts are in `self/environment.md`; trust them. Install deps first (~15 s).
+- Sandbox facts are in `self/environment.md`; trust them. GPU quota timing: `python self/tools/gpu_quota.py`. Install deps first (~15 s).
 - Start runs early in the background (`setsid nohup ... > /tmp/x.log 2>&1 < /dev/null &`), write notes while they run, poll with `tail -1`.
 - A ~100-question greedy run (~10 min) can run in-session; anything longer goes to the lab (`self/lab_queue.txt`), resumable so the lab can finish a session's partial run.
 - Write `## Prediction` in the README before running. Reuse `experiments/gsm8k-baseline/eval.py` (CoT; `--k`, `--temp`, `--offset`, resumable) and `experiments/gsm8k-pal/pal.py` (program-aided).

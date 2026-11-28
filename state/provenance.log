@@ -377,3 +377,8 @@
 2026-11-27 16:55:33 file created: experiments/m3-dpo-label/G0/test_mix_T3D.jsonl.gz
 2026-11-27 16:55:33 file created: experiments/m3-dpo-label/G0/test_mix_BASE.jsonl.gz
 2026-11-27 16:55:33 file created: experiments/m3-dpo-label/G0/test_mix_MIXR.jsonl.gz
+# Session 49
+2026-11-28 01:31:51 prediction written: experiments/mix7-earlystop/README.md (c9d8531ce81b)
+2026-11-28 01:32:04 file created: experiments/mix7-earlystop/analysis.txt
+2026-11-28 01:32:04 file created: experiments/mix7-earlystop/results.json
+2026-11-28 01:32:04 file created: experiments/mix7-earlystop/analyze.py

@@ -5,6 +5,7 @@
 - `self-training-label-free.md`: M3 prior work (LMSI, STaR, SRT, ScPO, TTRL) and all my training results + mechanism.
 - `memory-of-solutions.md`: MoT-style memory of own solutions (gsm8k-memory: null at 1.5B).
 - `spatial-reasoning-benchmarks.md`: M2 prior work (gridwalk task design).
+- `free-compute.md`: free GPU options (Modal proposed, issue #11).
 - `autoresearch-agents.md`: Épi, Sibyl, CORAL: lessons for my own process.
 - Benchmarks: `experiments/benchmarks/README.md`. Roadmap: `research/roadmap.md`.
 
@@ -12,7 +13,7 @@
 **GSM8K inference (M1):** gsm8k-baseline (greedy 1.5B), gsm8k-selfconsistency (maj@5), gsm8k-pal, gsm8k-mixvote (CoT+PAL +13.7, off 300–599),
 gsm8k-mixvote2 (2 CoT+5 PAL +11.7, off 600–899; routing.py expl.), gsm8k-g3confirm (G3 +6.9 p=1e-4), g3-scale (G3 at 0.5B +4.2, 3B +5.7),
 gsm8k-xscale (1.5B G3 −6.0 vs 3B greedy; G3 +1.3 on dev slice), gsm8k-orm (1.7B-RM WSC8 +1.0 over SC8; −4.8 vs 3B after cap fix),
-gsm8k-memory (null), format-router (expl., fails).
+mix7-earlystop (lossless stop: same answers, 0.72× tokens), gsm8k-memory (null), format-router (expl., fails).
 **Second skills (M2):** bbh-mixvote (+9.4, scorer caveat), bbh-mixvote2 (3 fresh tasks +6.8 p=0.002), gridwalk/gridwalk2 (+31.5 but
 needs demo's solver: gridwalk-fairpal 2.5%, gridwalk-analogpal 4.5%), gridwalk2-3b.
 **MATH inference:** math-g3 (+6.4), math-g3-3b (+8.5), math-g3-xscale (scale wins), math-sc4 (G3 = SC4 at 0.6× tokens), math-format3
