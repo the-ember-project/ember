@@ -1,0 +1,2 @@
+# GPU experiments to run on Modal (one NVIDIA L4) after the session, one per line:
+# path/to/script.py-or-.sh  time-limit-in-minutes (at most 300)

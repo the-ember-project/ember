@@ -779,11 +779,13 @@ def lab_status() -> str:
     return f"{text}\n\nStill queued: {len(waiting)} job(s)."
 
 
-def tidy_gpu_queue() -> None:
-    """Remove from self/gpu_queue.txt the lines the GPU workflow has taken since last time.
+def tidy_gpu_queue(usage_name: str = "kaggle_usage.json", done_name: str = "gpu_queue_done.json",
+                   queue_name: str = "gpu_queue.txt") -> None:
+    """Remove from self/gpu_queue.txt the lines the GPU workflow has taken since last time
+    (or, with the Modal names, from self/modal_queue.txt the lines the Modal workflow took).
     Only sessions write the queue: the GPU workflow can run at the same time as a session, and
     if both saved the file their changes would collide. It records what it took instead."""
-    usage, done_path = ROOT / "state" / "kaggle_usage.json", ROOT / "state" / "gpu_queue_done.json"
+    usage, done_path = ROOT / "state" / usage_name, ROOT / "state" / done_name
     try:
         jobs = json.loads(usage.read_text())["jobs"]
     except Exception:
@@ -795,7 +797,7 @@ def tidy_gpu_queue() -> None:
     todo = [j for j in jobs if j.get("from_queue") and gpu_job_id(j) not in done]
     if not todo:
         return
-    queue = SELF_DIR / "gpu_queue.txt"
+    queue = SELF_DIR / queue_name
     text = safefs.read_text(queue)
     lines = text.splitlines() if text is not None else []
     for j in todo:
@@ -825,7 +827,24 @@ def gpu_status() -> str:
     weekly = int(os.environ.get("GPU_WEEKLY_MINUTES") or 1440)
     return (f"{text or '(No GPU jobs yet.)'}\n\nStill queued: {len(waiting)} job(s). "
             f"Running on Kaggle: {', '.join(running) or 'none'}. "
-            f"GPU minutes used in the last 7 days: {used} of {weekly}.")
+            f"GPU minutes used in the last 7 days: {used} of {weekly}.{modal_status()}")
+
+
+def modal_status() -> str:
+    """Recent Modal GPU jobs, what's queued for Modal, and this month's dollars, once it's in use."""
+    log, usage = read(SELF_DIR / "modal_log.md")[-1500:].strip(), ROOT / "state" / "modal_usage.json"
+    waiting = [l for l in read(SELF_DIR / "modal_queue.txt").splitlines() if l.strip() and not l.startswith("#")]
+    try:
+        jobs = json.loads(usage.read_text())["jobs"]
+    except Exception:
+        jobs = []
+    if not (log or waiting or jobs):
+        return ""
+    month = f"{dt.datetime.now(dt.timezone.utc):%Y-%m}"
+    used = sum(j.get("dollars", 0) for j in jobs if j["submitted"].startswith(month))
+    cap = float(os.environ.get("MODAL_MONTHLY_USD") or 25)
+    return (f"\n\nModal (self/modal_log.md):\n{log or '(No Modal jobs yet.)'}\n\nQueued for Modal: "
+            f"{len(waiting)} job(s). Modal use this month: about ${used:.2f} of ${cap:.0f}.")
 
 
 FINAL_SESSION_NOTE = f"""## This is your final session before pausing
@@ -1331,6 +1350,7 @@ def main() -> int:
     size_notes.clear()
     try:
         tidy_gpu_queue()
+        tidy_gpu_queue("modal_usage.json", "modal_queue_done.json", "modal_queue.txt")
     except Exception as e:  # never let queue tidying stop a session
         print(f"Could not tidy the GPU queue: {type(e).__name__}: {e}")
     charter = system_prompt()

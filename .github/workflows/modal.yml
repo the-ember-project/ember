@@ -1,0 +1,75 @@
+name: Modal GPU jobs
+
+# Runs the GPU experiments the agent queued in self/modal_queue.txt on Modal (an approved service,
+# see agent/services.md) and saves what they return. Makes no Claude calls. The Modal token is used
+# only here; the agent's code runs in Modal's container (agent/modal_app.py), never on this machine.
+# To test the setup, open this workflow under Actions, choose "Run workflow" and tick "check".
+
+on:
+  workflow_run:
+    workflows: ["Research session"]
+    types: [completed]
+  schedule:
+    - cron: "07 15 * * *"  # a daily backup
+  workflow_dispatch:
+    inputs:
+      check:
+        description: "Only run a two-minute setup check (costs a few cents of the free credit)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: modal
+  cancel-in-progress: false
+
+jobs:
+  modal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    env:
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.ref_name }}
+
+      - name: Remove symlinks from the agent's folders
+        run: find self knowledge research experiments -type l -print -delete 2>/dev/null || true
+
+      - name: Check for work
+        id: work
+        run: |
+          if [ "${{ inputs.check }}" = "true" ] || grep -qvE '^\s*(#|$)' self/modal_queue.txt 2>/dev/null; then
+            echo "jobs=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v7
+        if: steps.work.outputs.jobs == 'yes'
+        with:
+          python-version: "3.12"
+
+      - name: Install the Modal client
+        if: steps.work.outputs.jobs == 'yes'
+        # Installed next to the token, so keep it to Modal's own package. Pin an exact version once
+        # the setup check has passed with it (the version is printed below).
+        run: pip install -q "modal>=1.0,<2" && pip show modal | head -2
+
+      - name: Run queued jobs on Modal
+        if: steps.work.outputs.jobs == 'yes'
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          MODAL_MONTHLY_USD: ${{ vars.MODAL_MONTHLY_USD || '25' }}
+        run: python agent/modal_jobs.py ${{ inputs.check && '--check' || '' }}
+
+      - name: Save the results
+        if: always() && steps.work.outputs.jobs == 'yes'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash .github/scripts/save.sh "Modal GPU jobs $(date -u +'%Y-%m-%d %H:%M')" \
+            experiments self/modal_log.md state/modal_usage.json
