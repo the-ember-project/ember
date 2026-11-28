@@ -54,16 +54,16 @@ jobs:
 
       - name: Install the Modal client
         if: steps.work.outputs.jobs == 'yes'
-        # Installed next to the token, so keep it to Modal's own package. Pin an exact version once
-        # the setup check has passed with it (the version is printed below).
-        run: pip install -q "modal>=1.0,<2" && pip show modal | head -2
+        # Pinned, since this installs next to the token: 1.6.4 is the version the setup check passed
+        # with on 2026-11-28. Change the number here to upgrade, then run the check again.
+        run: pip install -q modal==1.6.4 && python -c "import modal; print('modal', modal.__version__)"
 
       - name: Run queued jobs on Modal
         if: steps.work.outputs.jobs == 'yes'
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
           MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-          MODAL_MONTHLY_USD: ${{ vars.MODAL_MONTHLY_USD || '25' }}
+          MODAL_MONTHLY_USD: ${{ vars.MODAL_MONTHLY_USD || '28' }}
         run: python agent/modal_jobs.py ${{ inputs.check && '--check' || '' }}
 
       - name: Save the results

@@ -43,7 +43,7 @@ LOG = ROOT / "self" / "modal_log.md"
 USAGE = ROOT / "state" / "modal_usage.json"
 QUEUE_DONE = ROOT / "state" / "modal_queue_done.json"   # see QUEUE_DONE in agent/kaggle_jobs.py
 
-MONTHLY_USD = float(os.environ.get("MODAL_MONTHLY_USD") or 25)   # of the Starter plan's $30 credit
+MONTHLY_USD = float(os.environ.get("MODAL_MONTHLY_USD") or 28)   # of the $30 credit; Modal stops all use at $29.50
 RUN_MINUTES = int(os.environ.get("MODAL_RUN_MINUTES") or 330)     # how long one workflow run may work
 OVERHEAD = 10                                                       # image start-up, per job (minutes)
 

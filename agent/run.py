@@ -842,7 +842,7 @@ def modal_status() -> str:
         return ""
     month = f"{dt.datetime.now(dt.timezone.utc):%Y-%m}"
     used = sum(j.get("dollars", 0) for j in jobs if j["submitted"].startswith(month))
-    cap = float(os.environ.get("MODAL_MONTHLY_USD") or 25)
+    cap = float(os.environ.get("MODAL_MONTHLY_USD") or 28)
     return (f"\n\nModal (self/modal_log.md):\n{log or '(No Modal jobs yet.)'}\n\nQueued for Modal: "
             f"{len(waiting)} job(s). Modal use this month: about ${used:.2f} of ${cap:.0f}.")
 
